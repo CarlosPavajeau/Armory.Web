@@ -1,2 +1,11 @@
 /// <reference types="react-scripts" />
-API_URL='https://localhost:5001'
+declare namespace NodeJS {
+  interface ProcessEnv {
+    NODE_ENV: 'development' | 'production' | 'test'
+    PUBLIC_URL: string
+    REACT_APP_API_URL: string
+  }
+}
+interface Window {
+  Stripe: any
+}
