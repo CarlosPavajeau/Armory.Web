@@ -16,8 +16,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/services/AuthorizationService';
+import {
+  selectErrors,
+  selectStatus,
+  selectToken,
+} from '../../modules/users/userSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,7 +50,19 @@ const Login = (): React.ReactElement => {
     password: Yup.string().required('Su contraseña de acceso es requerida'),
   });
 
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const token = useAppSelector(selectToken);
+  const status = useAppSelector(selectStatus);
+  const authErrors = useAppSelector(selectErrors);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (status === 'loginSuccess') {
+      localStorage.setItem('user_token', token);
+    }
+    if (status === 'incorrectPassword' || status === 'userNotFound') {
+      console.log(`Errors ${authErrors}`);
+    }
+  }, [authErrors, status, token]);
 
   const loginForm = useFormik({
     initialValues: {
@@ -53,11 +71,7 @@ const Login = (): React.ReactElement => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: async values => {
-      const response = await authorizeUser({ ...values, isPersistent: false });
-
-      if (response) {
-        setLoginSuccess(true);
-      }
+      await authorizeUser({ ...values, isPersistent: false }, dispatch);
     },
   });
 
@@ -149,7 +163,7 @@ const Login = (): React.ReactElement => {
           </Card>
         </Container>
       </Box>
-      {loginSuccess && <Redirect to="/admin" />}
+      {status === 'loginSuccess' && <Redirect to="/admin" />}
     </>
   );
 };
