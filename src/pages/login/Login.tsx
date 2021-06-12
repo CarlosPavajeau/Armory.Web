@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       backgroundColor: 'background.default',
       height: '100%',
-      paddingTop: 64,
+      paddingTop: 'calc(50vh - 250px)',
     },
     mb_3: {
       marginBottom: theme.spacing(3),
