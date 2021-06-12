@@ -137,6 +137,16 @@ const Login = (): React.ReactElement => {
                   onChange={handleChange}
                   disabled={isSubmitting}
                 />
+                {(status === 'userNotFound' ||
+                  status === 'incorrectPassword') && (
+                  <Typography
+                    color="error"
+                    variant="body2"
+                    className={classes.py_2}
+                  >
+                    {authErrors}
+                  </Typography>
+                )}
                 <Box className={classes.py_2}>
                   <Button
                     color="primary"
