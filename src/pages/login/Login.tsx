@@ -59,10 +59,7 @@ const Login = (): React.ReactElement => {
     if (status === 'loginSuccess') {
       localStorage.setItem('user_token', token);
     }
-    if (status === 'incorrectPassword' || status === 'userNotFound') {
-      console.log(`Errors ${authErrors}`);
-    }
-  }, [authErrors, status, token]);
+  }, [status, token]);
 
   const loginForm = useFormik({
     initialValues: {
