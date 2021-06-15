@@ -12,12 +12,14 @@ export interface UserState {
   token: string;
   errors: string;
   status: LoginStatus;
+  isAuthenticate: boolean;
 }
 
 const initialState: UserState = {
   token: '',
   errors: '',
   status: 'idle',
+  isAuthenticate: false,
 };
 
 export const userSlice = createSlice({
@@ -25,8 +27,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action: PayloadAction<string>) => {
-      state.status = 'loginSuccess';
       state.token = action.payload;
+      state.status = 'loginSuccess';
+      state.isAuthenticate = true;
     },
     userNotFound: (state, action: PayloadAction<string>) => {
       state.status = 'userNotFound';
@@ -36,15 +39,24 @@ export const userSlice = createSlice({
       state.status = 'incorrectPassword';
       state.errors = action.payload;
     },
+    authenticationStatus: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticate = action.payload;
+    },
   },
 });
 
-export const { loginSuccess, incorrectPassword, userNotFound } =
-  userSlice.actions;
+export const {
+  loginSuccess,
+  incorrectPassword,
+  userNotFound,
+  authenticationStatus,
+} = userSlice.actions;
 
 export const selectToken = (state: RootState): string => state.user.token;
 export const selectStatus = (state: RootState): LoginStatus =>
   state.user.status;
 export const selectErrors = (state: RootState): string => state.user.errors;
+export const selectIsAuthenticate = (state: RootState): boolean =>
+  state.user.isAuthenticate;
 
 export default userSlice.reducer;

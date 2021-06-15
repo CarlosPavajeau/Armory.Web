@@ -15,15 +15,11 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/services/AuthorizationService';
-import {
-  selectErrors,
-  selectStatus,
-  selectToken,
-} from '../../modules/users/userSlice';
+import { selectErrors, selectStatus } from '../../modules/users/userSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,16 +46,9 @@ const Login = (): React.ReactElement => {
     password: Yup.string().required('Su contraseña de acceso es requerida'),
   });
 
-  const token = useAppSelector(selectToken);
   const status = useAppSelector(selectStatus);
   const authErrors = useAppSelector(selectErrors);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (status === 'loginSuccess') {
-      localStorage.setItem('user_token', token);
-    }
-  }, [status, token]);
 
   const loginForm = useFormik({
     initialValues: {
@@ -170,7 +159,6 @@ const Login = (): React.ReactElement => {
           </Card>
         </Container>
       </Box>
-      {status === 'loginSuccess' && <Redirect to="/admin" />}
     </>
   );
 };

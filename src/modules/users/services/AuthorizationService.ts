@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { AppDispatch } from '../../../common/store';
 import { AuthenticationRequest } from '../models/AuthenticationRequest';
-import { incorrectPassword, loginSuccess, userNotFound } from '../userSlice';
+import {
+  authenticationStatus,
+  incorrectPassword,
+  loginSuccess,
+  userNotFound,
+} from '../userSlice';
 
 const authorizeUser = async (
   data: AuthenticationRequest,
@@ -28,4 +33,9 @@ const authorizeUser = async (
   }
 };
 
-export { authorizeUser };
+const checkAuthentication = (dispatch: AppDispatch): void => {
+  const token = window.localStorage.getItem('user_token');
+  dispatch(authenticationStatus(Boolean(token)));
+};
+
+export { authorizeUser, checkAuthentication };
