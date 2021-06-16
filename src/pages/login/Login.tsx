@@ -15,11 +15,15 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/services/AuthorizationService';
-import { selectErrors, selectStatus } from '../../modules/users/userSlice';
+import {
+  selectErrors,
+  selectIsAuthenticate,
+  selectStatus,
+} from '../../modules/users/userSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,6 +52,7 @@ const Login = (): React.ReactElement => {
 
   const status = useAppSelector(selectStatus);
   const authErrors = useAppSelector(selectErrors);
+  const isAuth = useAppSelector(selectIsAuthenticate);
   const dispatch = useAppDispatch();
 
   const loginForm = useFormik({
@@ -159,6 +164,7 @@ const Login = (): React.ReactElement => {
           </Card>
         </Container>
       </Box>
+      {isAuth && <Redirect to="/dashboard" />}
     </>
   );
 };

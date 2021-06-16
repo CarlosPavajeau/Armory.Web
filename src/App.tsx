@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './App.css';
+import { Route, Switch } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './common/hooks';
 import MainLayout from './components/layouts/MainLayout';
 import DashboardLayout from './components/layouts/DashboardLayout';
@@ -26,9 +26,12 @@ const App = (): React.ReactElement => {
   }, [dispatch]);
 
   return (
-    <div className="App">
+    <div>
       <GlobalStyles />
-      {isAuthenticate ? <DashboardLayout /> : <MainLayout />}
+      <Switch>
+        <Route path="/dashboard" component={DashboardLayout} />
+        <Route path="/" component={MainLayout} />
+      </Switch>
     </div>
   );
 };
