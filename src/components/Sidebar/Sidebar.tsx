@@ -151,13 +151,14 @@ const Sidebar = (props: SidebarProps): React.ReactElement => {
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
         <ListItem
+          key="sidebar-title"
           className={clsx(classes.armory, classes.item, classes.itemCategory)}
         >
           Armería
         </ListItem>
         {categories.map(({ id, children }) => (
           <React.Fragment key={id}>
-            <ListItem className={classes.categoryHeader}>
+            <ListItem key={id} className={classes.categoryHeader}>
               <ListItemText
                 classes={{ primary: classes.categoryHeaderPrimary }}
               >
@@ -166,6 +167,7 @@ const Sidebar = (props: SidebarProps): React.ReactElement => {
             </ListItem>
             {children.map(({ id: childId, path, icon }) => (
               <Link
+                key={childId}
                 component={RouterLink}
                 to={path}
                 className={classes.itemLink}
