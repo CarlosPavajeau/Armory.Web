@@ -1,6 +1,12 @@
 import { AppDispatch } from '../../common/store';
 import { CreateSquadronRequest } from './Models/CreateSquadronRequest';
-import { notRegister, registeredCorrectly } from './SquadronSlice';
+import { Squadron } from './Models/Squadron';
+import {
+  loadingSquadrons,
+  loadSquadrons,
+  notRegister,
+  registeredCorrectly,
+} from './SquadronSlice';
 import axiosInstance from '../../common/config/axios';
 
 const createSquadron = async (
@@ -16,9 +22,20 @@ const createSquadron = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    console.log(error);
     dispatch(notRegister('No se puede regisrar el escuadron'));
   }
 };
 
-export { createSquadron };
+const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
+  try {
+    dispatch(loadingSquadrons());
+    const response = await axiosInstance.get<Squadron[]>('/Squadrons');
+    if (response) {
+      dispatch(loadSquadrons(response.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { createSquadron, getSquadrons };
