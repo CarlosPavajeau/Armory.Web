@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './common/hooks';
-import MainLayout from './components/layouts/MainLayout';
-import DashboardLayout from './components/layouts/DashboardLayout';
+import MainLayout from './components/Layouts/MainLayout';
+import DashboardLayout from './components/Layouts/DashboardLayout';
 import { checkAuthentication } from './modules/users/services/AuthorizationService';
 import { selectIsAuthenticate, selectToken } from './modules/users/userSlice';
 
