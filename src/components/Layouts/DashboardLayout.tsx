@@ -13,6 +13,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAppSelector } from '../../common/hooks';
 import { selectIsAuthenticate } from '../../modules/users/userSlice';
+import RegisterSquadron from '../../pages/squadron/RegisterSquadron';
+import Squadrons from '../../pages/squadron/Squadrons';
 import DashboardNavBar from '../Navbars/DashboardNavBar';
 import Sidebar from '../Sidebar/Sidebar';
 
@@ -195,6 +197,11 @@ const DashboardLayout = (props: DashboardLayoutProps): React.ReactElement => {
                 path="/dashboard/login"
                 render={() => <Typography>Login</Typography>}
               />
+              <Route
+                path="/dashboard/squadron/register"
+                component={RegisterSquadron}
+              />
+              <Route path="/dashboard/squadrons" component={Squadrons} />
               <Route path="**" render={() => <Redirect to="/dashboard" />} />
             </Switch>
           </main>
