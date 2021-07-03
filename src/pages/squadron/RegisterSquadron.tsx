@@ -1,20 +1,16 @@
-import {
-  Button,
-  createStyles,
-  LinearProgress,
-  Paper,
-  TextField,
-  Theme,
-  Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
-import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { withStyles, WithStyles } from '@material-ui/core';
+import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { formStyles } from '../../common/styles';
 import { CreateSquadronRequest } from '../../modules/squadrons/Models';
 import { createSquadron } from '../../modules/squadrons/Service';
 import {
@@ -23,35 +19,13 @@ import {
   selectWasRegistered,
 } from '../../modules/squadrons/Slice';
 
-const styles = (theme: Theme) =>
-  createStyles({
-    paper: {
-      maxWidth: 936,
-      margin: 'auto',
-      overflow: 'hidden',
-    },
-    contentWrapper: {
-      margin: '40px 16px',
-    },
-    form: {
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    formField: {
-      marginBottom: theme.spacing(2),
-    },
-    registerError: {
-      marginTop: theme.spacing(2),
-    },
-  });
-
 const registerSquadronScheme = Yup.object().shape({
   code: Yup.string().required('Este campo es requerido'),
   name: Yup.string().required('Este campo es requerido'),
   armoryUserId: Yup.string().required('Este campo es requerido'),
 });
 
-export type RegisterSquadronProps = WithStyles<typeof styles>;
+export type RegisterSquadronProps = WithStyles<typeof formStyles>;
 
 const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
   const { classes } = props;
@@ -175,4 +149,4 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
   );
 };
 
-export default withStyles(styles)(RegisterSquadron);
+export default withStyles(formStyles)(RegisterSquadron);
