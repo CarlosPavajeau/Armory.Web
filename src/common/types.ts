@@ -1,1 +1,8 @@
-export type UiStatus = 'idle' | 'loading' | 'loaded';
+export type UiStatus =
+  | 'idle'
+  | 'loading'
+  | 'loaded'
+  | 'updating'
+  | 'updated'
+  | 'deleting'
+  | 'deleted';
