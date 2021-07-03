@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   createMuiTheme,
   createStyles,
@@ -7,14 +8,12 @@ import {
   withStyles,
   WithStyles,
 } from '@material-ui/core';
-import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAppSelector } from '../../common/hooks';
 import { selectIsAuthenticate } from '../../modules/users/Slice';
-import RegisterSquadron from '../../pages/squadron/RegisterSquadron';
-import Squadrons from '../../pages/squadron/Squadrons';
+import { dashboardRoutes } from '../../routes';
 import DashboardNavBar from '../navbars/DashboardNavBar';
 import Sidebar from '../sidebar/Sidebar';
 
@@ -193,15 +192,16 @@ const DashboardLayout = (props: DashboardLayoutProps): React.ReactElement => {
                 exact
                 render={() => <Typography>Hola</Typography>}
               />
-              <Route
-                path="/dashboard/login"
-                render={() => <Typography>Login</Typography>}
-              />
-              <Route
-                path="/dashboard/squadrons/register"
-                component={RegisterSquadron}
-              />
-              <Route path="/dashboard/squadrons" component={Squadrons} />
+              {dashboardRoutes.map(prop => {
+                return (
+                  <Route
+                    key={`${prop.path}`}
+                    path={prop.path}
+                    component={prop.component}
+                    exact={prop.exact}
+                  />
+                );
+              })}
               <Route path="**" render={() => <Redirect to="/dashboard" />} />
             </Switch>
           </main>

@@ -36,6 +36,16 @@ type Categories = Category[];
 
 const categories: Categories = [
   {
+    id: 'Personas',
+    children: [
+      {
+        id: 'Registrar persona',
+        path: '/dashboard/people/register',
+        icon: <AddIcon />,
+      },
+    ],
+  },
+  {
     id: 'Escuadrillas',
     children: [
       {
