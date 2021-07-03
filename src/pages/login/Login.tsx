@@ -1,22 +1,18 @@
-import {
-  Button,
-  Container,
-  TextField,
-  Typography,
-  createStyles,
-  makeStyles,
-  Theme,
-  Box,
-  Link,
-  Card,
-  CardContent,
-  LinearProgress,
-} from '@material-ui/core';
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
-import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/Service';
 import {
@@ -25,7 +21,7 @@ import {
   selectStatus,
 } from '../../modules/users/Slice';
 
-const useStyles = makeStyles((theme: Theme) =>
+const loginStyles = (theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: 'background.default',
@@ -39,17 +35,19 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
     },
-  }),
-);
-
-const Login = (): React.ReactElement => {
-  const loginValidationSchema = Yup.object().shape({
-    usernameOrEmail: Yup.string().required(
-      'Su nombre de usuario o email son requeridos',
-    ),
-    password: Yup.string().required('Su contraseña de acceso es requerida'),
   });
 
+export type LoginProps = WithStyles<typeof loginStyles>;
+
+const loginValidationSchema = Yup.object().shape({
+  usernameOrEmail: Yup.string().required(
+    'Su nombre de usuario o email son requeridos',
+  ),
+  password: Yup.string().required('Su contraseña de acceso es requerida'),
+});
+
+const Login = (props: LoginProps): React.ReactElement => {
+  const { classes } = props;
   const status = useAppSelector(selectStatus);
   const authErrors = useAppSelector(selectErrors);
   const isAuth = useAppSelector(selectIsAuthenticate);
@@ -75,7 +73,6 @@ const Login = (): React.ReactElement => {
     touched,
   } = loginForm;
 
-  const classes = useStyles();
   return (
     <>
       <Helmet>
@@ -169,4 +166,4 @@ const Login = (): React.ReactElement => {
   );
 };
 
-export default Login;
+export default withStyles(loginStyles)(Login);
