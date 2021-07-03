@@ -1,5 +1,5 @@
 export interface CreateSquadronRequest {
   code: string;
   name: string;
-  armoryUserId: string;
+  personId: string;
 }
