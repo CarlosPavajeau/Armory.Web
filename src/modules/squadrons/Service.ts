@@ -1,12 +1,11 @@
 import { AppDispatch } from '../../common/store';
-import { CreateSquadronRequest } from './Models/CreateSquadronRequest';
-import { Squadron } from './Models/Squadron';
+import { CreateSquadronRequest, Squadron } from './Models';
 import {
   loadingSquadrons,
   loadSquadrons,
   notRegister,
   registeredCorrectly,
-} from './SquadronSlice';
+} from './Slice';
 import axiosInstance from '../../common/config/axios';
 
 const createSquadron = async (
@@ -14,10 +13,7 @@ const createSquadron = async (
   dispatch: AppDispatch,
 ): Promise<void> => {
   try {
-    const response = await axiosInstance.post(
-      `${process.env.REACT_APP_API_URL}/Squadrons`,
-      data,
-    );
+    const response = await axiosInstance.post('/Squadrons', data);
     if (response && response.status === 200) {
       dispatch(registeredCorrectly());
     }
@@ -34,7 +30,7 @@ const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadSquadrons(response.data));
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 

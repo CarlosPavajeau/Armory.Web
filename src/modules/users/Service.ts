@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { AppDispatch } from '../../../common/store';
-import { AuthenticationRequest } from '../models/AuthenticationRequest';
+import { AppDispatch } from '../../common/store';
+import { AuthenticationRequest } from './Models';
 import {
   authenticationStatus,
   incorrectPassword,
   loginSuccess,
   userNotFound,
-} from '../userSlice';
+} from './Slice';
 
 const authorizeUser = async (
   data: AuthenticationRequest,

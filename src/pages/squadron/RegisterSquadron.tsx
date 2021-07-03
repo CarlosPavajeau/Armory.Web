@@ -15,13 +15,13 @@ import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { CreateSquadronRequest } from '../../modules/Squadron/Models/CreateSquadronRequest';
-import { createSquadron } from '../../modules/Squadron/SquadronService';
+import { CreateSquadronRequest } from '../../modules/squadrons/Models';
+import { createSquadron } from '../../modules/squadrons/Service';
 import {
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../modules/Squadron/SquadronSlice';
+} from '../../modules/squadrons/Slice';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -68,7 +68,7 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
     initialValues: {
       code: '',
       name: '',
-      armoryUserId: '',
+      personId: '',
     },
     validationSchema: registerSquadronScheme,
     onSubmit: async (values: CreateSquadronRequest) => {
@@ -137,11 +137,11 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
               label="Persona a cargo"
               placeholder="Ejemplo: Manolo"
               helperText={
-                errors.armoryUserId && touched.armoryUserId
-                  ? errors.armoryUserId
+                errors.personId && touched.personId
+                  ? errors.personId
                   : 'Seleccione la persona a cargo'
               }
-              error={!!(errors.armoryUserId && touched.armoryUserId)}
+              error={!!(errors.personId && touched.personId)}
               className={classes.formField}
               onChange={handleChange}
               onBlur={handleBlur}

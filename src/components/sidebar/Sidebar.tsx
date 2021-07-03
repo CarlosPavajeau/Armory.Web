@@ -40,7 +40,7 @@ const categories: Categories = [
     children: [
       {
         id: 'Registrar escuadrilla',
-        path: '/dashboard/squadron/register',
+        path: '/dashboard/squadrons/register',
         icon: <AddIcon />,
       },
       {

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../common/store';
 import { UiStatus } from '../../common/types';
-import { Squadron } from './Models/Squadron';
+import { Squadrons } from './Models';
 
 export interface SquadronState {
   ui: UiStatus;
   error: string;
   wasRegistered: boolean;
-  data: Squadron[];
+  data: Squadrons;
 }
 
 const initialState: SquadronState = {
@@ -17,7 +17,7 @@ const initialState: SquadronState = {
   data: [],
 };
 
-export const squadronSlice = createSlice({
+export const slice = createSlice({
   name: 'squadron',
   initialState,
   reducers: {
@@ -34,7 +34,7 @@ export const squadronSlice = createSlice({
     loadingSquadrons: state => {
       state.ui = 'loading';
     },
-    loadSquadrons: (state, action: PayloadAction<Squadron[]>) => {
+    loadSquadrons: (state, action: PayloadAction<Squadrons>) => {
       state.ui = 'loaded';
       state.data = action.payload;
     },
@@ -47,13 +47,13 @@ export const {
   resetRegister,
   loadingSquadrons,
   loadSquadrons,
-} = squadronSlice.actions;
+} = slice.actions;
 
 export const selectError = (state: RootState): string => state.squadron.error;
 export const selectWasRegistered = (state: RootState): boolean =>
   state.squadron.wasRegistered;
-export const selectSquadrons = (state: RootState): Squadron[] =>
+export const selectSquadrons = (state: RootState): Squadrons =>
   state.squadron.data;
 export const selectUiStatus = (state: RootState): UiStatus => state.squadron.ui;
 
-export default squadronSlice.reducer;
+export default slice.reducer;

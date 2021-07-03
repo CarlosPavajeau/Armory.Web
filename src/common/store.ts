@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import userReducer from '../modules/users/userSlice';
-import squadronReducer from '../modules/Squadron/SquadronSlice';
+import userReducer from '../modules/users/Slice';
+import squadronReducer from '../modules/squadrons/Slice';
 import peopleReducer from '../modules/people/Slice';
 
 export const store = configureStore({

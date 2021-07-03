@@ -18,12 +18,12 @@ import { Helmet } from 'react-helmet';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { authorizeUser } from '../../modules/users/services/AuthorizationService';
+import { authorizeUser } from '../../modules/users/Service';
 import {
   selectErrors,
   selectIsAuthenticate,
   selectStatus,
-} from '../../modules/users/userSlice';
+} from '../../modules/users/Slice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

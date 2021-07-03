@@ -22,7 +22,7 @@ const initialState: UserState = {
   isAuthenticate: false,
 };
 
-export const userSlice = createSlice({
+export const slice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -50,7 +50,7 @@ export const {
   incorrectPassword,
   userNotFound,
   authenticationStatus,
-} = userSlice.actions;
+} = slice.actions;
 
 export const selectToken = (state: RootState): string => state.user.token;
 export const selectStatus = (state: RootState): LoginStatus =>
@@ -59,4 +59,4 @@ export const selectErrors = (state: RootState): string => state.user.errors;
 export const selectIsAuthenticate = (state: RootState): boolean =>
   state.user.isAuthenticate;
 
-export default userSlice.reducer;
+export default slice.reducer;

@@ -12,11 +12,11 @@ import { Helmet } from 'react-helmet';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAppSelector } from '../../common/hooks';
-import { selectIsAuthenticate } from '../../modules/users/userSlice';
+import { selectIsAuthenticate } from '../../modules/users/Slice';
 import RegisterSquadron from '../../pages/squadron/RegisterSquadron';
 import Squadrons from '../../pages/squadron/Squadrons';
-import DashboardNavBar from '../Navbars/DashboardNavBar';
-import Sidebar from '../Sidebar/Sidebar';
+import DashboardNavBar from '../navbars/DashboardNavBar';
+import Sidebar from '../sidebar/Sidebar';
 
 let theme = createMuiTheme({
   palette: {
@@ -198,7 +198,7 @@ const DashboardLayout = (props: DashboardLayoutProps): React.ReactElement => {
                 render={() => <Typography>Login</Typography>}
               />
               <Route
-                path="/dashboard/squadron/register"
+                path="/dashboard/squadrons/register"
                 component={RegisterSquadron}
               />
               <Route path="/dashboard/squadrons" component={Squadrons} />

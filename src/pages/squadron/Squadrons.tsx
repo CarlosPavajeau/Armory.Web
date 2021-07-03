@@ -24,11 +24,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { Helmet } from 'react-helmet';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { getSquadrons } from '../../modules/Squadron/SquadronService';
-import {
-  selectSquadrons,
-  selectUiStatus,
-} from '../../modules/Squadron/SquadronSlice';
+import { getSquadrons } from '../../modules/squadrons/Service';
+import { selectSquadrons, selectUiStatus } from '../../modules/squadrons/Slice';
 
 const styles = (theme: Theme) =>
   createStyles({
