@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../common/store';
+import { ArmoryRoles } from './Models';
+import { UiStatus } from '../../common/types';
 
 type LoginStatus =
-  | 'idle'
+  | UiStatus
   | 'login'
   | 'loginSuccess'
   | 'userNotFound'
@@ -12,8 +14,9 @@ export interface UserState {
   token: string;
   role: string;
   errors: string;
-  status: LoginStatus;
+  ui: LoginStatus;
   isAuthenticate: boolean;
+  roles: ArmoryRoles;
 }
 
 export interface AuthenticationPayload {
@@ -25,8 +28,9 @@ const initialState: UserState = {
   token: '',
   role: '',
   errors: '',
-  status: 'idle',
+  ui: 'idle',
   isAuthenticate: false,
+  roles: [],
 };
 
 export const slice = createSlice({
@@ -39,15 +43,15 @@ export const slice = createSlice({
       const payload = JSON.parse(window.atob(action.payload.split('.')[1]));
       state.role = payload.role;
 
-      state.status = 'loginSuccess';
+      state.ui = 'loginSuccess';
       state.isAuthenticate = true;
     },
     userNotFound: (state, action: PayloadAction<string>) => {
-      state.status = 'userNotFound';
+      state.ui = 'userNotFound';
       state.errors = action.payload;
     },
     incorrectPassword: (state, action: PayloadAction<string>) => {
-      state.status = 'incorrectPassword';
+      state.ui = 'incorrectPassword';
       state.errors = action.payload;
     },
     authenticationStatus: (
@@ -57,6 +61,13 @@ export const slice = createSlice({
       state.isAuthenticate = action.payload.isAuthenticate;
       state.role = action.payload.role;
     },
+    loadingRoles: state => {
+      state.ui = 'loading';
+    },
+    loadRoles: (state, action: PayloadAction<ArmoryRoles>) => {
+      state.ui = 'loaded';
+      state.roles = action.payload;
+    },
   },
 });
 
@@ -65,13 +76,15 @@ export const {
   incorrectPassword,
   userNotFound,
   authenticationStatus,
+  loadingRoles,
+  loadRoles,
 } = slice.actions;
 
 export const selectToken = (state: RootState): string => state.user.token;
-export const selectStatus = (state: RootState): LoginStatus =>
-  state.user.status;
+export const selectUiStatus = (state: RootState): LoginStatus => state.user.ui;
 export const selectErrors = (state: RootState): string => state.user.errors;
 export const selectIsAuthenticate = (state: RootState): boolean =>
   state.user.isAuthenticate;
+export const selectRoles = (state: RootState): ArmoryRoles => state.user.roles;
 
 export default slice.reducer;

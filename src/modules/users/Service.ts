@@ -1,9 +1,11 @@
 import axiosInstance from '../../common/config/axios';
 import { AppDispatch } from '../../common/store';
-import { AuthenticationRequest } from './Models';
+import { ArmoryRoles, AuthenticationRequest } from './Models';
 import {
   authenticationStatus,
   incorrectPassword,
+  loadingRoles,
+  loadRoles,
   loginSuccess,
   userNotFound,
 } from './Slice';
@@ -54,4 +56,16 @@ const logout = async (dispatch: AppDispatch): Promise<void> => {
   }
 };
 
-export { authorizeUser, checkAuthentication, logout };
+const getRoles = async (dispatch: AppDispatch): Promise<void> => {
+  try {
+    dispatch(loadingRoles());
+    const response = await axiosInstance.get<ArmoryRoles>('/ArmoryUsers/Roles');
+    if (response && response.status === 200) {
+      dispatch(loadRoles(response.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { authorizeUser, checkAuthentication, logout, getRoles };

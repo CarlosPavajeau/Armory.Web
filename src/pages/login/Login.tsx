@@ -18,7 +18,7 @@ import { authorizeUser } from '../../modules/users/Service';
 import {
   selectErrors,
   selectIsAuthenticate,
-  selectStatus,
+  selectUiStatus,
 } from '../../modules/users/Slice';
 
 const loginStyles = (theme: Theme) =>
@@ -48,7 +48,7 @@ const loginValidationSchema = Yup.object().shape({
 
 const Login = (props: LoginProps): React.ReactElement => {
   const { classes } = props;
-  const status = useAppSelector(selectStatus);
+  const status = useAppSelector(selectUiStatus);
   const authErrors = useAppSelector(selectErrors);
   const isAuth = useAppSelector(selectIsAuthenticate);
   const dispatch = useAppDispatch();
