@@ -10,13 +10,20 @@ type LoginStatus =
 
 export interface UserState {
   token: string;
+  role: string;
   errors: string;
   status: LoginStatus;
   isAuthenticate: boolean;
 }
 
+export interface AuthenticationPayload {
+  isAuthenticate: boolean;
+  role: string;
+}
+
 const initialState: UserState = {
   token: '',
+  role: '',
   errors: '',
   status: 'idle',
   isAuthenticate: false,
@@ -28,6 +35,10 @@ export const slice = createSlice({
   reducers: {
     loginSuccess: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
+
+      const payload = JSON.parse(window.atob(action.payload.split('.')[1]));
+      state.role = payload.role;
+
       state.status = 'loginSuccess';
       state.isAuthenticate = true;
     },
@@ -39,8 +50,12 @@ export const slice = createSlice({
       state.status = 'incorrectPassword';
       state.errors = action.payload;
     },
-    authenticationStatus: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticate = action.payload;
+    authenticationStatus: (
+      state,
+      action: PayloadAction<AuthenticationPayload>,
+    ) => {
+      state.isAuthenticate = action.payload.isAuthenticate;
+      state.role = action.payload.role;
     },
   },
 });

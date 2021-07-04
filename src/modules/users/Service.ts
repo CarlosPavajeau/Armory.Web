@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from '../../common/config/axios';
 import { AppDispatch } from '../../common/store';
 import { AuthenticationRequest } from './Models';
 import {
@@ -13,10 +13,7 @@ const authorizeUser = async (
   dispatch: AppDispatch,
 ): Promise<void> => {
   try {
-    const response = await axios.post<string>(
-      `${process.env.REACT_APP_API_URL}/Authentication`,
-      data,
-    );
+    const response = await axiosInstance.post<string>(`/Authentication`, data);
     if (response) {
       dispatch(loginSuccess(response.data));
     }
@@ -35,7 +32,26 @@ const authorizeUser = async (
 
 const checkAuthentication = (dispatch: AppDispatch): void => {
   const token = window.localStorage.getItem('user_token');
-  dispatch(authenticationStatus(Boolean(token)));
+
+  let role;
+  if (token) {
+    const payload = JSON.parse(window.atob(token.split('.')[1]));
+    role = payload.role;
+  }
+
+  dispatch(authenticationStatus({ isAuthenticate: Boolean(token), role }));
 };
 
-export { authorizeUser, checkAuthentication };
+const logout = async (dispatch: AppDispatch): Promise<void> => {
+  try {
+    const response = await axiosInstance.post('/Authentication/Logout', {});
+    if (response && response.status === 200) {
+      window.localStorage.removeItem('user_token');
+      dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { authorizeUser, checkAuthentication, logout };

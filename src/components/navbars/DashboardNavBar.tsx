@@ -24,6 +24,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useState } from 'react';
+import { logout } from '../../modules/users/Service';
+import { useAppDispatch } from '../../common/hooks';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -78,6 +80,12 @@ const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
 
   const handleCloseAccount = () => {
     setOpenProfile(null);
+  };
+
+  const dispatch = useAppDispatch();
+  const handleLogout = async () => {
+    handleCloseAccount();
+    await logout(dispatch);
   };
 
   return (
@@ -165,7 +173,7 @@ const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
                             Perfil de usuario
                           </Typography>
                         </MenuItem>
-                        <MenuItem onClick={handleCloseAccount}>
+                        <MenuItem onClick={handleLogout}>
                           <ListItemIcon>
                             <ExitToAppIcon fontSize="small" />
                           </ListItemIcon>
