@@ -4,7 +4,13 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { withStyles, WithStyles } from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import { FormHelperText, withStyles, WithStyles } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
@@ -18,11 +24,13 @@ import {
   selectError,
   selectWasRegistered,
 } from '../../modules/squadrons/Slice';
+import { selectPeople, selectUiStatus } from '../../modules/people/Slice';
+import { getPeopleByRole } from '../../modules/people/Service';
 
 const registerSquadronScheme = Yup.object().shape({
   code: Yup.string().required('Este campo es requerido'),
   name: Yup.string().required('Este campo es requerido'),
-  armoryUserId: Yup.string().required('Este campo es requerido'),
+  personId: Yup.string().required('Este campo es requerido'),
 });
 
 export type RegisterSquadronProps = WithStyles<typeof formStyles>;
@@ -30,9 +38,17 @@ export type RegisterSquadronProps = WithStyles<typeof formStyles>;
 const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
   const { classes } = props;
   const dispatch = useAppDispatch();
+  const people = useAppSelector(selectPeople);
+  const peopleUiState = useAppSelector(selectUiStatus);
 
   useEffect(() => {
     dispatch(resetRegister());
+  }, [dispatch]);
+
+  useEffect(() => {
+    (async () => {
+      await getPeopleByRole('SquadronLeader', dispatch);
+    })();
   }, [dispatch]);
 
   const registerError = useAppSelector(selectError);
@@ -105,23 +121,54 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
               disabled={isSubmitting}
               fullWidth
             />
-            <TextField
-              id="armoryUserId"
-              name="armoryUserId"
-              label="Persona a cargo"
-              placeholder="Ejemplo: Manolo"
-              helperText={
-                errors.personId && touched.personId
+            <FormControl className={classes.formField} fullWidth>
+              <InputLabel id="select-person-label">
+                Persona encargada
+              </InputLabel>
+              <Select
+                id="personId"
+                name="personId"
+                labelId="select-person-label"
+                error={!!(errors.personId && touched.personId)}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disabled={isSubmitting}
+                fullWidth
+              >
+                {peopleUiState === 'loading' && (
+                  <MenuItem value="">
+                    <Grid
+                      container
+                      spacing={2}
+                      direction="column"
+                      alignItems="center"
+                    >
+                      <Grid item xs>
+                        <CircularProgress />
+                      </Grid>
+                      <Grid item xs>
+                        <Typography>Cargando jefes de escuadrillas</Typography>
+                      </Grid>
+                    </Grid>
+                  </MenuItem>
+                )}
+                {peopleUiState === 'loaded' &&
+                  people &&
+                  people.map(p => {
+                    return (
+                      <MenuItem value={p.id} key={p.id}>
+                        {p.firstName} {p.secondName} {p.lastName}{' '}
+                        {p.secondLastName}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+              <FormHelperText error={!!(errors.personId && touched.personId)}>
+                {errors.personId && touched.personId
                   ? errors.personId
-                  : 'Seleccione la persona a cargo'
-              }
-              error={!!(errors.personId && touched.personId)}
-              className={classes.formField}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              disabled={isSubmitting}
-              fullWidth
-            />
+                  : 'Seleccione la persona cargo de la escuadrilla'}
+              </FormHelperText>
+            </FormControl>
             <Button
               type="submit"
               color="primary"
