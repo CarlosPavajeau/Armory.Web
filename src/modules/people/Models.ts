@@ -9,5 +9,7 @@ export interface Person {
 export type People = Person[];
 
 export interface CreatePersonRequest extends Person {
-  armoryUserId: string;
+  email: string;
+  phoneNumber: string;
+  roleName: string;
 }
