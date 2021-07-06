@@ -11,11 +11,9 @@ import {
 import { Helmet } from 'react-helmet';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useAppSelector } from '../../common/hooks';
-import { selectIsAuthenticate } from '../../modules/users/Slice';
-import { dashboardRoutes } from '../../routes';
 import DashboardNavBar from '../navbars/DashboardNavBar';
 import Sidebar from '../sidebar/Sidebar';
+import Location from '../routes/Location';
 
 let theme = createMuiTheme({
   palette: {
@@ -156,7 +154,6 @@ export type DashboardLayoutProps = WithStyles<typeof styles>;
 
 const DashboardLayout = (props: DashboardLayoutProps): React.ReactElement => {
   const { classes } = props;
-  const isAuth = useAppSelector(selectIsAuthenticate);
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
@@ -192,21 +189,11 @@ const DashboardLayout = (props: DashboardLayoutProps): React.ReactElement => {
                 exact
                 render={() => <Typography>Hola</Typography>}
               />
-              {dashboardRoutes.map(prop => {
-                return (
-                  <Route
-                    key={`${prop.path}`}
-                    path={prop.path}
-                    component={prop.component}
-                    exact={prop.exact}
-                  />
-                );
-              })}
+              <Location />
               <Route path="**" render={() => <Redirect to="/dashboard" />} />
             </Switch>
           </main>
         </div>
-        {!isAuth && <Redirect to="/login" />}
       </div>
     </ThemeProvider>
   );

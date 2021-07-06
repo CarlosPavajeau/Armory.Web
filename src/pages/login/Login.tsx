@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +12,7 @@ import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
+import { Link as RouterLink, Redirect, useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/Service';
 import {
@@ -52,6 +52,13 @@ const Login = (props: LoginProps): React.ReactElement => {
   const authErrors = useAppSelector(selectErrors);
   const isAuth = useAppSelector(selectIsAuthenticate);
   const dispatch = useAppDispatch();
+
+  const history = useHistory();
+  useEffect(() => {
+    if (isAuth) {
+      history.push('/dashboard');
+    }
+  }, [isAuth, history]);
 
   const loginForm = useFormik({
     initialValues: {
@@ -161,7 +168,6 @@ const Login = (props: LoginProps): React.ReactElement => {
           </Card>
         </Container>
       </Box>
-      {isAuth && <Redirect to="/dashboard" />}
     </>
   );
 };

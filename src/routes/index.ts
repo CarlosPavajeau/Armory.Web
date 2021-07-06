@@ -1,8 +1,10 @@
 import { RouteProps } from 'react-router-dom';
-import Login from './pages/login/Login';
-import RegisterPerson from './pages/people/RegisterPerson';
-import RegisterSquadron from './pages/squadron/RegisterSquadron';
-import Squadrons from './pages/squadron/Squadrons';
+import {
+  Login,
+  RegisterSquadron,
+  Squadrons,
+  RegisterPerson,
+} from './LazyComponents';
 
 type Routes = RouteProps[];
 
@@ -12,15 +14,13 @@ const routes: Routes = [
     component: Login,
     exact: true,
   },
-];
-
-const dashboardRoutes: Routes = [
   {
     path: '/dashboard/squadrons/register',
     component: RegisterSquadron,
   },
   {
     path: '/dashboard/squadrons',
+    exact: true,
     component: Squadrons,
   },
   {
@@ -29,4 +29,4 @@ const dashboardRoutes: Routes = [
   },
 ];
 
-export { routes, dashboardRoutes };
+export default routes;
