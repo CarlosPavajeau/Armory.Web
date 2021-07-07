@@ -6,7 +6,12 @@ const Routes = (): ReactElement => {
   return (
     <>
       {(Paths || []).map(item => (
-        <Route exact={item.exact} path={item.path} component={item.component} />
+        <Route
+          key={`${item.component}-${item.path}`}
+          exact={item.exact}
+          path={item.path}
+          component={item.component}
+        />
       ))}
     </>
   );
