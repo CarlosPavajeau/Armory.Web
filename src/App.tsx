@@ -5,7 +5,6 @@ import MainLayout from './components/layouts/MainLayout';
 import DashboardLayout from './components/layouts/DashboardLayout';
 import { checkAuthentication } from './modules/users/Service';
 import { selectIsAuthenticate, selectToken } from './modules/users/Slice';
-
 import GlobalStyles from './components/GlobalStyles';
 
 const App = (): React.ReactElement => {
