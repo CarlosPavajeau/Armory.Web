@@ -1,13 +1,17 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import userReducer from '../modules/users/Slice';
-import squadronReducer from '../modules/squadrons/Slice';
-import peopleReducer from '../modules/people/Slice';
+import UserReducer from '../modules/users/Slice';
+import SquadronReducer from '../modules/squadrons/Slice';
+import PeopleReducer from '../modules/people/Slice';
+import RankReducer from '../modules/ranks/Slice';
+import DegreesReducer from '../modules/degrees/Slice';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
-    squadron: squadronReducer,
-    people: peopleReducer,
+    user: UserReducer,
+    squadron: SquadronReducer,
+    people: PeopleReducer,
+    ranks: RankReducer,
+    degrees: DegreesReducer,
   },
 });
 
