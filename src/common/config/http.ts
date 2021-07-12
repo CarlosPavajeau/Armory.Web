@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const instance = axios.create({
+const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
 
-instance.interceptors.request.use(
+httpClient.interceptors.request.use(
   config => {
     if (!config.headers.Authorization) {
       const token = window.localStorage.getItem('user_token');
@@ -18,4 +18,4 @@ instance.interceptors.request.use(
   error => Promise.reject(error),
 );
 
-export default instance;
+export default httpClient;

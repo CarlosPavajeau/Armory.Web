@@ -1,4 +1,4 @@
-import axiosInstance from '../../common/config/axios';
+import HttpClient from '../../common/config/http';
 import { AppDispatch } from '../../common/store';
 import { ArmoryRoles, AuthenticationRequest } from './Models';
 import {
@@ -15,7 +15,7 @@ const authorizeUser = async (
   dispatch: AppDispatch,
 ): Promise<void> => {
   try {
-    const response = await axiosInstance.post<string>(`/Authentication`, data);
+    const response = await HttpClient.post<string>(`/Authentication`, data);
     if (response) {
       dispatch(loginSuccess(response.data));
     }
@@ -46,7 +46,7 @@ const checkAuthentication = (dispatch: AppDispatch): void => {
 
 const logout = async (dispatch: AppDispatch): Promise<void> => {
   try {
-    const response = await axiosInstance.post('/Authentication/Logout', {});
+    const response = await HttpClient.post('/Authentication/Logout', {});
     if (response && response.status === 200) {
       window.localStorage.removeItem('user_token');
       dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
@@ -59,7 +59,7 @@ const logout = async (dispatch: AppDispatch): Promise<void> => {
 const getRoles = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingRoles());
-    const response = await axiosInstance.get<ArmoryRoles>('/ArmoryUsers/Roles');
+    const response = await HttpClient.get<ArmoryRoles>('/ArmoryUsers/Roles');
     if (response && response.status === 200) {
       dispatch(loadRoles(response.data));
     }

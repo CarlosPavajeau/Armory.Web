@@ -1,6 +1,6 @@
 import { AppDispatch } from '../../common/store';
 import { CreatePersonRequest, Person, People } from './Models';
-import axiosInstance from '../../common/config/axios';
+import HttpClient from '../../common/config/http';
 import {
   deletedPerson,
   deletingPerson,
@@ -20,7 +20,7 @@ const createPerson = async (
   dispatch: AppDispatch,
 ): Promise<void> => {
   try {
-    const response = await axiosInstance.post('/People', data);
+    const response = await HttpClient.post('/People', data);
     if (response && response.status === 200) {
       dispatch(registeredCorrectly());
     }
@@ -32,7 +32,7 @@ const createPerson = async (
 const getPeople = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingPeople());
-    const response = await axiosInstance.get<People>('/People');
+    const response = await HttpClient.get<People>('/People');
     if (response && response.status === 200) {
       dispatch(loadPeople(response.data));
     }
@@ -44,7 +44,7 @@ const getPeople = async (dispatch: AppDispatch): Promise<void> => {
 const getPerson = async (id: string, dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingPerson());
-    const response = await axiosInstance.get<Person>(`/People/${id}`);
+    const response = await HttpClient.get<Person>(`/People/${id}`);
     if (response && response.status === 200) {
       dispatch(loadPerson(response.data));
     }
@@ -62,7 +62,7 @@ const getPeopleByRole = async (
 ): Promise<void> => {
   try {
     dispatch(loadingPeople());
-    const response = await axiosInstance.get<People>(`/People/ByRole/${role}`);
+    const response = await HttpClient.get<People>(`/People/ByRole/${role}`);
     if (response && response.status === 200) {
       dispatch(loadPeople(response.data));
     }
@@ -77,9 +77,7 @@ const getPersonByUserId = async (
 ): Promise<void> => {
   try {
     dispatch(loadingPerson());
-    const response = await axiosInstance.get<Person>(
-      `/People/ByUserId/${userId}`,
-    );
+    const response = await HttpClient.get<Person>(`/People/ByUserId/${userId}`);
     if (response && response.status === 200) {
       dispatch(loadPerson(response.data));
     }
@@ -97,7 +95,7 @@ const updatePerson = async (
 ): Promise<void> => {
   try {
     dispatch(updatingPerson());
-    const response = await axiosInstance.put(`/People/${person.id}`, person);
+    const response = await HttpClient.put(`/People/${person.id}`, person);
     if (response && response.status === 200) {
       dispatch(updatedPerson);
     }
@@ -115,7 +113,7 @@ const deletePerson = async (
 ): Promise<void> => {
   try {
     dispatch(deletingPerson());
-    const response = await axiosInstance.delete(`/People/${id}`);
+    const response = await HttpClient.delete(`/People/${id}`);
     if (response && response.status === 200) {
       dispatch(deletedPerson(id));
     }
