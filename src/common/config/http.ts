@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -17,5 +17,9 @@ httpClient.interceptors.request.use(
   },
   error => Promise.reject(error),
 );
+
+export const IsValidResponse = (response: AxiosResponse): boolean => {
+  return response && response.status === 200;
+};
 
 export default httpClient;
