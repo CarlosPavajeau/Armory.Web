@@ -1,6 +1,6 @@
 import { AppDispatch } from '../../common/store';
 import { CreatePersonRequest, Person, People } from './Models';
-import HttpClient from '../../common/config/http';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 import {
   deletedPerson,
   deletingPerson,
@@ -21,7 +21,7 @@ const createPerson = async (
 ): Promise<void> => {
   try {
     const response = await HttpClient.post('/People', data);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(registeredCorrectly());
     }
   } catch (error) {
@@ -33,7 +33,7 @@ const getPeople = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingPeople());
     const response = await HttpClient.get<People>('/People');
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadPeople(response.data));
     }
   } catch (error) {
@@ -45,7 +45,7 @@ const getPerson = async (id: string, dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingPerson());
     const response = await HttpClient.get<Person>(`/People/${id}`);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadPerson(response.data));
     }
   } catch (error) {
@@ -63,7 +63,7 @@ const getPeopleByRole = async (
   try {
     dispatch(loadingPeople());
     const response = await HttpClient.get<People>(`/People/ByRole/${role}`);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadPeople(response.data));
     }
   } catch (error) {
@@ -78,7 +78,7 @@ const getPersonByUserId = async (
   try {
     dispatch(loadingPerson());
     const response = await HttpClient.get<Person>(`/People/ByUserId/${userId}`);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadPerson(response.data));
     }
   } catch (error) {
@@ -96,7 +96,7 @@ const updatePerson = async (
   try {
     dispatch(updatingPerson());
     const response = await HttpClient.put(`/People/${person.id}`, person);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(updatedPerson);
     }
   } catch (error) {
@@ -114,7 +114,7 @@ const deletePerson = async (
   try {
     dispatch(deletingPerson());
     const response = await HttpClient.delete(`/People/${id}`);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(deletedPerson(id));
     }
   } catch (error) {

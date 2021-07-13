@@ -1,4 +1,4 @@
-import HttpClient from '../../common/config/http';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 import { AppDispatch } from '../../common/store';
 import { ArmoryRoles, AuthenticationRequest } from './Models';
 import {
@@ -16,7 +16,7 @@ const authorizeUser = async (
 ): Promise<void> => {
   try {
     const response = await HttpClient.post<string>(`/Authentication`, data);
-    if (response) {
+    if (IsValidResponse(response)) {
       dispatch(loginSuccess(response.data));
     }
   } catch (error) {
@@ -47,7 +47,7 @@ const checkAuthentication = (dispatch: AppDispatch): void => {
 const logout = async (dispatch: AppDispatch): Promise<void> => {
   try {
     const response = await HttpClient.post('/Authentication/Logout', {});
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       window.localStorage.removeItem('user_token');
       dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
     }
@@ -60,7 +60,7 @@ const getRoles = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingRoles());
     const response = await HttpClient.get<ArmoryRoles>('/ArmoryUsers/Roles');
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadRoles(response.data));
     }
   } catch (error) {

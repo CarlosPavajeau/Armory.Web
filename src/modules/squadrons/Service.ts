@@ -1,4 +1,5 @@
 import { AppDispatch } from '../../common/store';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 import { CreateSquadronRequest, Squadron } from './Models';
 import {
   loadingSquadrons,
@@ -6,7 +7,6 @@ import {
   notRegister,
   registeredCorrectly,
 } from './Slice';
-import HttpClient from '../../common/config/http';
 
 const createSquadron = async (
   data: CreateSquadronRequest,
@@ -14,7 +14,7 @@ const createSquadron = async (
 ): Promise<void> => {
   try {
     const response = await HttpClient.post('/Squadrons', data);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(registeredCorrectly());
     }
   } catch (error) {
@@ -26,7 +26,7 @@ const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingSquadrons());
     const response = await HttpClient.get<Squadron[]>('/Squadrons');
-    if (response) {
+    if (IsValidResponse(response)) {
       dispatch(loadSquadrons(response.data));
     }
   } catch (error) {

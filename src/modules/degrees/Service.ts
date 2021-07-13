@@ -1,6 +1,6 @@
 import { AppDispatch } from '../../common/store';
 import { CreateDegreeRequest, Degree, Degrees } from './Models';
-import HttpClient from '../../common/config/http';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 import {
   loadingDegrees,
   loadingDegree,
@@ -16,7 +16,7 @@ export const createDegree = async (
 ): Promise<void> => {
   try {
     const response = await HttpClient.post('/Degrees', data);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(registeredCorrectly());
     }
   } catch (error) {
@@ -28,7 +28,7 @@ export const getDegrees = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingDegrees());
     const response = await HttpClient.get<Degrees>('/Degrees');
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadDegrees(response.data));
     }
   } catch (error) {
@@ -43,7 +43,7 @@ export const getDegree = async (
   try {
     dispatch(loadingDegree());
     const response = await HttpClient.get<Degree>(`/Degrees/${id}`);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadDegree(response.data));
     }
   } catch (error) {

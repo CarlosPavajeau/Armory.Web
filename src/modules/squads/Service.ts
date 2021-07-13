@@ -1,5 +1,5 @@
 import { AppDispatch } from '../../common/store';
-import HttpClient from '../../common/config/http';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 import {
   notRegister,
   registeredCorrectly,
@@ -16,7 +16,7 @@ export const createSquad = async (
 ): Promise<void> => {
   try {
     const response = await HttpClient.post('/Squads', data);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(registeredCorrectly());
     }
   } catch (error) {
@@ -28,7 +28,7 @@ export const getSquads = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingSquads());
     const response = await HttpClient.get<Squads>('/Squads');
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadSquads(response.data));
     }
   } catch (error) {
@@ -43,7 +43,7 @@ export const getSquad = async (
   try {
     dispatch(loadingSquad());
     const response = await HttpClient.get<Squad>(`/Squads/${code}`);
-    if (response && response.status === 200) {
+    if (IsValidResponse(response)) {
       dispatch(loadSquad(response.data));
     }
   } catch (error) {
