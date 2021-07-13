@@ -18,7 +18,7 @@ const createSquadron = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede regisrar el escuadron'));
+    dispatch(notRegister('No se puede regisrar la escuadrilla'));
   }
 };
 
