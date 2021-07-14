@@ -8,6 +8,7 @@ import DegreesReducer from '../modules/degrees/Slice';
 import AmmunitionReducer from '../modules/armament/ammunition/Slice';
 import EquipmentsReducer from '../modules/armament/equipments/Slice';
 import ExplosivesReducer from '../modules/armament/explosives/Slice';
+import WeaponsReducer from '../modules/armament/weapons/Slice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     ammunition: AmmunitionReducer,
     equipments: EquipmentsReducer,
     explosives: ExplosivesReducer,
+    weapons: WeaponsReducer,
     ranks: RanksReducer,
     degrees: DegreesReducer,
   },
