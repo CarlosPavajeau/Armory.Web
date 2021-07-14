@@ -1,22 +1,24 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import UserReducer from '../modules/users/Slice';
-import SquadronReducer from '../modules/squadrons/Slice';
-import SquadReducer from '../modules/squads/Slice';
+import UsersReducer from '../modules/users/Slice';
+import SquadronsReducer from '../modules/squadrons/Slice';
+import SquadsReducer from '../modules/squads/Slice';
 import PeopleReducer from '../modules/people/Slice';
-import RankReducer from '../modules/ranks/Slice';
+import RanksReducer from '../modules/ranks/Slice';
 import DegreesReducer from '../modules/degrees/Slice';
 import AmmunitionReducer from '../modules/armament/ammunition/Slice';
-import EquipmentReducer from '../modules/armament/equipments/Slice';
+import EquipmentsReducer from '../modules/armament/equipments/Slice';
+import ExplosivesReducer from '../modules/armament/explosives/Slice';
 
 export const store = configureStore({
   reducer: {
-    user: UserReducer,
-    squadron: SquadronReducer,
-    squads: SquadReducer,
+    user: UsersReducer,
+    squadron: SquadronsReducer,
+    squads: SquadsReducer,
     people: PeopleReducer,
     ammunition: AmmunitionReducer,
-    equipments: EquipmentReducer,
-    ranks: RankReducer,
+    equipments: EquipmentsReducer,
+    explosives: ExplosivesReducer,
+    ranks: RanksReducer,
     degrees: DegreesReducer,
   },
 });
