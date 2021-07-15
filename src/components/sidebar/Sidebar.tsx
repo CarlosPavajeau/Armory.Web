@@ -65,12 +65,12 @@ const categories: Categories = [
     children: [
       {
         id: 'Registrar escuadras',
-        path: '/dashboard/squad/register',
+        path: '/dashboard/squads/register',
         icon: <AddIcon />,
       },
       {
         id: 'Consultar escuadras',
-        path: '/dashboard/squads/register',
+        path: '/dashboard/squads',
         icon: <PeopleIcon />,
       },
     ],

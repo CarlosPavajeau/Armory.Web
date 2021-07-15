@@ -4,6 +4,8 @@ import {
   RegisterSquadron,
   Squadrons,
   RegisterPerson,
+  RegisterSquad,
+  Squads,
 } from './LazyComponents';
 
 type Routes = RouteProps[];
@@ -26,6 +28,15 @@ const routes: Routes = [
   {
     path: '/dashboard/people/register',
     component: RegisterPerson,
+  },
+  {
+    path: '/dashboard/squads/register',
+    component: RegisterSquad,
+  },
+  {
+    path: '/dashboard/squads',
+    exact: true,
+    component: Squads,
   },
 ];
 
