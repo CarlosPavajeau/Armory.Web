@@ -8,11 +8,12 @@ httpClient.interceptors.request.use(
   config => {
     if (!config.headers.Authorization) {
       const token = window.localStorage.getItem('user_token');
-
+      config.withCredentials = !!token;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
+
     return config;
   },
   error => Promise.reject(error),
