@@ -108,7 +108,7 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
               id="name"
               name="name"
               label="Nombre"
-              placeholder="Ejemplo: Escuadrón de cacería"
+              placeholder="Ejemplo: Escuadrilla de cacería"
               helperText={
                 errors.name && touched.name
                   ? errors.name
