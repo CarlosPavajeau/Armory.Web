@@ -15,6 +15,7 @@ import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
+import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { formStyles } from '../../common/styles';
 import { CreateSquadronRequest } from '../../modules/squadrons/Models';
@@ -137,19 +138,10 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
               >
                 {peopleUiState === 'loading' && (
                   <MenuItem value="">
-                    <Grid
-                      container
-                      spacing={2}
-                      direction="column"
-                      alignItems="center"
-                    >
-                      <Grid item xs>
-                        <CircularProgress />
-                      </Grid>
-                      <Grid item xs>
-                        <Typography>Cargando jefes de escuadrillas</Typography>
-                      </Grid>
-                    </Grid>
+                    <CircularLoader
+                      size={40}
+                      message="Cargando jefes de escuadrilla"
+                    />
                   </MenuItem>
                 )}
                 {peopleUiState === 'loaded' &&

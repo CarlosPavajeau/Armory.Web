@@ -23,6 +23,7 @@ import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { Helmet } from 'react-helmet';
+import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { getSquadrons } from '../../modules/squadrons/Service';
 import { selectSquadrons, selectUiStatus } from '../../modules/squadrons/Slice';
@@ -104,14 +105,7 @@ const Squadrons = (props: SquadronsProps) => {
         </AppBar>
         <Paper elevation={0}>
           {uiStatus === 'loading' && (
-            <Grid container spacing={2} alignItems="center" direction="column">
-              <Grid item>
-                <CircularProgress size={150} />
-              </Grid>
-              <Grid item>
-                <Typography align="center">Cargando escuadrillas...</Typography>
-              </Grid>
-            </Grid>
+            <CircularLoader size={150} message="Cargnado escuadrillas..." />
           )}
           {uiStatus === 'loaded' && (
             <TableContainer className={classes.container}>

@@ -9,13 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
 import Button from '@material-ui/core/Button';
+import CircularLoader from '../../components/loading/CircularLoader';
 import { formStyles } from '../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
@@ -163,19 +162,7 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
               >
                 {squadronsUiStatus === 'loading' && (
                   <MenuItem value="">
-                    <Grid
-                      container
-                      spacing={2}
-                      direction="column"
-                      alignItems="center"
-                    >
-                      <Grid item xs>
-                        <CircularProgress />
-                      </Grid>
-                      <Grid item xs>
-                        <Typography>Cargando escuadrillas</Typography>
-                      </Grid>
-                    </Grid>
+                    <CircularLoader size={40} message="Cargando escuadrillas" />
                   </MenuItem>
                 )}
                 {squadronsUiStatus === 'loaded' &&
@@ -212,19 +199,10 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
               >
                 {peopleUiStatus === 'loading' && (
                   <MenuItem value="">
-                    <Grid
-                      container
-                      spacing={2}
-                      direction="column"
-                      alignItems="center"
-                    >
-                      <Grid item xs>
-                        <CircularProgress />
-                      </Grid>
-                      <Grid item xs>
-                        <Typography>Cargando jefes de escuadras</Typography>
-                      </Grid>
-                    </Grid>
+                    <CircularLoader
+                      size={40}
+                      message="Cargando jefes de escuadras"
+                    />
                   </MenuItem>
                 )}
                 {peopleUiStatus === 'loaded' &&

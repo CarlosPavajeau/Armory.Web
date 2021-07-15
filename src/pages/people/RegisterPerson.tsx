@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -15,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
+import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { formStyles } from '../../common/styles';
 import { CreatePersonRequest } from '../../modules/people/Models';
@@ -261,19 +261,7 @@ const RegisterPerson = (props: RegisterPersonProps): React.ReactElement => {
               >
                 {userUiStatus === 'loading' && (
                   <MenuItem value="">
-                    <Grid
-                      container
-                      spacing={2}
-                      direction="column"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <CircularProgress />
-                      </Grid>
-                      <Grid item>
-                        <Typography>Cargando roles</Typography>
-                      </Grid>
-                    </Grid>
+                    <CircularLoader size={40} message="Cargando roles..." />
                   </MenuItem>
                 )}
                 {userUiStatus === 'loaded' &&

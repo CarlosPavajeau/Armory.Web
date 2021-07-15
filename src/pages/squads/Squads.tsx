@@ -1,7 +1,6 @@
 import { ReactElement, useEffect } from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -17,7 +16,7 @@ import { Helmet } from 'react-helmet';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import Typography from '@material-ui/core/Typography';
+import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { selectSquads, selectUiStatus } from '../../modules/squads/Slice';
 import { getSquads } from '../../modules/squads/Service';
@@ -99,14 +98,7 @@ const Squads = (props: SquadsProps): ReactElement => {
         </AppBar>
         <Paper elevation={0}>
           {uiStatus === 'loading' && (
-            <Grid container spacing={2} alignItems="center" direction="column">
-              <Grid item>
-                <CircularProgress size={150} />
-              </Grid>
-              <Grid item>
-                <Typography align="center">Cargando escuadras...</Typography>
-              </Grid>
-            </Grid>
+            <CircularLoader size={150} message="Cargando escuadras..." />
           )}
           {uiStatus === 'loaded' && (
             <TableContainer className={classes.container}>
