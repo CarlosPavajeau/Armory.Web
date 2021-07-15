@@ -123,7 +123,7 @@ const Squadrons = (props: SquadronsProps) => {
                       <TableRow key={squadron.code}>
                         <TableCell>{squadron.code}</TableCell>
                         <TableCell>{squadron.name}</TableCell>
-                        <TableCell>Manolo</TableCell>
+                        <TableCell>{squadron.personId}</TableCell>
                       </TableRow>
                     );
                   })}
