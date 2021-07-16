@@ -1,10 +1,10 @@
 export interface CreateDegreeRequest {
   name: string;
+  rankId: number;
 }
 
-export interface Degree {
+export interface Degree extends CreateDegreeRequest {
   id: number;
-  name: string;
 }
 
 export type Degrees = Degree[];

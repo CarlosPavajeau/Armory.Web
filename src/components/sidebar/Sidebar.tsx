@@ -1,96 +1,15 @@
-import {
-  createStyles,
-  Divider,
-  Drawer,
-  DrawerProps,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
-import PeopleIcon from '@material-ui/icons/People';
-import AddIcon from '@material-ui/icons/Add';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
+import List from '@material-ui/core/List';
+import Drawer, { DrawerProps } from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItem from '@material-ui/core/ListItem';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import React from 'react';
 import clsx from 'clsx';
-
-export interface CategoryItem {
-  id: string;
-  path: string;
-  icon: React.ReactElement;
-}
-
-type CategoryItems = CategoryItem[];
-
-export interface Category {
-  id: string;
-  children: CategoryItems;
-}
-
-type Categories = Category[];
-
-const categories: Categories = [
-  {
-    id: 'Personas',
-    children: [
-      {
-        id: 'Registrar persona',
-        path: '/dashboard/people/register',
-        icon: <AddIcon />,
-      },
-    ],
-  },
-  {
-    id: 'Escuadrillas',
-    children: [
-      {
-        id: 'Registrar escuadrilla',
-        path: '/dashboard/squadrons/register',
-        icon: <AddIcon />,
-      },
-      {
-        id: 'Consultar escuadrilla',
-        path: '/dashboard/squadrons',
-        icon: <PeopleIcon />,
-      },
-    ],
-  },
-  {
-    id: 'Escuadras',
-    children: [
-      {
-        id: 'Registrar escuadras',
-        path: '/dashboard/squads/register',
-        icon: <AddIcon />,
-      },
-      {
-        id: 'Consultar escuadras',
-        path: '/dashboard/squads',
-        icon: <PeopleIcon />,
-      },
-    ],
-  },
-  {
-    id: 'Armas',
-    children: [
-      {
-        id: 'Registrar arma',
-        path: '/dashboard/weapon/register',
-        icon: <AddIcon />,
-      },
-      {
-        id: 'Consultar armas',
-        path: '/dashboard/weapons',
-        icon: <AllInboxIcon />,
-      },
-    ],
-  },
-];
+import Categories from './Categories';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -166,7 +85,7 @@ const Sidebar = (props: SidebarProps): React.ReactElement => {
         >
           Armería
         </ListItem>
-        {categories.map(({ id, children }) => (
+        {Categories.map(({ id, children }) => (
           <React.Fragment key={id}>
             <ListItem key={id} className={classes.categoryHeader}>
               <ListItemText

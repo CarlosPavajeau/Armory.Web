@@ -8,7 +8,7 @@ export interface DegreesState {
   error: string;
   wasRegistered: boolean;
   data: Degrees;
-  rank: Degree | null;
+  degree: Degree | null;
 }
 
 const initialState: DegreesState = {
@@ -16,7 +16,7 @@ const initialState: DegreesState = {
   error: '',
   wasRegistered: false,
   data: [],
-  rank: null,
+  degree: null,
 };
 
 export const slice = createSlice({
@@ -45,7 +45,7 @@ export const slice = createSlice({
     },
     loadDegree: (state, action: PayloadAction<Degree>) => {
       state.ui = 'loaded';
-      state.rank = action.payload;
+      state.degree = action.payload;
     },
   },
 });
@@ -63,9 +63,9 @@ export const {
 export const selectError = (state: RootState): string => state.degrees.error;
 export const selectWasRegistered = (state: RootState): boolean =>
   state.degrees.wasRegistered;
-export const selectRanks = (state: RootState): Degrees => state.degrees.data;
-export const selectRank = (state: RootState): Degree | null =>
-  state.degrees.rank;
+export const selectDegrees = (state: RootState): Degrees => state.degrees.data;
+export const selectDegree = (state: RootState): Degree | null =>
+  state.degrees.degree;
 export const selectUiStatus = (state: RootState): UiStatus => state.degrees.ui;
 
 export default slice.reducer;

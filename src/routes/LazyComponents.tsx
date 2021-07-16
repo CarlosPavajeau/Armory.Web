@@ -13,6 +13,12 @@ const RegisterSquadComponent = lazy(
   () => import('../pages/squads/RegisterSquad'),
 );
 const SquadsComponent = lazy(() => import('../pages/squads/Squads'));
+const RegisterRankComponent = lazy(() => import('../pages/ranks/RegisterRank'));
+const RanksComponent = lazy(() => import('../pages/ranks/Ranks'));
+const RegisterDegreeComponent = lazy(
+  () => import('../pages/degrees/RegisterDegree'),
+);
+const DegreesComponent = lazy(() => import('../pages/degrees/Degrees'));
 
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
@@ -47,5 +53,29 @@ export const RegisterSquad = (): ReactElement => (
 export const Squads = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <SquadsComponent />
+  </Suspense>
+);
+
+export const RegisterRank = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterRankComponent />
+  </Suspense>
+);
+
+export const Ranks = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RanksComponent />
+  </Suspense>
+);
+
+export const RegisterDegree = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterDegreeComponent />
+  </Suspense>
+);
+
+export const Degrees = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <DegreesComponent />
   </Suspense>
 );
