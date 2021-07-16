@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
+import { ReactElement, useEffect } from 'react';
+import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,30 +20,11 @@ import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { getSquadrons } from '../../modules/squadrons/Service';
 import { selectSquadrons, selectUiStatus } from '../../modules/squadrons/Slice';
+import { displayData } from '../../common/styles';
 
-const styles = (theme: Theme) =>
-  createStyles({
-    paper: {
-      maxWidth: 936,
-      margin: 'auto',
-    },
-    searchBar: {
-      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    },
-    searchInput: {
-      fontSize: theme.typography.fontSize,
-    },
-    block: {
-      display: 'block',
-    },
-    container: {
-      maxHeight: 500,
-    },
-  });
+export type SquadronsProps = WithStyles<typeof displayData>;
 
-export type SquadronsProps = WithStyles<typeof styles>;
-
-const Squadrons = (props: SquadronsProps) => {
+const Squadrons = (props: SquadronsProps): ReactElement => {
   const { classes } = props;
   const dispatch = useAppDispatch();
   const squadrons = useAppSelector(selectSquadrons);
@@ -130,4 +111,4 @@ const Squadrons = (props: SquadronsProps) => {
   );
 };
 
-export default withStyles(styles)(Squadrons);
+export default withStyles(displayData)(Squadrons);

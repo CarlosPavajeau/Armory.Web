@@ -25,4 +25,24 @@ const formStyles = (theme: Theme) =>
     },
   });
 
-export { formStyles };
+const displayData = (theme: Theme) =>
+  createStyles({
+    paper: {
+      maxWidth: 936,
+      margin: 'auto',
+    },
+    searchBar: {
+      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    },
+    searchInput: {
+      fontSize: theme.typography.fontSize,
+    },
+    block: {
+      display: 'block',
+    },
+    container: {
+      maxHeight: 500,
+    },
+  });
+
+export { formStyles, displayData };

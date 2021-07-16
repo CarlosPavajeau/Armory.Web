@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
@@ -20,28 +20,9 @@ import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { selectSquads, selectUiStatus } from '../../modules/squads/Slice';
 import { getSquads } from '../../modules/squads/Service';
+import { displayData } from '../../common/styles';
 
-const styles = (theme: Theme) =>
-  createStyles({
-    paper: {
-      maxWidth: 936,
-      margin: 'auto',
-    },
-    searchBar: {
-      borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    },
-    searchInput: {
-      fontSize: theme.typography.fontSize,
-    },
-    block: {
-      display: 'block',
-    },
-    container: {
-      maxHeight: 500,
-    },
-  });
-
-export type SquadsProps = WithStyles<typeof styles>;
+export type SquadsProps = WithStyles<typeof displayData>;
 
 const Squads = (props: SquadsProps): ReactElement => {
   const { classes } = props;
@@ -132,4 +113,4 @@ const Squads = (props: SquadsProps): ReactElement => {
   );
 };
 
-export default withStyles(styles)(Squads);
+export default withStyles(displayData)(Squads);
