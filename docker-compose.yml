@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 
 services:
   web:
@@ -7,4 +7,4 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5000:3000"
+      - "3000:3000"
