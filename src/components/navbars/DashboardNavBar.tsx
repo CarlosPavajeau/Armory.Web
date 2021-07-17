@@ -26,6 +26,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useState } from 'react';
 import { logout } from '../../modules/users/Service';
 import { useAppDispatch } from '../../common/hooks';
+import Breadcrumb from '../routes/Breadcrumb';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -103,6 +104,11 @@ const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
                 >
                   <MenuIcon />
                 </IconButton>
+              </Grid>
+            </Hidden>
+            <Hidden smDown>
+              <Grid item>
+                <Breadcrumb />
               </Grid>
             </Hidden>
             <Grid item xs />
