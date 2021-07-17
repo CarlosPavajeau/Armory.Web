@@ -10,6 +10,8 @@ import {
   Degrees,
   Ranks,
   RegisterRank,
+  RegisterAmmunition,
+  Ammunition,
 } from './LazyComponents';
 
 type Routes = RouteProps[];
@@ -59,6 +61,15 @@ const routes: Routes = [
     path: '/dashboard/degrees',
     exact: true,
     component: Degrees,
+  },
+  {
+    path: '/dashboard/ammunition/register',
+    component: RegisterAmmunition,
+  },
+  {
+    path: '/dashboard/ammunition',
+    exact: true,
+    component: Ammunition,
   },
 ];
 

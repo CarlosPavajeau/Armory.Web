@@ -19,6 +19,12 @@ const RegisterDegreeComponent = lazy(
   () => import('../pages/degrees/RegisterDegree'),
 );
 const DegreesComponent = lazy(() => import('../pages/degrees/Degrees'));
+const RegisterAmmunitionComponent = lazy(
+  () => import('../pages/armament/ammunition/RegisterAmmunition'),
+);
+const AmmunitionComponent = lazy(
+  () => import('../pages/armament/ammunition/Ammunition'),
+);
 
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
@@ -77,5 +83,17 @@ export const RegisterDegree = (): ReactElement => (
 export const Degrees = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <DegreesComponent />
+  </Suspense>
+);
+
+export const RegisterAmmunition = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterAmmunitionComponent />
+  </Suspense>
+);
+
+export const Ammunition = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <AmmunitionComponent />
   </Suspense>
 );

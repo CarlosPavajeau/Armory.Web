@@ -103,8 +103,18 @@ const categories: Categories = [
         icon: <AddIcon />,
       },
       {
+        id: 'Registrar municiones',
+        path: '/dashboard/ammunition/register',
+        icon: <AddIcon />,
+      },
+      {
         id: 'Consultar armas',
         path: '/dashboard/weapons',
+        icon: <AllInboxIcon />,
+      },
+      {
+        id: 'Consultar municiones',
+        path: '/dashboard/ammunition',
         icon: <AllInboxIcon />,
       },
     ],
