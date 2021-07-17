@@ -18,6 +18,8 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/dashboard/degrees/register': 'Registrar',
   '/dashboard/ammunition': 'Municiones',
   '/dashboard/ammunition/register': 'Registrar',
+  '/dashboard/equipments': 'Equipos y accesorios',
+  '/dashboard/equipments/register': 'Registrar',
 };
 
 const Breadcrumb = (): ReactElement => {

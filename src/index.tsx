@@ -6,6 +6,7 @@ import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { store } from './common/store';
 import * as serviceWorker from './serviceWorker';
+import './common/config/yup';
 
 ReactDOM.render(
   <React.StrictMode>
