@@ -117,6 +117,11 @@ const categories: Categories = [
         path: '/dashboard/ammunition',
         icon: <AllInboxIcon />,
       },
+      {
+        id: 'Consultar explosivos',
+        path: '/dashboard/explosives',
+        icon: <AllInboxIcon />,
+      },
     ],
   },
 ];

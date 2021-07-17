@@ -31,6 +31,12 @@ const RegisterEquipmentComponent = lazy(
 const EquipmentsComponent = lazy(
   () => import('../pages/armament/equipments/Equipments'),
 );
+const RegisterExplosiveComponent = lazy(
+  () => import('../pages/armament/explosives/RegisterExplosive'),
+);
+const ExplosivesComponent = lazy(
+  () => import('../pages/armament/explosives/Explosives'),
+);
 
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
@@ -113,5 +119,17 @@ export const RegisterEquipment = (): ReactElement => (
 export const Equipments = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <EquipmentsComponent />
+  </Suspense>
+);
+
+export const RegisterExplosive = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterExplosiveComponent />
+  </Suspense>
+);
+
+export const Explosives = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <ExplosivesComponent />
   </Suspense>
 );
