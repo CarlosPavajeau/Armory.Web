@@ -1,26 +1,19 @@
 import { ReactElement, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import SearchIcon from '@material-ui/icons/Search';
-import Grid from '@material-ui/core/Grid';
-import RefreshIcon from '@material-ui/icons/Refresh';
 import { Helmet } from 'react-helmet';
 import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { getSquadrons } from '../../modules/squadrons/Service';
 import { selectSquadrons, selectUiStatus } from '../../modules/squadrons/Slice';
 import { displayData } from '../../common/styles';
+import DisplayDataHeader from '../../components/data/DisplayDataHeader';
 
 export type SquadronsProps = WithStyles<typeof displayData>;
 
@@ -46,40 +39,13 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
         <title>Armería | Escuadrillas</title>
       </Helmet>
       <Paper>
-        <AppBar
-          className={classes.searchBar}
-          position="static"
-          color="default"
-          elevation={0}
-        >
-          <Toolbar>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                <SearchIcon className={classes.block} color="inherit" />
-              </Grid>
-              <Grid item xs>
-                <TextField
-                  fullWidth
-                  placeholder="Buscar escuadrilla"
-                  InputProps={{
-                    disableUnderline: true,
-                    className: classes.searchInput,
-                  }}
-                />
-              </Grid>
-              <Grid item>
-                <Tooltip title="Refrescar datos">
-                  <IconButton onClick={handleRefresh}>
-                    <RefreshIcon className={classes.block} color="inherit" />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
+        <DisplayDataHeader
+          placeholder="Buscar escudrilla"
+          handleRefresh={handleRefresh}
+        />
         <Paper elevation={0}>
           {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargnado escuadrillas..." />
+            <CircularLoader size={150} message="Cargando escuadrillas..." />
           )}
           {uiStatus === 'loaded' && (
             <TableContainer className={classes.container}>
