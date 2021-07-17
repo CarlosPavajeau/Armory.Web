@@ -1,29 +1,23 @@
-import {
-  AppBar,
-  Hidden,
-  IconButton,
-  Toolbar,
-  createStyles,
-  Theme,
-  Tooltip,
-  WithStyles,
-  withStyles,
-  Grid,
-  Popper,
-  Grow,
-  Paper,
-  ClickAwayListener,
-  MenuList,
-  MenuItem,
-  ListItemIcon,
-  Typography,
-} from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import { ReactElement, useState, MouseEvent } from 'react';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
+import Popper from '@material-ui/core/Popper';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import React, { useState } from 'react';
 import { logout } from '../../modules/users/Service';
 import { useAppDispatch } from '../../common/hooks';
 import Breadcrumb from '../routes/Breadcrumb';
@@ -48,7 +42,7 @@ interface DashboardNavBarProps extends WithStyles<typeof styles> {
   handleDrawerToggle: () => void;
 }
 
-const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
+const DashboardNavBar = (props: DashboardNavBarProps): ReactElement => {
   const { classes, handleDrawerToggle } = props;
 
   const [openNotification, setOpenNotification] = useState<null | HTMLElement>(
@@ -56,7 +50,7 @@ const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
   );
   const [openProfile, setOpenProfile] = useState<null | HTMLElement>(null);
 
-  const handleClickNotification = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickNotification = (event: MouseEvent<HTMLElement>) => {
     if (
       openNotification &&
       openNotification.contains(event.target as HTMLElement)
@@ -71,7 +65,7 @@ const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
     setOpenNotification(null);
   };
 
-  const handleClickAccount = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickAccount = (event: MouseEvent<HTMLElement>) => {
     if (openProfile && openProfile.contains(event.target as HTMLElement)) {
       setOpenProfile(null);
     } else {
@@ -150,7 +144,7 @@ const DashboardNavBar = (props: DashboardNavBarProps): React.ReactElement => {
             </Popper>
             <Grid item>
               <IconButton color="inherit" onClick={handleClickAccount}>
-                <AccountCircle />
+                <AccountCircleIcon />
               </IconButton>
             </Grid>
             <Popper
