@@ -112,6 +112,6 @@ export const RegisterEquipment = (): ReactElement => (
 
 export const Equipments = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
-    <Equipments />
+    <EquipmentsComponent />
   </Suspense>
 );
