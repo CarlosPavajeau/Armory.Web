@@ -89,7 +89,7 @@ const categories: Categories = [
     children: [
       {
         id: 'Registrar arma',
-        path: '/dashboard/weapon/register',
+        path: '/dashboard/weapons/register',
         icon: <AddIcon />,
       },
       {

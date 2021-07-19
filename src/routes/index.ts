@@ -16,6 +16,8 @@ import {
   Equipments,
   RegisterExplosive,
   Explosives,
+  RegisterWeapon,
+  Weapons,
 } from './LazyComponents';
 
 type Routes = RouteProps[];
@@ -92,6 +94,15 @@ const routes: Routes = [
     path: '/dashboard/explosives',
     exact: true,
     component: Explosives,
+  },
+  {
+    path: '/dashboard/weapons/register',
+    component: RegisterWeapon,
+  },
+  {
+    path: '/dashboard/weapons',
+    exact: true,
+    component: Weapons,
   },
 ];
 
