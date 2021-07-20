@@ -48,7 +48,7 @@ const registerTroopSchema = Yup.object().shape({
   lastName: Yup.string().required('Este campo es requerido'),
   secondLastName: Yup.string().required('Este campo es requerido'),
   squadCode: Yup.string().required('Este campo es requerido'),
-  degreeId: Yup.string().required('Este campo es requerido'),
+  degreeId: Yup.number().required('Este campo es requerido'),
   rankId: Yup.number().required('Este campo es requerido'),
 });
 
@@ -74,13 +74,10 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
   const history = useHistory();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/ammunition');
+      history.push('/dashboard/troopers');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   useEffect(() => {
     (async () => {
@@ -102,7 +99,7 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
       lastName: '',
       secondLastName: '',
       squadCode: '',
-      degreeId: '',
+      degreeId: 0,
       rankId: 0,
     },
     validationSchema: registerTroopSchema,
@@ -325,6 +322,10 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
                     id="degreeId"
                     name="degreeId"
                     labelId="select-degree-label"
+                    error={!!(errors.degreeId && touched.degreeId)}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    disabled={isSubmitting}
                     required
                     fullWidth
                   >

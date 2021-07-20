@@ -7,7 +7,7 @@ export interface CreateTroopRequest {
   lastName: string;
   secondLastName: string;
   squadCode: string;
-  degreeId: string;
+  degreeId: number;
 }
 
 export interface UpdateTroopRequest {
