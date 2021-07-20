@@ -45,12 +45,9 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/weapons');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   const registerWeaponForm = useFormik<CreateWeaponRequest>({
     initialValues: {

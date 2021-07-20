@@ -42,12 +42,9 @@ const RegisterAmmunition = (props: RegisterAmmunitionProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/ammunition');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   const registerAmmunitionForm = useFormik<CreateAmmunitionRequest>({
     initialValues: {

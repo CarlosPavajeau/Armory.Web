@@ -36,12 +36,9 @@ const RegisterRank = (props: RegisterRankProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/ranks');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   const registerRankForm = useFormik<CreateRankRequest>({
     initialValues: {

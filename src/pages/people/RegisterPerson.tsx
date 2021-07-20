@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { FormHelperText, withStyles, WithStyles } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -12,10 +12,11 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { Helmet } from 'react-helmet';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
+
 import { formStyles } from '../../common/styles';
 import { CreatePersonRequest } from '../../modules/people/Models';
 import { createPerson } from '../../modules/people/Service';
@@ -47,15 +48,21 @@ const registerPersonScheme = Yup.object().shape({
   roleName: Yup.string().required('Este campo es requerido'),
 });
 
-const RegisterPerson = (props: RegisterPersonProps): React.ReactElement => {
+const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
   const { classes } = props;
   const dispatch = useAppDispatch();
   const userUiStatus = useAppSelector(selectUiStatus);
   const roles = useAppSelector(selectRoles);
+  const registerError = useAppSelector(selectError);
+  const wasRegistered = useAppSelector(selectWasRegistered);
 
+  const history = useHistory();
   useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+    if (wasRegistered) {
+      history.push('/dashboard/people');
+      dispatch(resetRegister());
+    }
+  }, [dispatch, history, wasRegistered]);
 
   useEffect(() => {
     (async () => {
@@ -75,9 +82,6 @@ const RegisterPerson = (props: RegisterPersonProps): React.ReactElement => {
         return 'Rol no identificado';
     }
   };
-
-  const registerError = useAppSelector(selectError);
-  const wasRegistered = useAppSelector(selectWasRegistered);
 
   const registerPersonForm = useFormik<CreatePersonRequest>({
     initialValues: {
@@ -305,7 +309,6 @@ const RegisterPerson = (props: RegisterPersonProps): React.ReactElement => {
           )}
         </div>
       </Paper>
-      {wasRegistered && <Redirect to="/dashboard" />}
     </>
   );
 };

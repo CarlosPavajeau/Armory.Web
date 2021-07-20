@@ -20,13 +20,13 @@ import {
 } from '../../../modules/armament/explosives/Slice';
 
 const registerExplosiveSchema = Yup.object().shape({
-  code: Yup.string().required(),
-  type: Yup.string().required(),
-  mark: Yup.string().required(),
-  caliber: Yup.string().required(),
-  lot: Yup.string().required(),
-  series: Yup.string().required(),
-  quantityAvailable: Yup.number().required(),
+  code: Yup.string().required('Este campo es requerido'),
+  type: Yup.string().required('Este campo es requerido'),
+  mark: Yup.string().required('Este campo es requerido'),
+  caliber: Yup.string().required('Este campo es requerido'),
+  lot: Yup.string().required('Este campo es requerido'),
+  series: Yup.string().required('Este campo es requerido'),
+  quantityAvailable: Yup.number().required('Este campo es requerido'),
 });
 
 export type RegisterExplosiveProps = WithStyles<typeof formStyles>;
@@ -42,12 +42,9 @@ const RegisterExplosive = (props: RegisterExplosiveProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/explosives');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   const registerExplosiveForm = useFormik<CreateExplosiveRequest>({
     initialValues: {

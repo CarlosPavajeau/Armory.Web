@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import { FormHelperText, withStyles, WithStyles } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
@@ -34,24 +34,27 @@ const registerSquadronScheme = Yup.object().shape({
 
 export type RegisterSquadronProps = WithStyles<typeof formStyles>;
 
-const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
+const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
   const { classes } = props;
   const dispatch = useAppDispatch();
   const people = useAppSelector(selectPeople);
   const peopleUiState = useAppSelector(selectUiStatus);
+  const registerError = useAppSelector(selectError);
+  const wasRegistered = useAppSelector(selectWasRegistered);
 
+  const history = useHistory();
   useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+    if (wasRegistered) {
+      history.push('/dashboard/squadrons');
+      dispatch(resetRegister());
+    }
+  }, [dispatch, history, wasRegistered]);
 
   useEffect(() => {
     (async () => {
       await getPeopleByRole('SquadronLeader', dispatch);
     })();
   }, [dispatch]);
-
-  const registerError = useAppSelector(selectError);
-  const wasRegistered = useAppSelector(selectWasRegistered);
 
   const registerSquadronForm = useFormik<CreateSquadronRequest>({
     initialValues: {
@@ -181,7 +184,6 @@ const RegisterSquadron = (props: RegisterSquadronProps): React.ReactElement => {
           )}
         </div>
       </Paper>
-      {wasRegistered && <Redirect to="/dashboard/squadrons" />}
     </>
   );
 };

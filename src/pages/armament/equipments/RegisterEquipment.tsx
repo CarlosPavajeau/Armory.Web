@@ -20,11 +20,11 @@ import {
 } from '../../../modules/armament/equipments/Slice';
 
 const registerEquipmentSchema = Yup.object().shape({
-  code: Yup.string().required(),
-  type: Yup.string().required(),
-  model: Yup.string().required(),
-  series: Yup.string().required(),
-  quantityAvailable: Yup.number().required(),
+  code: Yup.string().required('Este campo es requerido'),
+  type: Yup.string().required('Este campo es requerido'),
+  model: Yup.string().required('Este campo es requerido'),
+  series: Yup.string().required('Este campo es requerido'),
+  quantityAvailable: Yup.number().required('Este campo es requerido'),
 });
 
 export type RegisterEquipmentProps = WithStyles<typeof formStyles>;
@@ -40,12 +40,9 @@ const RegisterEquipment = (props: RegisterEquipmentProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/equipments');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   const registerEquipmentForm = useFormik<CreateEquipmentRequest>({
     initialValues: {

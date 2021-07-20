@@ -50,12 +50,9 @@ const RegisterDegree = (props: RegisterDegreeProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/degrees');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   useEffect(() => {
     (async () => {

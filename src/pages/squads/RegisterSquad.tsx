@@ -59,12 +59,9 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
   useEffect(() => {
     if (wasRegistered) {
       history.push('/dashboard/squads');
+      dispatch(resetRegister());
     }
-  }, [history, wasRegistered]);
-
-  useEffect(() => {
-    dispatch(resetRegister());
-  }, [dispatch]);
+  }, [dispatch, history, wasRegistered]);
 
   useEffect(() => {
     (async () => {
