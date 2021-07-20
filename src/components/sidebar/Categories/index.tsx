@@ -124,6 +124,21 @@ const categories: Categories = [
       },
     ],
   },
+  {
+    id: 'Tropas',
+    children: [
+      {
+        id: 'Registrar tropa',
+        path: '/dashboard/troopers/register',
+        icon: <AddIcon />,
+      },
+      {
+        id: 'Consultar tropas',
+        path: '/dashboard/troopers',
+        icon: <PeopleIcon />,
+      },
+    ],
+  },
 ];
 
 export default categories;

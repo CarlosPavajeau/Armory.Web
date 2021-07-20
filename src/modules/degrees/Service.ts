@@ -36,6 +36,21 @@ export const getDegrees = async (dispatch: AppDispatch): Promise<void> => {
   }
 };
 
+export const getDegreesByRank = async (
+  rankId: number,
+  dispatch: AppDispatch,
+): Promise<void> => {
+  try {
+    dispatch(loadingDegrees());
+    const response = await HttpClient.get<Degrees>(`/Degrees/ByRank/${rankId}`);
+    if (IsValidResponse(response)) {
+      dispatch(loadDegrees(response.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getDegree = async (
   id: number,
   dispatch: AppDispatch,
