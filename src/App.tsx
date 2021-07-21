@@ -5,6 +5,7 @@ import MainLayout from './components/layouts/MainLayout';
 import DashboardLayout from './components/layouts/DashboardLayout';
 import { checkAuthentication } from './modules/users/Service';
 import { selectIsAuthenticate, selectToken } from './modules/users/Slice';
+import Storage from './common/plugins/Storage';
 import GlobalStyles from './components/GlobalStyles';
 
 const App = (): React.ReactElement => {
@@ -14,8 +15,8 @@ const App = (): React.ReactElement => {
 
   useEffect(() => {
     if (isAuthenticate) {
-      if (!window.localStorage.getItem('user_token')) {
-        window.localStorage.setItem('user_token', token);
+      if (!Storage.get('user_token')) {
+        Storage.set('user_token', token);
       }
     }
   }, [isAuthenticate, token]);
