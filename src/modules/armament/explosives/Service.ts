@@ -58,6 +58,22 @@ export const getExplosive = async (
   }
 };
 
+export const checkExists = async (code: string): Promise<boolean> => {
+  try {
+    const response = await HttpClient.get<boolean>(
+      `/Explosives/Exists/${code}`,
+    );
+    if (IsValidResponse(response)) {
+      return response.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export const updateExplosive = async (
   data: UpdateExplosiveRequest,
   dispatch: AppDispatch,

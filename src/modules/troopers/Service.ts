@@ -72,3 +72,17 @@ export const updateTroop = async (
     console.log(error);
   }
 };
+
+export const checkExists = async (code: string): Promise<boolean> => {
+  try {
+    const response = await HttpClient.get<boolean>(`/Troopers/Exists/${code}`);
+    if (IsValidResponse(response)) {
+      return response.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};

@@ -15,7 +15,7 @@ import {
   updatingPerson,
 } from './Slice';
 
-const createPerson = async (
+export const createPerson = async (
   data: CreatePersonRequest,
   dispatch: AppDispatch,
 ): Promise<void> => {
@@ -29,7 +29,7 @@ const createPerson = async (
   }
 };
 
-const getPeople = async (dispatch: AppDispatch): Promise<void> => {
+export const getPeople = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingPeople());
     const response = await HttpClient.get<People>('/People');
@@ -41,7 +41,10 @@ const getPeople = async (dispatch: AppDispatch): Promise<void> => {
   }
 };
 
-const getPerson = async (id: string, dispatch: AppDispatch): Promise<void> => {
+export const getPerson = async (
+  id: string,
+  dispatch: AppDispatch,
+): Promise<void> => {
   try {
     dispatch(loadingPerson());
     const response = await HttpClient.get<Person>(`/People/${id}`);
@@ -56,7 +59,7 @@ const getPerson = async (id: string, dispatch: AppDispatch): Promise<void> => {
   }
 };
 
-const getPeopleByRole = async (
+export const getPeopleByRole = async (
   role: string,
   dispatch: AppDispatch,
 ): Promise<void> => {
@@ -71,7 +74,7 @@ const getPeopleByRole = async (
   }
 };
 
-const getPersonByUserId = async (
+export const getPersonByUserId = async (
   userId: string,
   dispatch: AppDispatch,
 ): Promise<void> => {
@@ -89,7 +92,21 @@ const getPersonByUserId = async (
   }
 };
 
-const updatePerson = async (
+export const checkExists = async (code: string): Promise<boolean> => {
+  try {
+    const response = await HttpClient.get<boolean>(`/People/Exists/${code}`);
+    if (IsValidResponse(response)) {
+      return response.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const updatePerson = async (
   person: Person,
   dispatch: AppDispatch,
 ): Promise<void> => {
@@ -107,7 +124,7 @@ const updatePerson = async (
   }
 };
 
-const deletePerson = async (
+export const deletePerson = async (
   id: string,
   dispatch: AppDispatch,
 ): Promise<void> => {
@@ -123,14 +140,4 @@ const deletePerson = async (
       dispatch(personNotFound(errorMsg));
     }
   }
-};
-
-export {
-  createPerson,
-  getPeople,
-  getPerson,
-  getPeopleByRole,
-  getPersonByUserId,
-  updatePerson,
-  deletePerson,
 };

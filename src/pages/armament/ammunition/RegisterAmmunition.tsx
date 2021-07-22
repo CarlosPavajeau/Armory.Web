@@ -12,7 +12,10 @@ import { Helmet } from 'react-helmet';
 import { formStyles } from '../../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { CreateAmmunitionRequest } from '../../../modules/armament/ammunition/Models';
-import { createAmmunition } from '../../../modules/armament/ammunition/Service';
+import {
+  createAmmunition,
+  checkExists,
+} from '../../../modules/armament/ammunition/Service';
 import {
   resetRegister,
   selectError,
@@ -20,7 +23,27 @@ import {
 } from '../../../modules/armament/ammunition/Slice';
 
 const registerAmmunitionSchema = Yup.object().shape({
-  code: Yup.string().required('Este campo es requerido'),
+  code: Yup.string()
+    .required('Este campo es requerido')
+    .test(
+      'CheckExists',
+      'Ya existe una munición con el código digitado',
+      value => {
+        return new Promise(resolve => {
+          if (value === undefined || value === '') {
+            resolve(true);
+            return;
+          }
+          checkExists(value || '')
+            .then(result => {
+              resolve(!result);
+            })
+            .catch(() => {
+              resolve(true);
+            });
+        });
+      },
+    ),
   type: Yup.string().required('Este campo es requerido'),
   mark: Yup.string().required('Este campo es requerido'),
   caliber: Yup.string().required('Este campo es requerido'),

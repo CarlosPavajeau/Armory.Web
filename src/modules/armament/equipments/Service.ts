@@ -60,6 +60,22 @@ export const getEquipment = async (
   }
 };
 
+export const checkExists = async (code: string): Promise<boolean> => {
+  try {
+    const response = await HttpClient.get<boolean>(
+      `/Equipments/Exists/${code}`,
+    );
+    if (IsValidResponse(response)) {
+      return response.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export const updateEquipment = async (
   data: UpdateEquipmentRequest,
   dispatch: AppDispatch,

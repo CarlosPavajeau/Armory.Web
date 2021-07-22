@@ -28,7 +28,7 @@ import {
 } from '../../modules/squads/Slice';
 import { getSquadrons } from '../../modules/squadrons/Service';
 import { CreateSquadRequest } from '../../modules/squads/Models';
-import { createSquad } from '../../modules/squads/Service';
+import { checkExists, createSquad } from '../../modules/squads/Service';
 import {
   selectPeople,
   selectUiStatus as selectPeopleUiStatus,
@@ -36,7 +36,24 @@ import {
 import { getPeopleByRole } from '../../modules/people/Service';
 
 const registerSquadScheme = Yup.object().shape({
-  code: Yup.string().required('Este campo es requerido'),
+  code: Yup.string()
+    .required('Este campo es requerido')
+    .test(
+      'CheckExists',
+      'Ya esxite una escuadra con el código digitado',
+      value => {
+        return new Promise(resolve => {
+          if (value === undefined || value === '') {
+            resolve(true);
+            return;
+          }
+
+          checkExists(value || '')
+            .then(result => resolve(!result))
+            .catch(() => resolve(true));
+        });
+      },
+    ),
   name: Yup.string().required('Este campo es requerido'),
   squadronCode: Yup.string().required('Este campo es requerido'),
   personId: Yup.string().required('Este campo es requerido'),

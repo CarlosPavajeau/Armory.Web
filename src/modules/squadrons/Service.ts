@@ -8,7 +8,7 @@ import {
   registeredCorrectly,
 } from './Slice';
 
-const createSquadron = async (
+export const createSquadron = async (
   data: CreateSquadronRequest,
   dispatch: AppDispatch,
 ): Promise<void> => {
@@ -22,7 +22,7 @@ const createSquadron = async (
   }
 };
 
-const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
+export const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
   try {
     dispatch(loadingSquadrons());
     const response = await HttpClient.get<Squadron[]>('/Squadrons');
@@ -34,4 +34,16 @@ const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
   }
 };
 
-export { createSquadron, getSquadrons };
+export const checkExists = async (code: string): Promise<boolean> => {
+  try {
+    const response = await HttpClient.get<boolean>(`/Squadrons/Exists/${code}`);
+    if (IsValidResponse(response)) {
+      return response.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};

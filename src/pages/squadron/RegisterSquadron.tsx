@@ -17,7 +17,7 @@ import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { formStyles } from '../../common/styles';
 import { CreateSquadronRequest } from '../../modules/squadrons/Models';
-import { createSquadron } from '../../modules/squadrons/Service';
+import { checkExists, createSquadron } from '../../modules/squadrons/Service';
 import {
   resetRegister,
   selectError,
@@ -27,7 +27,24 @@ import { selectPeople, selectUiStatus } from '../../modules/people/Slice';
 import { getPeopleByRole } from '../../modules/people/Service';
 
 const registerSquadronScheme = Yup.object().shape({
-  code: Yup.string().required('Este campo es requerido'),
+  code: Yup.string()
+    .required('Este campo es requerido')
+    .test(
+      'CheckExists',
+      'Ya esxite una escuadrilla con el código digitado',
+      value => {
+        return new Promise(resolve => {
+          if (value === undefined || value === '') {
+            resolve(true);
+            return;
+          }
+
+          checkExists(value || '')
+            .then(result => resolve(!result))
+            .catch(() => resolve(true));
+        });
+      },
+    ),
   name: Yup.string().required('Este campo es requerido'),
   personId: Yup.string().required('Este campo es requerido'),
 });

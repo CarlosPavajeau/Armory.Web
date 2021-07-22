@@ -58,6 +58,20 @@ export const getWeapon = async (
   }
 };
 
+export const checkExists = async (code: string): Promise<boolean> => {
+  try {
+    const response = await HttpClient.get<boolean>(`/Weapons/Exists/${code}`);
+    if (IsValidResponse(response)) {
+      return response.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export const updateWeapon = async (
   data: UpdateWeaponRequest,
   dispatch: AppDispatch,

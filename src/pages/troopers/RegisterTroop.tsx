@@ -18,7 +18,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { formStyles } from '../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { CreateTroopRequest } from '../../modules/troopers/Models';
-import { createTroop } from '../../modules/troopers/Service';
+import { checkExists, createTroop } from '../../modules/troopers/Service';
 import { getSquads } from '../../modules/squads/Service';
 import { getRanks } from '../../modules/ranks/Service';
 import { getDegreesByRank } from '../../modules/degrees/Service';
@@ -42,7 +42,24 @@ import {
 import CircularLoader from '../../components/loading/CircularLoader';
 
 const registerTroopSchema = Yup.object().shape({
-  id: Yup.string().required('Este campo es requerido'),
+  id: Yup.string()
+    .required('Este campo es requerido')
+    .test(
+      'CheckExists',
+      'Ya existe un tropa con la indentificación digitada',
+      value => {
+        return new Promise(resolve => {
+          if (value === undefined || value === '') {
+            resolve(true);
+            return;
+          }
+
+          checkExists(value || '')
+            .then(result => resolve(!result))
+            .catch(() => resolve(true));
+        });
+      },
+    ),
   firstName: Yup.string().required('Este campo es requerido'),
   secondName: Yup.string().required('Este campo es requerido'),
   lastName: Yup.string().required('Este campo es requerido'),
