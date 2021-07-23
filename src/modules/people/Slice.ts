@@ -3,7 +3,7 @@ import { RootState } from '../../common/store';
 import { UiStatus } from '../../common/types';
 import { People, Person } from './Models';
 
-type PeopleStatus = UiStatus | 'personNotFound';
+type PeopleStatus = UiStatus;
 
 export interface PeopleState {
   ui: PeopleStatus;
@@ -25,9 +25,6 @@ export const slice = createSlice({
   name: 'people',
   initialState,
   reducers: {
-    notRegister: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
     registeredCorrectly: state => {
       state.wasRegistered = true;
     },
@@ -69,15 +66,14 @@ export const slice = createSlice({
         state.data = state.data.filter(p => p.id !== action.payload);
       }
     },
-    personNotFound: (state, action: PayloadAction<string>) => {
-      state.ui = 'personNotFound';
+    apiError: (state, action: PayloadAction<string>) => {
+      state.ui = 'apiError';
       state.error = action.payload;
     },
   },
 });
 
 export const {
-  notRegister,
   registeredCorrectly,
   resetRegister,
   loadingPeople,
@@ -88,7 +84,7 @@ export const {
   updatedPerson,
   deletingPerson,
   deletedPerson,
-  personNotFound,
+  apiError,
 } = slice.actions;
 
 export const selectError = (state: RootState): string => state.people.error;

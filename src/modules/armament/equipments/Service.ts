@@ -1,5 +1,9 @@
 import { AppDispatch } from '../../../common/store';
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../../common/config/http';
 import {
   CreateEquipmentRequest,
   UpdateEquipmentRequest,
@@ -7,7 +11,7 @@ import {
   Equipments,
 } from './Models';
 import {
-  notRegister,
+  apiError,
   registeredCorrectly,
   loadingEquipments,
   loadEquipments,
@@ -27,9 +31,15 @@ export const createEquipment = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(
-      notRegister('No se puede registrar el equipo especial o accesorio.'),
-    );
+    if (HasErrorName(error.response, 'EquipmentAlreadyRegistered')) {
+      dispatch(
+        apiError(GetErrorStr(error.response, 'EquipmentAlreadyRegistered')),
+      );
+    } else {
+      dispatch(
+        apiError('No se pudo registrar el equipo especial o accesorio.'),
+      );
+    }
   }
 };
 
@@ -41,7 +51,7 @@ export const getEquipments = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadEquipments(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -56,7 +66,9 @@ export const getEquipment = async (
       dispatch(loadEquipment(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'EquipmentNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'EquipmentNotFound')));
+    }
   }
 };
 
@@ -71,7 +83,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -87,6 +98,8 @@ export const updateEquipment = async (
       dispatch(updatedEquipment());
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'EquipmentNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'EquipmentNotFound')));
+    }
   }
 };

@@ -1,13 +1,17 @@
 import { AppDispatch } from '../../common/store';
 import { CreateRankRequest, Rank, Ranks } from './Models';
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../common/config/http';
 import {
   loadingRanks,
   loadingRank,
   loadRanks,
   loadRank,
   registeredCorrectly,
-  notRegister,
+  apiError,
 } from './Slice';
 
 export const createRank = async (
@@ -20,7 +24,7 @@ export const createRank = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar el rango'));
+    dispatch(apiError('No se pudo registrar el rango.'));
   }
 };
 
@@ -32,7 +36,7 @@ export const getRanks = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadRanks(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -47,6 +51,8 @@ export const getRank = async (
       dispatch(loadRank(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'RankNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'RankNotFound')));
+    }
   }
 };

@@ -23,9 +23,6 @@ export const slice = createSlice({
   name: 'equipments',
   initialState,
   reducers: {
-    notRegister: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
     registeredCorrectly: state => {
       state.wasRegistered = true;
     },
@@ -53,11 +50,14 @@ export const slice = createSlice({
     updatedEquipment: state => {
       state.ui = 'updated';
     },
+    apiError: (state, action: PayloadAction<string>) => {
+      state.ui = 'apiError';
+      state.error = action.payload;
+    },
   },
 });
 
 export const {
-  notRegister,
   registeredCorrectly,
   resetRegister,
   loadingEquipments,
@@ -66,6 +66,7 @@ export const {
   loadEquipment,
   updatingEquipment,
   updatedEquipment,
+  apiError,
 } = slice.actions;
 
 export const selectError = (state: RootState): string => state.equipments.error;

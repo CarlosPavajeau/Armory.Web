@@ -23,9 +23,6 @@ export const slice = createSlice({
   name: 'ranks',
   initialState,
   reducers: {
-    notRegister: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
     registeredCorrectly: state => {
       state.wasRegistered = true;
     },
@@ -47,17 +44,21 @@ export const slice = createSlice({
       state.ui = 'loaded';
       state.rank = action.payload;
     },
+    apiError: (state, action: PayloadAction<string>) => {
+      state.ui = 'apiError';
+      state.error = action.payload;
+    },
   },
 });
 
 export const {
-  notRegister,
   registeredCorrectly,
   resetRegister,
   loadingRanks,
   loadRanks,
   loadingRank,
   loadRank,
+  apiError,
 } = slice.actions;
 
 export const selectError = (state: RootState): string => state.ranks.error;

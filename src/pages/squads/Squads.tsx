@@ -8,12 +8,18 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Helmet } from 'react-helmet';
+import clsx from 'clsx';
 import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { selectSquads, selectUiStatus } from '../../modules/squads/Slice';
+import {
+  selectSquads,
+  selectUiStatus,
+  selectError,
+} from '../../modules/squads/Slice';
 import { getSquads } from '../../modules/squads/Service';
 import { displayData } from '../../common/styles';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
+import Alert from '../../components/feedback/Alert';
 
 export type SquadsProps = WithStyles<typeof displayData>;
 
@@ -22,6 +28,7 @@ const Squads = (props: SquadsProps): ReactElement => {
   const dispatch = useAppDispatch();
   const squads = useAppSelector(selectSquads);
   const uiStatus = useAppSelector(selectUiStatus);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     (async () => {
@@ -43,7 +50,13 @@ const Squads = (props: SquadsProps): ReactElement => {
           placeholder="Buscar escuadra"
           handleRefresh={handleRefresh}
         />
-        <Paper elevation={0}>
+        <Paper
+          elevation={0}
+          className={clsx(
+            (uiStatus === 'loading' || uiStatus === 'apiError') &&
+              classes.withoutData,
+          )}
+        >
           {uiStatus === 'loading' && (
             <CircularLoader size={150} message="Cargando escuadras..." />
           )}
@@ -73,6 +86,7 @@ const Squads = (props: SquadsProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
+          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
         </Paper>
       </Paper>
     </>

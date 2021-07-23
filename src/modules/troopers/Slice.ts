@@ -23,9 +23,6 @@ export const slice = createSlice({
   name: 'troopers',
   initialState,
   reducers: {
-    notRegister: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
     registeredCorrectly: state => {
       state.wasRegistered = true;
     },
@@ -53,11 +50,15 @@ export const slice = createSlice({
     updatedTroop: state => {
       state.ui = 'updated';
     },
+    apiError: (state, action: PayloadAction<string>) => {
+      state.ui = 'apiError';
+      state.error = action.payload;
+    },
   },
 });
 
 export const {
-  notRegister,
+  apiError,
   registeredCorrectly,
   resetRegister,
   loadingTroopers,

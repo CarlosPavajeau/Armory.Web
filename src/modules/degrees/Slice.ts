@@ -23,9 +23,6 @@ export const slice = createSlice({
   name: 'degrees',
   initialState,
   reducers: {
-    notRegister: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
     registeredCorrectly: state => {
       state.wasRegistered = true;
     },
@@ -47,17 +44,21 @@ export const slice = createSlice({
       state.ui = 'loaded';
       state.degree = action.payload;
     },
+    apiError: (state, action: PayloadAction<string>) => {
+      state.ui = 'apiError';
+      state.error = action.payload;
+    },
   },
 });
 
 export const {
-  notRegister,
   registeredCorrectly,
   resetRegister,
   loadingDegrees,
   loadDegrees,
   loadingDegree,
   loadDegree,
+  apiError,
 } = slice.actions;
 
 export const selectError = (state: RootState): string => state.degrees.error;

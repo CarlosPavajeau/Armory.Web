@@ -5,4 +5,5 @@ export type UiStatus =
   | 'updating'
   | 'updated'
   | 'deleting'
-  | 'deleted';
+  | 'deleted'
+  | 'apiError';

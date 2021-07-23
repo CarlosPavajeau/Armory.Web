@@ -43,6 +43,9 @@ const displayData = (theme: Theme) =>
     container: {
       maxHeight: 500,
     },
+    withoutData: {
+      padding: 30,
+    },
   });
 
 export { formStyles, displayData };

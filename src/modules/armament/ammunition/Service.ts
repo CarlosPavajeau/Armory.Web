@@ -1,12 +1,15 @@
 import { AppDispatch } from '../../../common/store';
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
+import HttpClient, {
+  IsValidResponse,
+  HasErrorName,
+  GetErrorStr,
+} from '../../../common/config/http';
 import {
   CreateAmmunitionRequest,
   Ammunition,
   UpdateAmmunitionRequest,
 } from './Models';
 import {
-  notRegister,
   registeredCorrectly,
   loadingAmmunition,
   loadAmmunition,
@@ -14,6 +17,7 @@ import {
   loadOneAmmunition,
   updatingOneAmmunition,
   updatedOneAmmunition,
+  apiError,
 } from './Slice';
 
 export const createAmmunition = async (
@@ -26,7 +30,13 @@ export const createAmmunition = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar la escuadrilla'));
+    if (HasErrorName(error.response, 'AmmunitionAlreadyRegistered')) {
+      dispatch(
+        apiError(GetErrorStr(error.response, 'AmmunitionAlreadyRegistered')),
+      );
+    } else {
+      dispatch(apiError('No se pudo registrar la escuadrilla.'));
+    }
   }
 };
 
@@ -38,7 +48,7 @@ export const getAmmunition = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadAmmunition(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -53,7 +63,9 @@ export const getOneAmmunition = async (
       dispatch(loadOneAmmunition(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'AmmunitionNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'AmmunitionNotFound')));
+    }
   }
 };
 
@@ -67,8 +79,7 @@ export const checkExists = async (code: string): Promise<boolean> => {
     }
 
     return false;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
     return false;
   }
 };
@@ -84,6 +95,8 @@ export const updateOneAmmunition = async (
       dispatch(updatedOneAmmunition());
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'AmmunitionNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'AmmunitionNotFound')));
+    }
   }
 };

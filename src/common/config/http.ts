@@ -23,4 +23,20 @@ export const IsValidResponse = (response: AxiosResponse): boolean => {
   return response && response.status === 200;
 };
 
+export const HasErrorName = (
+  response: AxiosResponse,
+  name: string,
+): boolean => {
+  return (
+    response &&
+    response.data &&
+    response.data.errors &&
+    response.data.errors[name]
+  );
+};
+
+export const GetErrorStr = (response: AxiosResponse, name: string): string => {
+  return response.data.errors[name].join(', ');
+};
+
 export default httpClient;

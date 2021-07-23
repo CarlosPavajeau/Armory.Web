@@ -1,10 +1,14 @@
 import { AppDispatch } from '../../common/store';
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../common/config/http';
 import { CreateSquadronRequest, Squadron } from './Models';
 import {
   loadingSquadrons,
   loadSquadrons,
-  notRegister,
+  apiError,
   registeredCorrectly,
 } from './Slice';
 
@@ -18,7 +22,13 @@ export const createSquadron = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede regisrar la escuadrilla'));
+    if (HasErrorName(error.response, 'SquadronAlreadyRegistered')) {
+      dispatch(
+        apiError(GetErrorStr(error.response, 'SquadronAlreadyRegistered')),
+      );
+    } else {
+      dispatch(apiError('No se pudo registrar la escuadrilla.'));
+    }
   }
 };
 
@@ -30,7 +40,7 @@ export const getSquadrons = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadSquadrons(response.data));
     }
   } catch (error) {
-    console.log(error.response);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -43,7 +53,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

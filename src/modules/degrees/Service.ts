@@ -1,13 +1,17 @@
 import { AppDispatch } from '../../common/store';
 import { CreateDegreeRequest, Degree, Degrees } from './Models';
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../common/config/http';
 import {
   loadingDegrees,
   loadingDegree,
   loadDegrees,
   loadDegree,
   registeredCorrectly,
-  notRegister,
+  apiError,
 } from './Slice';
 
 export const createDegree = async (
@@ -20,7 +24,7 @@ export const createDegree = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar el grado'));
+    dispatch(apiError('No se pudo registrar el grado.'));
   }
 };
 
@@ -32,7 +36,7 @@ export const getDegrees = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadDegrees(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -47,7 +51,7 @@ export const getDegreesByRank = async (
       dispatch(loadDegrees(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -62,6 +66,8 @@ export const getDegree = async (
       dispatch(loadDegree(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'DegreeNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'DegreeNotFound')));
+    }
   }
 };

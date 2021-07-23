@@ -1,5 +1,9 @@
 import { AppDispatch } from '../../../common/store';
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../../common/config/http';
 import {
   CreateExplosiveRequest,
   UpdateExplosiveRequest,
@@ -7,7 +11,7 @@ import {
   Explosives,
 } from './Models';
 import {
-  notRegister,
+  apiError,
   registeredCorrectly,
   loadingExplosives,
   loadExplosives,
@@ -27,7 +31,13 @@ export const createExplosive = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar el explosivo'));
+    if (HasErrorName(error.response, 'ExplosiveAlreadyRegistered')) {
+      dispatch(
+        apiError(GetErrorStr(error.response, 'ExplosiveAlreadyRegistered')),
+      );
+    } else {
+      dispatch(apiError('No se pudo registrar el explosivo.'));
+    }
   }
 };
 
@@ -39,7 +49,7 @@ export const getExplosives = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadExplosives(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -54,7 +64,9 @@ export const getExplosive = async (
       dispatch(loadExplosive(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'ExplosiveNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'ExplosiveNotFound')));
+    }
   }
 };
 
@@ -69,7 +81,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -85,6 +96,8 @@ export const updateExplosive = async (
       dispatch(updatedExplosive());
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'ExplosiveNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'ExplosiveNotFound')));
+    }
   }
 };

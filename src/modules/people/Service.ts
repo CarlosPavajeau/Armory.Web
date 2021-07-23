@@ -1,6 +1,10 @@
 import { AppDispatch } from '../../common/store';
 import { CreatePersonRequest, Person, People } from './Models';
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../common/config/http';
 import {
   deletedPerson,
   deletingPerson,
@@ -8,11 +12,10 @@ import {
   loadingPerson,
   loadPeople,
   loadPerson,
-  notRegister,
-  personNotFound,
   registeredCorrectly,
   updatedPerson,
   updatingPerson,
+  apiError,
 } from './Slice';
 
 export const createPerson = async (
@@ -25,7 +28,7 @@ export const createPerson = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar a la persona'));
+    dispatch(apiError('No se pudo registrar a la persona'));
   }
 };
 
@@ -37,7 +40,7 @@ export const getPeople = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadPeople(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se puedo obtener los datos.'));
   }
 };
 
@@ -52,9 +55,8 @@ export const getPerson = async (
       dispatch(loadPerson(response.data));
     }
   } catch (error) {
-    if (error.response.data.errors.PersonNotFound) {
-      const errorMsg = error.response.data.errors.PersonNotFound.join(', ');
-      dispatch(personNotFound(errorMsg));
+    if (HasErrorName(error.response, 'PersonNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
     }
   }
 };
@@ -70,7 +72,7 @@ export const getPeopleByRole = async (
       dispatch(loadPeople(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo cargar los datos.'));
   }
 };
 
@@ -85,9 +87,8 @@ export const getPersonByUserId = async (
       dispatch(loadPerson(response.data));
     }
   } catch (error) {
-    if (error.response.data.errors.PersonNotFound) {
-      const errorMsg = error.response.data.errors.PersonNotFound.join(', ');
-      dispatch(personNotFound(errorMsg));
+    if (HasErrorName(error.response, 'PersonNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
     }
   }
 };
@@ -101,7 +102,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -117,9 +117,8 @@ export const updatePerson = async (
       dispatch(updatedPerson);
     }
   } catch (error) {
-    if (error.response.data.errors.PersonNotFound) {
-      const errorMsg = error.response.data.errors.PersonNotFound.join(', ');
-      dispatch(personNotFound(errorMsg));
+    if (HasErrorName(error.response, 'PersonNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
     }
   }
 };
@@ -135,9 +134,8 @@ export const deletePerson = async (
       dispatch(deletedPerson(id));
     }
   } catch (error) {
-    if (error.response.data.errors.PersonNotFound) {
-      const errorMsg = error.response.data.errors.PersonNotFound.join(', ');
-      dispatch(personNotFound(errorMsg));
+    if (HasErrorName(error.response, 'PersonNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
     }
   }
 };

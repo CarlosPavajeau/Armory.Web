@@ -8,12 +8,18 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Helmet } from 'react-helmet';
+import clsx from 'clsx';
 import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { displayData } from '../../common/styles';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
 import { getTroopers } from '../../modules/troopers/Service';
-import { selectTroopers, selectUiStatus } from '../../modules/troopers/Slice';
+import {
+  selectTroopers,
+  selectUiStatus,
+  selectError,
+} from '../../modules/troopers/Slice';
+import Alert from '../../components/feedback/Alert';
 
 export type TroopersProps = WithStyles<typeof displayData>;
 
@@ -22,6 +28,7 @@ const Troopers = (props: TroopersProps): ReactElement => {
   const dispatch = useAppDispatch();
   const troopers = useAppSelector(selectTroopers);
   const uiStatus = useAppSelector(selectUiStatus);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     (async () => {
@@ -43,7 +50,13 @@ const Troopers = (props: TroopersProps): ReactElement => {
           placeholder="Buscar tropa"
           handleRefresh={handleRefresh}
         />
-        <Paper elevation={0}>
+        <Paper
+          elevation={0}
+          className={clsx(
+            (uiStatus === 'loading' || uiStatus === 'apiError') &&
+              classes.withoutData,
+          )}
+        >
           {uiStatus === 'loading' && (
             <CircularLoader size={150} message="Cargando tropas..." />
           )}
@@ -76,6 +89,7 @@ const Troopers = (props: TroopersProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
+          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
         </Paper>
       </Paper>
     </>

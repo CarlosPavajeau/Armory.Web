@@ -8,15 +8,18 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Helmet } from 'react-helmet';
+import clsx from 'clsx';
 import CircularLoader from '../../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { displayData } from '../../../common/styles';
 import {
   selectAmmunition,
   selectUiStatus,
+  selectError,
 } from '../../../modules/armament/ammunition/Slice';
 import { getAmmunition } from '../../../modules/armament/ammunition/Service';
 import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
+import Alert from '../../../components/feedback/Alert';
 
 export type AmmunitionProps = WithStyles<typeof displayData>;
 
@@ -25,6 +28,7 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
   const dispatch = useAppDispatch();
   const ammunition = useAppSelector(selectAmmunition);
   const uiStatus = useAppSelector(selectUiStatus);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     (async () => {
@@ -46,7 +50,13 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
           placeholder="Buscar munición"
           handleRefresh={handleRefresh}
         />
-        <Paper elevation={0}>
+        <Paper
+          elevation={0}
+          className={clsx(
+            (uiStatus === 'loading' || uiStatus === 'apiError') &&
+              classes.withoutData,
+          )}
+        >
           {uiStatus === 'loading' && (
             <CircularLoader size={150} message="Cargando municiones..." />
           )}
@@ -78,6 +88,7 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
+          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
         </Paper>
       </Paper>
     </>

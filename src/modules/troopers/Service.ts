@@ -1,5 +1,9 @@
 import { AppDispatch } from '../../common/store';
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../common/config/http';
 import {
   CreateTroopRequest,
   UpdateTroopRequest,
@@ -7,7 +11,7 @@ import {
   Troopers,
 } from './Models';
 import {
-  notRegister,
+  apiError,
   registeredCorrectly,
   loadingTroopers,
   loadTroopers,
@@ -27,7 +31,11 @@ export const createTroop = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar la tropa'));
+    if (HasErrorName(error.response, 'TroopAlreadyRegistered')) {
+      dispatch(apiError(GetErrorStr(error.response, 'TroopAlreadyRegistered')));
+    } else {
+      dispatch(apiError('No se pudo registrar la tropa.'));
+    }
   }
 };
 
@@ -39,7 +47,7 @@ export const getTroopers = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadTroopers(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -54,7 +62,9 @@ export const getTroop = async (
       dispatch(loadTroop(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'TroopNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'TroopNotFound')));
+    }
   }
 };
 
@@ -69,7 +79,9 @@ export const updateTroop = async (
       dispatch(updatedTroop());
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'TroopNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'TroopNotFound')));
+    }
   }
 };
 
@@ -82,7 +94,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

@@ -1,7 +1,11 @@
 import { AppDispatch } from '../../common/store';
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../common/config/http';
 import {
-  notRegister,
+  apiError,
   registeredCorrectly,
   loadingSquads,
   loadingSquad,
@@ -20,7 +24,11 @@ export const createSquad = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar el escuadron.'));
+    if (HasErrorName(error.response, 'SquadAlreadyRegistered')) {
+      dispatch(apiError(GetErrorStr(error.response, 'SquadAlreadyRegistered')));
+    } else {
+      dispatch(apiError('No se pudo registrar el escuadron.'));
+    }
   }
 };
 
@@ -32,7 +40,7 @@ export const getSquads = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadSquads(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -47,7 +55,9 @@ export const getSquad = async (
       dispatch(loadSquad(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'SquadNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'SquadNotFound')));
+    }
   }
 };
 
@@ -60,7 +70,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

@@ -8,12 +8,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Helmet } from 'react-helmet';
+import clsx from 'clsx';
 import CircularLoader from '../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { getSquadrons } from '../../modules/squadrons/Service';
-import { selectSquadrons, selectUiStatus } from '../../modules/squadrons/Slice';
+import {
+  selectSquadrons,
+  selectUiStatus,
+  selectError,
+} from '../../modules/squadrons/Slice';
 import { displayData } from '../../common/styles';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
+import Alert from '../../components/feedback/Alert';
 
 export type SquadronsProps = WithStyles<typeof displayData>;
 
@@ -22,6 +28,7 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
   const dispatch = useAppDispatch();
   const squadrons = useAppSelector(selectSquadrons);
   const uiStatus = useAppSelector(selectUiStatus);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     (async () => {
@@ -43,7 +50,13 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
           placeholder="Buscar escudrilla"
           handleRefresh={handleRefresh}
         />
-        <Paper elevation={0}>
+        <Paper
+          elevation={0}
+          className={clsx(
+            (uiStatus === 'loading' || uiStatus === 'apiError') &&
+              classes.withoutData,
+          )}
+        >
           {uiStatus === 'loading' && (
             <CircularLoader size={150} message="Cargando escuadrillas..." />
           )}
@@ -71,6 +84,7 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
+          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
         </Paper>
       </Paper>
     </>

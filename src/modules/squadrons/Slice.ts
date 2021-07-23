@@ -21,9 +21,6 @@ export const slice = createSlice({
   name: 'squadron',
   initialState,
   reducers: {
-    notRegister: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
     registeredCorrectly: state => {
       state.wasRegistered = true;
     },
@@ -38,11 +35,15 @@ export const slice = createSlice({
       state.ui = 'loaded';
       state.data = action.payload;
     },
+    apiError: (state, action: PayloadAction<string>) => {
+      state.ui = 'apiError';
+      state.error = action.payload;
+    },
   },
 });
 
 export const {
-  notRegister,
+  apiError,
   registeredCorrectly,
   resetRegister,
   loadingSquadrons,

@@ -1,5 +1,9 @@
 import { AppDispatch } from '../../../common/store';
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
+import HttpClient, {
+  GetErrorStr,
+  HasErrorName,
+  IsValidResponse,
+} from '../../../common/config/http';
 import {
   CreateWeaponRequest,
   UpdateWeaponRequest,
@@ -7,7 +11,7 @@ import {
   Weapons,
 } from './Models';
 import {
-  notRegister,
+  apiError,
   registeredCorrectly,
   loadingWeapons,
   loadWeapons,
@@ -27,7 +31,13 @@ export const createWeapon = async (
       dispatch(registeredCorrectly());
     }
   } catch (error) {
-    dispatch(notRegister('No se puede registrar el arma'));
+    if (HasErrorName(error.response, 'WeaponAlreadyRegistered')) {
+      dispatch(
+        apiError(GetErrorStr(error.response, 'WeaponAlreadyRegistered')),
+      );
+    } else {
+      dispatch(apiError('No se pudo registrar el arma.'));
+    }
   }
 };
 
@@ -39,7 +49,7 @@ export const getWeapons = async (dispatch: AppDispatch): Promise<void> => {
       dispatch(loadWeapons(response.data));
     }
   } catch (error) {
-    console.log(error);
+    dispatch(apiError('No se pudo obtener los datos.'));
   }
 };
 
@@ -54,7 +64,9 @@ export const getWeapon = async (
       dispatch(loadWeapon(response.data));
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'WeaponNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'WeaponNotFound')));
+    }
   }
 };
 
@@ -67,7 +79,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -83,6 +94,8 @@ export const updateWeapon = async (
       dispatch(updatedWeapon());
     }
   } catch (error) {
-    console.log(error);
+    if (HasErrorName(error.response, 'WeaponNotFound')) {
+      dispatch(apiError(GetErrorStr(error.response, 'WeaponNotFound')));
+    }
   }
 };
