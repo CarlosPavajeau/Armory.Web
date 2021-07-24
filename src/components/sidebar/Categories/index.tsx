@@ -98,7 +98,7 @@ const categories: Categories = [
         icon: <AddIcon />,
       },
       {
-        id: 'Registrar equipo especial y accesorios',
+        id: 'Registrar equipo especial y accesorio',
         path: '/dashboard/equipments/register',
         icon: <AddIcon />,
       },
@@ -120,6 +120,11 @@ const categories: Categories = [
       {
         id: 'Consultar explosivos',
         path: '/dashboard/explosives',
+        icon: <AllInboxIcon />,
+      },
+      {
+        id: 'Consultar equipos especiales y accesorios',
+        path: '/dashboard/equipments',
         icon: <AllInboxIcon />,
       },
     ],
