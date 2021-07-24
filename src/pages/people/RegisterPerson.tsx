@@ -277,6 +277,7 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
                 labelId="select-role-label"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                defaultValue=""
                 fullWidth
               >
                 {userUiStatus === 'loading' && (

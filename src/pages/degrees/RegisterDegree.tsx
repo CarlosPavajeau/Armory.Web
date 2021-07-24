@@ -121,6 +121,7 @@ const RegisterDegree = (props: RegisterDegreeProps): ReactElement => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                defaultValue=""
                 fullWidth
               >
                 {ranksUiStatus === 'loading' && (

@@ -267,6 +267,7 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                defaultValue=""
                 required
                 fullWidth
               >
@@ -305,6 +306,7 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     disabled={isSubmitting}
+                    defaultValue=""
                     required
                     fullWidth
                   >
@@ -343,6 +345,7 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     disabled={isSubmitting}
+                    defaultValue=""
                     required
                     fullWidth
                   >

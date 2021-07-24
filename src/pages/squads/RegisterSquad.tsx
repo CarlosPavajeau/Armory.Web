@@ -172,6 +172,7 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                defaultValue=""
                 fullWidth
               >
                 {squadronsUiStatus === 'loading' && (
@@ -209,6 +210,7 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                defaultValue=""
                 fullWidth
               >
                 {peopleUiStatus === 'loading' && (

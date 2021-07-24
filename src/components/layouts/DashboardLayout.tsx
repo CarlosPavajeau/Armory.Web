@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  createMuiTheme,
+  createTheme,
   createStyles,
   ThemeProvider,
   Hidden,
@@ -15,7 +15,7 @@ import DashboardNavBar from '../navbars/DashboardNavBar';
 import Sidebar from '../sidebar/Sidebar';
 import Location from '../routes/Location';
 
-let theme = createMuiTheme({
+let theme = createTheme({
   palette: {
     primary: {
       light: '#63ccff',

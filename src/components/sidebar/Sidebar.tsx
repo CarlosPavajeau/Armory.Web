@@ -49,7 +49,12 @@ const Sidebar = (props: SidebarProps): ReactElement => {
           Armería
         </ListItem>
         {Categories.map(({ id, children }) => (
-          <Category id={id} items={children} currentPath={location.pathname} />
+          <Category
+            key={id}
+            id={id}
+            items={children}
+            currentPath={location.pathname}
+          />
         ))}
       </List>
     </Drawer>

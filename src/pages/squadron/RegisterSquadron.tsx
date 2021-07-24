@@ -152,6 +152,7 @@ const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                defaultValue=""
                 fullWidth
               >
                 {peopleUiState === 'loading' && (

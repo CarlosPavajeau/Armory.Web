@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement, useEffect } from 'react';
+import { MouseEventHandler, ReactElement } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';

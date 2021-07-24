@@ -37,6 +37,7 @@ const Category = (props: CategoryProps): ReactElement => {
       </ListItem>
       {items.map(child => (
         <CategoryItem
+          key={child.id}
           id={child.id}
           path={child.path}
           icon={child.icon}
