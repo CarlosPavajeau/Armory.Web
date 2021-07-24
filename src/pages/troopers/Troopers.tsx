@@ -43,7 +43,7 @@ const Troopers = (props: TroopersProps): ReactElement => {
   return (
     <>
       <Helmet>
-        <title>Armería | Troopas</title>
+        <title>Armería | Tropas</title>
       </Helmet>
       <Paper>
         <DisplayDataHeader
