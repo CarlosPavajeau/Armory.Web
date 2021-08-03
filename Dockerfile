@@ -1,15 +1,16 @@
-FROM node:alpine
+FROM node:alpine as build
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
-
-COPY package.json ./
-COPY yarn.lock ./
-
+COPY package.json .
+COPY yarn.lock .
 RUN yarn install
 
-COPY . ./
+COPY . .
+RUN npm run build
 
-CMD ["yarn", "start"]
+FROM nginx:alpine
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/build /usr/share/nginx/html
 
