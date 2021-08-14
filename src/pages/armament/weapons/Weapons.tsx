@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
+import { Tooltip, withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
@@ -9,11 +9,16 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Helmet } from 'react-helmet';
 import clsx from 'clsx';
+import IconButton from '@material-ui/core/IconButton';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import CircularLoader from '../../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { displayData } from '../../../common/styles';
 import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
-import { getWeapons } from '../../../modules/armament/weapons/Service';
+import {
+  generateQr,
+  getWeapons,
+} from '../../../modules/armament/weapons/Service';
 import {
   selectWeapons,
   selectUiStatus,
@@ -38,6 +43,10 @@ const Weapons = (props: WeaponsProps): ReactElement => {
 
   const handleRefresh = async () => {
     await getWeapons(dispatch);
+  };
+
+  const generateWeaponQr = async (code: string) => {
+    await generateQr(code);
   };
 
   return (
@@ -70,6 +79,7 @@ const Weapons = (props: WeaponsProps): ReactElement => {
                     <TableCell>Marca</TableCell>
                     <TableCell>Modelo</TableCell>
                     <TableCell>Calibre</TableCell>
+                    <TableCell>Acciones</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -81,6 +91,15 @@ const Weapons = (props: WeaponsProps): ReactElement => {
                         <TableCell>{weapon.mark}</TableCell>
                         <TableCell>{weapon.model}</TableCell>
                         <TableCell>{weapon.caliber}</TableCell>
+                        <TableCell>
+                          <Tooltip title="Generar y descargar código QR">
+                            <IconButton
+                              onClick={() => generateWeaponQr(weapon.code)}
+                            >
+                              <GetAppIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

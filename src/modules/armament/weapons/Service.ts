@@ -87,6 +87,19 @@ export const checkExists = async (code: string): Promise<boolean> => {
   }
 };
 
+export const generateQr = async (code: string): Promise<void> => {
+  try {
+    const response = await HttpClient.get<Blob>(`/Weapons/GenerateQr/${code}`, {
+      responseType: 'blob',
+    });
+    if (IsValidResponse(response)) {
+      FileSaver.saveAs(response.data, `qr-${code}.pdf`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updateWeapon = async (
   data: UpdateWeaponRequest,
   dispatch: AppDispatch,
