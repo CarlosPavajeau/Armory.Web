@@ -8,7 +8,6 @@ export interface CreateWeaponRequest {
   lot: string;
   numberOfProviders: number;
   providerCapacity: number;
-  quantityAvailable: number;
 }
 
 export type UpdateWeaponRequest = CreateWeaponRequest;

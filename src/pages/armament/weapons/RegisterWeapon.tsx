@@ -45,7 +45,6 @@ const registerWeaponSchema = Yup.object().shape({
   lot: Yup.string().required('Este campo es requerido'),
   numberOfProviders: Yup.number().required('Este campo es requerido'),
   providerCapacity: Yup.number().required('Este campo es requerido'),
-  quantityAvailable: Yup.number().required('Este campo es requerido'),
 });
 
 export type RegisterWeaponProps = WithStyles<typeof formStyles>;
@@ -76,7 +75,6 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
       lot: '',
       numberOfProviders: 0,
       providerCapacity: 0,
-      quantityAvailable: 0,
     },
     validationSchema: registerWeaponSchema,
     onSubmit: async values => {
@@ -243,22 +241,6 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
                   : 'Digite la capacidad del proveedor del arma'
               }
               error={!!(errors.providerCapacity && touched.providerCapacity)}
-              className={classes.formField}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              disabled={isSubmitting}
-              fullWidth
-            />
-            <TextField
-              id="quantityAvailable"
-              name="quantityAvailable"
-              label="Cantidad disponible"
-              helperText={
-                errors.quantityAvailable && touched.quantityAvailable
-                  ? errors.quantityAvailable
-                  : 'Digite la cantidad disponible del arma'
-              }
-              error={!!(errors.quantityAvailable && touched.quantityAvailable)}
               className={classes.formField}
               onChange={handleChange}
               onBlur={handleBlur}

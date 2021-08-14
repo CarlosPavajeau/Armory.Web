@@ -1,3 +1,4 @@
+import FileSaver from 'file-saver';
 import { AppDispatch } from '../../../common/store';
 import HttpClient, {
   GetErrorStr,
@@ -26,8 +27,11 @@ export const createWeapon = async (
   dispatch: AppDispatch,
 ): Promise<void> => {
   try {
-    const response = await HttpClient.post('/Weapons', data);
+    const response = await HttpClient.post<Blob>('/Weapons', data, {
+      responseType: 'blob',
+    });
     if (IsValidResponse(response)) {
+      FileSaver.saveAs(response.data, `qr-${data.code}.pdf`);
       dispatch(registeredCorrectly());
     }
   } catch (error) {

@@ -20,7 +20,7 @@ httpClient.interceptors.request.use(
 );
 
 export const IsValidResponse = (response: AxiosResponse): boolean => {
-  return response && response.status === 200;
+  return response && (response.status === 200 || response.status === 201);
 };
 
 export const HasErrorName = (

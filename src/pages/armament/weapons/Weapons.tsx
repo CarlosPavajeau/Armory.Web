@@ -70,7 +70,6 @@ const Weapons = (props: WeaponsProps): ReactElement => {
                     <TableCell>Marca</TableCell>
                     <TableCell>Modelo</TableCell>
                     <TableCell>Calibre</TableCell>
-                    <TableCell>Cantidad disponible</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -82,7 +81,6 @@ const Weapons = (props: WeaponsProps): ReactElement => {
                         <TableCell>{weapon.mark}</TableCell>
                         <TableCell>{weapon.model}</TableCell>
                         <TableCell>{weapon.caliber}</TableCell>
-                        <TableCell>{weapon.quantityAvailable}</TableCell>
                       </TableRow>
                     );
                   })}
