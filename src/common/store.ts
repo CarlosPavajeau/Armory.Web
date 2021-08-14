@@ -10,9 +10,11 @@ import WeaponsReducer from '../modules/armament/weapons/Slice';
 import RanksReducer from '../modules/ranks/Slice';
 import DegreesReducer from '../modules/degrees/Slice';
 import TroopersReducer from '../modules/troopers/Slice';
+import ApplicationReducer from '../modules/application/Slice';
 
 export const store = configureStore({
   reducer: {
+    application: ApplicationReducer,
     user: UsersReducer,
     squadron: SquadronsReducer,
     squads: SquadsReducer,

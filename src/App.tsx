@@ -7,10 +7,19 @@ import { checkAuthentication } from './modules/users/Service';
 import { selectIsAuthenticate, selectToken } from './modules/users/Slice';
 import Storage from './common/plugins/Storage';
 import GlobalStyles from './components/GlobalStyles';
+import { ConfigureGlobalError } from './common/config/http';
+import {
+  closeErrorDialog,
+  openErrorDialog,
+  selectApiErrors,
+} from './modules/application/Slice';
+import ErrorDialog from './components/feedback/dialogs/ErrorDialog';
 
 const App = (): React.ReactElement => {
   const isAuthenticate = useAppSelector(selectIsAuthenticate);
   const token = useAppSelector(selectToken);
+  const openErrDialog = useAppSelector(openErrorDialog);
+  const apiErrors = useAppSelector(selectApiErrors);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -25,6 +34,14 @@ const App = (): React.ReactElement => {
     checkAuthentication(dispatch);
   }, [dispatch]);
 
+  useEffect(() => {
+    ConfigureGlobalError(dispatch);
+  }, [dispatch]);
+
+  const handleOnCloseErrorDialog = () => {
+    dispatch(closeErrorDialog());
+  };
+
   return (
     <div>
       <GlobalStyles />
@@ -32,6 +49,11 @@ const App = (): React.ReactElement => {
         <Route path="/dashboard" component={DashboardLayout} />
         <Route path="/" component={MainLayout} />
       </Switch>
+      <ErrorDialog
+        open={openErrDialog}
+        errors={apiErrors}
+        onClose={handleOnCloseErrorDialog}
+      />
     </div>
   );
 };

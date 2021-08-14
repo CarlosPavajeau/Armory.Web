@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../common/hooks';
 
 import { formStyles } from '../../common/styles';
 import { CreatePersonRequest } from '../../modules/people/Models';
-import { checkExists, createPerson } from '../../modules/people/Service';
+import { createPerson } from '../../modules/people/Service';
 import {
   resetRegister,
   selectError,
@@ -33,23 +33,7 @@ export type RegisterPersonProps = WithStyles<typeof formStyles>;
 const registerPersonScheme = Yup.object().shape({
   id: Yup.string()
     .required('Este campo es requerido')
-    .max(10, 'No se permiten más de 10 caracteres')
-    .test(
-      'CheckExists',
-      'Ya esxite una persona con la identificación digitada',
-      value => {
-        return new Promise(resolve => {
-          if (value === undefined || value === '') {
-            resolve(true);
-            return;
-          }
-
-          checkExists(value || '')
-            .then(result => resolve(!result))
-            .catch(() => resolve(true));
-        });
-      },
-    ),
+    .max(10, 'No se permiten más de 10 caracteres'),
   firstName: Yup.string().required('Este campo es requerido'),
   secondName: Yup.string().required('Este campo es requerido'),
   lastName: Yup.string().required('Este campo es requerido'),
