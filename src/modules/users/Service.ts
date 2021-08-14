@@ -1,6 +1,6 @@
 import HttpClient, { IsValidResponse } from '../../common/config/http';
 import { AppDispatch } from '../../common/store';
-import { ArmoryRoles, AuthenticationRequest } from './Models';
+import { ArmoryRoles, AuthenticationRequest, UserPayload } from './Models';
 import {
   authenticationStatus,
   incorrectPassword,
@@ -9,6 +9,7 @@ import {
   loginSuccess,
   userNotFound,
 } from './Slice';
+import Storage from '../../common/plugins/Storage';
 
 const authorizeUser = async (
   data: AuthenticationRequest,
@@ -33,22 +34,20 @@ const authorizeUser = async (
 };
 
 const checkAuthentication = (dispatch: AppDispatch): void => {
-  const token = window.localStorage.getItem('user_token');
+  const token = Storage.get('user_token');
 
-  let role;
   if (token) {
     const payload = JSON.parse(window.atob(token.split('.')[1]));
-    role = payload.role;
+    const { role } = payload;
+    dispatch(authenticationStatus({ isAuthenticate: Boolean(token), role }));
   }
-
-  dispatch(authenticationStatus({ isAuthenticate: Boolean(token), role }));
 };
 
 const logout = async (dispatch: AppDispatch): Promise<void> => {
   try {
     const response = await HttpClient.post('/Authentication/Logout', {});
     if (IsValidResponse(response)) {
-      window.localStorage.removeItem('user_token');
+      Storage.remove('user_token');
       dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
     }
   } catch (error) {

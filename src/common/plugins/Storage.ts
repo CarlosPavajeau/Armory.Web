@@ -12,6 +12,11 @@ const Storage = {
       window.localStorage.setItem(key, value);
     }
   },
+  remove: (key: string): void => {
+    if (window.localStorage) {
+      window.localStorage.removeItem(key);
+    }
+  },
   decode: (token: string): unknown => jwtDecode(token),
   clear: (): void => {
     if (window.localStorage) {

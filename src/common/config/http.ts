@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { AppDispatch } from '../store';
 import { apiError } from '../../modules/application/Slice';
+import { authenticationStatus } from '../../modules/users/Slice';
+import Storage from '../plugins/Storage';
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -9,7 +11,7 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   config => {
     if (!config.headers.Authorization) {
-      const token = window.localStorage.getItem('user_token');
+      const token = Storage.get('user_token');
       config.withCredentials = !!token;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -25,6 +27,10 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
   httpClient.interceptors.response.use(
     response => response,
     error => {
+      if (error.response.status === 401) {
+        Storage.clear();
+        dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
+      }
       if (error.response && error.response.data && error.response.data.errors) {
         const apiErrors: string[] = [];
         // eslint-disable-next-line no-restricted-syntax
