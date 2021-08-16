@@ -21,3 +21,18 @@ export interface AddAssignedWeaponMagazineFormatItemRequest {
   ammunitionLot: string;
   observations: string;
 }
+
+export interface AssignedWeaponMagazineFormatItem
+  extends AddAssignedWeaponMagazineFormatItemRequest {
+  id: number;
+}
+
+export type AssignedWeaponMagazineFormatItems =
+  AssignedWeaponMagazineFormatItem[];
+
+export interface AssignedWeaponMagazineFormat
+  extends CreateAssignedWeaponMagazineFormatRequest {
+  id: number;
+
+  items: AssignedWeaponMagazineFormatItems;
+}

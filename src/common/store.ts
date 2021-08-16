@@ -11,6 +11,7 @@ import RanksReducer from '../modules/ranks/Slice';
 import DegreesReducer from '../modules/degrees/Slice';
 import TroopersReducer from '../modules/troopers/Slice';
 import ApplicationReducer from '../modules/application/Slice';
+import AssignedWeaponMagazineFormat from '../modules/formats/assigned-weapon-magazine/Slice';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     ranks: RanksReducer,
     degrees: DegreesReducer,
     troopers: TroopersReducer,
+    assigned_weapon_magazine_format: AssignedWeaponMagazineFormat,
   },
 });
 
