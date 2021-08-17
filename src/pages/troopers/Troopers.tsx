@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -18,6 +18,8 @@ import {
   selectTroopers,
   selectUiStatus,
   selectError,
+  loadingTroopers,
+  loadTroopers,
 } from '../../modules/troopers/Slice';
 import Alert from '../../components/feedback/Alert';
 
@@ -30,14 +32,20 @@ const Troopers = (props: TroopersProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getTroopers(dispatch);
-    })();
+  const fetchTroopers = useCallback(async () => {
+    dispatch(loadingTroopers());
+    const result = await getTroopers();
+    dispatch(loadTroopers(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchTroopers();
+    })();
+  }, [fetchTroopers]);
+
   const handleRefresh = async () => {
-    await getTroopers(dispatch);
+    await fetchTroopers();
   };
 
   return (

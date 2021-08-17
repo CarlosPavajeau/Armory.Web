@@ -21,6 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logout } from '../../modules/users/Service';
 import { useAppDispatch } from '../../common/hooks';
 import Breadcrumb from '../routes/Breadcrumb';
+import { authenticationStatus } from '../../modules/users/Slice';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -80,7 +81,8 @@ const DashboardNavBar = (props: DashboardNavBarProps): ReactElement => {
   const dispatch = useAppDispatch();
   const handleLogout = async () => {
     handleCloseAccount();
-    await logout(dispatch);
+    const result = await logout();
+    dispatch(authenticationStatus(result));
   };
 
   return (

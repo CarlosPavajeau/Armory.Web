@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -17,6 +17,8 @@ import {
   selectEquipments,
   selectUiStatus,
   selectError,
+  loadingEquipments,
+  loadEquipments,
 } from '../../../modules/armament/equipments/Slice';
 import { getEquipments } from '../../../modules/armament/equipments/Service';
 import Alert from '../../../components/feedback/Alert';
@@ -30,14 +32,20 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getEquipments(dispatch);
-    })();
+  const fetchEquipments = useCallback(async () => {
+    dispatch(loadingEquipments());
+    const result = await getEquipments();
+    dispatch(loadEquipments(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchEquipments();
+    })();
+  }, [fetchEquipments]);
+
   const handleRefresh = async () => {
-    await getEquipments(dispatch);
+    await fetchEquipments();
   };
 
   return (

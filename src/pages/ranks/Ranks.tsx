@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -16,6 +16,8 @@ import {
   selectRanks,
   selectUiStatus,
   selectError,
+  loadingRanks,
+  loadRanks,
 } from '../../modules/ranks/Slice';
 import { getRanks } from '../../modules/ranks/Service';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
@@ -30,14 +32,20 @@ const Ranks = (props: RanksProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getRanks(dispatch);
-    })();
+  const fetchRanks = useCallback(async () => {
+    dispatch(loadingRanks());
+    const result = await getRanks();
+    dispatch(loadRanks(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchRanks();
+    })();
+  }, [fetchRanks]);
+
   const handleRefresh = async () => {
-    await getRanks(dispatch);
+    await fetchRanks();
   };
 
   return (

@@ -24,6 +24,8 @@ import {
   selectWasRegistered,
 } from '../../modules/degrees/Slice';
 import {
+  loadingRanks,
+  loadRanks,
   selectRanks,
   selectUiStatus as selectRanksUiStatus,
 } from '../../modules/ranks/Slice';
@@ -57,7 +59,9 @@ const RegisterDegree = (props: RegisterDegreeProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      await getRanks(dispatch);
+      dispatch(loadingRanks());
+      const result = await getRanks();
+      dispatch(loadRanks(result));
     })();
   }, [dispatch]);
 

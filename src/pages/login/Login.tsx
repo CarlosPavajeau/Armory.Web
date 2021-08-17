@@ -16,6 +16,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/Service';
 import {
+  loginSuccess,
   selectErrors,
   selectIsAuthenticate,
   selectUiStatus,
@@ -67,7 +68,8 @@ const Login = (props: LoginProps): ReactElement => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: async values => {
-      await authorizeUser({ ...values, isPersistent: false }, dispatch);
+      const result = await authorizeUser({ ...values, isPersistent: false });
+      dispatch(loginSuccess(result));
     },
   });
 

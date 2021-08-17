@@ -17,6 +17,7 @@ import {
   createEquipment,
 } from '../../../modules/armament/equipments/Service';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -74,7 +75,8 @@ const RegisterEquipment = (props: RegisterEquipmentProps): ReactElement => {
     },
     validationSchema: registerEquipmentSchema,
     onSubmit: async values => {
-      await createEquipment(values, dispatch);
+      await createEquipment(values);
+      dispatch(registeredCorrectly());
     },
   });
 

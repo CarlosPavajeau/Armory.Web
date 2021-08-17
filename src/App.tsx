@@ -4,7 +4,11 @@ import { useAppDispatch, useAppSelector } from './common/hooks';
 import MainLayout from './components/layouts/MainLayout';
 import DashboardLayout from './components/layouts/DashboardLayout';
 import { checkAuthentication } from './modules/users/Service';
-import { selectIsAuthenticate, selectToken } from './modules/users/Slice';
+import {
+  authenticationStatus,
+  selectIsAuthenticate,
+  selectToken,
+} from './modules/users/Slice';
 import Storage from './common/plugins/Storage';
 import GlobalStyles from './components/GlobalStyles';
 import { ConfigureGlobalError } from './common/config/http';
@@ -31,7 +35,8 @@ const App = (): React.ReactElement => {
   }, [isAuthenticate, token]);
 
   useEffect(() => {
-    checkAuthentication(dispatch);
+    const result = checkAuthentication();
+    dispatch(authenticationStatus(result));
   }, [dispatch]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -16,6 +16,8 @@ import {
   selectAmmunition,
   selectUiStatus,
   selectError,
+  loadingAmmunition,
+  loadAmmunition,
 } from '../../../modules/armament/ammunition/Slice';
 import { getAmmunition } from '../../../modules/armament/ammunition/Service';
 import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
@@ -30,14 +32,20 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getAmmunition(dispatch);
-    })();
+  const fetchAmmunition = useCallback(async () => {
+    dispatch(loadingAmmunition());
+    const result = await getAmmunition();
+    dispatch(loadAmmunition(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchAmmunition();
+    })();
+  }, [fetchAmmunition]);
+
   const handleRefresh = async () => {
-    await getAmmunition(dispatch);
+    await fetchAmmunition();
   };
 
   return (

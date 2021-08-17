@@ -19,11 +19,17 @@ import { formStyles } from '../../common/styles';
 import { CreateSquadronRequest } from '../../modules/squadrons/Models';
 import { checkExists, createSquadron } from '../../modules/squadrons/Service';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
 } from '../../modules/squadrons/Slice';
-import { selectPeople, selectUiStatus } from '../../modules/people/Slice';
+import {
+  loadingPeople,
+  loadPeople,
+  selectPeople,
+  selectUiStatus,
+} from '../../modules/people/Slice';
 import { getPeopleByRole } from '../../modules/people/Service';
 
 const registerSquadronScheme = Yup.object().shape({
@@ -69,7 +75,9 @@ const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      await getPeopleByRole('SquadronLeader', dispatch);
+      dispatch(loadingPeople());
+      const result = await getPeopleByRole('SquadronLeader');
+      dispatch(loadPeople(result));
     })();
   }, [dispatch]);
 
@@ -81,7 +89,8 @@ const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
     },
     validationSchema: registerSquadronScheme,
     onSubmit: async (values: CreateSquadronRequest) => {
-      await createSquadron(values, dispatch);
+      await createSquadron(values);
+      dispatch(registeredCorrectly());
     },
   });
 

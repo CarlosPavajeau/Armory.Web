@@ -1,64 +1,26 @@
-import { AppDispatch } from '../../common/store';
-import HttpClient, {
-  GetErrorStr,
-  HasErrorName,
-  IsValidResponse,
-} from '../../common/config/http';
-import {
-  apiError,
-  registeredCorrectly,
-  loadingSquads,
-  loadingSquad,
-  loadSquads,
-  loadSquad,
-} from './Slice';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 import { CreateSquadRequest, Squad, Squads } from './Models';
 
-export const createSquad = async (
-  data: CreateSquadRequest,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    const response = await HttpClient.post('/Squads', data);
-    if (IsValidResponse(response)) {
-      dispatch(registeredCorrectly());
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'SquadAlreadyRegistered')) {
-      dispatch(apiError(GetErrorStr(error.response, 'SquadAlreadyRegistered')));
-    } else {
-      dispatch(apiError('No se pudo registrar el escuadron.'));
-    }
-  }
+export const createSquad = async (data: CreateSquadRequest): Promise<void> => {
+  await HttpClient.post('/Squads', data);
 };
 
-export const getSquads = async (dispatch: AppDispatch): Promise<void> => {
-  try {
-    dispatch(loadingSquads());
-    const response = await HttpClient.get<Squads>('/Squads');
-    if (IsValidResponse(response)) {
-      dispatch(loadSquads(response.data));
-    }
-  } catch (error) {
-    dispatch(apiError('No se pudo obtener los datos.'));
+export const getSquads = async (): Promise<Squads> => {
+  const response = await HttpClient.get<Squads>('/Squads');
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudieron obtener las escuadras.');
 };
 
-export const getSquad = async (
-  code: string,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(loadingSquad());
-    const response = await HttpClient.get<Squad>(`/Squads/${code}`);
-    if (IsValidResponse(response)) {
-      dispatch(loadSquad(response.data));
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'SquadNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'SquadNotFound')));
-    }
+export const getSquad = async (code: string): Promise<Squad> => {
+  const response = await HttpClient.get<Squad>(`/Squads/${code}`);
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudo obtener la escuadra.');
 };
 
 export const checkExists = async (code: string): Promise<boolean> => {

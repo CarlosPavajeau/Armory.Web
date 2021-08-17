@@ -18,10 +18,13 @@ import CircularLoader from '../../components/loading/CircularLoader';
 import { formStyles } from '../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
+  loadingSquadrons,
+  loadSquadrons,
   selectSquadrons,
   selectUiStatus as selectSquadronsUiStatus,
 } from '../../modules/squadrons/Slice';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -30,6 +33,8 @@ import { getSquadrons } from '../../modules/squadrons/Service';
 import { CreateSquadRequest } from '../../modules/squads/Models';
 import { checkExists, createSquad } from '../../modules/squads/Service';
 import {
+  loadingPeople,
+  loadPeople,
   selectPeople,
   selectUiStatus as selectPeopleUiStatus,
 } from '../../modules/people/Slice';
@@ -82,13 +87,17 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      await getSquadrons(dispatch);
+      dispatch(loadingSquadrons());
+      const result = await getSquadrons();
+      dispatch(loadSquadrons(result));
     })();
   }, [dispatch]);
 
   useEffect(() => {
     (async () => {
-      await getPeopleByRole('SquadLeader', dispatch);
+      dispatch(loadingPeople());
+      const result = await getPeopleByRole('SquadLeader');
+      dispatch(loadPeople(result));
     })();
   }, [dispatch]);
 
@@ -101,7 +110,8 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
     },
     validationSchema: registerSquadScheme,
     onSubmit: async values => {
-      await createSquad(values, dispatch);
+      await createSquad(values);
+      dispatch(registeredCorrectly());
     },
   });
 

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { Tooltip, withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -23,6 +23,8 @@ import {
   selectWeapons,
   selectUiStatus,
   selectError,
+  loadingWeapons,
+  loadWeapons,
 } from '../../../modules/armament/weapons/Slice';
 import Alert from '../../../components/feedback/Alert';
 
@@ -35,14 +37,20 @@ const Weapons = (props: WeaponsProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getWeapons(dispatch);
-    })();
+  const fetchWeapons = useCallback(async () => {
+    dispatch(loadingWeapons());
+    const result = await getWeapons();
+    dispatch(loadWeapons(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchWeapons();
+    })();
+  }, [fetchWeapons]);
+
   const handleRefresh = async () => {
-    await getWeapons(dispatch);
+    await fetchWeapons();
   };
 
   const generateWeaponQr = async (code: string) => {

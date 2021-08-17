@@ -17,6 +17,7 @@ import {
   checkExists,
 } from '../../../modules/armament/ammunition/Service';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -81,7 +82,8 @@ const RegisterAmmunition = (props: RegisterAmmunitionProps): ReactElement => {
     },
     validationSchema: registerAmmunitionSchema,
     onSubmit: async values => {
-      await createAmmunition(values, dispatch);
+      await createAmmunition(values);
+      dispatch(registeredCorrectly());
     },
   });
 

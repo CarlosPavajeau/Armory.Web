@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -15,6 +15,8 @@ import {
   selectSquads,
   selectUiStatus,
   selectError,
+  loadingSquads,
+  loadSquads,
 } from '../../modules/squads/Slice';
 import { getSquads } from '../../modules/squads/Service';
 import { displayData } from '../../common/styles';
@@ -30,14 +32,20 @@ const Squads = (props: SquadsProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getSquads(dispatch);
-    })();
+  const fetchSquads = useCallback(async () => {
+    dispatch(loadingSquads());
+    const result = await getSquads();
+    dispatch(loadSquads(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchSquads();
+    })();
+  }, [fetchSquads]);
+
   const handleRefresh = async () => {
-    await getSquads(dispatch);
+    await fetchSquads();
   };
 
   return (

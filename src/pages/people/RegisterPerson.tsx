@@ -21,11 +21,17 @@ import { formStyles } from '../../common/styles';
 import { CreatePersonRequest } from '../../modules/people/Models';
 import { createPerson } from '../../modules/people/Service';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
 } from '../../modules/people/Slice';
-import { selectRoles, selectUiStatus } from '../../modules/users/Slice';
+import {
+  loadingRoles,
+  loadRoles,
+  selectRoles,
+  selectUiStatus,
+} from '../../modules/users/Slice';
 import { getRoles } from '../../modules/users/Service';
 
 export type RegisterPersonProps = WithStyles<typeof formStyles>;
@@ -66,7 +72,9 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      await getRoles(dispatch);
+      dispatch(loadingRoles());
+      const result = await getRoles();
+      dispatch(loadRoles(result));
     })();
   }, [dispatch]);
 
@@ -96,7 +104,8 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
     },
     validationSchema: registerPersonScheme,
     onSubmit: async values => {
-      await createPerson(values, dispatch);
+      await createPerson(values);
+      dispatch(registeredCorrectly());
     },
   });
 

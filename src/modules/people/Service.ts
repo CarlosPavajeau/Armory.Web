@@ -1,96 +1,46 @@
-import { AppDispatch } from '../../common/store';
 import { CreatePersonRequest, Person, People } from './Models';
-import HttpClient, {
-  GetErrorStr,
-  HasErrorName,
-  IsValidResponse,
-} from '../../common/config/http';
-import {
-  deletedPerson,
-  deletingPerson,
-  loadingPeople,
-  loadingPerson,
-  loadPeople,
-  loadPerson,
-  registeredCorrectly,
-  updatedPerson,
-  updatingPerson,
-  apiError,
-} from './Slice';
+import HttpClient, { IsValidResponse } from '../../common/config/http';
 
 export const createPerson = async (
   data: CreatePersonRequest,
-  dispatch: AppDispatch,
 ): Promise<void> => {
-  try {
-    const response = await HttpClient.post('/People', data);
-    if (IsValidResponse(response)) {
-      dispatch(registeredCorrectly());
-    }
-  } catch (error) {
-    dispatch(apiError('No se pudo registrar a la persona'));
-  }
+  await HttpClient.post('/People', data);
 };
 
-export const getPeople = async (dispatch: AppDispatch): Promise<void> => {
-  try {
-    dispatch(loadingPeople());
-    const response = await HttpClient.get<People>('/People');
-    if (IsValidResponse(response)) {
-      dispatch(loadPeople(response.data));
-    }
-  } catch (error) {
-    dispatch(apiError('No se puedo obtener los datos.'));
+export const getPeople = async (): Promise<People> => {
+  const response = await HttpClient.get<People>('/People');
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudieron obtener las personas.');
 };
 
-export const getPerson = async (
-  id: string,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(loadingPerson());
-    const response = await HttpClient.get<Person>(`/People/${id}`);
-    if (IsValidResponse(response)) {
-      dispatch(loadPerson(response.data));
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'PersonNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
-    }
+export const getPerson = async (id: string): Promise<Person> => {
+  const response = await HttpClient.get<Person>(`/People/${id}`);
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudo obtener la persona');
 };
 
-export const getPeopleByRole = async (
-  role: string,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(loadingPeople());
-    const response = await HttpClient.get<People>(`/People/ByRole/${role}`);
-    if (IsValidResponse(response)) {
-      dispatch(loadPeople(response.data));
-    }
-  } catch (error) {
-    dispatch(apiError('No se pudo cargar los datos.'));
+export const getPeopleByRole = async (role: string): Promise<People> => {
+  const response = await HttpClient.get<People>(`/People/ByRole/${role}`);
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudieron obtener las personas.');
 };
 
-export const getPersonByUserId = async (
-  userId: string,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(loadingPerson());
-    const response = await HttpClient.get<Person>(`/People/ByUserId/${userId}`);
-    if (IsValidResponse(response)) {
-      dispatch(loadPerson(response.data));
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'PersonNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
-    }
+export const getPersonByUserId = async (userId: string): Promise<Person> => {
+  const response = await HttpClient.get<Person>(`/People/ByUserId/${userId}`);
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudo obtener la persona');
 };
 
 export const checkExists = async (code: string): Promise<boolean> => {
@@ -106,36 +56,10 @@ export const checkExists = async (code: string): Promise<boolean> => {
   }
 };
 
-export const updatePerson = async (
-  person: Person,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(updatingPerson());
-    const response = await HttpClient.put(`/People/${person.id}`, person);
-    if (IsValidResponse(response)) {
-      dispatch(updatedPerson);
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'PersonNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
-    }
-  }
+export const updatePerson = async (person: Person): Promise<void> => {
+  await HttpClient.put(`/People/${person.id}`, person);
 };
 
-export const deletePerson = async (
-  id: string,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(deletingPerson());
-    const response = await HttpClient.delete(`/People/${id}`);
-    if (IsValidResponse(response)) {
-      dispatch(deletedPerson(id));
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'PersonNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'PersonNotFound')));
-    }
-  }
+export const deletePerson = async (id: string): Promise<void> => {
+  await HttpClient.delete(`/People/${id}`);
 };

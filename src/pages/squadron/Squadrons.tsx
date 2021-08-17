@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -16,6 +16,8 @@ import {
   selectSquadrons,
   selectUiStatus,
   selectError,
+  loadingSquadrons,
+  loadSquadrons,
 } from '../../modules/squadrons/Slice';
 import { displayData } from '../../common/styles';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
@@ -30,14 +32,20 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getSquadrons(dispatch);
-    })();
+  const fetchSquadrons = useCallback(async () => {
+    dispatch(loadingSquadrons());
+    const result = await getSquadrons();
+    dispatch(loadSquadrons(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchSquadrons();
+    })();
+  }, [fetchSquadrons]);
+
   const handleRefresh = async () => {
-    await getSquadrons(dispatch);
+    await fetchSquadrons();
   };
 
   return (

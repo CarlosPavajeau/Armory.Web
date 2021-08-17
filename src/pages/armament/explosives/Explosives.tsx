@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -17,6 +17,8 @@ import {
   selectExplosives,
   selectUiStatus,
   selectError,
+  loadingExplosives,
+  loadExplosives,
 } from '../../../modules/armament/explosives/Slice';
 import { getExplosives } from '../../../modules/armament/explosives/Service';
 import Alert from '../../../components/feedback/Alert';
@@ -30,14 +32,20 @@ const Explosives = (props: ExplosivesProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getExplosives(dispatch);
-    })();
+  const fetchExplosives = useCallback(async () => {
+    dispatch(loadingExplosives());
+    const result = await getExplosives();
+    dispatch(loadExplosives(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchExplosives();
+    })();
+  }, [fetchExplosives]);
+
   const handleRefresh = async () => {
-    await getExplosives(dispatch);
+    await fetchExplosives();
   };
 
   return (

@@ -1,72 +1,32 @@
-import { AppDispatch } from '../../../common/store';
-import HttpClient, {
-  IsValidResponse,
-  HasErrorName,
-  GetErrorStr,
-} from '../../../common/config/http';
+import HttpClient, { IsValidResponse } from '../../../common/config/http';
 import {
   CreateAmmunitionRequest,
   Ammunition,
   UpdateAmmunitionRequest,
 } from './Models';
-import {
-  registeredCorrectly,
-  loadingAmmunition,
-  loadAmmunition,
-  loadingOneAmmunition,
-  loadOneAmmunition,
-  updatingOneAmmunition,
-  updatedOneAmmunition,
-  apiError,
-} from './Slice';
 
 export const createAmmunition = async (
   data: CreateAmmunitionRequest,
-  dispatch: AppDispatch,
 ): Promise<void> => {
-  try {
-    const response = await HttpClient.post('/Ammunition', data);
-    if (IsValidResponse(response)) {
-      dispatch(registeredCorrectly());
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'AmmunitionAlreadyRegistered')) {
-      dispatch(
-        apiError(GetErrorStr(error.response, 'AmmunitionAlreadyRegistered')),
-      );
-    } else {
-      dispatch(apiError('No se pudo registrar la escuadrilla.'));
-    }
-  }
+  await HttpClient.post('/Ammunition', data);
 };
 
-export const getAmmunition = async (dispatch: AppDispatch): Promise<void> => {
-  try {
-    dispatch(loadingAmmunition());
-    const response = await HttpClient.get<Ammunition[]>('/Ammunition');
-    if (IsValidResponse(response)) {
-      dispatch(loadAmmunition(response.data));
-    }
-  } catch (error) {
-    dispatch(apiError('No se pudo obtener los datos.'));
+export const getAmmunition = async (): Promise<Ammunition[]> => {
+  const response = await HttpClient.get<Ammunition[]>('/Ammunition');
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudieron obtener las municiones.');
 };
 
-export const getOneAmmunition = async (
-  code: string,
-  dispatch: AppDispatch,
-): Promise<void> => {
-  try {
-    dispatch(loadingOneAmmunition());
-    const response = await HttpClient.get<Ammunition>(`/Ammunition/${code}`);
-    if (IsValidResponse(response)) {
-      dispatch(loadOneAmmunition(response.data));
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'AmmunitionNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'AmmunitionNotFound')));
-    }
+export const getOneAmmunition = async (code: string): Promise<Ammunition> => {
+  const response = await HttpClient.get<Ammunition>(`/Ammunition/${code}`);
+  if (IsValidResponse(response)) {
+    return response.data;
   }
+
+  throw new Error('No se pudo obtener la munición.');
 };
 
 export const checkExists = async (code: string): Promise<boolean> => {
@@ -86,17 +46,6 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
 export const updateOneAmmunition = async (
   data: UpdateAmmunitionRequest,
-  dispatch: AppDispatch,
 ): Promise<void> => {
-  try {
-    dispatch(updatingOneAmmunition());
-    const response = await HttpClient.put(`/Ammunition/${data.code}`, data);
-    if (IsValidResponse(response)) {
-      dispatch(updatedOneAmmunition());
-    }
-  } catch (error) {
-    if (HasErrorName(error.response, 'AmmunitionNotFound')) {
-      dispatch(apiError(GetErrorStr(error.response, 'AmmunitionNotFound')));
-    }
-  }
+  await HttpClient.put(`/Ammunition/${data.code}`, data);
 };

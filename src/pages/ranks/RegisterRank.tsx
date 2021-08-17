@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { formStyles } from '../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -46,7 +47,8 @@ const RegisterRank = (props: RegisterRankProps): ReactElement => {
     },
     validationSchema: registerRankSchema,
     onSubmit: async values => {
-      await createRank(values, dispatch);
+      await createRank(values);
+      dispatch(registeredCorrectly());
     },
   });
 

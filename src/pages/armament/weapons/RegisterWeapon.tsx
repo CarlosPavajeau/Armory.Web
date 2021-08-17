@@ -17,6 +17,7 @@ import {
   createWeapon,
 } from '../../../modules/armament/weapons/Service';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -78,7 +79,8 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
     },
     validationSchema: registerWeaponSchema,
     onSubmit: async values => {
-      await createWeapon(values, dispatch);
+      await createWeapon(values);
+      dispatch(registeredCorrectly());
     },
   });
 

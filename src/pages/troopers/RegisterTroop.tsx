@@ -23,6 +23,7 @@ import { getSquads } from '../../modules/squads/Service';
 import { getRanks } from '../../modules/ranks/Service';
 import { getDegreesByRank } from '../../modules/degrees/Service';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -30,10 +31,14 @@ import {
 import {
   selectUiStatus as selectSquadsUiStatus,
   selectSquads,
+  loadingSquads,
+  loadSquads,
 } from '../../modules/squads/Slice';
 import {
   selectUiStatus as selectRanksUiStatus,
   selectRanks,
+  loadingRanks,
+  loadRanks,
 } from '../../modules/ranks/Slice';
 import {
   selectUiStatus as selectDegreesUiStatus,
@@ -100,13 +105,17 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      await getSquads(dispatch);
+      dispatch(loadingSquads());
+      const result = await getSquads();
+      dispatch(loadSquads(result));
     })();
   }, [dispatch]);
 
   useEffect(() => {
     (async () => {
-      await getRanks(dispatch);
+      dispatch(loadingRanks());
+      const result = await getRanks();
+      dispatch(loadRanks(result));
     })();
   }, [dispatch]);
 
@@ -123,7 +132,8 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
     },
     validationSchema: registerTroopSchema,
     onSubmit: async values => {
-      await createTroop(values, dispatch);
+      await createTroop(values);
+      dispatch(registeredCorrectly());
     },
   });
 
