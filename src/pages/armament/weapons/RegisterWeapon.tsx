@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
+import FileSaver from 'file-saver';
 import { formStyles } from '../../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { CreateWeaponRequest } from '../../../modules/armament/weapons/Models';
@@ -79,7 +80,8 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
     },
     validationSchema: registerWeaponSchema,
     onSubmit: async values => {
-      await createWeapon(values);
+      const result = await createWeapon(values);
+      FileSaver.saveAs(result, `qr-${values.code}.pdf`);
       dispatch(registeredCorrectly());
     },
   });

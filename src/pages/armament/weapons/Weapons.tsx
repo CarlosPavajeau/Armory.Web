@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import FileSaver from 'file-saver';
 import CircularLoader from '../../../components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { displayData } from '../../../common/styles';
@@ -54,7 +55,8 @@ const Weapons = (props: WeaponsProps): ReactElement => {
   };
 
   const generateWeaponQr = async (code: string) => {
-    await generateQr(code);
+    const result = await generateQr(code);
+    FileSaver.saveAs(result, `qr-${code}.pdf`);
   };
 
   return (
