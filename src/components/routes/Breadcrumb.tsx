@@ -26,6 +26,9 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/dashboard/weapons/register': 'Registrar',
   '/dashboard/troopers': 'Tropas',
   '/dashboard/troopers/register': 'Registrar',
+  '/dashboard/formats': 'Formatos',
+  '/dashboard/formats/assigned-weapon-magazine-format': 'Revista',
+  '/dashboard/formats/assigned-weapon-magazine-format/register': 'Registrar',
 };
 
 const Breadcrumb = (): ReactElement => {

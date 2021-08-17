@@ -15,7 +15,7 @@ export const createAssignedWeaponMagazineFormat = async (
     return response.data;
   }
 
-  return 0;
+  throw new Error('No se puedo registrar el formato');
 };
 
 export const addAssignedWeaponMagazineFormatItem = async (

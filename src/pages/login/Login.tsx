@@ -68,8 +68,12 @@ const Login = (props: LoginProps): ReactElement => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: async values => {
-      const result = await authorizeUser({ ...values, isPersistent: false });
-      dispatch(loginSuccess(result));
+      try {
+        const result = await authorizeUser({ ...values, isPersistent: false });
+        dispatch(loginSuccess(result));
+      } catch (err) {
+        // Ignore error
+      }
     },
   });
 

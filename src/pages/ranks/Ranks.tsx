@@ -18,6 +18,7 @@ import {
   selectError,
   loadingRanks,
   loadRanks,
+  apiError,
 } from '../../modules/ranks/Slice';
 import { getRanks } from '../../modules/ranks/Service';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
@@ -33,9 +34,13 @@ const Ranks = (props: RanksProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchRanks = useCallback(async () => {
-    dispatch(loadingRanks());
-    const result = await getRanks();
-    dispatch(loadRanks(result));
+    try {
+      dispatch(loadingRanks());
+      const result = await getRanks();
+      dispatch(loadRanks(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

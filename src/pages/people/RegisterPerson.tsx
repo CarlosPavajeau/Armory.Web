@@ -21,6 +21,7 @@ import { formStyles } from '../../common/styles';
 import { CreatePersonRequest } from '../../modules/people/Models';
 import { createPerson } from '../../modules/people/Service';
 import {
+  apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
@@ -72,9 +73,13 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingRoles());
-      const result = await getRoles();
-      dispatch(loadRoles(result));
+      try {
+        dispatch(loadingRoles());
+        const result = await getRoles();
+        dispatch(loadRoles(result));
+      } catch (err) {
+        // Ignore error
+      }
     })();
   }, [dispatch]);
 
@@ -104,8 +109,12 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
     },
     validationSchema: registerPersonScheme,
     onSubmit: async values => {
-      await createPerson(values);
-      dispatch(registeredCorrectly());
+      try {
+        await createPerson(values);
+        dispatch(registeredCorrectly());
+      } catch (err) {
+        dispatch(apiError(err.message));
+      }
     },
   });
 

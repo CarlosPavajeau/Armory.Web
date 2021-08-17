@@ -18,6 +18,7 @@ import {
   selectError,
   loadingAmmunition,
   loadAmmunition,
+  apiError,
 } from '../../../modules/armament/ammunition/Slice';
 import { getAmmunition } from '../../../modules/armament/ammunition/Service';
 import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
@@ -33,9 +34,13 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchAmmunition = useCallback(async () => {
-    dispatch(loadingAmmunition());
-    const result = await getAmmunition();
-    dispatch(loadAmmunition(result));
+    try {
+      dispatch(loadingAmmunition());
+      const result = await getAmmunition();
+      dispatch(loadAmmunition(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

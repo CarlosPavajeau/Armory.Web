@@ -17,6 +17,7 @@ import {
   createExplosive,
 } from '../../../modules/armament/explosives/Service';
 import {
+  apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
@@ -81,8 +82,12 @@ const RegisterExplosive = (props: RegisterExplosiveProps): ReactElement => {
     },
     validationSchema: registerExplosiveSchema,
     onSubmit: async values => {
-      await createExplosive(values);
-      dispatch(registeredCorrectly());
+      try {
+        await createExplosive(values);
+        dispatch(registeredCorrectly());
+      } catch (err) {
+        dispatch(apiError(err.message));
+      }
     },
   });
 

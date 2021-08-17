@@ -22,8 +22,10 @@ import {
   loadSquadrons,
   selectSquadrons,
   selectUiStatus as selectSquadronsUiStatus,
+  apiError as squadronsApiError,
 } from '../../modules/squadrons/Slice';
 import {
+  apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
@@ -37,6 +39,7 @@ import {
   loadPeople,
   selectPeople,
   selectUiStatus as selectPeopleUiStatus,
+  apiError as peopleApiError,
 } from '../../modules/people/Slice';
 import { getPeopleByRole } from '../../modules/people/Service';
 
@@ -87,17 +90,25 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingSquadrons());
-      const result = await getSquadrons();
-      dispatch(loadSquadrons(result));
+      try {
+        dispatch(loadingSquadrons());
+        const result = await getSquadrons();
+        dispatch(loadSquadrons(result));
+      } catch (err) {
+        dispatch(squadronsApiError(err.message));
+      }
     })();
   }, [dispatch]);
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingPeople());
-      const result = await getPeopleByRole('SquadLeader');
-      dispatch(loadPeople(result));
+      try {
+        dispatch(loadingPeople());
+        const result = await getPeopleByRole('SquadLeader');
+        dispatch(loadPeople(result));
+      } catch (err) {
+        dispatch(peopleApiError(err.message));
+      }
     })();
   }, [dispatch]);
 
@@ -110,8 +121,12 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
     },
     validationSchema: registerSquadScheme,
     onSubmit: async values => {
-      await createSquad(values);
-      dispatch(registeredCorrectly());
+      try {
+        await createSquad(values);
+        dispatch(registeredCorrectly());
+      } catch (err) {
+        dispatch(apiError(err.message));
+      }
     },
   });
 

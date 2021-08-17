@@ -26,6 +26,7 @@ import {
   selectError,
   loadingWeapons,
   loadWeapons,
+  apiError,
 } from '../../../modules/armament/weapons/Slice';
 import Alert from '../../../components/feedback/Alert';
 
@@ -39,9 +40,13 @@ const Weapons = (props: WeaponsProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchWeapons = useCallback(async () => {
-    dispatch(loadingWeapons());
-    const result = await getWeapons();
-    dispatch(loadWeapons(result));
+    try {
+      dispatch(loadingWeapons());
+      const result = await getWeapons();
+      dispatch(loadWeapons(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -55,8 +60,12 @@ const Weapons = (props: WeaponsProps): ReactElement => {
   };
 
   const generateWeaponQr = async (code: string) => {
-    const result = await generateQr(code);
-    FileSaver.saveAs(result, `qr-${code}.pdf`);
+    try {
+      const result = await generateQr(code);
+      FileSaver.saveAs(result, `qr-${code}.pdf`);
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   };
 
   return (

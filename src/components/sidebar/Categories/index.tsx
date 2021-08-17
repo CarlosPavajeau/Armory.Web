@@ -144,6 +144,16 @@ const categories: Categories = [
       },
     ],
   },
+  {
+    id: 'Formatos',
+    children: [
+      {
+        id: 'Generar formato de revista',
+        path: '/dashboard/formats/assigned-weapon-magazine-format/register',
+        icon: <AddIcon />,
+      },
+    ],
+  },
 ];
 
 export default categories;

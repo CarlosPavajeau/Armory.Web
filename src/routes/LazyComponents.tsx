@@ -47,6 +47,12 @@ const RegisterTroopComponent = lazy(
   () => import('../pages/troopers/RegisterTroop'),
 );
 const TroopersComponent = lazy(() => import('../pages/troopers/Troopers'));
+const RegisterAssignedWeaponMagazineFormatComponent = lazy(
+  () =>
+    import(
+      '../pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormat'
+    ),
+);
 
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
@@ -165,5 +171,11 @@ export const RegisterTroop = (): ReactElement => (
 export const Troopers = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <TroopersComponent />
+  </Suspense>
+);
+
+export const RegisterAssignedWeaponMagazineFormat = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterAssignedWeaponMagazineFormatComponent />
   </Suspense>
 );

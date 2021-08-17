@@ -19,6 +19,7 @@ import {
   selectError,
   loadingExplosives,
   loadExplosives,
+  apiError,
 } from '../../../modules/armament/explosives/Slice';
 import { getExplosives } from '../../../modules/armament/explosives/Service';
 import Alert from '../../../components/feedback/Alert';
@@ -33,9 +34,13 @@ const Explosives = (props: ExplosivesProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchExplosives = useCallback(async () => {
-    dispatch(loadingExplosives());
-    const result = await getExplosives();
-    dispatch(loadExplosives(result));
+    try {
+      dispatch(loadingExplosives());
+      const result = await getExplosives();
+      dispatch(loadExplosives(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

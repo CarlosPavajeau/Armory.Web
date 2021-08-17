@@ -23,6 +23,7 @@ import { getSquads } from '../../modules/squads/Service';
 import { getRanks } from '../../modules/ranks/Service';
 import { getDegreesByRank } from '../../modules/degrees/Service';
 import {
+  apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
@@ -30,18 +31,21 @@ import {
 } from '../../modules/troopers/Slice';
 import {
   selectUiStatus as selectSquadsUiStatus,
+  apiError as squadsApiError,
   selectSquads,
   loadingSquads,
   loadSquads,
 } from '../../modules/squads/Slice';
 import {
   selectUiStatus as selectRanksUiStatus,
+  apiError as ranksApiError,
   selectRanks,
   loadingRanks,
   loadRanks,
 } from '../../modules/ranks/Slice';
 import {
   selectUiStatus as selectDegreesUiStatus,
+  apiError as degreesApiError,
   selectDegrees,
   loadingDegrees,
   loadDegrees,
@@ -105,17 +109,25 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingSquads());
-      const result = await getSquads();
-      dispatch(loadSquads(result));
+      try {
+        dispatch(loadingSquads());
+        const result = await getSquads();
+        dispatch(loadSquads(result));
+      } catch (err) {
+        dispatch(squadsApiError(err.message));
+      }
     })();
   }, [dispatch]);
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingRanks());
-      const result = await getRanks();
-      dispatch(loadRanks(result));
+      try {
+        dispatch(loadingRanks());
+        const result = await getRanks();
+        dispatch(loadRanks(result));
+      } catch (err) {
+        dispatch(ranksApiError(err.message));
+      }
     })();
   }, [dispatch]);
 
@@ -132,8 +144,12 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
     },
     validationSchema: registerTroopSchema,
     onSubmit: async values => {
-      await createTroop(values);
-      dispatch(registeredCorrectly());
+      try {
+        await createTroop(values);
+        dispatch(registeredCorrectly());
+      } catch (err) {
+        dispatch(apiError(err.message));
+      }
     },
   });
 
@@ -150,9 +166,13 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
   useEffect(() => {
     if (values.rankId && values.rankId !== 0) {
       (async () => {
-        dispatch(loadingDegrees());
-        const result = await getDegreesByRank(values.rankId);
-        dispatch(loadDegrees(result));
+        try {
+          dispatch(loadingDegrees());
+          const result = await getDegreesByRank(values.rankId);
+          dispatch(loadDegrees(result));
+        } catch (err) {
+          dispatch(degreesApiError(err.message));
+        }
       })();
     }
   }, [dispatch, values.rankId]);

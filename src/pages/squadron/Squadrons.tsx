@@ -18,6 +18,7 @@ import {
   selectError,
   loadingSquadrons,
   loadSquadrons,
+  apiError,
 } from '../../modules/squadrons/Slice';
 import { displayData } from '../../common/styles';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
@@ -33,9 +34,13 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchSquadrons = useCallback(async () => {
-    dispatch(loadingSquadrons());
-    const result = await getSquadrons();
-    dispatch(loadSquadrons(result));
+    try {
+      dispatch(loadingSquadrons());
+      const result = await getSquadrons();
+      dispatch(loadSquadrons(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

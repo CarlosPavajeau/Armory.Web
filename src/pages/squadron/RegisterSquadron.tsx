@@ -19,6 +19,7 @@ import { formStyles } from '../../common/styles';
 import { CreateSquadronRequest } from '../../modules/squadrons/Models';
 import { checkExists, createSquadron } from '../../modules/squadrons/Service';
 import {
+  apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
@@ -29,6 +30,7 @@ import {
   loadPeople,
   selectPeople,
   selectUiStatus,
+  apiError as peopleApiError,
 } from '../../modules/people/Slice';
 import { getPeopleByRole } from '../../modules/people/Service';
 
@@ -75,9 +77,13 @@ const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
 
   useEffect(() => {
     (async () => {
-      dispatch(loadingPeople());
-      const result = await getPeopleByRole('SquadronLeader');
-      dispatch(loadPeople(result));
+      try {
+        dispatch(loadingPeople());
+        const result = await getPeopleByRole('SquadronLeader');
+        dispatch(loadPeople(result));
+      } catch (err) {
+        dispatch(peopleApiError(err.message));
+      }
     })();
   }, [dispatch]);
 
@@ -89,8 +95,12 @@ const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
     },
     validationSchema: registerSquadronScheme,
     onSubmit: async (values: CreateSquadronRequest) => {
-      await createSquadron(values);
-      dispatch(registeredCorrectly());
+      try {
+        await createSquadron(values);
+        dispatch(registeredCorrectly());
+      } catch (err) {
+        dispatch(apiError(err.message));
+      }
     },
   });
 

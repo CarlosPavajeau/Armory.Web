@@ -27,7 +27,7 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
   httpClient.interceptors.response.use(
     response => response,
     error => {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         Storage.clear();
         dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
       }
@@ -41,8 +41,12 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
           });
         }
         dispatch(apiError(apiErrors));
-      } else {
-        throw error;
+      } else if (error.request) {
+        dispatch(
+          apiError([
+            'No se ha recibido ninguna respuesta del servidor. Revisa tu conexión a internet.',
+          ]),
+        );
       }
     },
   );

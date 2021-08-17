@@ -19,6 +19,7 @@ import {
   selectError,
   loadingEquipments,
   loadEquipments,
+  apiError,
 } from '../../../modules/armament/equipments/Slice';
 import { getEquipments } from '../../../modules/armament/equipments/Service';
 import Alert from '../../../components/feedback/Alert';
@@ -33,9 +34,13 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchEquipments = useCallback(async () => {
-    dispatch(loadingEquipments());
-    const result = await getEquipments();
-    dispatch(loadEquipments(result));
+    try {
+      dispatch(loadingEquipments());
+      const result = await getEquipments();
+      dispatch(loadEquipments(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

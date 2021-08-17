@@ -17,6 +17,7 @@ import {
   selectError,
   loadingSquads,
   loadSquads,
+  apiError,
 } from '../../modules/squads/Slice';
 import { getSquads } from '../../modules/squads/Service';
 import { displayData } from '../../common/styles';
@@ -33,9 +34,13 @@ const Squads = (props: SquadsProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchSquads = useCallback(async () => {
-    dispatch(loadingSquads());
-    const result = await getSquads();
-    dispatch(loadSquads(result));
+    try {
+      dispatch(loadingSquads());
+      const result = await getSquads();
+      dispatch(loadSquads(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

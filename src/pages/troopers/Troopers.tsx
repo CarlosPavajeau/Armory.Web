@@ -20,6 +20,7 @@ import {
   selectError,
   loadingTroopers,
   loadTroopers,
+  apiError,
 } from '../../modules/troopers/Slice';
 import Alert from '../../components/feedback/Alert';
 
@@ -33,9 +34,13 @@ const Troopers = (props: TroopersProps): ReactElement => {
   const error = useAppSelector(selectError);
 
   const fetchTroopers = useCallback(async () => {
-    dispatch(loadingTroopers());
-    const result = await getTroopers();
-    dispatch(loadTroopers(result));
+    try {
+      dispatch(loadingTroopers());
+      const result = await getTroopers();
+      dispatch(loadTroopers(result));
+    } catch (err) {
+      dispatch(apiError(err.message));
+    }
   }, [dispatch]);
 
   useEffect(() => {

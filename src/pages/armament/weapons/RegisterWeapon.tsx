@@ -18,6 +18,7 @@ import {
   createWeapon,
 } from '../../../modules/armament/weapons/Service';
 import {
+  apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
@@ -80,9 +81,13 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
     },
     validationSchema: registerWeaponSchema,
     onSubmit: async values => {
-      const result = await createWeapon(values);
-      FileSaver.saveAs(result, `qr-${values.code}.pdf`);
-      dispatch(registeredCorrectly());
+      try {
+        const result = await createWeapon(values);
+        FileSaver.saveAs(result, `qr-${values.code}.pdf`);
+        dispatch(registeredCorrectly());
+      } catch (err) {
+        dispatch(apiError(err.message));
+      }
     },
   });
 

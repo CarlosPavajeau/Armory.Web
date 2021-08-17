@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../common/store';
 import { UiStatus } from '../../../common/types';
-import {
-  CreateAssignedWeaponMagazineFormatRequest,
-  AddAssignedWeaponMagazineFormatItemRequest,
-  AssignedWeaponMagazineFormat,
-  AssignedWeaponMagazineFormatItem,
-} from './Models';
+import { AssignedWeaponMagazineFormat } from './Models';
 
 export interface AssignedWeaponMagazineFormatsState {
   ui: UiStatus;
