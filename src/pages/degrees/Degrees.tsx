@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -16,6 +16,8 @@ import {
   selectDegrees,
   selectUiStatus,
   selectError,
+  loadingDegrees,
+  loadDegrees,
 } from '../../modules/degrees/Slice';
 import { getDegrees } from '../../modules/degrees/Service';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
@@ -30,14 +32,20 @@ const Degrees = (props: DegreesProps): ReactElement => {
   const uiStatus = useAppSelector(selectUiStatus);
   const error = useAppSelector(selectError);
 
-  useEffect(() => {
-    (async () => {
-      await getDegrees(dispatch);
-    })();
+  const fetchDegrees = useCallback(async () => {
+    dispatch(loadingDegrees());
+    const result = await getDegrees();
+    dispatch(loadDegrees(result));
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      await fetchDegrees();
+    })();
+  }, [fetchDegrees]);
+
   const handleRefresh = async () => {
-    await getDegrees(dispatch);
+    await fetchDegrees();
   };
 
   return (

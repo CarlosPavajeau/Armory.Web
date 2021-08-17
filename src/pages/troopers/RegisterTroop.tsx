@@ -38,6 +38,8 @@ import {
 import {
   selectUiStatus as selectDegreesUiStatus,
   selectDegrees,
+  loadingDegrees,
+  loadDegrees,
 } from '../../modules/degrees/Slice';
 import CircularLoader from '../../components/loading/CircularLoader';
 
@@ -138,7 +140,9 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
   useEffect(() => {
     if (values.rankId && values.rankId !== 0) {
       (async () => {
-        await getDegreesByRank(values.rankId, dispatch);
+        dispatch(loadingDegrees());
+        const result = await getDegreesByRank(values.rankId);
+        dispatch(loadDegrees(result));
       })();
     }
   }, [dispatch, values.rankId]);

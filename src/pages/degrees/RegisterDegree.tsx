@@ -18,6 +18,7 @@ import CircularLoader from '../../components/loading/CircularLoader';
 import { formStyles } from '../../common/styles';
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import {
+  registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
@@ -67,7 +68,8 @@ const RegisterDegree = (props: RegisterDegreeProps): ReactElement => {
     },
     validationSchema: registerDegreeSchema,
     onSubmit: async values => {
-      await createDegree(values, dispatch);
+      await createDegree(values);
+      dispatch(registeredCorrectly());
     },
   });
 
