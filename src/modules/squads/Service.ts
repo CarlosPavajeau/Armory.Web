@@ -14,6 +14,19 @@ export const getSquads = async (): Promise<Squads> => {
   throw new Error('No se pudieron obtener las escuadras.');
 };
 
+export const getSquadsBySquadron = async (
+  squadronCode: string,
+): Promise<Squads> => {
+  const response = await HttpClient.get<Squads>(
+    `/Squads/BySquadron/${squadronCode}`,
+  );
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener las escuadras.');
+};
+
 export const getSquad = async (code: string): Promise<Squad> => {
   const response = await HttpClient.get<Squad>(`/Squads/${code}`);
   if (IsValidResponse(response)) {
