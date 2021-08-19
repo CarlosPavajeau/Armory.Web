@@ -53,6 +53,12 @@ const RegisterAssignedWeaponMagazineFormatComponent = lazy(
       '../pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormat'
     ),
 );
+const RegisterAssignedWeaponMagazineFormatItemsComponent = lazy(
+  () =>
+    import(
+      '../pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormatItems'
+    ),
+);
 
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
@@ -177,5 +183,11 @@ export const Troopers = (): ReactElement => (
 export const RegisterAssignedWeaponMagazineFormat = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <RegisterAssignedWeaponMagazineFormatComponent />
+  </Suspense>
+);
+
+export const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterAssignedWeaponMagazineFormatItemsComponent />
   </Suspense>
 );

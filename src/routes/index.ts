@@ -21,6 +21,7 @@ import {
   RegisterTroop,
   Troopers,
   RegisterAssignedWeaponMagazineFormat,
+  RegisterAssignedWeaponMagazineFormatItems,
 } from './LazyComponents';
 
 type Routes = RouteProps[];
@@ -120,6 +121,11 @@ const routes: Routes = [
     path: '/dashboard/formats/assigned-weapon-magazine-format/register',
     exact: true,
     component: RegisterAssignedWeaponMagazineFormat,
+  },
+  {
+    path: '/dashboard/formats/assigned-weapon-magazine-format/items/register',
+    exact: true,
+    component: RegisterAssignedWeaponMagazineFormatItems,
   },
 ];
 

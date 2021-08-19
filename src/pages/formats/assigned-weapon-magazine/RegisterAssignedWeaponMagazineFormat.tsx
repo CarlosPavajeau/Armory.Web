@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { FormHelperText, withStyles, WithStyles } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
@@ -67,12 +67,15 @@ const RegisterAssignedWeaponMagazineFormat = (
   const wasRegistered = useAppSelector(selectWasRegistered);
 
   const history = useHistory();
+  const [formatId, setFormatId] = useState(0);
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard');
+      history.push(
+        `/dashboard/formats/assigned-weapon-magazine-format/items/register?formatId=${formatId}`,
+      );
       dispatch(resetRegister());
     }
-  }, [dispatch, history, wasRegistered]);
+  }, [dispatch, history, wasRegistered, formatId]);
 
   useEffect(() => {
     (async () => {
@@ -100,7 +103,8 @@ const RegisterAssignedWeaponMagazineFormat = (
       validationSchema: registerAssignedWeaponMagazineFormatSchema,
       onSubmit: async values => {
         try {
-          await createAssignedWeaponMagazineFormat(values);
+          const result = await createAssignedWeaponMagazineFormat(values);
+          setFormatId(result);
           dispatch(registeredCorrectly());
         } catch (err) {
           // Ignore error
