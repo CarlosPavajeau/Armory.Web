@@ -41,8 +41,8 @@ export const slice = createSlice({
       state.ui = 'loading';
     },
     loadWeapon: (state, action: PayloadAction<Weapon>) => {
-      state.ui = 'loaded';
       state.weapon = action.payload;
+      state.ui = 'loaded';
     },
     updatingWeapon: state => {
       state.ui = 'updating';
