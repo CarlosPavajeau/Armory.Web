@@ -20,7 +20,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logout } from '../../modules/users/Service';
 import { useAppDispatch } from '../../common/hooks';
-import Breadcrumb from '../routes/Breadcrumb';
 import { authenticationStatus } from '../../modules/users/Slice';
 
 const styles = (theme: Theme) =>
@@ -104,7 +103,7 @@ const DashboardNavBar = (props: DashboardNavBarProps): ReactElement => {
             </Hidden>
             <Hidden smDown>
               <Grid item>
-                <Breadcrumb />
+                <Typography>Armería</Typography>
               </Grid>
             </Hidden>
             <Grid item xs />
