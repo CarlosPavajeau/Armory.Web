@@ -6,9 +6,12 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import {
   createStyles,
+  Paper,
   Slide,
   TextField,
   Theme,
+  Tooltip,
+  useTheme,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
@@ -53,9 +56,11 @@ const RegisterAssignedWeaponMagazineFormatItemHeader = withStyles(headerStyles)(
     return (
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
+          <Tooltip title="Cancelar">
+            <IconButton edge="start" color="inherit" onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+          </Tooltip>
           <Typography variant="h6" className={classes.title}>
             Registro de item
           </Typography>
@@ -104,7 +109,7 @@ const RegisterAssignedWeaponMagazineFormatItem = (
     useFormik<AddAssignedWeaponMagazineFormatItemRequest>({
       initialValues: {
         formatId: formatId != null ? +formatId : 0,
-        troopId: '0',
+        troopId: weapon != null ? weapon.ownerId : '',
         weaponCode: weapon != null ? weapon.code : '',
         cartridgeOfLife: false,
         verifiedInPhysical: false,
@@ -134,6 +139,8 @@ const RegisterAssignedWeaponMagazineFormatItem = (
     touched,
   } = registerAssignedWeaponMagazineFormatItemForm;
 
+  const theme = useTheme();
+
   return (
     <>
       <Dialog
@@ -144,15 +151,21 @@ const RegisterAssignedWeaponMagazineFormatItem = (
       >
         <RegisterAssignedWeaponMagazineFormatItemHeader onClose={onClose} />
         <div className={classes.contentWrapper}>
-          <Typography variant="subtitle1" color="textSecondary">
-            Código de arma: {weapon && weapon.code}
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            N° de seríe: {weapon && weapon.series}
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            Dueño:
-          </Typography>
+          <Paper
+            elevation={2}
+            className={classes.paper}
+            style={{ padding: theme.spacing(2) }}
+          >
+            <Typography variant="body2" color="textSecondary" align="center">
+              Código de arma: {weapon && weapon.code}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" align="center">
+              N° de seríe: {weapon && weapon.series}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" align="center">
+              Dueño: {weapon && `${weapon.ownerId} - ${weapon.ownerName}`}
+            </Typography>
+          </Paper>
           <form onSubmit={handleSubmit} className={classes.form}>
             <FormControl
               component="fieldset"

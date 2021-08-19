@@ -12,5 +12,8 @@ export interface CreateWeaponRequest {
 
 export type UpdateWeaponRequest = CreateWeaponRequest;
 
-export type Weapon = CreateWeaponRequest;
+export interface Weapon extends CreateWeaponRequest {
+  ownerId: string;
+  ownerName: string;
+}
 export type Weapons = Weapon[];
