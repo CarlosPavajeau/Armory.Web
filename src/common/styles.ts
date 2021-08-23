@@ -1,6 +1,6 @@
-import { createStyles, Theme } from '@material-ui/core';
+import { createStyles, StyleRules, Theme } from '@material-ui/core';
 
-const formStyles = (theme: Theme) =>
+const formStyles = (theme: Theme): StyleRules =>
   createStyles({
     paper: {
       maxWidth: 936,
@@ -25,7 +25,7 @@ const formStyles = (theme: Theme) =>
     },
   });
 
-const displayData = (theme: Theme) =>
+const displayData = (theme: Theme): StyleRules =>
   createStyles({
     paper: {
       maxWidth: 936,
