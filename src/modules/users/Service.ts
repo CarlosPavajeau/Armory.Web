@@ -16,7 +16,7 @@ const checkAuthentication = (): AuthenticationPayload => {
   const token = Storage.get('user_token');
 
   if (token) {
-    const payload = JSON.parse(window.atob(token.split('.')[1]));
+    const payload = Storage.decode(token);
     const { role } = payload;
     return { isAuthenticate: Boolean(token), role };
   }

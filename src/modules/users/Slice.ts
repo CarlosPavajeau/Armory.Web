@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../common/store';
 import { ArmoryRoles } from './Models';
 import { UiStatus } from '../../common/types';
+import Storage from '../../common/plugins/Storage';
 
 type LoginStatus =
   | UiStatus
@@ -12,7 +13,7 @@ type LoginStatus =
 
 export interface UserState {
   token: string;
-  role: string;
+  role: string | string[];
   errors: string;
   ui: LoginStatus;
   isAuthenticate: boolean;
@@ -21,7 +22,7 @@ export interface UserState {
 
 export interface AuthenticationPayload {
   isAuthenticate: boolean;
-  role: string;
+  role: string | string[];
 }
 
 const initialState: UserState = {
@@ -40,7 +41,7 @@ export const slice = createSlice({
     loginSuccess: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
 
-      const payload = JSON.parse(window.atob(action.payload.split('.')[1]));
+      const payload = Storage.decode(action.payload);
       state.role = payload.role;
 
       state.ui = 'loginSuccess';
