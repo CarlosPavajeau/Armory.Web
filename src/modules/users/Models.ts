@@ -8,8 +8,4 @@ export interface ArmoryRole {
   name: string;
 }
 
-export interface UserPayload {
-  role: string;
-}
-
 export type ArmoryRoles = ArmoryRole[];

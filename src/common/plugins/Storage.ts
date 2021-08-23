@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+import { UserPayload } from '../models';
 
 const Storage = {
   get: (key: string): string | null => {
@@ -17,7 +18,7 @@ const Storage = {
       window.localStorage.removeItem(key);
     }
   },
-  decode: (token: string): unknown => jwtDecode(token),
+  decode: (token: string): UserPayload => jwtDecode<UserPayload>(token),
   clear: (): void => {
     if (window.localStorage) {
       window.localStorage.clear();
