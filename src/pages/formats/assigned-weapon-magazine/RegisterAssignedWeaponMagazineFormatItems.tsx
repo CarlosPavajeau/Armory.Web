@@ -2,6 +2,7 @@ import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { Helmet } from 'react-helmet';
 import { Paper, withStyles, WithStyles } from '@material-ui/core';
+import Consola from 'consola';
 import QrReaderDialog from '../../../components/qr/QrReaderDialog';
 import {
   useAppDispatch,
@@ -12,7 +13,6 @@ import { formStyles } from '../../../common/styles';
 import {
   loadingWeapon,
   loadWeapon,
-  selectWeapon,
   selectUiStatus as selectWeaponUiStatus,
 } from '../../../modules/armament/weapons/Slice';
 import { getWeapon } from '../../../modules/armament/weapons/Service';
@@ -30,7 +30,6 @@ const RegisterAssignedWeaponMagazineFormatItems = (
   const [openQrDialog, setOpenQrDialog] = useState(false);
   const [openItemDialog, setOpenItemDialog] = useState(false);
 
-  const currentWeapon = useAppSelector(selectWeapon);
   const weaponUiStatus = useAppSelector(selectWeaponUiStatus);
   const fetchWeapon = useCallback(
     async (weaponCode: string) => {
@@ -48,7 +47,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (
   const query = useQuery();
   const formatId = query.get('formatId');
   useMemo(() => {
-    console.log(formatId);
+    Consola.info(formatId);
   }, [formatId]);
 
   useEffect(() => {

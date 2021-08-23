@@ -121,6 +121,8 @@ const RegisterAssignedWeaponMagazineFormatItem = (
       validationSchema: RegisterAssignedWeaponMagazineFormatItemSchema,
       onSubmit: async (values, actions) => {
         try {
+          values.troopId = weapon != null ? weapon.ownerId : '';
+          values.weaponCode = weapon != null ? weapon.code : '';
           await addAssignedWeaponMagazineFormatItem(values);
           actions.resetForm();
           onClose();
