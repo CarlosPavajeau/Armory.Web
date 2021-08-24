@@ -58,9 +58,9 @@ const RegisterAssignedWeaponMagazineFormatItems = (
 
   const handleCloseQrDialog = async (value: string | null) => {
     if (value != null) {
+      setOpenQrDialog(false);
       await fetchWeapon(value);
     }
-    setOpenQrDialog(false);
   };
 
   const handleClickOnOpenQrDialog = () => {
@@ -86,6 +86,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (
             onClick={handleClickOnOpenQrDialog}
             variant="contained"
             color="primary"
+            disabled={weaponUiStatus === 'loading'}
           >
             Escanear código QR
           </Button>
