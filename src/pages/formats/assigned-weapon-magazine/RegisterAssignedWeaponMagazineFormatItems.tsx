@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Helmet } from 'react-helmet';
 import { Paper, withStyles, WithStyles } from '@material-ui/core';
 import Consola from 'consola';
+import RegisterAssignedWeaponMagazineFormatItem from 'pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormatItem';
 import QrReaderDialog from '../../../components/qr/QrReaderDialog';
 import {
   useAppDispatch,
@@ -16,7 +17,7 @@ import {
   selectUiStatus as selectWeaponUiStatus,
 } from '../../../modules/armament/weapons/Slice';
 import { getWeapon } from '../../../modules/armament/weapons/Service';
-import RegisterAssignedWeaponMagazineFormatItem from './RegisterAssignedWeaponMagazineFormatItem';
+import { selectCurrentFormat } from '../../../modules/formats/assigned-weapon-magazine/Slice';
 
 export type RegisterAssignedWeaponMagazineFormatItemsProps = WithStyles<
   typeof formStyles
@@ -27,6 +28,8 @@ const RegisterAssignedWeaponMagazineFormatItems = (
 ): ReactElement => {
   const { classes } = props;
   const dispatch = useAppDispatch();
+  const format = useAppSelector(selectCurrentFormat);
+
   const [openQrDialog, setOpenQrDialog] = useState(false);
   const [openItemDialog, setOpenItemDialog] = useState(false);
 

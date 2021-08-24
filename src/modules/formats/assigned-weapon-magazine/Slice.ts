@@ -37,7 +37,8 @@ export const slice = createSlice({
   },
 });
 
-export const { registeredCorrectly, resetRegister } = slice.actions;
+export const { registeredCorrectly, resetRegister, setCurrentFormat } =
+  slice.actions;
 
 export const selectError = (state: RootState): string =>
   state.assigned_weapon_magazine_format.error;

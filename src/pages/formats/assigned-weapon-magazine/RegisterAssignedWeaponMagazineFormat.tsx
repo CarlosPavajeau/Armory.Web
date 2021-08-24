@@ -18,11 +18,15 @@ import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { formStyles } from '../../../common/styles';
 import {
   registeredCorrectly,
+  setCurrentFormat,
   resetRegister,
   selectError,
   selectWasRegistered,
 } from '../../../modules/formats/assigned-weapon-magazine/Slice';
-import { CreateAssignedWeaponMagazineFormatRequest } from '../../../modules/formats/assigned-weapon-magazine/Models';
+import {
+  AssignedWeaponMagazineFormat,
+  CreateAssignedWeaponMagazineFormatRequest,
+} from '../../../modules/formats/assigned-weapon-magazine/Models';
 import { createAssignedWeaponMagazineFormat } from '../../../modules/formats/assigned-weapon-magazine/Service';
 import { Warehouse } from '../../../modules/formats/war-material-and-special-equipment-assignment/Models';
 import {
@@ -105,6 +109,14 @@ const RegisterAssignedWeaponMagazineFormat = (
         try {
           const result = await createAssignedWeaponMagazineFormat(values);
           setFormatId(result);
+
+          const format: AssignedWeaponMagazineFormat = {
+            id: result,
+            items: [],
+            ...values,
+          };
+
+          dispatch(setCurrentFormat(format));
           dispatch(registeredCorrectly());
         } catch (err) {
           // Ignore error
