@@ -37,7 +37,8 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "lf",
+        "singleQuote": true
       }
     ],
     "react-hooks/rules-of-hooks": "error",
