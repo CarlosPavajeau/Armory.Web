@@ -8,7 +8,6 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import Consola from 'consola';
-import RegisterAssignedWeaponMagazineFormatItem from 'pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormatItem';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +33,9 @@ import { formStyles } from 'common/styles';
 import QrReaderDialog from 'components/qr/QrReaderDialog';
 import { useAppDispatch, useAppSelector, useQuery } from 'common/hooks';
 import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
+import FileSaver from 'file-saver';
+import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
+import RegisterAssignedWeaponMagazineFormatItem from './RegisterAssignedWeaponMagazineFormatItem';
 import AssignedWeaponMagazineFormatInfo from './components/AssignedWeaponMagazineFormatInfo';
 import AssignedWeaponMagazineFormatItemInfo from './components/AssignedWeaponMagazineFormatItemInfo';
 
@@ -106,6 +108,13 @@ const RegisterAssignedWeaponMagazineFormatItems = (
     setOpenQrDialog(true);
   };
 
+  const handleClickOnGenerateFormat = async () => {
+    if (formatId != null) {
+      const result = await generateAssignedWeaponMagazineFormat(+formatId);
+      FileSaver.saveAs(result, `format-${formatId}.xlsx`);
+    }
+  };
+
   const handleCloseFormatItemDialog = (
     value: AssignedWeaponMagazineFormatItem | null,
   ) => {
@@ -147,7 +156,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (
             </Grid>
             <Grid item>
               <Tooltip title="Generar formato">
-                <IconButton>
+                <IconButton onClick={handleClickOnGenerateFormat}>
                   <AssignmentReturnedIcon />
                 </IconButton>
               </Tooltip>

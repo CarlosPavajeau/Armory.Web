@@ -1,7 +1,7 @@
 import HttpClient, { IsValidResponse } from '../../../common/config/http';
 import {
-  CreateAssignedWeaponMagazineFormatRequest,
   AddAssignedWeaponMagazineFormatItemRequest,
+  CreateAssignedWeaponMagazineFormatRequest,
 } from './Models';
 
 export const createAssignedWeaponMagazineFormat = async (
@@ -31,4 +31,21 @@ export const addAssignedWeaponMagazineFormatItem = async (
   }
 
   throw new Error('No se pudo agregar el registro del formato.');
+};
+
+export const generateAssignedWeaponMagazineFormat = async (
+  formatId: number,
+): Promise<Blob> => {
+  const response = await HttpClient.get<Blob>(
+    `/AssignedWeaponMagazineFormats/${formatId}`,
+    {
+      responseType: 'blob',
+    },
+  );
+
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudo generar el formato');
 };
