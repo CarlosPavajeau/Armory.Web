@@ -9,20 +9,20 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Helmet } from 'react-helmet';
 import clsx from 'clsx';
-import CircularLoader from '../../../components/loading/CircularLoader';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { displayData } from '../../../common/styles';
-import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
+import CircularLoader from 'components/loading/CircularLoader';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
 import {
-  selectEquipments,
-  selectUiStatus,
-  selectError,
-  loadingEquipments,
-  loadEquipments,
   apiError,
-} from '../../../modules/armament/equipments/Slice';
-import { getEquipments } from '../../../modules/armament/equipments/Service';
-import Alert from '../../../components/feedback/Alert';
+  loadEquipments,
+  loadingEquipments,
+  selectEquipments,
+  selectError,
+  selectUiStatus,
+} from 'modules/armament/equipments/Slice';
+import { getEquipments } from 'modules/armament/equipments/Service';
+import Alert from 'components/feedback/Alert';
 
 export type EquipmentsProps = WithStyles<typeof displayData>;
 
@@ -56,7 +56,7 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
   return (
     <>
       <Helmet>
-        <title>meria | Equipos especiales y accesorios</title>
+        <title>Armería | Equipos especiales y accesorios</title>
       </Helmet>
       <Paper>
         <DisplayDataHeader
@@ -92,6 +92,7 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
                   {equipments.map(equipment => {
                     return (
                       <TableRow key={equipment.code}>
+                        <TableCell>{equipment.code}</TableCell>
                         <TableCell>{equipment.type}</TableCell>
                         <TableCell>{equipment.model}</TableCell>
                         <TableCell>{equipment.series}</TableCell>
