@@ -15,14 +15,20 @@ export const createAssignedWeaponMagazineFormat = async (
     return response.data;
   }
 
-  throw new Error('No se puedo registrar el formato');
+  throw new Error('No se pudo registrar el formato.');
 };
 
 export const addAssignedWeaponMagazineFormatItem = async (
   data: AddAssignedWeaponMagazineFormatItemRequest,
-): Promise<void> => {
-  await HttpClient.post(
+): Promise<number> => {
+  const response = await HttpClient.post<number>(
     `/AssignedWeaponMagazineFormats/AddItem/${data.formatId}`,
     data,
   );
+
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudo agregar el registro del formato.');
 };

@@ -1,12 +1,13 @@
+import { Moment } from 'moment';
 import { Warehouse } from '../war-material-and-special-equipment-assignment/Models';
 
 export interface CreateAssignedWeaponMagazineFormatRequest {
   code: string;
-  validity: Date;
+  validity: Moment;
   squadronCode: string;
   squadCode: string;
   warehouse: Warehouse;
-  date: Date;
+  date: Moment;
   comments: string;
 }
 

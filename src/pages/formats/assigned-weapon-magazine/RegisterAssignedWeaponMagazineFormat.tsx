@@ -13,36 +13,42 @@ import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
-import CircularLoader from '../../../components/loading/CircularLoader';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { formStyles } from '../../../common/styles';
+import moment from 'moment';
+import MomentUtils from '@date-io/moment';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import CircularLoader from 'components/loading/CircularLoader';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
 import {
   registeredCorrectly,
   setCurrentFormat,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../../modules/formats/assigned-weapon-magazine/Slice';
+} from 'modules/formats/assigned-weapon-magazine/Slice';
 import {
   AssignedWeaponMagazineFormat,
   CreateAssignedWeaponMagazineFormatRequest,
-} from '../../../modules/formats/assigned-weapon-magazine/Models';
-import { createAssignedWeaponMagazineFormat } from '../../../modules/formats/assigned-weapon-magazine/Service';
-import { Warehouse } from '../../../modules/formats/war-material-and-special-equipment-assignment/Models';
+} from 'modules/formats/assigned-weapon-magazine/Models';
+import { createAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
+import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
 import {
   loadingSquadrons,
   loadSquadrons,
   selectSquadrons,
   selectUiStatus as selectSquadronsUiStatus,
-} from '../../../modules/squadrons/Slice';
+} from 'modules/squadrons/Slice';
 import {
   loadingSquads,
   loadSquads,
   selectSquads,
   selectUiStatus as selectSquadsUiStatus,
-} from '../../../modules/squads/Slice';
-import { getSquadrons } from '../../../modules/squadrons/Service';
-import { getSquadsBySquadron } from '../../../modules/squads/Service';
+} from 'modules/squads/Slice';
+import { getSquadrons } from 'modules/squadrons/Service';
+import { getSquadsBySquadron } from 'modules/squads/Service';
 
 export type RegisterAssignedWeaponMagazineFormatProps = WithStyles<
   typeof formStyles
@@ -97,11 +103,11 @@ const RegisterAssignedWeaponMagazineFormat = (
     useFormik<CreateAssignedWeaponMagazineFormatRequest>({
       initialValues: {
         code: '',
-        validity: new Date(),
+        validity: moment(),
         squadronCode: '',
         squadCode: '',
         warehouse: Warehouse.Air,
-        date: new Date(),
+        date: moment(),
         comments: '',
       },
       validationSchema: registerAssignedWeaponMagazineFormatSchema,
@@ -183,25 +189,38 @@ const RegisterAssignedWeaponMagazineFormat = (
               disabled={isSubmitting}
               fullWidth
             />
-            <TextField
-              id="validity"
-              name="validity"
-              type="date"
-              label="Vigencia"
-              InputLabelProps={{ shrink: true }}
-              value={values.validity}
-              helperText={
-                errors.validity && touched.validity
-                  ? errors.validity
-                  : 'Digite la vigencia del formato'
-              }
-              error={!!(errors.validity && touched.validity)}
-              className={classes.formField}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <KeyboardDatePicker
+                id="validity"
+                variant="inline"
+                label="Vigencia"
+                margin="normal"
+                format="yyyy/MM/DD"
+                value={values.validity}
+                helperText={
+                  errors.validity && touched.validity
+                    ? errors.validity
+                    : 'Digite la vigencia del formato'
+                }
+                error={!!(errors.validity && touched.validity)}
+                className={classes.formField}
+                onChange={value => {
+                  if (value && value.date != null) {
+                    registerAssignedWeaponMagazineFormatForm.setFieldValue(
+                      'validity',
+                      value,
+                    );
+                  }
+                }}
+                onBlur={handleBlur}
+                disabled={isSubmitting}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+                disableToolbar
+                fullWidth
+              />
+            </MuiPickersUtilsProvider>
             <FormControl className={classes.formField} fullWidth>
               <InputLabel id="select-squadronCode-label">
                 Escuadrilla

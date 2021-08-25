@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../common/store';
 import { UiStatus } from '../../../common/types';
-import { AssignedWeaponMagazineFormat } from './Models';
+import {
+  AssignedWeaponMagazineFormat,
+  AssignedWeaponMagazineFormatItem,
+} from './Models';
 
 export interface AssignedWeaponMagazineFormatsState {
   ui: UiStatus;
@@ -34,11 +37,23 @@ export const slice = createSlice({
     ) => {
       state.currentFormat = action.payload;
     },
+    addFormatItem: (
+      state,
+      action: PayloadAction<AssignedWeaponMagazineFormatItem>,
+    ) => {
+      if (state.currentFormat != null) {
+        state.currentFormat.items.push(action.payload);
+      }
+    },
   },
 });
 
-export const { registeredCorrectly, resetRegister, setCurrentFormat } =
-  slice.actions;
+export const {
+  registeredCorrectly,
+  resetRegister,
+  setCurrentFormat,
+  addFormatItem,
+} = slice.actions;
 
 export const selectError = (state: RootState): string =>
   state.assigned_weapon_magazine_format.error;

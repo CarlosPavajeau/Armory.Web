@@ -29,7 +29,10 @@ import { useFormik } from 'formik';
 import { formStyles } from '../../../common/styles';
 import { useAppSelector } from '../../../common/hooks';
 import { selectWeapon } from '../../../modules/armament/weapons/Slice';
-import { AddAssignedWeaponMagazineFormatItemRequest } from '../../../modules/formats/assigned-weapon-magazine/Models';
+import {
+  AddAssignedWeaponMagazineFormatItemRequest,
+  AssignedWeaponMagazineFormatItem,
+} from '../../../modules/formats/assigned-weapon-magazine/Models';
 import { addAssignedWeaponMagazineFormatItem } from '../../../modules/formats/assigned-weapon-magazine/Service';
 
 const headerStyles = (theme: Theme) =>
@@ -74,7 +77,7 @@ export interface RegisterAssignedWeaponMagazineFormatItemProps
   extends WithStyles<typeof formStyles> {
   open: boolean;
   formatId: string | null;
-  onClose: () => void;
+  onClose: (item: AssignedWeaponMagazineFormatItem | null) => void;
 }
 
 const Transition = forwardRef(
@@ -123,9 +126,12 @@ const RegisterAssignedWeaponMagazineFormatItem = (
         try {
           values.troopId = weapon != null ? weapon.ownerId : '';
           values.weaponCode = weapon != null ? weapon.code : '';
-          await addAssignedWeaponMagazineFormatItem(values);
+          const result = await addAssignedWeaponMagazineFormatItem(values);
           actions.resetForm();
-          onClose();
+          onClose({
+            ...values,
+            id: result,
+          });
         } catch (err) {
           // Ignore error
         }
@@ -143,15 +149,21 @@ const RegisterAssignedWeaponMagazineFormatItem = (
 
   const theme = useTheme();
 
+  const handleOnClose = () => {
+    onClose(null);
+  };
+
   return (
     <>
       <Dialog
         open={open}
-        onClose={onClose}
+        onClose={handleOnClose}
         TransitionComponent={Transition}
         fullScreen
       >
-        <RegisterAssignedWeaponMagazineFormatItemHeader onClose={onClose} />
+        <RegisterAssignedWeaponMagazineFormatItemHeader
+          onClose={handleOnClose}
+        />
         <div className={classes.contentWrapper}>
           <Paper
             elevation={2}
@@ -272,6 +284,7 @@ const RegisterAssignedWeaponMagazineFormatItem = (
               color="primary"
               variant="contained"
               className={classes.submitButton}
+              disabled={isSubmitting}
               fullWidth
             >
               Añadir registro
