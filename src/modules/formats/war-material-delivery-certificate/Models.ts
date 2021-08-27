@@ -1,14 +1,19 @@
+import { Moment } from 'moment';
+
+type ItemAmount = { [key: string]: number };
+type ItemAmounts = ItemAmount[];
+
 export interface CreateWarMaterialDeliveryCertificateFormatRequest {
   code: string;
-  validity: Date;
+  validity: Moment;
   place: string;
-  date: Date;
+  date: Moment;
   squadronCode: string;
   squadCode: string;
   troopId: string;
 
   weapons: string[];
-  ammunition: [{ [key: string]: number }];
-  equipments: [{ [key: string]: number }];
-  explosives: [{ [key: string]: number }];
+  ammunition: ItemAmounts;
+  equipments: ItemAmounts;
+  explosives: ItemAmounts;
 }
