@@ -21,7 +21,8 @@
     "react",
     "react-hooks",
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "simple-import-sort"
   ],
   "rules": {
     "no-param-reassign": [
@@ -70,7 +71,8 @@
       {
         "devDependencies": true
       }
-    ]
+    ],
+    "simple-import-sort/imports": "error"
   },
   "settings": {
     "import/resolver": {
