@@ -1,9 +1,9 @@
 import HttpClient, { IsValidResponse } from '../../../common/config/http';
 import {
   CreateExplosiveRequest,
-  UpdateExplosiveRequest,
   Explosive,
   Explosives,
+  UpdateExplosiveRequest,
 } from './Models';
 
 export const createExplosive = async (

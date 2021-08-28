@@ -1,27 +1,29 @@
 import { RouteProps } from 'react-router-dom';
+
 import {
-  Login,
-  RegisterSquadron,
-  Squadrons,
-  RegisterPerson,
-  RegisterSquad,
-  Squads,
-  RegisterDegree,
-  Degrees,
-  Ranks,
-  RegisterRank,
-  RegisterAmmunition,
   Ammunition,
-  RegisterEquipment,
+  Degrees,
   Equipments,
-  RegisterExplosive,
   Explosives,
-  RegisterWeapon,
-  Weapons,
-  RegisterTroop,
-  Troopers,
+  Login,
+  Ranks,
+  RegisterAmmunition,
   RegisterAssignedWeaponMagazineFormat,
   RegisterAssignedWeaponMagazineFormatItems,
+  RegisterDegree,
+  RegisterEquipment,
+  RegisterExplosive,
+  RegisterPerson,
+  RegisterRank,
+  RegisterSquad,
+  RegisterSquadron,
+  RegisterTroop,
+  RegisterWarMaterialDeliveryCertificateFormat,
+  RegisterWeapon,
+  Squadrons,
+  Squads,
+  Troopers,
+  Weapons,
 } from './LazyComponents';
 
 type Routes = RouteProps[];
@@ -126,6 +128,11 @@ const routes: Routes = [
     path: '/dashboard/formats/assigned-weapon-magazine-format/items/register',
     exact: true,
     component: RegisterAssignedWeaponMagazineFormatItems,
+  },
+  {
+    path: '/dashboard/formats/war-material-delivery-certificate-format/register',
+    exact: true,
+    component: RegisterWarMaterialDeliveryCertificateFormat,
   },
 ];
 

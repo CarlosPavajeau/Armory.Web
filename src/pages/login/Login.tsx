@@ -1,18 +1,19 @@
-import { ReactElement, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Container from '@material-ui/core/Container';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { authorizeUser } from '../../modules/users/Service';
 import {

@@ -1,7 +1,7 @@
-import { ReactElement } from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core';
+import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
+import { ReactElement } from 'react';
 
 const styles = createStyles({
   text: {

@@ -1,7 +1,7 @@
-import { ReactElement } from 'react';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
+import { ReactElement } from 'react';
 
 const fallBackStyles = (theme: Theme) =>
   createStyles({

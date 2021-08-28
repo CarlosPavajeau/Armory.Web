@@ -1,8 +1,10 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+
 import App from './App';
 import { store } from './common/store';
 import * as serviceWorker from './serviceWorker';

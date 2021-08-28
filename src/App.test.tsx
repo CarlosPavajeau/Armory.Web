@@ -1,9 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from './common/store';
+
 import App from './App';
+import { store } from './common/store';
 
 test('renders app', () => {
   const { getByText } = render(

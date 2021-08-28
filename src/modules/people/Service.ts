@@ -1,5 +1,5 @@
-import { CreatePersonRequest, Person, People } from './Models';
 import HttpClient, { IsValidResponse } from '../../common/config/http';
+import { CreatePersonRequest, People, Person } from './Models';
 
 export const createPerson = async (
   data: CreatePersonRequest,

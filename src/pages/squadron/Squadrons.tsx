@@ -1,5 +1,4 @@
-import { ReactElement, useCallback, useEffect } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
+import { WithStyles, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,22 +6,24 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Helmet } from 'react-helmet';
 import clsx from 'clsx';
-import CircularLoader from '../../components/loading/CircularLoader';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { getSquadrons } from '../../modules/squadrons/Service';
-import {
-  selectSquadrons,
-  selectUiStatus,
-  selectError,
-  loadingSquadrons,
-  loadSquadrons,
-  apiError,
-} from '../../modules/squadrons/Slice';
 import { displayData } from '../../common/styles';
 import DisplayDataHeader from '../../components/data/DisplayDataHeader';
 import Alert from '../../components/feedback/Alert';
+import CircularLoader from '../../components/loading/CircularLoader';
+import { getSquadrons } from '../../modules/squadrons/Service';
+import {
+  apiError,
+  loadingSquadrons,
+  loadSquadrons,
+  selectError,
+  selectSquadrons,
+  selectUiStatus
+} from '../../modules/squadrons/Slice';
 
 export type SquadronsProps = WithStyles<typeof displayData>;
 

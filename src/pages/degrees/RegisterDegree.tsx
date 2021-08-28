@@ -1,37 +1,38 @@
-import { ReactElement, useEffect } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
+import { WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { formStyles } from '../../common/styles';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { formStyles } from '../../common/styles';
+import CircularLoader from '../../components/loading/CircularLoader';
+import { CreateDegreeRequest } from '../../modules/degrees/Models';
+import { createDegree } from '../../modules/degrees/Service';
 import {
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
 } from '../../modules/degrees/Slice';
+import { getRanks } from '../../modules/ranks/Service';
 import {
   loadingRanks,
   loadRanks,
   selectRanks,
   selectUiStatus as selectRanksUiStatus,
 } from '../../modules/ranks/Slice';
-import { CreateDegreeRequest } from '../../modules/degrees/Models';
-import { createDegree } from '../../modules/degrees/Service';
-import { getRanks } from '../../modules/ranks/Service';
 
 export type RegisterDegreeProps = WithStyles<typeof formStyles>;
 

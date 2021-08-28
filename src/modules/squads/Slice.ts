@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { RootState } from '../../common/store';
 import { UiStatus } from '../../common/types';
-import { Squads, Squad } from './Models';
+import { Squad, Squads } from './Models';
 
 export interface SquadState {
   ui: UiStatus;

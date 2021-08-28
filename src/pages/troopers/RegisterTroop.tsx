@@ -1,27 +1,50 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { withStyles, WithStyles } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import { WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Helmet } from 'react-helmet';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { formStyles } from '../../common/styles';
+import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { useFormik } from 'formik';
+import React, { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { formStyles } from '../../common/styles';
+import CircularLoader from '../../components/loading/CircularLoader';
+import { getDegreesByRank } from '../../modules/degrees/Service';
+import {
+  apiError as degreesApiError,
+  loadDegrees,
+  loadingDegrees,
+  selectDegrees,
+  selectUiStatus as selectDegreesUiStatus,
+} from '../../modules/degrees/Slice';
+import { getRanks } from '../../modules/ranks/Service';
+import {
+  apiError as ranksApiError,
+  loadingRanks,
+  loadRanks,
+  selectRanks,
+  selectUiStatus as selectRanksUiStatus,
+} from '../../modules/ranks/Slice';
+import { getSquads } from '../../modules/squads/Service';
+import {
+  apiError as squadsApiError,
+  loadingSquads,
+  loadSquads,
+  selectSquads,
+  selectUiStatus as selectSquadsUiStatus,
+} from '../../modules/squads/Slice';
 import { CreateTroopRequest } from '../../modules/troopers/Models';
 import { checkExists, createTroop } from '../../modules/troopers/Service';
-import { getSquads } from '../../modules/squads/Service';
-import { getRanks } from '../../modules/ranks/Service';
-import { getDegreesByRank } from '../../modules/degrees/Service';
 import {
   apiError,
   registeredCorrectly,
@@ -29,28 +52,6 @@ import {
   selectError,
   selectWasRegistered,
 } from '../../modules/troopers/Slice';
-import {
-  selectUiStatus as selectSquadsUiStatus,
-  apiError as squadsApiError,
-  selectSquads,
-  loadingSquads,
-  loadSquads,
-} from '../../modules/squads/Slice';
-import {
-  selectUiStatus as selectRanksUiStatus,
-  apiError as ranksApiError,
-  selectRanks,
-  loadingRanks,
-  loadRanks,
-} from '../../modules/ranks/Slice';
-import {
-  selectUiStatus as selectDegreesUiStatus,
-  apiError as degreesApiError,
-  selectDegrees,
-  loadingDegrees,
-  loadDegrees,
-} from '../../modules/degrees/Slice';
-import CircularLoader from '../../components/loading/CircularLoader';
 
 const registerTroopSchema = Yup.object().shape({
   id: Yup.string()

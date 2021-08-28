@@ -1,11 +1,11 @@
-import { ReactElement } from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
-import { Link as RouterLink } from 'react-router-dom';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import clsx from 'clsx';
+import { ReactElement } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = (theme: Theme) =>
   createStyles({

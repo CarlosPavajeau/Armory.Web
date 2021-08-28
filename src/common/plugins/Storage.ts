@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+
 import { UserPayload } from '../models';
 
 const Storage = {

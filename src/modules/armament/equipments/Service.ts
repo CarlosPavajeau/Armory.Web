@@ -1,9 +1,9 @@
 import HttpClient, { IsValidResponse } from '../../../common/config/http';
 import {
   CreateEquipmentRequest,
-  UpdateEquipmentRequest,
   Equipment,
   Equipments,
+  UpdateEquipmentRequest,
 } from './Models';
 
 export const createEquipment = async (

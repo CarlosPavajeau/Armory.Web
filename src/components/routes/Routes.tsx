@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 import { Route } from 'react-router-dom';
+
 import Paths from '../../routes';
 
 const Routes = (): ReactElement => {

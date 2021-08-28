@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { RootState } from '../../common/store';
 import { UiStatus } from '../../common/types';
 import { Troop, Troopers } from './Models';

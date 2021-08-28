@@ -1,10 +1,10 @@
-import { ReactElement } from 'react';
-import { Paper, withStyles, WithStyles } from '@material-ui/core';
+import { Paper, WithStyles, withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { formStyles } from 'common/styles';
 import { useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
 import { selectCurrentFormat } from 'modules/formats/assigned-weapon-magazine/Slice';
 import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
+import { ReactElement } from 'react';
 
 export type AssignedWeaponMagazineFormatInfoProps = WithStyles<
   typeof formStyles

@@ -1,4 +1,3 @@
-import { ReactElement, useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -7,8 +6,10 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import QrReader from './QrReader';
+import { ReactElement, useState } from 'react';
+
 import Alert from '../feedback/Alert';
+import QrReader from './QrReader';
 
 export interface QrReaderDialogProps {
   open: boolean;

@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+
+import { ConfigureGlobalError } from './common/config/http';
 import { useAppDispatch, useAppSelector } from './common/hooks';
-import MainLayout from './components/layouts/MainLayout';
+import Storage from './common/plugins/Storage';
+import ErrorDialog from './components/feedback/dialogs/ErrorDialog';
+import GlobalStyles from './components/GlobalStyles';
 import DashboardLayout from './components/layouts/DashboardLayout';
+import MainLayout from './components/layouts/MainLayout';
+import {
+  closeErrorDialog,
+  openErrorDialog,
+  selectApiErrors,
+} from './modules/application/Slice';
 import { checkAuthentication } from './modules/users/Service';
 import {
   authenticationStatus,
   selectIsAuthenticate,
   selectToken,
 } from './modules/users/Slice';
-import Storage from './common/plugins/Storage';
-import GlobalStyles from './components/GlobalStyles';
-import { ConfigureGlobalError } from './common/config/http';
-import {
-  closeErrorDialog,
-  openErrorDialog,
-  selectApiErrors,
-} from './modules/application/Slice';
-import ErrorDialog from './components/feedback/dialogs/ErrorDialog';
 
 const App = (): React.ReactElement => {
   const isAuthenticate = useAppSelector(selectIsAuthenticate);

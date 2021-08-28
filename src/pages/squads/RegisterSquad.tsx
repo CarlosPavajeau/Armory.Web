@@ -1,29 +1,41 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { withStyles, WithStyles } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Paper from '@material-ui/core/Paper';
+import { WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import React, { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Button from '@material-ui/core/Button';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { formStyles } from '../../common/styles';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { formStyles } from '../../common/styles';
+import CircularLoader from '../../components/loading/CircularLoader';
+import { getPeopleByRole } from '../../modules/people/Service';
 import {
+  apiError as peopleApiError,
+  loadingPeople,
+  loadPeople,
+  selectPeople,
+  selectUiStatus as selectPeopleUiStatus,
+} from '../../modules/people/Slice';
+import { getSquadrons } from '../../modules/squadrons/Service';
+import {
+  apiError as squadronsApiError,
   loadingSquadrons,
   loadSquadrons,
   selectSquadrons,
   selectUiStatus as selectSquadronsUiStatus,
-  apiError as squadronsApiError,
 } from '../../modules/squadrons/Slice';
+import { CreateSquadRequest } from '../../modules/squads/Models';
+import { checkExists, createSquad } from '../../modules/squads/Service';
 import {
   apiError,
   registeredCorrectly,
@@ -31,17 +43,6 @@ import {
   selectError,
   selectWasRegistered,
 } from '../../modules/squads/Slice';
-import { getSquadrons } from '../../modules/squadrons/Service';
-import { CreateSquadRequest } from '../../modules/squads/Models';
-import { checkExists, createSquad } from '../../modules/squads/Service';
-import {
-  loadingPeople,
-  loadPeople,
-  selectPeople,
-  selectUiStatus as selectPeopleUiStatus,
-  apiError as peopleApiError,
-} from '../../modules/people/Slice';
-import { getPeopleByRole } from '../../modules/people/Service';
 
 const registerSquadScheme = Yup.object().shape({
   code: Yup.string()

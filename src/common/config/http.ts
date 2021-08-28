@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
-import { AppDispatch } from '../store';
+
 import { apiError } from '../../modules/application/Slice';
 import { authenticationStatus } from '../../modules/users/Slice';
 import Storage from '../plugins/Storage';
+import { AppDispatch } from '../store';
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

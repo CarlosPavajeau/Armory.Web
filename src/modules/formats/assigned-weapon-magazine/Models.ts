@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+
 import { Warehouse } from '../war-material-and-special-equipment-assignment/Models';
 
 export interface CreateAssignedWeaponMagazineFormatRequest {

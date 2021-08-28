@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../common/store';
-import { ArmoryRoles } from './Models';
-import { UiStatus } from '../../common/types';
+
 import Storage from '../../common/plugins/Storage';
+import { RootState } from '../../common/store';
+import { UiStatus } from '../../common/types';
+import { ArmoryRoles } from './Models';
 
 type LoginStatus =
   | UiStatus

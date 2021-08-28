@@ -1,54 +1,54 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react';
-import { FormHelperText, withStyles, WithStyles } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Paper from '@material-ui/core/Paper';
-import FormControl from '@material-ui/core/FormControl';
+import MomentUtils from '@date-io/moment';
+import { FormHelperText, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { Helmet } from 'react-helmet';
-import moment from 'moment';
-import MomentUtils from '@date-io/moment';
 import {
-  MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
-import CircularLoader from 'components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
-import {
-  registeredCorrectly,
-  setCurrentFormat,
-  resetRegister,
-  selectError,
-  selectWasRegistered,
-} from 'modules/formats/assigned-weapon-magazine/Slice';
+import CircularLoader from 'components/loading/CircularLoader';
+import { useFormik } from 'formik';
 import {
   AssignedWeaponMagazineFormat,
   CreateAssignedWeaponMagazineFormatRequest,
 } from 'modules/formats/assigned-weapon-magazine/Models';
 import { createAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
+import {
+  registeredCorrectly,
+  resetRegister,
+  selectError,
+  selectWasRegistered,
+  setCurrentFormat,
+} from 'modules/formats/assigned-weapon-magazine/Slice';
 import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
+import { getSquadrons } from 'modules/squadrons/Service';
 import {
   loadingSquadrons,
   loadSquadrons,
   selectSquadrons,
   selectUiStatus as selectSquadronsUiStatus,
 } from 'modules/squadrons/Slice';
+import { getSquadsBySquadron } from 'modules/squads/Service';
 import {
   loadingSquads,
   loadSquads,
   selectSquads,
   selectUiStatus as selectSquadsUiStatus,
 } from 'modules/squads/Slice';
-import { getSquadrons } from 'modules/squadrons/Service';
-import { getSquadsBySquadron } from 'modules/squads/Service';
+import moment from 'moment';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 export type RegisterAssignedWeaponMagazineFormatProps = WithStyles<
   typeof formStyles

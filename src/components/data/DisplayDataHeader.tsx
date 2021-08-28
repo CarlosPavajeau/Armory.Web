@@ -1,13 +1,14 @@
-import { MouseEventHandler, ReactElement } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
+import { WithStyles, withStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import Grid from '@material-ui/core/Grid';
-import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import SearchIcon from '@material-ui/icons/Search';
+import { MouseEventHandler, ReactElement } from 'react';
+
 import { displayData } from '../../common/styles';
 
 export interface DisplayDataHeaderProps extends WithStyles<typeof displayData> {

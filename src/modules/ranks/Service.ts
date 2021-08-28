@@ -1,5 +1,5 @@
-import { CreateRankRequest, Rank, Ranks } from './Models';
 import HttpClient, { IsValidResponse } from '../../common/config/http';
+import { CreateRankRequest, Rank, Ranks } from './Models';
 
 export const createRank = async (data: CreateRankRequest): Promise<void> => {
   await HttpClient.post('/Ranks', data);

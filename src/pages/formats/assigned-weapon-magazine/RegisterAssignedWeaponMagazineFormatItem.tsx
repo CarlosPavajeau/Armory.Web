@@ -1,9 +1,3 @@
-import { forwardRef, ReactElement, Ref } from 'react';
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
-import Dialog from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import {
   createStyles,
   Paper,
@@ -12,22 +6,29 @@ import {
   Theme,
   Tooltip,
   useTheme,
-  withStyles,
   WithStyles,
+  withStyles,
 } from '@material-ui/core';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
-import { TransitionProps } from '@material-ui/core/transitions';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import * as Yup from 'yup';
+import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from '@material-ui/core/Dialog';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormLabel from '@material-ui/core/FormLabel';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import { TransitionProps } from '@material-ui/core/transitions';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 import { useFormik } from 'formik';
-import { formStyles } from '../../../common/styles';
+import { forwardRef, ReactElement, Ref } from 'react';
+import * as Yup from 'yup';
+
 import { useAppSelector } from '../../../common/hooks';
+import { formStyles } from '../../../common/styles';
 import { selectWeapon } from '../../../modules/armament/weapons/Slice';
 import {
   AddAssignedWeaponMagazineFormatItemRequest,

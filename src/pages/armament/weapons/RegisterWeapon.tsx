@@ -1,17 +1,18 @@
-import { ReactElement, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { withStyles, WithStyles } from '@material-ui/core';
+import { WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Helmet } from 'react-helmet';
 import FileSaver from 'file-saver';
-import { formStyles } from '../../../common/styles';
+import { useFormik } from 'formik';
+import { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
+import { formStyles } from '../../../common/styles';
 import { CreateWeaponRequest } from '../../../modules/armament/weapons/Models';
 import {
   checkExists,

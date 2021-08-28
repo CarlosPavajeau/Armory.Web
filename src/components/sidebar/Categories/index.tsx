@@ -1,7 +1,7 @@
-import { ReactElement } from 'react';
 import AddIcon from '@material-ui/icons/Add';
-import PeopleIcon from '@material-ui/icons/People';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
+import PeopleIcon from '@material-ui/icons/People';
+import { ReactElement } from 'react';
 
 export interface CategoryItem {
   id: string;
@@ -150,6 +150,11 @@ const categories: Categories = [
       {
         id: 'Generar formato de revista',
         path: '/dashboard/formats/assigned-weapon-magazine-format/register',
+        icon: <AddIcon />,
+      },
+      {
+        id: 'Generar formato de acta',
+        path: '/dashboard/formats/war-material-delivery-certificate-format/register',
         icon: <AddIcon />,
       },
     ],

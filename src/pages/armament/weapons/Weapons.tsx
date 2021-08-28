@@ -1,34 +1,35 @@
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Tooltip, withStyles, WithStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import { Helmet } from 'react-helmet';
-import clsx from 'clsx';
+import { Tooltip, WithStyles, withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import clsx from 'clsx';
 import FileSaver from 'file-saver';
-import CircularLoader from '../../../components/loading/CircularLoader';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { displayData } from '../../../common/styles';
 import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
+import Alert from '../../../components/feedback/Alert';
+import CircularLoader from '../../../components/loading/CircularLoader';
 import {
   generateQr,
   getWeapons,
 } from '../../../modules/armament/weapons/Service';
 import {
-  selectWeapons,
-  selectUiStatus,
-  selectError,
+  apiError,
   loadingWeapons,
   loadWeapons,
-  apiError,
+  selectError,
+  selectUiStatus,
+  selectWeapons,
 } from '../../../modules/armament/weapons/Slice';
-import Alert from '../../../components/feedback/Alert';
 
 export type WeaponsProps = WithStyles<typeof displayData>;
 

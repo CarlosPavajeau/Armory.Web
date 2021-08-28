@@ -1,23 +1,23 @@
-import { ReactElement, useEffect } from 'react';
-import { useFormik } from 'formik';
-import { FormHelperText, withStyles, WithStyles } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Paper from '@material-ui/core/Paper';
+import { FormHelperText, WithStyles, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useFormik } from 'formik';
+import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
 
+import { useAppDispatch, useAppSelector } from '../../common/hooks';
 import { formStyles } from '../../common/styles';
+import CircularLoader from '../../components/loading/CircularLoader';
 import { CreatePersonRequest } from '../../modules/people/Models';
 import { createPerson } from '../../modules/people/Service';
 import {
@@ -27,13 +27,13 @@ import {
   selectError,
   selectWasRegistered,
 } from '../../modules/people/Slice';
+import { getRoles } from '../../modules/users/Service';
 import {
   loadingRoles,
   loadRoles,
   selectRoles,
   selectUiStatus,
 } from '../../modules/users/Slice';
-import { getRoles } from '../../modules/users/Service';
 
 export type RegisterPersonProps = WithStyles<typeof formStyles>;
 

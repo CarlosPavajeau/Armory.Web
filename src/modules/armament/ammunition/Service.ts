@@ -1,7 +1,7 @@
 import HttpClient, { IsValidResponse } from '../../../common/config/http';
 import {
-  CreateAmmunitionRequest,
   Ammunition,
+  CreateAmmunitionRequest,
   UpdateAmmunitionRequest,
 } from './Models';
 

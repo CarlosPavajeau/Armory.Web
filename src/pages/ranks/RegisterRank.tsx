@@ -1,16 +1,19 @@
-import { ReactElement, useEffect } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
+import { WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { formStyles } from '../../common/styles';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+
 import { useAppDispatch, useAppSelector } from '../../common/hooks';
+import { formStyles } from '../../common/styles';
+import { CreateRankRequest } from '../../modules/ranks/Models';
+import { createRank } from '../../modules/ranks/Service';
 import {
   apiError,
   registeredCorrectly,
@@ -18,8 +21,6 @@ import {
   selectError,
   selectWasRegistered,
 } from '../../modules/ranks/Slice';
-import { CreateRankRequest } from '../../modules/ranks/Models';
-import { createRank } from '../../modules/ranks/Service';
 
 export type RegisterRankProps = WithStyles<typeof formStyles>;
 

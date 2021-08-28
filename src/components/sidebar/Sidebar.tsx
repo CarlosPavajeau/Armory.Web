@@ -1,10 +1,11 @@
-import { ReactElement } from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
-import List from '@material-ui/core/List';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Drawer, { DrawerProps } from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
+import { ReactElement } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import Categories from './Categories';
 import Category from './Categories/Category';
 

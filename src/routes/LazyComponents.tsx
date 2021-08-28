@@ -1,4 +1,5 @@
-import { lazy, Suspense, ReactElement } from 'react';
+import { lazy, ReactElement, Suspense } from 'react';
+
 import Fallback from '../components/routes/Fallback';
 
 const LoginComponent = lazy(() => import('../pages/login/Login'));
@@ -57,6 +58,12 @@ const RegisterAssignedWeaponMagazineFormatItemsComponent = lazy(
   () =>
     import(
       '../pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormatItems'
+    ),
+);
+const RegisterWarMaterialDeliveryCertificateFormatComponent = lazy(
+  () =>
+    import(
+      'pages/formats/war-material-delivery-certificate/RegisterWarMaterialDeliveryCertificateFormat'
     ),
 );
 
@@ -191,3 +198,10 @@ export const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => (
     <RegisterAssignedWeaponMagazineFormatItemsComponent />
   </Suspense>
 );
+
+export const RegisterWarMaterialDeliveryCertificateFormat =
+  (): ReactElement => (
+    <Suspense fallback={<Fallback />}>
+      <RegisterWarMaterialDeliveryCertificateFormatComponent />
+    </Suspense>
+  );

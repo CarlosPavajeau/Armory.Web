@@ -1,43 +1,44 @@
-import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import {
   createStyles,
   makeStyles,
   Theme,
-  withStyles,
   WithStyles,
+  withStyles,
 } from '@material-ui/core';
-import Consola from 'consola';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import CropFreeIcon from '@material-ui/icons/CropFree';
-import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
-import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
+import CropFreeIcon from '@material-ui/icons/CropFree';
+import { useAppDispatch, useAppSelector, useQuery } from 'common/hooks';
+import { formStyles } from 'common/styles';
+import QrReaderDialog from 'components/qr/QrReaderDialog';
+import Consola from 'consola';
+import FileSaver from 'file-saver';
+import { getWeapon } from 'modules/armament/weapons/Service';
 import {
   loadingWeapon,
   loadWeapon,
   selectUiStatus as selectWeaponUiStatus,
 } from 'modules/armament/weapons/Slice';
-import { getWeapon } from 'modules/armament/weapons/Service';
+import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
+import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
 import {
   addFormatItem,
   selectCurrentFormat,
 } from 'modules/formats/assigned-weapon-magazine/Slice';
-import { formStyles } from 'common/styles';
-import QrReaderDialog from 'components/qr/QrReaderDialog';
-import { useAppDispatch, useAppSelector, useQuery } from 'common/hooks';
-import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
-import FileSaver from 'file-saver';
-import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
-import RegisterAssignedWeaponMagazineFormatItem from './RegisterAssignedWeaponMagazineFormatItem';
+import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet';
+
 import AssignedWeaponMagazineFormatInfo from './components/AssignedWeaponMagazineFormatInfo';
 import AssignedWeaponMagazineFormatItemInfo from './components/AssignedWeaponMagazineFormatItemInfo';
+import RegisterAssignedWeaponMagazineFormatItem from './RegisterAssignedWeaponMagazineFormatItem';
 
 const useCustomStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,5 +1,5 @@
-import { CreateDegreeRequest, Degree, Degrees } from './Models';
 import HttpClient, { IsValidResponse } from '../../common/config/http';
+import { CreateDegreeRequest, Degree, Degrees } from './Models';
 
 export const createDegree = async (
   data: CreateDegreeRequest,

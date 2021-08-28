@@ -1,19 +1,20 @@
-import React from 'react';
 import {
-  createTheme,
   createStyles,
-  ThemeProvider,
+  createTheme,
   Hidden,
+  ThemeProvider,
   Typography,
-  withStyles,
   WithStyles,
+  withStyles,
 } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+
 import DashboardNavBar from '../navbars/DashboardNavBar';
-import Sidebar from '../sidebar/Sidebar';
 import Location from '../routes/Location';
+import Sidebar from '../sidebar/Sidebar';
 
 let theme = createTheme({
   palette: {
@@ -24,6 +25,7 @@ let theme = createTheme({
     },
   },
   typography: {
+    fontFamily: 'Work Sans, sans-serif',
     h5: {
       fontWeight: 500,
       fontSize: 26,

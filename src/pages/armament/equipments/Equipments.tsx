@@ -1,18 +1,18 @@
-import { ReactElement, useCallback, useEffect } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
+import { WithStyles, withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { Helmet } from 'react-helmet';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import clsx from 'clsx';
-import CircularLoader from 'components/loading/CircularLoader';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import Alert from 'components/feedback/Alert';
+import CircularLoader from 'components/loading/CircularLoader';
+import { getEquipments } from 'modules/armament/equipments/Service';
 import {
   apiError,
   loadEquipments,
@@ -21,8 +21,8 @@ import {
   selectError,
   selectUiStatus,
 } from 'modules/armament/equipments/Slice';
-import { getEquipments } from 'modules/armament/equipments/Service';
-import Alert from 'components/feedback/Alert';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type EquipmentsProps = WithStyles<typeof displayData>;
 

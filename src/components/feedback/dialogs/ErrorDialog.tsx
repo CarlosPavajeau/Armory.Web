@@ -1,14 +1,15 @@
-import { ReactElement } from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
-import List from '@material-ui/core/List';
+import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
+import { ReactElement } from 'react';
+
 import Alert from '../Alert';
 
 const styles = (theme: Theme) =>

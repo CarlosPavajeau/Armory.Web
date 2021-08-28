@@ -1,5 +1,7 @@
-import { shallow } from 'enzyme';
 import '@testing-library/jest-dom';
+
+import { shallow } from 'enzyme';
+
 import DisplayDataHeader from '../../data/DisplayDataHeader';
 
 describe('DisplayDataHeader tests', () => {
