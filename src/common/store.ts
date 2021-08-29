@@ -6,6 +6,7 @@ import ExplosivesReducer from 'modules/armament/explosives/Slice';
 import WeaponsReducer from 'modules/armament/weapons/Slice';
 import DegreesReducer from 'modules/degrees/Slice';
 import AssignedWeaponMagazineFormat from 'modules/formats/assigned-weapon-magazine/Slice';
+import WarMaterialAndSpecialEquipmentAssigment from 'modules/formats/war-material-and-special-equipment-assignment/Slice';
 import WarMaterialDeliveryCertificate from 'modules/formats/war-material-delivery-certificate/Slice';
 import PeopleReducer from 'modules/people/Slice';
 import RanksReducer from 'modules/ranks/Slice';
@@ -30,6 +31,8 @@ export const store = configureStore({
     troopers: TroopersReducer,
     assigned_weapon_magazine_format: AssignedWeaponMagazineFormat,
     war_material_delivery_certificate: WarMaterialDeliveryCertificate,
+    war_material_and_special_equipment_assigment:
+      WarMaterialAndSpecialEquipmentAssigment,
   },
 });
 

@@ -1,3 +1,10 @@
+import {
+  AmmunitionAndQuantities,
+  EquipmentsAndQuantities,
+  ExplosivesAndQuantities,
+} from 'modules/formats/war-material-delivery-certificate/Models';
+import { Moment } from 'moment';
+
 export enum Warehouse {
   Terrestrial,
   Air,
@@ -16,9 +23,9 @@ export enum DocMovement {
 
 export interface CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest {
   code: string;
-  validity: Date;
+  validity: Moment;
   place: string;
-  date: Date;
+  date: Moment;
   squadronCode: string;
   squadCode: string;
   troopId: string;
@@ -29,7 +36,7 @@ export interface CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest {
   others: string;
 
   weapons: string[];
-  ammunition: [{ [key: string]: number }];
-  equipments: [{ [key: string]: number }];
-  explosives: [{ [key: string]: number }];
+  ammunition: AmmunitionAndQuantities;
+  equipments: EquipmentsAndQuantities;
+  explosives: ExplosivesAndQuantities;
 }
