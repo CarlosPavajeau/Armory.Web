@@ -20,14 +20,14 @@ import {
   selectEquipments,
   selectUiStatus as selectEquipmentsUiStatus,
 } from 'modules/armament/equipments/Slice';
-import { ItemAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
+import { EquipmentAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
 import { ReactElement, useEffect } from 'react';
 import * as Yup from 'yup';
 
 export interface EquipmentsAndQuantitySelectionDialogProps
   extends WithStyles<typeof formStyles> {
   open: boolean;
-  onClose: (item: ItemAndQuantity | null) => void;
+  onClose: (item: EquipmentAndQuantity | null) => void;
 }
 
 const EquipmentAndQuantitySchema = Yup.object().shape({
@@ -57,19 +57,15 @@ const EquipmentAndQuantitySelectionDialog = (
     })();
   }, [dispatch]);
 
-  const equipmentAndQuantityForm = useFormik({
+  const equipmentAndQuantityForm = useFormik<EquipmentAndQuantity>({
     initialValues: {
       equipmentCode: '',
       quantity: 0,
     },
     validationSchema: EquipmentAndQuantitySchema,
     onSubmit: (values, actions) => {
-      const item: ItemAndQuantity = {
-        [values.equipmentCode]: +values.quantity,
-      };
-
       actions.resetForm();
-      onClose(item);
+      onClose(values);
     },
   });
 

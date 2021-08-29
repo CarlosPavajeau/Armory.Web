@@ -20,14 +20,14 @@ import {
   selectExplosives,
   selectUiStatus as selectExplosivesUiStatus,
 } from 'modules/armament/explosives/Slice';
-import { ItemAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
+import { ExplosiveAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
 import { ReactElement, useEffect } from 'react';
 import * as Yup from 'yup';
 
 export interface ExplosivesAndQuantitySelectionDialogProps
   extends WithStyles<typeof formStyles> {
   open: boolean;
-  onClose: (item: ItemAndQuantity | null) => void;
+  onClose: (item: ExplosiveAndQuantity | null) => void;
 }
 
 const ExplosivesAndQuantitySchema = Yup.object().shape({
@@ -64,12 +64,8 @@ const ExplosivesAndQuantitySelectionDialog = (
     },
     validationSchema: ExplosivesAndQuantitySchema,
     onSubmit: (values, actions) => {
-      const item: ItemAndQuantity = {
-        [values.explosiveCode]: +values.quantity,
-      };
-
       actions.resetForm();
-      onClose(item);
+      onClose(values);
     },
   });
 

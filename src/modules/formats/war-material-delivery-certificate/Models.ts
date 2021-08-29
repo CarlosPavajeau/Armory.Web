@@ -1,7 +1,23 @@
 import { Moment } from 'moment';
 
-export type ItemAndQuantity = { [key: string]: number };
-export type ItemAndQuantities = ItemAndQuantity[];
+export interface AmmunitionAndQuantity {
+  ammunitionCode: string;
+  quantity: number;
+}
+
+export interface EquipmentAndQuantity {
+  equipmentCode: string;
+  quantity: number;
+}
+
+export interface ExplosiveAndQuantity {
+  explosiveCode: string;
+  quantity: number;
+}
+
+export type AmmunitionAndQuantities = AmmunitionAndQuantity[];
+export type EquipmentsAndQuantities = EquipmentAndQuantity[];
+export type ExplosivesAndQuantities = ExplosiveAndQuantity[];
 
 export interface CreateWarMaterialDeliveryCertificateFormatRequest {
   code: string;
@@ -13,7 +29,7 @@ export interface CreateWarMaterialDeliveryCertificateFormatRequest {
   troopId: string;
 
   weapons: string[];
-  ammunition: ItemAndQuantities;
-  equipments: ItemAndQuantities;
-  explosives: ItemAndQuantities;
+  ammunition: AmmunitionAndQuantities;
+  equipments: EquipmentsAndQuantities;
+  explosives: ExplosivesAndQuantities;
 }

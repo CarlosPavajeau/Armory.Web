@@ -1,19 +1,16 @@
 import MomentUtils from '@date-io/moment';
-import {
-  FormHelperText,
-  Input,
-  TextField,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import { WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import {
   KeyboardDatePicker,
@@ -32,8 +29,10 @@ import {
   selectWeapons,
 } from 'modules/armament/weapons/Slice';
 import {
+  AmmunitionAndQuantity,
   CreateWarMaterialDeliveryCertificateFormatRequest,
-  ItemAndQuantity,
+  EquipmentAndQuantity,
+  ExplosiveAndQuantity,
 } from 'modules/formats/war-material-delivery-certificate/Models';
 import { createWarMaterialDeliveryCertificateFormat } from 'modules/formats/war-material-delivery-certificate/Service';
 import {
@@ -88,6 +87,33 @@ const RegisterWarMaterialDeliveryCertificateFormatSchema = Yup.object().shape({
   squadCode: Yup.string().required('Este campo es requerido'),
   troopId: Yup.string().required('Este campo es requerido'),
   weapons: Yup.array(Yup.string())
+    .required('Este campo es requerido')
+    .min(1, 'Se debe seleccionar al menos un arma'),
+  ammunition: Yup.array()
+    .of(
+      Yup.object().shape({
+        ammunitionCode: Yup.string(),
+        quantity: Yup.number(),
+      }),
+    )
+    .required('Este campo es requerido')
+    .min(1, 'Se debe seleccionar al menos un arma'),
+  equipments: Yup.array()
+    .of(
+      Yup.object().shape({
+        equipmentsCode: Yup.string(),
+        quantity: Yup.number(),
+      }),
+    )
+    .required('Este campo es requerido')
+    .min(1, 'Se debe seleccionar al menos un arma'),
+  explosives: Yup.array()
+    .of(
+      Yup.object().shape({
+        explosiveCode: Yup.string(),
+        quantity: Yup.number(),
+      }),
+    )
     .required('Este campo es requerido')
     .min(1, 'Se debe seleccionar al menos un arma'),
 });
@@ -151,7 +177,6 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
       validationSchema: RegisterWarMaterialDeliveryCertificateFormatSchema,
       onSubmit: async values => {
         try {
-          console.log(values);
           const result = await createWarMaterialDeliveryCertificateFormat(
             values,
           );
@@ -228,7 +253,9 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
   const [explosivesAndQuantityOpen, setExplosivesAndQuantityOpen] =
     useState(false);
 
-  const handleAmmunitionAndQuantityClose = (item: ItemAndQuantity | null) => {
+  const handleAmmunitionAndQuantityClose = (
+    item: AmmunitionAndQuantity | null,
+  ) => {
     setAmmunitionAndQuantityOpen(false);
     if (item != null) {
       registerWarMaterialDeliveryCertificateFormatForm.setFieldValue(
@@ -238,22 +265,26 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
     }
   };
 
-  const handleEquipmentsAndQuantityClose = (item: ItemAndQuantity | null) => {
+  const handleEquipmentsAndQuantityClose = (
+    item: EquipmentAndQuantity | null,
+  ) => {
     setEquipmentsAndQuantityOpen(false);
     if (item != null) {
       registerWarMaterialDeliveryCertificateFormatForm.setFieldValue(
         'equipments',
-        [...values.ammunition, item],
+        [...values.equipments, item],
       );
     }
   };
 
-  const handleExplosivesAndQuantityClose = (item: ItemAndQuantity | null) => {
+  const handleExplosivesAndQuantityClose = (
+    item: ExplosiveAndQuantity | null,
+  ) => {
     setExplosivesAndQuantityOpen(false);
     if (item != null) {
       registerWarMaterialDeliveryCertificateFormatForm.setFieldValue(
         'explosives',
-        [...values.ammunition, item],
+        [...values.explosives, item],
       );
     }
   };

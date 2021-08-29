@@ -8,6 +8,9 @@ export const createWarMaterialDeliveryCertificateFormat = async (
   const response = await HttpClient.post<Blob>(
     '/WarMaterialDeliveryCertificateFormats',
     data,
+    {
+      responseType: 'blob',
+    },
   );
 
   if (IsValidResponse(response)) {

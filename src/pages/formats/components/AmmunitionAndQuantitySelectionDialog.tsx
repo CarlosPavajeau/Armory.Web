@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import { useFormik } from 'formik';
 import { getAmmunition } from 'modules/armament/ammunition/Service';
 import {
@@ -19,16 +20,14 @@ import {
   selectAmmunition,
   selectUiStatus as selectAmmunitionUiStatus,
 } from 'modules/armament/ammunition/Slice';
-import { ItemAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
+import { AmmunitionAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
 import { ReactElement, useEffect } from 'react';
 import * as Yup from 'yup';
-
-import CircularLoader from '../../../components/loading/CircularLoader';
 
 export interface AmmunitionAndQuantitySelectionDialogProps
   extends WithStyles<typeof formStyles> {
   open: boolean;
-  onClose: (item: ItemAndQuantity | null) => void;
+  onClose: (item: AmmunitionAndQuantity | null) => void;
 }
 
 const AmmunitionAndQuantitySchema = Yup.object().shape({
@@ -58,19 +57,15 @@ const AmmunitionAndQuantitySelectionDialog = (
     })();
   }, [dispatch]);
 
-  const ammunitionAndQuantityForm = useFormik({
+  const ammunitionAndQuantityForm = useFormik<AmmunitionAndQuantity>({
     initialValues: {
       ammunitionCode: '',
       quantity: 0,
     },
     validationSchema: AmmunitionAndQuantitySchema,
     onSubmit: (values, actions) => {
-      const item: ItemAndQuantity = {
-        [values.ammunitionCode]: +values.quantity,
-      };
-
       actions.resetForm();
-      onClose(item);
+      onClose(values);
     },
   });
 
