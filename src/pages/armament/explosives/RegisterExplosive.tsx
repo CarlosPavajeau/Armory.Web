@@ -4,26 +4,25 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
 import { useFormik } from 'formik';
-import React, { ReactElement, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
-
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { formStyles } from '../../../common/styles';
-import { CreateExplosiveRequest } from '../../../modules/armament/explosives/Models';
+import { CreateExplosiveRequest } from 'modules/armament/explosives/Models';
 import {
   checkExists,
   createExplosive,
-} from '../../../modules/armament/explosives/Service';
+} from 'modules/armament/explosives/Service';
 import {
   apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../../modules/armament/explosives/Slice';
+} from 'modules/armament/explosives/Slice';
+import React, { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const registerExplosiveSchema = Yup.object().shape({
   code: Yup.string()

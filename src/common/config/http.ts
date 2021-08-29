@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { apiError } from '../../modules/application/Slice';
-import { authenticationStatus } from '../../modules/users/Slice';
-import Storage from '../plugins/Storage';
-import { AppDispatch } from '../store';
+import Storage from 'common/plugins/Storage';
+import { AppDispatch } from 'common/store';
+import { apiError } from 'modules/application/Slice';
+import { authenticationStatus } from 'modules/users/Slice';
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

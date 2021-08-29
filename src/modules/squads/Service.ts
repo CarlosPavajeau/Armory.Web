@@ -1,4 +1,5 @@
-import HttpClient, { IsValidResponse } from '../../common/config/http';
+import HttpClient, { IsValidResponse } from 'common/config/http';
+
 import { CreateSquadRequest, Squad, Squads } from './Models';
 
 export const createSquad = async (data: CreateSquadRequest): Promise<void> => {

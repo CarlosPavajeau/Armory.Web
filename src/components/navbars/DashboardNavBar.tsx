@@ -17,11 +17,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { useAppDispatch } from 'common/hooks';
+import { logout } from 'modules/users/Service';
+import { authenticationStatus } from 'modules/users/Slice';
 import { MouseEvent, ReactElement, useState } from 'react';
-
-import { useAppDispatch } from '../../common/hooks';
-import { logout } from '../../modules/users/Service';
-import { authenticationStatus } from '../../modules/users/Slice';
 
 const styles = (theme: Theme) =>
   createStyles({

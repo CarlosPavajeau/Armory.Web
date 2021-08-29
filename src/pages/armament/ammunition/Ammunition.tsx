@@ -7,15 +7,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { displayData } from '../../../common/styles';
-import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
-import Alert from '../../../components/feedback/Alert';
-import CircularLoader from '../../../components/loading/CircularLoader';
-import { getAmmunition } from '../../../modules/armament/ammunition/Service';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import Alert from 'components/feedback/Alert';
+import CircularLoader from 'components/loading/CircularLoader';
+import { getAmmunition } from 'modules/armament/ammunition/Service';
 import {
   apiError,
   loadAmmunition,
@@ -23,7 +20,9 @@ import {
   selectAmmunition,
   selectError,
   selectUiStatus,
-} from '../../../modules/armament/ammunition/Slice';
+} from 'modules/armament/ammunition/Slice';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type AmmunitionProps = WithStyles<typeof displayData>;
 

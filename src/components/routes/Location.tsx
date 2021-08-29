@@ -1,8 +1,8 @@
+import { useAppSelector } from 'common/hooks';
+import { selectIsAuthenticate } from 'modules/users/Slice';
 import { ReactElement, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { useAppSelector } from '../../common/hooks';
-import { selectIsAuthenticate } from '../../modules/users/Slice';
 import Routes from './Routes';
 
 const Location = (): ReactElement => {

@@ -4,26 +4,25 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
 import { useFormik } from 'formik';
-import React, { ReactElement, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
-
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { formStyles } from '../../../common/styles';
-import { CreateEquipmentRequest } from '../../../modules/armament/equipments/Models';
+import { CreateEquipmentRequest } from 'modules/armament/equipments/Models';
 import {
   checkExists,
   createEquipment,
-} from '../../../modules/armament/equipments/Service';
+} from 'modules/armament/equipments/Service';
 import {
   apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../../modules/armament/equipments/Slice';
+} from 'modules/armament/equipments/Slice';
+import React, { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const registerEquipmentSchema = Yup.object().shape({
   code: Yup.string()

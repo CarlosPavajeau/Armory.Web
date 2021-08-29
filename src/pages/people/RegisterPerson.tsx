@@ -9,31 +9,30 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import { useFormik } from 'formik';
-import { ReactElement, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { formStyles } from '../../common/styles';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { CreatePersonRequest } from '../../modules/people/Models';
-import { createPerson } from '../../modules/people/Service';
+import { CreatePersonRequest } from 'modules/people/Models';
+import { createPerson } from 'modules/people/Service';
 import {
   apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../modules/people/Slice';
-import { getRoles } from '../../modules/users/Service';
+} from 'modules/people/Slice';
+import { getRoles } from 'modules/users/Service';
 import {
   loadingRoles,
   loadRoles,
   selectRoles,
   selectUiStatus,
-} from '../../modules/users/Slice';
+} from 'modules/users/Slice';
+import { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 export type RegisterPersonProps = WithStyles<typeof formStyles>;
 

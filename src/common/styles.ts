@@ -48,4 +48,4 @@ const displayData = (theme: Theme): StyleRules =>
     },
   });
 
-export { formStyles, displayData };
+export { displayData, formStyles };

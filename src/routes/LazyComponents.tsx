@@ -1,63 +1,58 @@
+import Fallback from 'components/routes/Fallback';
 import { lazy, ReactElement, Suspense } from 'react';
 
-import Fallback from '../components/routes/Fallback';
-
-const LoginComponent = lazy(() => import('../pages/login/Login'));
+const LoginComponent = lazy(() => import('pages/login/Login'));
 const RegisterSquadronComponent = lazy(
-  () => import('../pages/squadron/RegisterSquadron'),
+  () => import('pages/squadron/RegisterSquadron'),
 );
-const SquadronsComponent = lazy(() => import('../pages/squadron/Squadrons'));
+const SquadronsComponent = lazy(() => import('pages/squadron/Squadrons'));
 const RegisterPersonComponent = lazy(
-  () => import('../pages/people/RegisterPerson'),
+  () => import('pages/people/RegisterPerson'),
 );
-const RegisterSquadComponent = lazy(
-  () => import('../pages/squads/RegisterSquad'),
-);
-const SquadsComponent = lazy(() => import('../pages/squads/Squads'));
-const RegisterRankComponent = lazy(() => import('../pages/ranks/RegisterRank'));
-const RanksComponent = lazy(() => import('../pages/ranks/Ranks'));
+const RegisterSquadComponent = lazy(() => import('pages/squads/RegisterSquad'));
+const SquadsComponent = lazy(() => import('pages/squads/Squads'));
+const RegisterRankComponent = lazy(() => import('pages/ranks/RegisterRank'));
+const RanksComponent = lazy(() => import('pages/ranks/Ranks'));
 const RegisterDegreeComponent = lazy(
-  () => import('../pages/degrees/RegisterDegree'),
+  () => import('pages/degrees/RegisterDegree'),
 );
-const DegreesComponent = lazy(() => import('../pages/degrees/Degrees'));
+const DegreesComponent = lazy(() => import('pages/degrees/Degrees'));
 const RegisterAmmunitionComponent = lazy(
-  () => import('../pages/armament/ammunition/RegisterAmmunition'),
+  () => import('pages/armament/ammunition/RegisterAmmunition'),
 );
 const AmmunitionComponent = lazy(
-  () => import('../pages/armament/ammunition/Ammunition'),
+  () => import('pages/armament/ammunition/Ammunition'),
 );
 const RegisterEquipmentComponent = lazy(
-  () => import('../pages/armament/equipments/RegisterEquipment'),
+  () => import('pages/armament/equipments/RegisterEquipment'),
 );
 const EquipmentsComponent = lazy(
-  () => import('../pages/armament/equipments/Equipments'),
+  () => import('pages/armament/equipments/Equipments'),
 );
 const RegisterExplosiveComponent = lazy(
-  () => import('../pages/armament/explosives/RegisterExplosive'),
+  () => import('pages/armament/explosives/RegisterExplosive'),
 );
 const ExplosivesComponent = lazy(
-  () => import('../pages/armament/explosives/Explosives'),
+  () => import('pages/armament/explosives/Explosives'),
 );
 const RegisterWeaponComponent = lazy(
-  () => import('../pages/armament/weapons/RegisterWeapon'),
+  () => import('pages/armament/weapons/RegisterWeapon'),
 );
-const WeaponsComponent = lazy(
-  () => import('../pages/armament/weapons/Weapons'),
-);
+const WeaponsComponent = lazy(() => import('pages/armament/weapons/Weapons'));
 const RegisterTroopComponent = lazy(
-  () => import('../pages/troopers/RegisterTroop'),
+  () => import('pages/troopers/RegisterTroop'),
 );
-const TroopersComponent = lazy(() => import('../pages/troopers/Troopers'));
+const TroopersComponent = lazy(() => import('pages/troopers/Troopers'));
 const RegisterAssignedWeaponMagazineFormatComponent = lazy(
   () =>
     import(
-      '../pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormat'
+      'pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormat'
     ),
 );
 const RegisterAssignedWeaponMagazineFormatItemsComponent = lazy(
   () =>
     import(
-      '../pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormatItems'
+      'pages/formats/assigned-weapon-magazine/RegisterAssignedWeaponMagazineFormatItems'
     ),
 );
 const RegisterWarMaterialDeliveryCertificateFormatComponent = lazy(

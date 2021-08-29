@@ -9,40 +9,39 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import { useFormik } from 'formik';
-import React, { ReactElement, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { formStyles } from '../../common/styles';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getPeopleByRole } from '../../modules/people/Service';
+import { getPeopleByRole } from 'modules/people/Service';
 import {
   apiError as peopleApiError,
   loadingPeople,
   loadPeople,
   selectPeople,
   selectUiStatus as selectPeopleUiStatus,
-} from '../../modules/people/Slice';
-import { getSquadrons } from '../../modules/squadrons/Service';
+} from 'modules/people/Slice';
+import { getSquadrons } from 'modules/squadrons/Service';
 import {
   apiError as squadronsApiError,
   loadingSquadrons,
   loadSquadrons,
   selectSquadrons,
   selectUiStatus as selectSquadronsUiStatus,
-} from '../../modules/squadrons/Slice';
-import { CreateSquadRequest } from '../../modules/squads/Models';
-import { checkExists, createSquad } from '../../modules/squads/Service';
+} from 'modules/squadrons/Slice';
+import { CreateSquadRequest } from 'modules/squads/Models';
+import { checkExists, createSquad } from 'modules/squads/Service';
 import {
   apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../modules/squads/Slice';
+} from 'modules/squads/Slice';
+import React, { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const registerSquadScheme = Yup.object().shape({
   code: Yup.string()

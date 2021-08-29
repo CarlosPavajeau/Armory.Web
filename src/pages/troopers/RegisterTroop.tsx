@@ -10,48 +10,47 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import { useFormik } from 'formik';
-import React, { ReactElement, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { formStyles } from '../../common/styles';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getDegreesByRank } from '../../modules/degrees/Service';
+import { getDegreesByRank } from 'modules/degrees/Service';
 import {
   apiError as degreesApiError,
   loadDegrees,
   loadingDegrees,
   selectDegrees,
   selectUiStatus as selectDegreesUiStatus,
-} from '../../modules/degrees/Slice';
-import { getRanks } from '../../modules/ranks/Service';
+} from 'modules/degrees/Slice';
+import { getRanks } from 'modules/ranks/Service';
 import {
   apiError as ranksApiError,
   loadingRanks,
   loadRanks,
   selectRanks,
   selectUiStatus as selectRanksUiStatus,
-} from '../../modules/ranks/Slice';
-import { getSquads } from '../../modules/squads/Service';
+} from 'modules/ranks/Slice';
+import { getSquads } from 'modules/squads/Service';
 import {
   apiError as squadsApiError,
   loadingSquads,
   loadSquads,
   selectSquads,
   selectUiStatus as selectSquadsUiStatus,
-} from '../../modules/squads/Slice';
-import { CreateTroopRequest } from '../../modules/troopers/Models';
-import { checkExists, createTroop } from '../../modules/troopers/Service';
+} from 'modules/squads/Slice';
+import { CreateTroopRequest } from 'modules/troopers/Models';
+import { checkExists, createTroop } from 'modules/troopers/Service';
 import {
   apiError,
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../modules/troopers/Slice';
+} from 'modules/troopers/Slice';
+import React, { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const registerTroopSchema = Yup.object().shape({
   id: Yup.string()

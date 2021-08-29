@@ -8,13 +8,12 @@ import {
   withStyles,
 } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import DashboardNavBar from 'components/navbars/DashboardNavBar';
+import Location from 'components/routes/Location';
+import Sidebar from 'components/sidebar/Sidebar';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
-import DashboardNavBar from '../navbars/DashboardNavBar';
-import Location from '../routes/Location';
-import Sidebar from '../sidebar/Sidebar';
 
 let theme = createTheme({
   palette: {

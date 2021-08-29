@@ -7,9 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SearchIcon from '@material-ui/icons/Search';
+import { displayData } from 'common/styles';
 import { MouseEventHandler, ReactElement } from 'react';
-
-import { displayData } from '../../common/styles';
 
 export interface DisplayDataHeaderProps extends WithStyles<typeof displayData> {
   handleRefresh: MouseEventHandler<HTMLButtonElement>;

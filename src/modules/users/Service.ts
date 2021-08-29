@@ -1,5 +1,6 @@
-import HttpClient, { IsValidResponse } from '../../common/config/http';
-import Storage from '../../common/plugins/Storage';
+import HttpClient, { IsValidResponse } from 'common/config/http';
+import Storage from 'common/plugins/Storage';
+
 import { ArmoryRoles, AuthenticationRequest } from './Models';
 import { AuthenticationPayload } from './Slice';
 
@@ -43,4 +44,4 @@ const getRoles = async (): Promise<ArmoryRoles> => {
   throw new Error('No se pueden obtener los roles.');
 };
 
-export { authorizeUser, checkAuthentication, logout, getRoles };
+export { authorizeUser, checkAuthentication, getRoles, logout };

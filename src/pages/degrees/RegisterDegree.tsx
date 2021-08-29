@@ -9,30 +9,29 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import { useFormik } from 'formik';
-import { ReactElement, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { formStyles } from '../../common/styles';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { CreateDegreeRequest } from '../../modules/degrees/Models';
-import { createDegree } from '../../modules/degrees/Service';
+import { CreateDegreeRequest } from 'modules/degrees/Models';
+import { createDegree } from 'modules/degrees/Service';
 import {
   registeredCorrectly,
   resetRegister,
   selectError,
   selectWasRegistered,
-} from '../../modules/degrees/Slice';
-import { getRanks } from '../../modules/ranks/Service';
+} from 'modules/degrees/Slice';
+import { getRanks } from 'modules/ranks/Service';
 import {
   loadingRanks,
   loadRanks,
   selectRanks,
   selectUiStatus as selectRanksUiStatus,
-} from '../../modules/ranks/Slice';
+} from 'modules/ranks/Slice';
+import { ReactElement, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 export type RegisterDegreeProps = WithStyles<typeof formStyles>;
 

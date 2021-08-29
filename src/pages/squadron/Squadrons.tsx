@@ -22,7 +22,7 @@ import {
   loadSquadrons,
   selectError,
   selectSquadrons,
-  selectUiStatus
+  selectUiStatus,
 } from '../../modules/squadrons/Slice';
 
 export type SquadronsProps = WithStyles<typeof displayData>;

@@ -7,22 +7,21 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { displayData } from '../../common/styles';
-import DisplayDataHeader from '../../components/data/DisplayDataHeader';
-import Alert from '../../components/feedback/Alert';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getDegrees } from '../../modules/degrees/Service';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import Alert from 'components/feedback/Alert';
+import CircularLoader from 'components/loading/CircularLoader';
+import { getDegrees } from 'modules/degrees/Service';
 import {
   loadDegrees,
   loadingDegrees,
   selectDegrees,
   selectError,
   selectUiStatus,
-} from '../../modules/degrees/Slice';
+} from 'modules/degrees/Slice';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type DegreesProps = WithStyles<typeof displayData>;
 

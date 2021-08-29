@@ -22,7 +22,7 @@ import {
   loadSquads,
   selectError,
   selectSquads,
-  selectUiStatus
+  selectUiStatus,
 } from '../../modules/squads/Slice';
 
 export type SquadsProps = WithStyles<typeof displayData>;

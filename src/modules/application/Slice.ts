@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { RootState } from '../../common/store';
+import { RootState } from 'common/store';
 
 export interface AppState {
   errors: string[];

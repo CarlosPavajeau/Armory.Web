@@ -9,19 +9,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import clsx from 'clsx';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import Alert from 'components/feedback/Alert';
+import CircularLoader from 'components/loading/CircularLoader';
 import FileSaver from 'file-saver';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { displayData } from '../../../common/styles';
-import DisplayDataHeader from '../../../components/data/DisplayDataHeader';
-import Alert from '../../../components/feedback/Alert';
-import CircularLoader from '../../../components/loading/CircularLoader';
-import {
-  generateQr,
-  getWeapons,
-} from '../../../modules/armament/weapons/Service';
+import { generateQr, getWeapons } from 'modules/armament/weapons/Service';
 import {
   apiError,
   loadingWeapons,
@@ -29,7 +23,9 @@ import {
   selectError,
   selectUiStatus,
   selectWeapons,
-} from '../../../modules/armament/weapons/Slice';
+} from 'modules/armament/weapons/Slice';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type WeaponsProps = WithStyles<typeof displayData>;
 

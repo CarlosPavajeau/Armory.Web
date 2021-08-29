@@ -1,4 +1,5 @@
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
+import HttpClient, { IsValidResponse } from 'common/config/http';
+
 import {
   Ammunition,
   CreateAmmunitionRequest,
