@@ -3,7 +3,7 @@ import ReactQrReader from 'react-qr-reader';
 
 export interface QrReaderProps {
   handleScan: (data: string | null) => void;
-  handleError: (err: any) => void;
+  handleError: (err: unknown) => void;
 }
 
 const QrReader = (props: QrReaderProps): ReactElement => {

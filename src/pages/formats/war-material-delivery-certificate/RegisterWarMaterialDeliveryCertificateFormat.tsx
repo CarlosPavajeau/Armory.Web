@@ -35,10 +35,6 @@ import {
   ExplosiveAndQuantity,
 } from 'modules/formats/war-material-delivery-certificate/Models';
 import { createWarMaterialDeliveryCertificateFormat } from 'modules/formats/war-material-delivery-certificate/Service';
-import {
-  selectError,
-  selectWasRegistered,
-} from 'modules/formats/war-material-delivery-certificate/Slice';
 import { getSquadrons } from 'modules/squadrons/Service';
 import {
   loadingSquadrons,
@@ -132,8 +128,8 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
   const weapons = useAppSelector(selectWeapons);
   const weaponsUiStatus = useAppSelector(selectWeaponsUiStatus);
 
-  const registerError = useAppSelector(selectError);
-  const wasRegistered = useAppSelector(selectWasRegistered);
+  // const registerError = useAppSelector(selectError);
+  // const wasRegistered = useAppSelector(selectWasRegistered);
 
   useEffect(() => {
     (async () => {

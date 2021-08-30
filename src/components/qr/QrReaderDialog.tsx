@@ -7,6 +7,7 @@ import {
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Alert from 'components/feedback/Alert';
+import Consola from 'consola';
 import { ReactElement, useState } from 'react';
 
 import QrReader from './QrReader';
@@ -32,7 +33,8 @@ const QrReaderDialog = (props: QrReaderDialogProps): ReactElement => {
     }
   };
 
-  const handleError = (err: any) => {
+  const handleError = (err: unknown) => {
+    Consola.warn((err as Error).message);
     setHasError(true);
   };
 
