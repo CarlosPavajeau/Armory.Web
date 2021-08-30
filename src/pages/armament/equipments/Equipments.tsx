@@ -38,8 +38,8 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
       dispatch(loadingEquipments());
       const result = await getEquipments();
       dispatch(loadEquipments(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

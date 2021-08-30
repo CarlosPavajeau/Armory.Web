@@ -39,8 +39,8 @@ const Ranks = (props: RanksProps): ReactElement => {
       dispatch(loadingRanks());
       const result = await getRanks();
       dispatch(loadRanks(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

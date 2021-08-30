@@ -39,8 +39,8 @@ const Squads = (props: SquadsProps): ReactElement => {
       dispatch(loadingSquads());
       const result = await getSquads();
       dispatch(loadSquads(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

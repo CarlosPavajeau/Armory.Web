@@ -7,15 +7,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { displayData } from '../../common/styles';
-import DisplayDataHeader from '../../components/data/DisplayDataHeader';
-import Alert from '../../components/feedback/Alert';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getTroopers } from '../../modules/troopers/Service';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import Alert from 'components/feedback/Alert';
+import CircularLoader from 'components/loading/CircularLoader';
+import { getTroopers } from 'modules/troopers/Service';
 import {
   apiError,
   loadingTroopers,
@@ -23,7 +20,9 @@ import {
   selectError,
   selectTroopers,
   selectUiStatus,
-} from '../../modules/troopers/Slice';
+} from 'modules/troopers/Slice';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type TroopersProps = WithStyles<typeof displayData>;
 
@@ -39,8 +38,8 @@ const Troopers = (props: TroopersProps): ReactElement => {
       dispatch(loadingTroopers());
       const result = await getTroopers();
       dispatch(loadTroopers(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

@@ -85,8 +85,8 @@ const RegisterExplosive = (props: RegisterExplosiveProps): ReactElement => {
       try {
         await createExplosive(values);
         dispatch(registeredCorrectly());
-      } catch (err) {
-        dispatch(apiError(err.message));
+      } catch (err: unknown) {
+        dispatch(apiError((err as Error).message));
       }
     },
   });

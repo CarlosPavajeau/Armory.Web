@@ -38,8 +38,8 @@ const Explosives = (props: ExplosivesProps): ReactElement => {
       dispatch(loadingExplosives());
       const result = await getExplosives();
       dispatch(loadExplosives(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

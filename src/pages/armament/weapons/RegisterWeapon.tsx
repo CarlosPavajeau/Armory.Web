@@ -82,8 +82,8 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
         const result = await createWeapon(values);
         FileSaver.saveAs(result, `qr-${values.code}.pdf`);
         dispatch(registeredCorrectly());
-      } catch (err) {
-        dispatch(apiError(err.message));
+      } catch (err: unknown) {
+        dispatch(apiError((err as Error).message));
       }
     },
   });

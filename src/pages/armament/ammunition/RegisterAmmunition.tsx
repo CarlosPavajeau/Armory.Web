@@ -86,8 +86,8 @@ const RegisterAmmunition = (props: RegisterAmmunitionProps): ReactElement => {
       try {
         await createAmmunition(values);
         dispatch(registeredCorrectly());
-      } catch (err) {
-        dispatch(apiError(err.message));
+      } catch (err: unknown) {
+        dispatch(apiError((err as Error).message));
       }
     },
   });

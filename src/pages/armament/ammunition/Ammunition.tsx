@@ -38,8 +38,8 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
       dispatch(loadingAmmunition());
       const result = await getAmmunition();
       dispatch(loadAmmunition(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

@@ -39,8 +39,8 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
       dispatch(loadingSquadrons());
       const result = await getSquadrons();
       dispatch(loadSquadrons(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 

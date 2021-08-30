@@ -41,8 +41,8 @@ const Weapons = (props: WeaponsProps): ReactElement => {
       dispatch(loadingWeapons());
       const result = await getWeapons();
       dispatch(loadWeapons(result));
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   }, [dispatch]);
 
@@ -60,8 +60,8 @@ const Weapons = (props: WeaponsProps): ReactElement => {
     try {
       const result = await generateQr(code);
       FileSaver.saveAs(result, `qr-${code}.pdf`);
-    } catch (err) {
-      dispatch(apiError(err.message));
+    } catch (err: unknown) {
+      dispatch(apiError((err as Error).message));
     }
   };
 

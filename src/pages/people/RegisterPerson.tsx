@@ -111,8 +111,8 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
       try {
         await createPerson(values);
         dispatch(registeredCorrectly());
-      } catch (err) {
-        dispatch(apiError(err.message));
+      } catch (err: unknown) {
+        dispatch(apiError((err as Error).message));
       }
     },
   });
