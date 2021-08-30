@@ -85,11 +85,11 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
   const translateRoleName = (roleName: string): string => {
     switch (roleName) {
       case 'SquadronLeader':
-        return 'Jefe de escuadrilla';
+        return 'Comandante de escuadrilla';
       case 'SquadLeader':
-        return 'Jefe de escuadra';
+        return 'Comandante de escuadra';
       case 'StoreLeader':
-        return 'Jefe de bodega';
+        return 'Comandante de escuadron';
       default:
         return 'Rol no identificado';
     }
