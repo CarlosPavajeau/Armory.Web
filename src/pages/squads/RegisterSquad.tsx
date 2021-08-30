@@ -94,8 +94,8 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
         dispatch(loadingSquadrons());
         const result = await getSquadrons();
         dispatch(loadSquadrons(result));
-      } catch (err) {
-        dispatch(squadronsApiError(err.message));
+      } catch (err: unknown) {
+        dispatch(squadronsApiError((err as Error).message));
       }
     })();
   }, [dispatch]);
@@ -106,8 +106,8 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
         dispatch(loadingPeople());
         const result = await getPeopleByRole('SquadLeader');
         dispatch(loadPeople(result));
-      } catch (err) {
-        dispatch(peopleApiError(err.message));
+      } catch (err: unknown) {
+        dispatch(peopleApiError((err as Error).message));
       }
     })();
   }, [dispatch]);

@@ -81,8 +81,8 @@ const RegisterSquadron = (props: RegisterSquadronProps): ReactElement => {
         dispatch(loadingPeople());
         const result = await getPeopleByRole('SquadronLeader');
         dispatch(loadPeople(result));
-      } catch (err) {
-        dispatch(peopleApiError(err.message));
+      } catch (err: unknown) {
+        dispatch(peopleApiError((err as Error).message));
       }
     })();
   }, [dispatch]);

@@ -113,8 +113,8 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
         dispatch(loadingSquads());
         const result = await getSquads();
         dispatch(loadSquads(result));
-      } catch (err) {
-        dispatch(squadsApiError(err.message));
+      } catch (err: unknown) {
+        dispatch(squadsApiError((err as Error).message));
       }
     })();
   }, [dispatch]);
@@ -125,8 +125,8 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
         dispatch(loadingRanks());
         const result = await getRanks();
         dispatch(loadRanks(result));
-      } catch (err) {
-        dispatch(ranksApiError(err.message));
+      } catch (err: unknown) {
+        dispatch(ranksApiError((err as Error).message));
       }
     })();
   }, [dispatch]);
@@ -170,8 +170,8 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
           dispatch(loadingDegrees());
           const result = await getDegreesByRank(values.rankId);
           dispatch(loadDegrees(result));
-        } catch (err) {
-          dispatch(degreesApiError(err.message));
+        } catch (err: unknown) {
+          dispatch(degreesApiError((err as Error).message));
         }
       })();
     }
