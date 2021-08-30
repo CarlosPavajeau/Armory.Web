@@ -157,6 +157,11 @@ const categories: Categories = [
         path: '/dashboard/formats/war-material-delivery-certificate-format/register',
         icon: <AddIcon />,
       },
+      {
+        id: 'Generar formato de asignación',
+        path: '/dashboard/formats/war-material-and-special-equipment-assigment-format/register',
+        icon: <AddIcon />,
+      },
     ],
   },
 ];

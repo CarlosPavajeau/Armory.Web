@@ -62,6 +62,13 @@ const RegisterWarMaterialDeliveryCertificateFormatComponent = lazy(
     ),
 );
 
+const RegisterWarMaterialAndSpecialEquipmentAssigmentFormatComponent = lazy(
+  () =>
+    import(
+      'pages/formats/war-material-and-special-equipment-assignment/RegisterWarMaterialAndSpecialEquipmentAssigmentFormat'
+    ),
+);
+
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <LoginComponent />
@@ -198,5 +205,11 @@ export const RegisterWarMaterialDeliveryCertificateFormat =
   (): ReactElement => (
     <Suspense fallback={<Fallback />}>
       <RegisterWarMaterialDeliveryCertificateFormatComponent />
+    </Suspense>
+  );
+export const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat =
+  (): ReactElement => (
+    <Suspense fallback={<Fallback />}>
+      <RegisterWarMaterialAndSpecialEquipmentAssigmentFormatComponent />
     </Suspense>
   );

@@ -18,6 +18,7 @@ import {
   RegisterSquad,
   RegisterSquadron,
   RegisterTroop,
+  RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   RegisterWarMaterialDeliveryCertificateFormat,
   RegisterWeapon,
   Squadrons,
@@ -133,6 +134,11 @@ const routes: Routes = [
     path: '/dashboard/formats/war-material-delivery-certificate-format/register',
     exact: true,
     component: RegisterWarMaterialDeliveryCertificateFormat,
+  },
+  {
+    path: '/dashboard/formats/war-material-and-special-equipment-assigment-format/register',
+    exact: true,
+    component: RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   },
 ];
 
