@@ -1,4 +1,4 @@
-import { FormHelperText, WithStyles, withStyles } from '@material-ui/core';
+import { FormHelperText } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import CircularLoader from 'components/loading/CircularLoader';
@@ -31,7 +33,7 @@ import {
 } from 'modules/users/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 export type RegisterPersonProps = WithStyles<typeof formStyles>;
@@ -62,10 +64,10 @@ const RegisterPerson = (props: RegisterPersonProps): ReactElement => {
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/people');
+      history('/dashboard/people');
       dispatch(resetRegister());
     }
   }, [dispatch, history, wasRegistered]);

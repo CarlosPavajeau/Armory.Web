@@ -1,9 +1,12 @@
-import { WithStyles, withStyles } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Fade from '@material-ui/core/Fade';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import { useFormik } from 'formik';
@@ -21,7 +24,7 @@ import {
 } from 'modules/armament/ammunition/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const registerAmmunitionSchema = Yup.object().shape({
@@ -63,10 +66,10 @@ const RegisterAmmunition = (props: RegisterAmmunitionProps): ReactElement => {
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/ammunition');
+      history('/dashboard/ammunition');
       dispatch(resetRegister());
     }
   }, [dispatch, history, wasRegistered]);
@@ -107,7 +110,17 @@ const RegisterAmmunition = (props: RegisterAmmunitionProps): ReactElement => {
         <title>Armería | Registro de munición</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Box sx={{ height: 40 }}>
+          <Fade
+            in={isSubmitting}
+            style={{
+              transitionDelay: isSubmitting ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+          >
+            <LinearProgress />
+          </Fade>
+        </Box>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de munición

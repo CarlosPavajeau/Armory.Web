@@ -1,5 +1,7 @@
-import { Paper, WithStyles, withStyles } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import { selectCurrentFormat } from 'modules/formats/assigned-weapon-magazine/Slice';

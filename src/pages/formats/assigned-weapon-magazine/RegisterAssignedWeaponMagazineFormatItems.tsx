@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,6 +10,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import CropFreeIcon from '@material-ui/icons/CropFree';
+import { WithStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
+import makeStyles from '@material-ui/styles/makeStyles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector, useQuery } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import QrReaderDialog from 'components/qr/QrReaderDialog';
@@ -150,6 +148,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (
                   color="primary"
                   onClick={handleClickOnOpenQrDialog}
                   disabled={weaponUiStatus === 'loading'}
+                  size="large"
                 >
                   <CropFreeIcon />
                 </IconButton>
@@ -157,7 +156,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (
             </Grid>
             <Grid item>
               <Tooltip title="Generar formato">
-                <IconButton onClick={handleClickOnGenerateFormat}>
+                <IconButton onClick={handleClickOnGenerateFormat} size="large">
                   <AssignmentReturnedIcon />
                 </IconButton>
               </Tooltip>

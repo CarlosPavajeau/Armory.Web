@@ -1,4 +1,10 @@
-import { RouteProps } from 'react-router-dom';
+import { TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import DashboardLayout from 'components/layouts/dashboard';
+import { ReactElement } from 'react';
+import { Navigate, useRoutes } from 'react-router-dom';
 
 import {
   Ammunition,
@@ -27,7 +33,7 @@ import {
   Weapons,
 } from './LazyComponents';
 
-type Routes = RouteProps[];
+/* type Routes = RouteProps[];
 
 const routes: Routes = [
   {
@@ -140,6 +146,29 @@ const routes: Routes = [
     exact: true,
     component: RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   },
-];
+]; */
 
-export default routes;
+const Router = (): ReactElement | null => {
+  return useRoutes([
+    {
+      path: '/dashboard',
+      element: <DashboardLayout />,
+      children: [
+        {
+          path: '',
+          element: (
+            <div>
+              <RegisterAmmunition />
+            </div>
+          ),
+        },
+      ],
+    },
+    {
+      path: '/',
+      element: <Navigate to="/dashboard" replace />,
+    },
+  ]);
+};
+
+export default Router;

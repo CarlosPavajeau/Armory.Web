@@ -1,5 +1,5 @@
 import MomentUtils from '@date-io/moment';
-import { FormHelperText, WithStyles, withStyles } from '@material-ui/core';
+import { FormHelperText } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,10 +9,11 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import AdapterMoment from '@material-ui/lab/AdapterMoment';
+import DatePicker from '@material-ui/lab/DatePicker';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import CircularLoader from 'components/loading/CircularLoader';
@@ -47,7 +48,7 @@ import {
 import moment from 'moment';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 export type RegisterAssignedWeaponMagazineFormatProps = WithStyles<
@@ -76,11 +77,11 @@ const RegisterAssignedWeaponMagazineFormat = (
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   const [formatId, setFormatId] = useState(0);
   useEffect(() => {
     if (wasRegistered) {
-      history.push(
+      history(
         `/dashboard/formats/assigned-weapon-magazine-format/items/register?formatId=${formatId}`,
       );
       dispatch(resetRegister());
@@ -189,38 +190,34 @@ const RegisterAssignedWeaponMagazineFormat = (
               disabled={isSubmitting}
               fullWidth
             />
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
-                id="validity"
-                variant="inline"
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
                 label="Vigencia"
-                margin="normal"
-                format="yyyy/MM/DD"
                 value={values.validity}
-                helperText={
-                  errors.validity && touched.validity
-                    ? errors.validity
-                    : 'Digite la vigencia del formato'
-                }
-                error={!!(errors.validity && touched.validity)}
                 className={classes.formField}
                 onChange={value => {
-                  if (value && value.date != null) {
+                  if (value) {
                     registerAssignedWeaponMagazineFormatForm.setFieldValue(
                       'validity',
                       value,
                     );
                   }
                 }}
-                onBlur={handleBlur}
                 disabled={isSubmitting}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-                disableToolbar
-                fullWidth
+                renderInput={params => (
+                  <TextField
+                    helperText={
+                      errors.validity && touched.validity
+                        ? errors.validity
+                        : 'Digite la vigencia del formato'
+                    }
+                    error={!!(errors.validity && touched.validity)}
+                    fullWidth
+                    {...params}
+                  />
+                )}
               />
-            </MuiPickersUtilsProvider>
+            </LocalizationProvider>
             <FormControl className={classes.formField} fullWidth>
               <InputLabel id="select-squadronCode-label">
                 Escuadrilla

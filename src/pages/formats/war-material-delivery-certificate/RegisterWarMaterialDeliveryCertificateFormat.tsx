@@ -1,5 +1,3 @@
-import MomentUtils from '@date-io/moment';
-import { WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -9,13 +7,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
+import Select, { SelectChangeEvent } from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import AdapterMoment from '@material-ui/lab/AdapterMoment';
+import DatePicker from '@material-ui/lab/DatePicker';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import CircularLoader from 'components/loading/CircularLoader';
@@ -235,10 +234,16 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
     })();
   }, [fetchTroops, values.squadCode]);
 
-  const handleSelectWeapon = (event: ChangeEvent<{ value: unknown }>) => {
+  const handleSelectWeapon = (
+    event: SelectChangeEvent<typeof values.weapons>,
+  ) => {
+    const {
+      target: { value },
+    } = event;
+
     registerWarMaterialDeliveryCertificateFormatForm.setFieldValue(
       'weapons',
-      event.target.value as string[],
+      typeof value === 'string' ? value.split(',') : value,
     );
   };
 
@@ -323,38 +328,34 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
               disabled={isSubmitting}
               fullWidth
             />
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
-                id="validity"
-                variant="inline"
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
                 label="Vigencia"
-                margin="normal"
-                format="yyyy/MM/DD"
                 value={values.validity}
-                helperText={
-                  errors.validity && touched.validity
-                    ? errors.validity
-                    : 'Digite la vigencia del formato'
-                }
-                error={!!(errors.validity && touched.validity)}
                 className={classes.formField}
                 onChange={value => {
-                  if (value && value.date != null) {
+                  if (value) {
                     registerWarMaterialDeliveryCertificateFormatForm.setFieldValue(
                       'validity',
                       value,
                     );
                   }
                 }}
-                onBlur={handleBlur}
                 disabled={isSubmitting}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-                disableToolbar
-                fullWidth
+                renderInput={params => (
+                  <TextField
+                    helperText={
+                      errors.validity && touched.validity
+                        ? errors.validity
+                        : 'Digite la vigencia del formato'
+                    }
+                    error={!!(errors.validity && touched.validity)}
+                    fullWidth
+                    {...params}
+                  />
+                )}
               />
-            </MuiPickersUtilsProvider>
+            </LocalizationProvider>
             <TextField
               id="place"
               name="place"
@@ -506,7 +507,6 @@ const RegisterWarMaterialDeliveryCertificateFormat = (
                 onChange={handleSelectWeapon}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
-                defaultValue=""
                 multiple
                 fullWidth
               >

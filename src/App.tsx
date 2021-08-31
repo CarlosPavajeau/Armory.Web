@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { ReactElement, useEffect } from 'react';
 
 import { ConfigureGlobalError } from './common/config/http';
 import { useAppDispatch, useAppSelector } from './common/hooks';
 import Storage from './common/plugins/Storage';
-import ErrorDialog from './components/feedback/dialogs/ErrorDialog';
-import GlobalStyles from './components/GlobalStyles';
-import DashboardLayout from './components/layouts/DashboardLayout';
-import MainLayout from './components/layouts/MainLayout';
 import {
   closeErrorDialog,
   openErrorDialog,
@@ -19,8 +14,10 @@ import {
   selectIsAuthenticate,
   selectToken,
 } from './modules/users/Slice';
+import Router from './routes';
+import ThemeConfig from './shared/theme';
 
-const App = (): React.ReactElement => {
+const App = (): ReactElement => {
   const isAuthenticate = useAppSelector(selectIsAuthenticate);
   const token = useAppSelector(selectToken);
   const openErrDialog = useAppSelector(openErrorDialog);
@@ -49,18 +46,9 @@ const App = (): React.ReactElement => {
   };
 
   return (
-    <div>
-      <GlobalStyles />
-      <Switch>
-        <Route path="/dashboard" component={DashboardLayout} />
-        <Route path="/" component={MainLayout} />
-      </Switch>
-      <ErrorDialog
-        open={openErrDialog}
-        errors={apiErrors}
-        onClose={handleOnCloseErrorDialog}
-      />
-    </div>
+    <ThemeConfig>
+      <Router />
+    </ThemeConfig>
   );
 };
 export default App;

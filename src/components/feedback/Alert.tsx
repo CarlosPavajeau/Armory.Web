@@ -1,4 +1,4 @@
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import MuiAlert, { AlertProps } from '@material-ui/core/Alert';
 import { ReactElement } from 'react';
 
 const Alert = (props: AlertProps): ReactElement => {

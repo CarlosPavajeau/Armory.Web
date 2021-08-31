@@ -1,4 +1,4 @@
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -8,6 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import { WithStyles, withStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
 import { ReactElement } from 'react';
 
 import Alert from '../Alert';
@@ -42,7 +44,11 @@ const ErrorDialog = (props: ErrorDialogProps): ReactElement => {
           No se puede completar la acción debido a los siguientes errores:
         </Typography>
         <Tooltip title="Cerrar">
-          <IconButton className={classes.closeButton} onClick={onClose}>
+          <IconButton
+            className={classes.closeButton}
+            onClick={onClose}
+            size="large"
+          >
             <CloseIcon />
           </IconButton>
         </Tooltip>

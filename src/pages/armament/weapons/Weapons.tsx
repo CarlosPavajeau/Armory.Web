@@ -1,4 +1,4 @@
-import { Tooltip, WithStyles, withStyles } from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,6 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
@@ -111,6 +113,7 @@ const Weapons = (props: WeaponsProps): ReactElement => {
                           <Tooltip title="Generar y descargar código QR">
                             <IconButton
                               onClick={() => generateWeaponQr(weapon.code)}
+                              size="large"
                             >
                               <GetAppIcon />
                             </IconButton>

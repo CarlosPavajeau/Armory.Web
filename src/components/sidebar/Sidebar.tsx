@@ -1,7 +1,10 @@
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import Drawer, { DrawerProps } from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { WithStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
+import withStyles from '@material-ui/styles/withStyles';
 import clsx from 'clsx';
 import { ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';

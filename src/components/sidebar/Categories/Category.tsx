@@ -1,7 +1,10 @@
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { WithStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
+import withStyles from '@material-ui/styles/withStyles';
 import { Fragment, ReactElement } from 'react';
 
 import CategoryItem from './CategoryItem';

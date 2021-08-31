@@ -1,4 +1,3 @@
-import { WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -10,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import CircularLoader from 'components/loading/CircularLoader';
@@ -49,7 +50,7 @@ import {
 } from 'modules/troopers/Slice';
 import React, { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const registerTroopSchema = Yup.object().shape({
@@ -99,10 +100,10 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/troopers');
+      history('/dashboard/troopers');
       dispatch(resetRegister());
     }
   }, [dispatch, history, wasRegistered]);

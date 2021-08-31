@@ -1,4 +1,4 @@
-import { createStyles, Theme, WithStyles, withStyles } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +17,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { WithStyles, withStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
 import { useAppDispatch } from 'common/hooks';
 import { logout } from 'modules/users/Service';
 import { authenticationStatus } from 'modules/users/Slice';
@@ -96,12 +98,13 @@ const DashboardNavBar = (props: DashboardNavBarProps): ReactElement => {
                   aria-label="open drawe"
                   onClick={handleDrawerToggle}
                   className={classes.menuButton}
+                  size="large"
                 >
                   <MenuIcon />
                 </IconButton>
               </Grid>
             </Hidden>
-            <Hidden smDown>
+            <Hidden mdDown>
               <Grid item>
                 <Typography>Armería</Typography>
               </Grid>
@@ -109,7 +112,11 @@ const DashboardNavBar = (props: DashboardNavBarProps): ReactElement => {
             <Grid item xs />
             <Grid item>
               <Tooltip title="Notificaciones">
-                <IconButton color="inherit" onClick={handleClickNotification}>
+                <IconButton
+                  color="inherit"
+                  onClick={handleClickNotification}
+                  size="large"
+                >
                   <NotificationsIcon />
                 </IconButton>
               </Tooltip>
@@ -144,7 +151,11 @@ const DashboardNavBar = (props: DashboardNavBarProps): ReactElement => {
               )}
             </Popper>
             <Grid item>
-              <IconButton color="inherit" onClick={handleClickAccount}>
+              <IconButton
+                color="inherit"
+                onClick={handleClickAccount}
+                size="large"
+              >
                 <AccountCircleIcon />
               </IconButton>
             </Grid>
