@@ -81,6 +81,7 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
       </Box>
 
       <NavSection navConfig={sidebarConfig} />
+      <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );
 

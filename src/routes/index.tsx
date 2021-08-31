@@ -1,6 +1,3 @@
-import { TextField } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import DashboardLayout from 'components/layouts/dashboard';
 import { ReactElement } from 'react';
@@ -33,121 +30,6 @@ import {
   Weapons,
 } from './LazyComponents';
 
-/* type Routes = RouteProps[];
-
-const routes: Routes = [
-  {
-    path: '/login',
-    component: Login,
-    exact: true,
-  },
-  {
-    path: '/dashboard/squadrons/register',
-    component: RegisterSquadron,
-  },
-  {
-    path: '/dashboard/squadrons',
-    exact: true,
-    component: Squadrons,
-  },
-  {
-    path: '/dashboard/people/register',
-    component: RegisterPerson,
-  },
-  {
-    path: '/dashboard/squads/register',
-    component: RegisterSquad,
-  },
-  {
-    path: '/dashboard/squads',
-    exact: true,
-    component: Squads,
-  },
-  {
-    path: '/dashboard/ranks/register',
-    component: RegisterRank,
-  },
-  {
-    path: '/dashboard/ranks',
-    exact: true,
-    component: Ranks,
-  },
-  {
-    path: '/dashboard/degrees/register',
-    component: RegisterDegree,
-  },
-  {
-    path: '/dashboard/degrees',
-    exact: true,
-    component: Degrees,
-  },
-  {
-    path: '/dashboard/ammunition/register',
-    component: RegisterAmmunition,
-  },
-  {
-    path: '/dashboard/ammunition',
-    exact: true,
-    component: Ammunition,
-  },
-  {
-    path: '/dashboard/equipments/register',
-    component: RegisterEquipment,
-  },
-  {
-    path: '/dashboard/equipments',
-    exact: true,
-    component: Equipments,
-  },
-  {
-    path: '/dashboard/explosives/register',
-    component: RegisterExplosive,
-  },
-  {
-    path: '/dashboard/explosives',
-    exact: true,
-    component: Explosives,
-  },
-  {
-    path: '/dashboard/weapons/register',
-    component: RegisterWeapon,
-  },
-  {
-    path: '/dashboard/weapons',
-    exact: true,
-    component: Weapons,
-  },
-  {
-    path: '/dashboard/troopers/register',
-    component: RegisterTroop,
-  },
-  {
-    path: '/dashboard/troopers',
-    exact: true,
-    component: Troopers,
-  },
-  {
-    path: '/dashboard/formats/assigned-weapon-magazine-format/register',
-    exact: true,
-    component: RegisterAssignedWeaponMagazineFormat,
-  },
-  {
-    path: '/dashboard/formats/assigned-weapon-magazine-format/items/register',
-    exact: true,
-    component: RegisterAssignedWeaponMagazineFormatItems,
-  },
-  {
-    path: '/dashboard/formats/war-material-delivery-certificate-format/register',
-    exact: true,
-    component: RegisterWarMaterialDeliveryCertificateFormat,
-  },
-  {
-    path: '/dashboard/formats/war-material-and-special-equipment-assigment-format/register',
-    exact: true,
-    component: RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
-  },
-]; */
-
 const Router = (): ReactElement | null => {
   return useRoutes([
     {
@@ -156,11 +38,187 @@ const Router = (): ReactElement | null => {
       children: [
         {
           path: '',
-          element: (
-            <div>
-              <RegisterAmmunition />
-            </div>
-          ),
+          element: <Typography variant="h4">Bienvenido</Typography>,
+        },
+        {
+          path: '/people/register',
+          element: <RegisterPerson />,
+        },
+        {
+          path: 'squadrons',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/squadrons/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterSquadron />,
+            },
+            {
+              path: 'all',
+              element: <Squadrons />,
+            },
+          ],
+        },
+        {
+          path: 'squads',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/squads/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterSquad />,
+            },
+            {
+              path: 'all',
+              element: <Squads />,
+            },
+          ],
+        },
+        {
+          path: 'ranks',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/ranks/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterRank />,
+            },
+            {
+              path: 'all',
+              element: <Ranks />,
+            },
+          ],
+        },
+        {
+          path: 'degrees',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/degrees/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterDegree />,
+            },
+            {
+              path: 'all',
+              element: <Degrees />,
+            },
+          ],
+        },
+        {
+          path: 'ammunition',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/ammunition/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterAmmunition />,
+            },
+            {
+              path: 'all',
+              element: <Ammunition />,
+            },
+          ],
+        },
+        {
+          path: 'equipments',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/equipments/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterEquipment />,
+            },
+            {
+              path: 'all',
+              element: <Equipments />,
+            },
+          ],
+        },
+        {
+          path: 'explosives',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/explosives/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterExplosive />,
+            },
+            {
+              path: 'all',
+              element: <Explosives />,
+            },
+          ],
+        },
+        {
+          path: 'weapons',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/weapons/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterWeapon />,
+            },
+            {
+              path: 'all',
+              element: <Weapons />,
+            },
+          ],
+        },
+        {
+          path: 'troopers',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/troopers/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterTroop />,
+            },
+            {
+              path: 'all',
+              element: <Troopers />,
+            },
+          ],
+        },
+        {
+          path: 'formats',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/" />,
+            },
+            {
+              path: 'assigned-weapon-magazine-format',
+              element: <RegisterAssignedWeaponMagazineFormat />,
+            },
+            {
+              path: 'war-material-delivery-certificate-format',
+              element: <RegisterWarMaterialDeliveryCertificateFormat />,
+            },
+            {
+              path: 'war-material-and-special-equipment-assigment-format',
+              element: (
+                <RegisterWarMaterialAndSpecialEquipmentAssigmentFormat />
+              ),
+            },
+          ],
         },
       ],
     },

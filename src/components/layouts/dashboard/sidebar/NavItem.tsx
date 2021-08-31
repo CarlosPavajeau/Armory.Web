@@ -85,10 +85,10 @@ const NavItem = (props: NavItemProps): ReactElement => {
     return (
       <>
         <ListItemStyle
-          {...props}
           sx={{
             ...(isActiveRoot && activeRootStyle),
           }}
+          {...props}
         >
           <ListItemIconStyle>{icon}</ListItemIconStyle>
           <ListItemText primary={title} disableTypography />

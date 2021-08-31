@@ -1,4 +1,11 @@
+import AddIcon from '@material-ui/icons/Add';
+import AddModeratorIcon from '@material-ui/icons/AddModerator';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
+import AutoAwesomeIcon from '@material-ui/icons/AutoAwesome';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import HomeIcon from '@material-ui/icons/Home';
+import PeopleIcon from '@material-ui/icons/People';
 import { ReactElement } from 'react';
 
 export interface SidebarConfigItemChildren {
@@ -16,18 +23,171 @@ export interface SidebarConfigItem {
 
 const sidebarConfig: SidebarConfigItem[] = [
   {
-    title: 'Inicio',
-    path: '/home',
-    icon: <HomeIcon width={22} height={22} />,
-  },
-  {
-    title: 'Inicio',
-    path: '/home',
-    icon: <HomeIcon width={22} height={22} />,
+    title: 'Personas',
+    path: '/dashboard/people',
+    icon: <PeopleIcon />,
     children: [
       {
-        title: 'Inicio',
-        path: '/home',
+        title: 'Registrar persona',
+        path: '/dashboard/people/register',
+      },
+      {
+        title: 'Consultar personas',
+        path: '/dashboard/people',
+      },
+    ],
+  },
+  {
+    title: 'Escuadrillas',
+    path: '/dashboard/squadrons',
+    icon: <DashboardIcon />,
+    children: [
+      {
+        title: 'Registrar escuadrilla',
+        path: '/dashboard/squadrons/register',
+      },
+      {
+        title: 'Consultar escuadrillas',
+        path: '/dashboard/squadrons/all',
+      },
+    ],
+  },
+  {
+    title: 'Escuadras',
+    path: '/dashboard/squads',
+    icon: <DashboardIcon />,
+    children: [
+      {
+        title: 'Registrar escuadras',
+        path: '/dashboard/squads/register',
+      },
+      {
+        title: 'Consultar escuadras',
+        path: '/dashboard/squads/all',
+      },
+    ],
+  },
+  {
+    title: 'Rangos',
+    path: '/dashboard/ranks/',
+    icon: <AddModeratorIcon />,
+    children: [
+      {
+        title: 'Registrar rango',
+        path: '/dashboard/ranks/register',
+      },
+      {
+        title: 'Rangos',
+        path: '/dashboard/ranks/all',
+      },
+    ],
+  },
+  {
+    title: 'Grados',
+    path: '/dashboard/degrees/',
+    icon: <AddModeratorIcon />,
+    children: [
+      {
+        title: 'Registrar grado',
+        path: '/dashboard/degrees/register',
+      },
+      {
+        title: 'Grados',
+        path: '/dashboard/degrees/all',
+      },
+    ],
+  },
+  {
+    title: 'Cadetes, alumnos y sodados',
+    icon: <PeopleIcon />,
+    path: '/dashboard/troopers/',
+    children: [
+      {
+        title: 'Registrar cadete, alumno o soldado',
+        path: '/dashboard/troopers/register',
+      },
+      {
+        title: 'Consultar cadetes, alumnos o soldado',
+        path: '/dashboard/troopers/all',
+      },
+    ],
+  },
+  {
+    title: 'Armas',
+    icon: <AutoAwesomeIcon />,
+    path: '/dashboard/weapons/',
+    children: [
+      {
+        title: 'Registrar arma',
+        path: '/dashboard/weapons/register',
+      },
+      {
+        title: 'Consultar armas',
+        path: '/dashboard/weapons/all',
+      },
+    ],
+  },
+  {
+    title: 'Explosivos',
+    icon: <AutoAwesomeIcon />,
+    path: '/dashboard/explosives/',
+    children: [
+      {
+        title: 'Registrar explosivo',
+        path: '/dashboard/explosives/register',
+      },
+      {
+        title: 'Consultar explosivos',
+        path: '/dashboard/explosives/all',
+      },
+    ],
+  },
+  {
+    title: 'Equipo especial y accesorios',
+    icon: <AutoAwesomeIcon />,
+    path: '/dashboard/equipments/',
+    children: [
+      {
+        title: 'Registrar equipo especial y accesorio',
+        path: '/dashboard/equipments/register',
+      },
+      {
+        title: 'Consultar equipos especiales y accesorios',
+        path: '/dashboard/equipments/all',
+      },
+    ],
+  },
+  {
+    title: 'Municiones',
+    icon: <AutoAwesomeIcon />,
+    path: '/dashboard/ammunition/',
+    children: [
+      {
+        title: 'Registrar municiones',
+        path: '/dashboard/ammunition/register',
+      },
+      {
+        title: 'Consultar municiones',
+        path: '/dashboard/ammunition/all',
+      },
+    ],
+  },
+  {
+    title: 'Formatos',
+    path: '/dashboard/formats/',
+    icon: <FormatAlignLeftIcon />,
+    children: [
+      {
+        title: 'Generar formato de revista',
+        path: '/dashboard/formats/assigned-weapon-magazine-format',
+      },
+      {
+        title: 'Generar formato de acta',
+        path: '/dashboard/formats/war-material-delivery-certificate-format',
+      },
+      {
+        title: 'Generar formato de asignación',
+        path: '/dashboard/formats/war-material-and-special-equipment-assigment-format',
       },
     ],
   },
