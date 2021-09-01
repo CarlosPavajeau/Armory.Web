@@ -1,4 +1,4 @@
-import { FormHelperText } from '@material-ui/core';
+import { Fade, FormHelperText } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -167,7 +167,9 @@ const RegisterAssignedWeaponMagazineFormat = (
         <title>Armería | Registrar formato de revista</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de formato de revista
