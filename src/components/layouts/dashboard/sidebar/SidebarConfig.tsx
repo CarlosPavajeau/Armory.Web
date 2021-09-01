@@ -1,10 +1,7 @@
-import AddIcon from '@material-ui/icons/Add';
 import AddModeratorIcon from '@material-ui/icons/AddModerator';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
 import AutoAwesomeIcon from '@material-ui/icons/AutoAwesome';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import { ReactElement } from 'react';
 

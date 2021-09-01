@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Drawer,
-  Link,
-  Stack,
-  Typography,
-} from '@material-ui/core';
+import { Avatar, Drawer, Link, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
 import MHidden from 'components/@material-extend/MHidden';

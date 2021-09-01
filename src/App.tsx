@@ -3,11 +3,6 @@ import { ReactElement, useEffect } from 'react';
 import { ConfigureGlobalError } from './common/config/http';
 import { useAppDispatch, useAppSelector } from './common/hooks';
 import Storage from './common/plugins/Storage';
-import {
-  closeErrorDialog,
-  openErrorDialog,
-  selectApiErrors,
-} from './modules/application/Slice';
 import { checkAuthentication } from './modules/users/Service';
 import {
   authenticationStatus,
@@ -20,8 +15,6 @@ import ThemeConfig from './shared/theme';
 const App = (): ReactElement => {
   const isAuthenticate = useAppSelector(selectIsAuthenticate);
   const token = useAppSelector(selectToken);
-  const openErrDialog = useAppSelector(openErrorDialog);
-  const apiErrors = useAppSelector(selectApiErrors);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,10 +33,6 @@ const App = (): ReactElement => {
   useEffect(() => {
     ConfigureGlobalError(dispatch);
   }, [dispatch]);
-
-  const handleOnCloseErrorDialog = () => {
-    dispatch(closeErrorDialog());
-  };
 
   return (
     <ThemeConfig>

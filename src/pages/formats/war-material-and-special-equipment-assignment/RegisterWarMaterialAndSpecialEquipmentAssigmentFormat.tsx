@@ -1,4 +1,3 @@
-import MomentUtils from '@date-io/moment';
 import { FormHelperText } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,6 +17,7 @@ import { WithStyles } from '@material-ui/styles';
 import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import FileSaver from 'file-saver';
 import { useFormik } from 'formik';
 import { getWeapons } from 'modules/armament/weapons/Service';
@@ -64,17 +64,9 @@ import moment from 'moment';
 import AmmunitionAndQuantitySelectionDialog from 'pages/formats/components/AmmunitionAndQuantitySelectionDialog';
 import EquipmentAndQuantitySelectionDialog from 'pages/formats/components/EquipmentsAndQuantitySelectionDialog';
 import ExplosivesAndQuantitySelectionDialog from 'pages/formats/components/ExplosivesAndQuantitySelectionDialog';
-import {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
-
-import CircularLoader from '../../../components/loading/CircularLoader';
 
 export type RegisterWarMaterialAndSpecialEquipmentAssigmentFormatProps =
   WithStyles<typeof formStyles>;

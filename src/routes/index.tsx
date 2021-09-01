@@ -12,7 +12,6 @@ import {
   Ranks,
   RegisterAmmunition,
   RegisterAssignedWeaponMagazineFormat,
-  RegisterAssignedWeaponMagazineFormatItems,
   RegisterDegree,
   RegisterEquipment,
   RegisterExplosive,
@@ -221,6 +220,10 @@ const Router = (): ReactElement | null => {
           ],
         },
       ],
+    },
+    {
+      path: '/login',
+      element: <Login />,
     },
     {
       path: '/',

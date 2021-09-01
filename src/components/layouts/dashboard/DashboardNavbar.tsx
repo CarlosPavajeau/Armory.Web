@@ -2,7 +2,6 @@ import { AppBar, Stack, Toolbar } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import { alpha, styled } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import MHidden from 'components/@material-extend/MHidden';
 import { ReactElement } from 'react';

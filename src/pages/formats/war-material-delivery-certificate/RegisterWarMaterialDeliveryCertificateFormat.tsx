@@ -57,13 +57,7 @@ import {
 } from 'modules/troopers/Slice';
 import moment from 'moment';
 import AmmunitionAndQuantitySelectionDialog from 'pages/formats/components/AmmunitionAndQuantitySelectionDialog';
-import {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 

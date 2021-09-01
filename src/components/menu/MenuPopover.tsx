@@ -1,6 +1,5 @@
-import { Popover, PopoverProps, Theme } from '@material-ui/core';
+import { Popover, PopoverProps } from '@material-ui/core';
 import { alpha, styled } from '@material-ui/core/styles';
-import { SxProps } from '@material-ui/system';
 import { ReactElement, ReactNode } from 'react';
 
 const ArrowStyle = styled('span')(({ theme }) => ({

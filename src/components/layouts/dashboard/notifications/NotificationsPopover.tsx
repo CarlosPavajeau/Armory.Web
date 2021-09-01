@@ -40,7 +40,7 @@ const NOTIFICATIONS: Notification[] = [
 const NotificationsPopover = (): ReactElement => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [notifications, setNotifications] = useState(NOTIFICATIONS);
+  const [notifications] = useState(NOTIFICATIONS);
 
   const handleOpen = () => {
     setOpen(true);
