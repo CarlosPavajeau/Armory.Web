@@ -62,7 +62,7 @@ const Scrollbar = (props: ScrollbarProps): ReactElement => {
 };
 
 Scrollbar.defaultProps = {
-  sx: null,
+  sx: undefined,
 };
 
 export default Scrollbar;

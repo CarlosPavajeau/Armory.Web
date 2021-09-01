@@ -1,4 +1,4 @@
-import './index.css';
+import 'simplebar/src/simplebar.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
