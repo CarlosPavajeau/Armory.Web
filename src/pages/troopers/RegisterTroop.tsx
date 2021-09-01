@@ -1,3 +1,4 @@
+import { Fade } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -184,7 +185,9 @@ const RegisterTroop = (props: RegisterTroopProps): ReactElement => {
         <title>Armería | Registro de tropa</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de tropa

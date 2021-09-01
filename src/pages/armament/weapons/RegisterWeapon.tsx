@@ -1,3 +1,4 @@
+import { Fade } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
@@ -104,7 +105,9 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
         <title>Armería | Registro de arma</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de arma
