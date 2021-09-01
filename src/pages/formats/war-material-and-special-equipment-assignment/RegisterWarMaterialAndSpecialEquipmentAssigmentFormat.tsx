@@ -1,5 +1,4 @@
-import MomentUtils from '@date-io/moment';
-import { FormHelperText, WithStyles, withStyles } from '@material-ui/core';
+import { Fade, FormHelperText } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -8,15 +7,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
+import Select, { SelectChangeEvent } from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+import AdapterMoment from '@material-ui/lab/AdapterMoment';
+import DatePicker from '@material-ui/lab/DatePicker';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
+import CircularLoader from 'components/loading/CircularLoader';
 import FileSaver from 'file-saver';
 import { useFormik } from 'formik';
 import { getWeapons } from 'modules/armament/weapons/Service';
@@ -63,17 +64,9 @@ import moment from 'moment';
 import AmmunitionAndQuantitySelectionDialog from 'pages/formats/components/AmmunitionAndQuantitySelectionDialog';
 import EquipmentAndQuantitySelectionDialog from 'pages/formats/components/EquipmentsAndQuantitySelectionDialog';
 import ExplosivesAndQuantitySelectionDialog from 'pages/formats/components/ExplosivesAndQuantitySelectionDialog';
-import {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
-
-import CircularLoader from '../../../components/loading/CircularLoader';
 
 export type RegisterWarMaterialAndSpecialEquipmentAssigmentFormatProps =
   WithStyles<typeof formStyles>;
@@ -246,10 +239,16 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat = (
     })();
   }, [fetchTroops, values.squadCode]);
 
-  const handleSelectWeapon = (event: ChangeEvent<{ value: unknown }>) => {
+  const handleSelectWeapon = (
+    event: SelectChangeEvent<typeof values.weapons>,
+  ) => {
+    const {
+      target: { value },
+    } = event;
+
     registerWarMaterialAndSpecialEquipmentAssigmentFormatForm.setFieldValue(
       'weapons',
-      event.target.value as string[],
+      typeof value === 'string' ? value.split(',') : value,
     );
   };
 
@@ -312,7 +311,9 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat = (
         onClose={handleExplosivesAndQuantityClose}
       />
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de formato de asignación
@@ -334,38 +335,34 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat = (
               disabled={isSubmitting}
               fullWidth
             />
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
-                id="validity"
-                variant="inline"
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
                 label="Vigencia"
-                margin="normal"
-                format="yyyy/MM/DD"
                 value={values.validity}
-                helperText={
-                  errors.validity && touched.validity
-                    ? errors.validity
-                    : 'Digite la vigencia del formato'
-                }
-                error={!!(errors.validity && touched.validity)}
                 className={classes.formField}
                 onChange={value => {
-                  if (value && value.date != null) {
+                  if (value) {
                     registerWarMaterialAndSpecialEquipmentAssigmentFormatForm.setFieldValue(
                       'validity',
                       value,
                     );
                   }
                 }}
-                onBlur={handleBlur}
                 disabled={isSubmitting}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-                disableToolbar
-                fullWidth
+                renderInput={params => (
+                  <TextField
+                    helperText={
+                      errors.validity && touched.validity
+                        ? errors.validity
+                        : 'Digite la vigencia del formato'
+                    }
+                    error={!!(errors.validity && touched.validity)}
+                    fullWidth
+                    {...params}
+                  />
+                )}
               />
-            </MuiPickersUtilsProvider>
+            </LocalizationProvider>
             <TextField
               id="place"
               name="place"
@@ -632,6 +629,7 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat = (
                 id="weapons"
                 name="weapons"
                 labelId="select-weapons-label"
+                multiple
                 value={values.weapons}
                 renderValue={selected => (selected as string[]).join(', ')}
                 input={<Input />}
@@ -639,8 +637,6 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat = (
                 onChange={handleSelectWeapon}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
-                defaultValue=""
-                multiple
                 fullWidth
               >
                 {weaponsUiStatus === 'loading' && (

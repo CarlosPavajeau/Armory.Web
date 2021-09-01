@@ -4,6 +4,7 @@ import AmmunitionReducer from 'modules/armament/ammunition/Slice';
 import EquipmentsReducer from 'modules/armament/equipments/Slice';
 import ExplosivesReducer from 'modules/armament/explosives/Slice';
 import WeaponsReducer from 'modules/armament/weapons/Slice';
+import AuthReducer from 'modules/auth/Slice';
 import DegreesReducer from 'modules/degrees/Slice';
 import AssignedWeaponMagazineFormat from 'modules/formats/assigned-weapon-magazine/Slice';
 import WarMaterialAndSpecialEquipmentAssigment from 'modules/formats/war-material-and-special-equipment-assignment/Slice';
@@ -17,6 +18,7 @@ import UsersReducer from 'modules/users/Slice';
 
 export const store = configureStore({
   reducer: {
+    auth: AuthReducer,
     application: ApplicationReducer,
     user: UsersReducer,
     squadron: SquadronsReducer,

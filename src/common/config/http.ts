@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import Storage from 'common/plugins/Storage';
 import { AppDispatch } from 'common/store';
 import { apiError } from 'modules/application/Slice';
-import { authenticationStatus } from 'modules/users/Slice';
+import { logout } from 'modules/auth/Slice';
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -28,8 +28,7 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
     response => response,
     error => {
       if (error.response && error.response.status === 401) {
-        Storage.clear();
-        dispatch(authenticationStatus({ isAuthenticate: false, role: '' }));
+        dispatch(logout());
       }
       if (error.response && error.response.data && error.response.data.errors) {
         const apiErrors: string[] = [];

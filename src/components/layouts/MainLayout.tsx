@@ -1,14 +1,10 @@
-import Location from 'components/routes/Location';
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { ReactElement } from 'react';
+import { Outlet } from 'react-router-dom';
 
-const MainLayout = (): React.ReactElement => {
+const MainLayout = (): ReactElement => {
   return (
     <>
-      <Switch>
-        <Location />
-        <Route path="/" render={() => <Redirect to="/login" />} />
-      </Switch>
+      <Outlet />
     </>
   );
 };

@@ -1,9 +1,9 @@
-import './index.css';
+import 'simplebar/src/simplebar.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import { store } from './common/store';
@@ -12,11 +12,9 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/']} initialIndex={1}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </MemoryRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

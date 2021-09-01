@@ -1,4 +1,3 @@
-import { WithStyles, withStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import SearchIcon from '@material-ui/icons/Search';
+import { WithStyles, withStyles } from '@material-ui/styles';
 import { displayData } from 'common/styles';
 import { MouseEventHandler, ReactElement } from 'react';
 
@@ -28,7 +28,7 @@ const DisplayDataHeader = (props: DisplayDataHeaderProps): ReactElement => {
       <Toolbar>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
-            <SearchIcon color="inherit" className={classes.block} />
+            <SearchIcon color="inherit" sx={{ display: 'block' }} />
           </Grid>
           <Grid item xs>
             <TextField
@@ -42,7 +42,7 @@ const DisplayDataHeader = (props: DisplayDataHeaderProps): ReactElement => {
           </Grid>
           <Grid item>
             <Tooltip title="Refrescar datos">
-              <IconButton onClick={handleRefresh}>
+              <IconButton onClick={handleRefresh} size="large">
                 <RefreshIcon color="inherit" className={classes.block} />
               </IconButton>
             </Tooltip>

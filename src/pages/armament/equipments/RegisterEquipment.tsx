@@ -1,9 +1,11 @@
-import { WithStyles, withStyles } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import { useFormik } from 'formik';
@@ -21,7 +23,7 @@ import {
 } from 'modules/armament/equipments/Slice';
 import React, { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const registerEquipmentSchema = Yup.object().shape({
@@ -58,10 +60,10 @@ const RegisterEquipment = (props: RegisterEquipmentProps): ReactElement => {
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/equipments');
+      history('/dashboard/equipments');
       dispatch(resetRegister());
     }
   }, [dispatch, history, wasRegistered]);
@@ -100,7 +102,9 @@ const RegisterEquipment = (props: RegisterEquipmentProps): ReactElement => {
         <title>Armeria | Registro de equipo especial y accesorio</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de equipo especial o accesorio

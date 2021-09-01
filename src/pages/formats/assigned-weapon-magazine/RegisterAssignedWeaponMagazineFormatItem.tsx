@@ -1,13 +1,10 @@
 import {
-  createStyles,
   Paper,
   Slide,
   TextField,
   Theme,
   Tooltip,
   useTheme,
-  WithStyles,
-  withStyles,
 } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -23,6 +20,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { TransitionProps } from '@material-ui/core/transitions';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import { WithStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useFormik } from 'formik';
 import { forwardRef, ReactElement, Ref } from 'react';
 import * as Yup from 'yup';
@@ -61,7 +61,12 @@ const RegisterAssignedWeaponMagazineFormatItemHeader = withStyles(headerStyles)(
       <AppBar className={classes.appBar}>
         <Toolbar>
           <Tooltip title="Cancelar">
-            <IconButton edge="start" color="inherit" onClick={onClose}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={onClose}
+              size="large"
+            >
               <CloseIcon />
             </IconButton>
           </Tooltip>

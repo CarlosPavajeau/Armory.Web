@@ -1,4 +1,4 @@
-import { WithStyles, withStyles } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import CircularLoader from 'components/loading/CircularLoader';
@@ -40,7 +42,7 @@ import {
 } from 'modules/squads/Slice';
 import React, { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const registerSquadScheme = Yup.object().shape({
@@ -80,10 +82,10 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/squads');
+      history('/dashboard/squads');
       dispatch(resetRegister());
     }
   }, [dispatch, history, wasRegistered]);
@@ -145,7 +147,9 @@ const RegisterSquad = (props: RegisterSquadProps): ReactElement => {
         <title>Armería | Registrar escuadra</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de escuadra

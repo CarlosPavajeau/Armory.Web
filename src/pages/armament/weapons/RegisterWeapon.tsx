@@ -1,9 +1,11 @@
-import { WithStyles, withStyles } from '@material-ui/core';
+import { Fade } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import FileSaver from 'file-saver';
@@ -19,7 +21,7 @@ import {
 } from 'modules/armament/weapons/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const registerWeaponSchema = Yup.object().shape({
@@ -56,10 +58,10 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
   const registerError = useAppSelector(selectError);
   const wasRegistered = useAppSelector(selectWasRegistered);
 
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     if (wasRegistered) {
-      history.push('/dashboard/weapons');
+      history('/dashboard/weapons');
       dispatch(resetRegister());
     }
   }, [dispatch, history, wasRegistered]);
@@ -103,7 +105,9 @@ const RegisterWeapon = (props: RegisterWeaponProps): ReactElement => {
         <title>Armería | Registro de arma</title>
       </Helmet>
       <Paper className={classes.paper}>
-        <LinearProgress hidden={!isSubmitting} />
+        <Fade in={isSubmitting}>
+          <LinearProgress />
+        </Fade>
         <div className={classes.contentWrapper}>
           <Typography variant="h5" align="center">
             Registro de arma

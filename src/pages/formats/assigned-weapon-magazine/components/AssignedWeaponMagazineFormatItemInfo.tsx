@@ -1,5 +1,7 @@
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/styles';
+import createStyles from '@material-ui/styles/createStyles';
+import withStyles from '@material-ui/styles/withStyles';
 import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
 import { ReactElement } from 'react';
 
