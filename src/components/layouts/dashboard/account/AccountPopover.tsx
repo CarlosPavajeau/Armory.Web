@@ -9,9 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useAppDispatch } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
+import { logoutUser } from 'modules/auth/Service';
+import { logout } from 'modules/auth/Slice';
 import { ReactElement, useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 interface MenuOption {
   label: string;
@@ -34,6 +37,18 @@ const AccountPopover = (): ReactElement => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const handleOnLogout = async () => {
+    try {
+      await logoutUser();
+      dispatch(logout());
+      navigate('/login', { replace: true });
+    } catch (err) {
+      // Ignore error
+    }
   };
 
   return (
@@ -101,7 +116,12 @@ const AccountPopover = (): ReactElement => {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button
+            fullWidth
+            color="inherit"
+            variant="outlined"
+            onClick={handleOnLogout}
+          >
             Cerrar sesión
           </Button>
         </Box>

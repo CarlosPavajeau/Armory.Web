@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Fade, useTheme } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -6,43 +6,25 @@ import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from '@material-ui/core/Link';
+import { styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from '@material-ui/styles';
-import createStyles from '@material-ui/styles/createStyles';
-import withStyles from '@material-ui/styles/withStyles';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import Storage from 'common/plugins/Storage';
 import { useFormik } from 'formik';
-import { ReactElement, useEffect } from 'react';
+import { authorizeUser } from 'modules/auth/Service';
+import { authenticate } from 'modules/auth/Slice';
+import { selectErrors, selectUiStatus } from 'modules/users/Slice';
+import { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { authorizeUser } from '../../modules/users/Service';
-import {
-  loginSuccess,
-  selectErrors,
-  selectIsAuthenticate,
-  selectUiStatus,
-} from '../../modules/users/Slice';
-
-const loginStyles = (theme: Theme) =>
-  createStyles({
-    root: {
-      backgroundColor: 'background.default',
-      height: '100%',
-      paddingTop: 'calc(50vh - 250px)',
-    },
-    mb_3: {
-      marginBottom: theme.spacing(3),
-    },
-    py_2: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-    },
-  });
-
-export type LoginProps = WithStyles<typeof loginStyles>;
+const RootStyle = styled(Box)({
+  backgroundColor: 'background.default',
+  height: '100%',
+  paddingTop: 'calc(50vh - 250px)',
+});
 
 const loginValidationSchema = Yup.object().shape({
   usernameOrEmail: Yup.string().required(
@@ -51,19 +33,11 @@ const loginValidationSchema = Yup.object().shape({
   password: Yup.string().required('Su contraseña de acceso es requerida'),
 });
 
-const Login = (props: LoginProps): ReactElement => {
-  const { classes } = props;
+const Login = (): ReactElement => {
+  const theme = useTheme();
+  const dispatch = useAppDispatch();
   const status = useAppSelector(selectUiStatus);
   const authErrors = useAppSelector(selectErrors);
-  const isAuth = useAppSelector(selectIsAuthenticate);
-  const dispatch = useAppDispatch();
-
-  const history = useNavigate();
-  useEffect(() => {
-    if (isAuth) {
-      history('/dashboard');
-    }
-  }, [isAuth, history]);
 
   const loginForm = useFormik({
     initialValues: {
@@ -74,7 +48,10 @@ const Login = (props: LoginProps): ReactElement => {
     onSubmit: async values => {
       try {
         const result = await authorizeUser({ ...values, isPersistent: false });
-        dispatch(loginSuccess(result));
+
+        const token = Storage.decode(result);
+        const { role } = token;
+        dispatch(authenticate({ isAuthenticate: true, role, token: result }));
       } catch (err) {
         // Ignore error
       }
@@ -95,13 +72,15 @@ const Login = (props: LoginProps): ReactElement => {
       <Helmet>
         <title>Iniciar sesión | Armería</title>
       </Helmet>
-      <Box className={classes.root}>
+      <RootStyle>
         <Container maxWidth="sm">
           <Card variant="outlined">
-            <LinearProgress hidden={!isSubmitting} />
+            <Fade in={isSubmitting}>
+              <LinearProgress />
+            </Fade>
             <CardContent>
               <form onSubmit={handleSubmit}>
-                <Box className={classes.mb_3}>
+                <Box sx={{ marginBottom: theme.spacing(3) }}>
                   <Typography color="textPrimary" variant="h4">
                     Iniciar sesión
                   </Typography>
@@ -147,12 +126,12 @@ const Login = (props: LoginProps): ReactElement => {
                   <Typography
                     color="error"
                     variant="body2"
-                    className={classes.py_2}
+                    sx={{ paddingY: theme.spacing(2) }}
                   >
                     {authErrors}
                   </Typography>
                 )}
-                <Box className={classes.py_2}>
+                <Box sx={{ paddingY: theme.spacing(2) }}>
                   <Button
                     color="primary"
                     disabled={isSubmitting}
@@ -177,9 +156,9 @@ const Login = (props: LoginProps): ReactElement => {
             </CardContent>
           </Card>
         </Container>
-      </Box>
+      </RootStyle>
     </>
   );
 };
 
-export default withStyles(loginStyles)(Login);
+export default Login;

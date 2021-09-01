@@ -1,42 +1,26 @@
 import { ReactElement, useEffect } from 'react';
 
-import { ConfigureGlobalError } from './common/config/http';
-import { useAppDispatch, useAppSelector } from './common/hooks';
+import { useAppSelector } from './common/hooks';
 import Storage from './common/plugins/Storage';
-import { checkAuthentication } from './modules/users/Service';
-import {
-  authenticationStatus,
-  selectIsAuthenticate,
-  selectToken,
-} from './modules/users/Slice';
+import { selectIsAuth, selectPayload } from './modules/auth/Slice';
 import Router from './routes';
 import ThemeConfig from './shared/theme';
 
 const App = (): ReactElement => {
-  const isAuthenticate = useAppSelector(selectIsAuthenticate);
-  const token = useAppSelector(selectToken);
-  const dispatch = useAppDispatch();
+  const payload = useAppSelector(selectPayload);
+  const isAuth = useAppSelector(selectIsAuth);
 
   useEffect(() => {
-    if (isAuthenticate) {
-      if (!Storage.get('user_token')) {
-        Storage.set('user_token', token);
-      }
+    if (payload.isAuthenticate && payload.token) {
+      Storage.set('user_token', payload.token);
+    } else {
+      Storage.remove('user_token');
     }
-  }, [isAuthenticate, token]);
-
-  useEffect(() => {
-    const result = checkAuthentication();
-    dispatch(authenticationStatus(result));
-  }, [dispatch]);
-
-  useEffect(() => {
-    ConfigureGlobalError(dispatch);
-  }, [dispatch]);
+  }, [payload]);
 
   return (
     <ThemeConfig>
-      <Router />
+      <Router isAuth={isAuth} />
     </ThemeConfig>
   );
 };

@@ -29,11 +29,15 @@ import {
   Weapons,
 } from './LazyComponents';
 
-const Router = (): ReactElement | null => {
+interface RouterProps {
+  isAuth: boolean;
+}
+
+const Router = ({ isAuth }: RouterProps): ReactElement | null => {
   return useRoutes([
     {
       path: '/dashboard',
-      element: <DashboardLayout />,
+      element: isAuth ? <DashboardLayout /> : <Navigate to="/login" replace />,
       children: [
         {
           path: '',
@@ -223,7 +227,7 @@ const Router = (): ReactElement | null => {
     },
     {
       path: '/login',
-      element: <Login />,
+      element: !isAuth ? <Login /> : <Navigate to="/dashboard" replace />,
     },
     {
       path: '/',
