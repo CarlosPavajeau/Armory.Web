@@ -1,6 +1,7 @@
 import { ReactElement, useEffect } from 'react';
 
-import { useAppSelector } from './common/hooks';
+import { ConfigureGlobalError } from './common/config/http';
+import { useAppDispatch, useAppSelector } from './common/hooks';
 import Storage from './common/plugins/Storage';
 import { selectIsAuth, selectPayload } from './modules/auth/Slice';
 import Router from './routes';
@@ -17,6 +18,11 @@ const App = (): ReactElement => {
       Storage.remove('user_token');
     }
   }, [payload]);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    ConfigureGlobalError(dispatch);
+  }, [dispatch]);
 
   return (
     <ThemeConfig>
