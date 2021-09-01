@@ -5,9 +5,11 @@ import {
   Theme,
   ThemeProvider,
 } from '@material-ui/core/styles';
+import { Components } from '@material-ui/core/styles/components';
 import { ReactElement, ReactNode, useMemo } from 'react';
 
 import GlobalStyles from './globalStyles';
+import componentsOverride from './overrides';
 import palette from './palette';
 import shadows, { customShadows } from './shadows';
 import shape from './shape';
@@ -37,6 +39,8 @@ export default function ThemeConfig({
   );
 
   const theme = createTheme(themeOptions);
+
+  theme.components = componentsOverride(theme) as Components;
 
   return (
     <StyledEngineProvider injectFirst>
