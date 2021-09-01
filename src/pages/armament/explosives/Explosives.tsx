@@ -11,14 +11,13 @@ import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { getExplosives } from 'modules/armament/explosives/Service';
 import {
   apiError,
   loadExplosives,
   loadingExplosives,
-  selectError,
   selectExplosives,
   selectUiStatus,
 } from 'modules/armament/explosives/Slice';
@@ -32,7 +31,6 @@ const Explosives = (props: ExplosivesProps): ReactElement => {
   const dispatch = useAppDispatch();
   const explosives = useAppSelector(selectExplosives);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchExplosives = useCallback(async () => {
     try {
@@ -104,7 +102,7 @@ const Explosives = (props: ExplosivesProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

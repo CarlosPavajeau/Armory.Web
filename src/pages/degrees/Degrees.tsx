@@ -11,14 +11,13 @@ import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { getDegrees } from 'modules/degrees/Service';
 import {
   loadDegrees,
   loadingDegrees,
   selectDegrees,
-  selectError,
   selectUiStatus,
 } from 'modules/degrees/Slice';
 import { ReactElement, useCallback, useEffect } from 'react';
@@ -31,12 +30,15 @@ const Degrees = (props: DegreesProps): ReactElement => {
   const dispatch = useAppDispatch();
   const degrees = useAppSelector(selectDegrees);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchDegrees = useCallback(async () => {
-    dispatch(loadingDegrees());
-    const result = await getDegrees();
-    dispatch(loadDegrees(result));
+    try {
+      dispatch(loadingDegrees());
+      const result = await getDegrees();
+      dispatch(loadDegrees(result));
+    } catch (err) {
+      // Ignore error
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -93,7 +95,7 @@ const Degrees = (props: DegreesProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

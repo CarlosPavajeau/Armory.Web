@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { getAmmunition } from 'modules/armament/ammunition/Service';
 import {
@@ -19,7 +19,6 @@ import {
   loadAmmunition,
   loadingAmmunition,
   selectAmmunition,
-  selectError,
   selectUiStatus,
 } from 'modules/armament/ammunition/Slice';
 import { ReactElement, useCallback, useEffect } from 'react';
@@ -32,7 +31,6 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
   const dispatch = useAppDispatch();
   const ammunition = useAppSelector(selectAmmunition);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchAmmunition = useCallback(async () => {
     try {
@@ -102,7 +100,7 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

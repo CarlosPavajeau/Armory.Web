@@ -11,14 +11,13 @@ import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { getTroopers } from 'modules/troopers/Service';
 import {
   apiError,
   loadingTroopers,
   loadTroopers,
-  selectError,
   selectTroopers,
   selectUiStatus,
 } from 'modules/troopers/Slice';
@@ -32,7 +31,6 @@ const Troopers = (props: TroopersProps): ReactElement => {
   const dispatch = useAppDispatch();
   const troopers = useAppSelector(selectTroopers);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchTroopers = useCallback(async () => {
     try {
@@ -103,7 +101,7 @@ const Troopers = (props: TroopersProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

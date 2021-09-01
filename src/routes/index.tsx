@@ -1,7 +1,9 @@
 import Typography from '@material-ui/core/Typography';
+import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import DashboardLayout from 'components/layouts/dashboard';
-import { ReactElement } from 'react';
+import { clearErrors } from 'modules/application/Slice';
+import { ReactElement, useEffect } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 
 import {
@@ -36,6 +38,12 @@ interface RouterProps {
 
 const Router = ({ isAuth }: RouterProps): ReactElement | null => {
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, [pathname, dispatch]);
+
   if (pathname !== '/login') {
     Storage.set('last_path', pathname);
   }

@@ -14,7 +14,7 @@ import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import FileSaver from 'file-saver';
 import { generateQr, getWeapons } from 'modules/armament/weapons/Service';
@@ -22,7 +22,6 @@ import {
   apiError,
   loadingWeapons,
   loadWeapons,
-  selectError,
   selectUiStatus,
   selectWeapons,
 } from 'modules/armament/weapons/Slice';
@@ -36,7 +35,6 @@ const Weapons = (props: WeaponsProps): ReactElement => {
   const dispatch = useAppDispatch();
   const weapons = useAppSelector(selectWeapons);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchWeapons = useCallback(async () => {
     try {
@@ -126,7 +124,7 @@ const Weapons = (props: WeaponsProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

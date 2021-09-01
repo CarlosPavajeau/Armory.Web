@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
 import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { getEquipments } from 'modules/armament/equipments/Service';
 import {
@@ -19,7 +19,6 @@ import {
   loadEquipments,
   loadingEquipments,
   selectEquipments,
-  selectError,
   selectUiStatus,
 } from 'modules/armament/equipments/Slice';
 import { ReactElement, useCallback, useEffect } from 'react';
@@ -32,7 +31,6 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
   const dispatch = useAppDispatch();
   const equipments = useAppSelector(selectEquipments);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchEquipments = useCallback(async () => {
     try {
@@ -105,7 +103,7 @@ const Equipments = (props: EquipmentsProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

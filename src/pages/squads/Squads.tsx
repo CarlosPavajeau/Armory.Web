@@ -8,23 +8,21 @@ import TableRow from '@material-ui/core/TableRow';
 import { WithStyles } from '@material-ui/styles';
 import withStyles from '@material-ui/styles/withStyles';
 import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { displayData } from '../../common/styles';
-import DisplayDataHeader from '../../components/data/DisplayDataHeader';
-import Alert from '../../components/feedback/Alert';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getSquads } from '../../modules/squads/Service';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import ApiErrors from 'components/feedback/ApiErrors';
+import CircularLoader from 'components/loading/CircularLoader';
+import { getSquads } from 'modules/squads/Service';
 import {
   apiError,
   loadingSquads,
   loadSquads,
-  selectError,
   selectSquads,
   selectUiStatus,
-} from '../../modules/squads/Slice';
+} from 'modules/squads/Slice';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type SquadsProps = WithStyles<typeof displayData>;
 
@@ -33,7 +31,6 @@ const Squads = (props: SquadsProps): ReactElement => {
   const dispatch = useAppDispatch();
   const squads = useAppSelector(selectSquads);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchSquads = useCallback(async () => {
     try {
@@ -101,7 +98,7 @@ const Squads = (props: SquadsProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

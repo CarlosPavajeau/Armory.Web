@@ -8,23 +8,21 @@ import TableRow from '@material-ui/core/TableRow';
 import { WithStyles } from '@material-ui/styles';
 import withStyles from '@material-ui/styles/withStyles';
 import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { displayData } from '../../common/styles';
-import DisplayDataHeader from '../../components/data/DisplayDataHeader';
-import Alert from '../../components/feedback/Alert';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getRanks } from '../../modules/ranks/Service';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { displayData } from 'common/styles';
+import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import ApiErrors from 'components/feedback/ApiErrors';
+import CircularLoader from 'components/loading/CircularLoader';
+import { getRanks } from 'modules/ranks/Service';
 import {
   apiError,
   loadingRanks,
   loadRanks,
-  selectError,
   selectRanks,
   selectUiStatus,
-} from '../../modules/ranks/Slice';
+} from 'modules/ranks/Slice';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 export type RanksProps = WithStyles<typeof displayData>;
 
@@ -33,7 +31,6 @@ const Ranks = (props: RanksProps): ReactElement => {
   const dispatch = useAppDispatch();
   const ranks = useAppSelector(selectRanks);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchRanks = useCallback(async () => {
     try {
@@ -97,7 +94,7 @@ const Ranks = (props: RanksProps): ReactElement => {
               </Table>
             </TableContainer>
           )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
+          <ApiErrors />
         </Paper>
       </Paper>
     </>

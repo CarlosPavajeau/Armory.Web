@@ -9,12 +9,12 @@ import Link from '@material-ui/core/Link';
 import { styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
+import ApiErrors from 'components/feedback/ApiErrors';
 import { useFormik } from 'formik';
 import { authorizeUser } from 'modules/auth/Service';
 import { authenticate } from 'modules/auth/Slice';
-import { selectErrors, selectUiStatus } from 'modules/users/Slice';
 import { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink } from 'react-router-dom';
@@ -36,8 +36,6 @@ const loginValidationSchema = Yup.object().shape({
 const Login = (): ReactElement => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const status = useAppSelector(selectUiStatus);
-  const authErrors = useAppSelector(selectErrors);
 
   const loginForm = useFormik({
     initialValues: {
@@ -121,16 +119,7 @@ const Login = (): ReactElement => {
                   onChange={handleChange}
                   disabled={isSubmitting}
                 />
-                {(status === 'userNotFound' ||
-                  status === 'incorrectPassword') && (
-                  <Typography
-                    color="error"
-                    variant="body2"
-                    sx={{ paddingY: theme.spacing(2) }}
-                  >
-                    {authErrors}
-                  </Typography>
-                )}
+                <ApiErrors />
                 <Box sx={{ paddingY: theme.spacing(2) }}>
                   <Button
                     color="primary"
