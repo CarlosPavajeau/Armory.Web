@@ -81,7 +81,7 @@ const RegisterAssignedWeaponMagazineFormat = (
   useEffect(() => {
     if (wasRegistered) {
       history(
-        `/dashboard/formats/assigned-weapon-magazine-format/items/register?formatId=${formatId}`,
+        `/dashboard/formats/assigned-weapon-magazine-format/items?formatId=${formatId}`,
       );
       dispatch(resetRegister());
     }

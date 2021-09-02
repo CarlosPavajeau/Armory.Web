@@ -16,6 +16,7 @@ import {
   Ranks,
   RegisterAmmunition,
   RegisterAssignedWeaponMagazineFormat,
+  RegisterAssignedWeaponMagazineFormatItems,
   RegisterDegree,
   RegisterEquipment,
   RegisterExplosive,
@@ -248,6 +249,10 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
               element: (
                 <RegisterWarMaterialAndSpecialEquipmentAssigmentFormat />
               ),
+            },
+            {
+              path: 'assigned-weapon-magazine-format/items',
+              element: <RegisterAssignedWeaponMagazineFormatItems />,
             },
           ],
         },
