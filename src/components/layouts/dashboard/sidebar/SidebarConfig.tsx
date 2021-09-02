@@ -30,7 +30,7 @@ const sidebarConfig: SidebarConfigItem[] = [
       },
       {
         title: 'Consultar personas',
-        path: '/dashboard/people',
+        path: '/dashboard/people/all',
       },
     ],
   },

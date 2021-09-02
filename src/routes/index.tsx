@@ -12,6 +12,7 @@ import {
   Equipments,
   Explosives,
   Login,
+  People,
   Ranks,
   RegisterAmmunition,
   RegisterAssignedWeaponMagazineFormat,
@@ -58,8 +59,21 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
           element: <Typography variant="h4">Bienvenido</Typography>,
         },
         {
-          path: '/people/register',
-          element: <RegisterPerson />,
+          path: 'people',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/people/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterPerson />,
+            },
+            {
+              path: 'all',
+              element: <People />,
+            },
+          ],
         },
         {
           path: 'squadrons',

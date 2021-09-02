@@ -9,6 +9,7 @@ const SquadronsComponent = lazy(() => import('pages/squadron/Squadrons'));
 const RegisterPersonComponent = lazy(
   () => import('pages/people/RegisterPerson'),
 );
+const PeopleComponent = lazy(() => import('pages/people/People'));
 const RegisterSquadComponent = lazy(() => import('pages/squads/RegisterSquad'));
 const SquadsComponent = lazy(() => import('pages/squads/Squads'));
 const RegisterRankComponent = lazy(() => import('pages/ranks/RegisterRank'));
@@ -90,6 +91,12 @@ export const Squadrons = (): ReactElement => (
 export const RegisterPerson = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <RegisterPersonComponent />
+  </Suspense>
+);
+
+export const People = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <PeopleComponent />
   </Suspense>
 );
 
