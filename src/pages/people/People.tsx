@@ -9,12 +9,20 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
+import ApiErrors from 'components/feedback/ApiErrors';
+import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import PeopleListHead, { HeadLabel } from 'components/people/PeopleListHead';
 import PeopleListToolbar from 'components/people/PeopleListToolbar';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getPeople } from 'modules/people/Service';
-import { loadingPeople, loadPeople, selectPeople } from 'modules/people/Slice';
+import {
+  apiError,
+  loadingPeople,
+  loadPeople,
+  selectPeople,
+  selectUiStatus,
+} from 'modules/people/Slice';
 import {
   ChangeEvent,
   MouseEvent,
@@ -28,13 +36,14 @@ import { Link as RouterLink } from 'react-router-dom';
 const People = (): ReactElement => {
   const dispatch = useAppDispatch();
   const people = useAppSelector(selectPeople);
+  const peopleUiStatus = useAppSelector(selectUiStatus);
   const fetchPeople = useCallback(async () => {
     try {
       dispatch(loadingPeople());
       const result = await getPeople();
       dispatch(loadPeople(result));
     } catch (err) {
-      // Ignore error
+      dispatch(apiError('No se pudieron cargar las personas'));
     }
   }, [dispatch]);
 
@@ -106,23 +115,41 @@ const People = (): ReactElement => {
                   onRequestSort={handleRequestSort}
                 />
                 <TableBody>
-                  {people.map(person => {
-                    const {
-                      id,
-                      firstName,
-                      secondName,
-                      lastName,
-                      secondLastName,
-                    } = person;
-                    return (
-                      <TableRow key={id} tabIndex={-1} hover>
-                        <TableCell>{id}</TableCell>
-                        <TableCell>
-                          {firstName} {secondName} {lastName} {secondLastName}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {peopleUiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                        <CircularLoader
+                          size={150}
+                          message="Cargando personas..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {peopleUiStatus === 'loaded' &&
+                    people.length > 0 &&
+                    people.map(person => {
+                      const {
+                        id,
+                        firstName,
+                        secondName,
+                        lastName,
+                        secondLastName,
+                      } = person;
+                      return (
+                        <TableRow key={id} tabIndex={-1} hover>
+                          <TableCell>{id}</TableCell>
+                          <TableCell>
+                            {firstName} {secondName} {lastName} {secondLastName}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
