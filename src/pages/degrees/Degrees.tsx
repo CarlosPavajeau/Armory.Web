@@ -88,7 +88,9 @@ const Degrees = (): ReactElement => {
           justifyContent="space-between"
           mb={5}
         >
-          <Typography>Grados</Typography>
+          <Typography variant="h4" gutterBottom>
+            Grados
+          </Typography>
           <Button
             variant="contained"
             component={RouterLink}
