@@ -12,11 +12,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
 import { logoutUser } from 'modules/auth/Service';
-import { logout } from 'modules/auth/Slice';
+import { logout, selectEmail } from 'modules/auth/Slice';
+import { selectCurrentPerson } from 'modules/people/Slice';
 import { ReactElement, useRef, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-
-import { selectCurrentPerson } from '../../../../modules/people/Slice';
 
 interface MenuOption {
   label: string;
@@ -35,6 +34,7 @@ const AccountPopover = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const person = useAppSelector(selectCurrentPerson);
+  const email = useAppSelector(selectEmail);
 
   const handleOpen = () => {
     setOpen(true);
@@ -93,7 +93,7 @@ const AccountPopover = (): ReactElement => {
               : 'Usuario desconocido'}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            armeria@arm.com
+            {email && email}
           </Typography>
         </Box>
 

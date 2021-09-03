@@ -28,6 +28,7 @@ export const slice = createSlice({
         isAuthenticate: false,
         role: undefined,
         token: undefined,
+        email: undefined,
       };
     },
   },
@@ -39,6 +40,8 @@ export const selectIsAuth = (state: RootState): boolean =>
   state.auth.payload.isAuthenticate;
 export const selectRole = (state: RootState): string | string[] | undefined =>
   state.auth.payload.role;
+export const selectEmail = (state: RootState): string | undefined =>
+  state.auth.payload.email;
 export const selectPayload = (state: RootState): AuthenticationPayload =>
   state.auth.payload;
 

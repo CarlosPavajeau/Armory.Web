@@ -43,8 +43,10 @@ const LoginForm = (): ReactElement => {
         const result = await authorizeUser({ ...values, isPersistent: false });
 
         const token = Storage.decode(result);
-        const { role } = token;
-        dispatch(authenticate({ isAuthenticate: true, role, token: result }));
+        const { role, email } = token;
+        dispatch(
+          authenticate({ isAuthenticate: true, role, token: result, email }),
+        );
       } catch (err) {
         // Ignore error
       }
