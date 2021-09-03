@@ -9,12 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { useAppDispatch } from 'common/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
 import { logoutUser } from 'modules/auth/Service';
 import { logout } from 'modules/auth/Slice';
 import { ReactElement, useRef, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { selectCurrentPerson } from '../../../../modules/people/Slice';
 
 interface MenuOption {
   label: string;
@@ -31,6 +33,8 @@ const MENU_OPTIONS: MenuOption[] = [
 const AccountPopover = (): ReactElement => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const person = useAppSelector(selectCurrentPerson);
 
   const handleOpen = () => {
     setOpen(true);
@@ -84,7 +88,9 @@ const AccountPopover = (): ReactElement => {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            Usuario armería
+            {person != null
+              ? `${person.firstName} ${person.lastName}`
+              : 'Usuario desconocido'}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             armeria@arm.com

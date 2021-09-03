@@ -1,8 +1,11 @@
 import { Avatar, Drawer, Link, Stack, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core/styles';
+import { useAppSelector } from 'common/hooks';
 import MHidden from 'components/@material-extend/MHidden';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { selectRole } from 'modules/auth/Slice';
+import { selectCurrentPerson } from 'modules/people/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
@@ -36,6 +39,36 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
 
   const { pathname } = useLocation();
 
+  const person = useAppSelector(selectCurrentPerson);
+  const role = useAppSelector(selectRole);
+
+  const translateRole = (role: string | string[] | undefined): string => {
+    if (typeof role === 'undefined') {
+      return '';
+    }
+
+    const translateHelper = (value: string) => {
+      switch (value) {
+        case 'Developer':
+          return 'Desarollador';
+        case 'SquadronLeader':
+          return 'Comandante de escuadrilla';
+        case 'SquadLeader':
+          return 'Comandante de escuadra';
+        case 'StoreLeader':
+          return 'Comandante de escuadron';
+        default:
+          return '';
+      }
+    };
+
+    if (typeof role === 'string') {
+      return translateHelper(role);
+    }
+
+    return role.map(rol => translateHelper(rol)).join(', ');
+  };
+
   useEffect(() => {
     if (isOpen) {
       onClose();
@@ -63,10 +96,12 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
             <Avatar>A</Avatar>
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Armory user
+                {person != null
+                  ? `${person.firstName} ${person.lastName}`
+                  : 'Usuario desconocido'}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Armory role
+                {translateRole(role)}
               </Typography>
             </Box>
           </AccountStyle>
