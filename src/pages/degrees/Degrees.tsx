@@ -1,18 +1,21 @@
-import Paper from '@material-ui/core/Paper';
+import { Card } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Stack from '@material-ui/core/Stack';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getDegrees } from 'modules/degrees/Service';
 import {
   loadDegrees,
@@ -20,13 +23,17 @@ import {
   selectDegrees,
   selectUiStatus,
 } from 'modules/degrees/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type DegreesProps = WithStyles<typeof displayData>;
-
-const Degrees = (props: DegreesProps): ReactElement => {
-  const { classes } = props;
+const Degrees = (): ReactElement => {
   const dispatch = useAppDispatch();
   const degrees = useAppSelector(selectDegrees);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -47,59 +54,112 @@ const Degrees = (props: DegreesProps): ReactElement => {
     })();
   }, [fetchDegrees]);
 
-  const handleRefresh = async () => {
-    await fetchDegrees();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'id', label: 'Id', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Grados</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar grado"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Grados">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando grados..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell>Nombre</TableCell>
-                    <TableCell>Rango</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography>Grados</Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/degrees/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar grado
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar grado"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
+
                 <TableBody>
-                  {degrees.map(degree => {
-                    return (
-                      <TableRow key={degree.id}>
-                        <TableCell>{degree.id}</TableCell>
-                        <TableCell>{degree.name}</TableCell>
-                        <TableCell>{degree.rankId}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando grados..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    degrees.length > 0 &&
+                    degrees.map(degree => {
+                      const { id, name, rankId } = degree;
+                      return (
+                        <TableRow key={id} tabIndex={-1} hover>
+                          <TableCell>{id}</TableCell>
+                          <TableCell>{name}</TableCell>
+                          <TableCell>{rankId}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          <ApiErrors />
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Degrees);
+export default Degrees;
