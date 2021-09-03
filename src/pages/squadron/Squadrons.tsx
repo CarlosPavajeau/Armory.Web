@@ -77,7 +77,7 @@ const Squadrons = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'personId', label: 'Persona a cargo', alignRight: false },
+    { id: 'ownerName', label: 'Persona a cargo', alignRight: false },
   ];
 
   return (
@@ -136,12 +136,12 @@ const Squadrons = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     squadrons.length > 0 &&
                     squadrons.map(squadron => {
-                      const { code, name, personId } = squadron;
+                      const { code, name, ownerName } = squadron;
                       return (
                         <TableRow key={code} tabIndex={-1} hover>
                           <TableCell>{code}</TableCell>
                           <TableCell>{name}</TableCell>
-                          <TableCell>{personId}</TableCell>
+                          <TableCell>{ownerName}</TableCell>
                         </TableRow>
                       );
                     })}
