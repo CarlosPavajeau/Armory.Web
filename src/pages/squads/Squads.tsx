@@ -2,6 +2,7 @@ import { Card } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
+import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -110,53 +111,55 @@ const Squads = (): ReactElement => {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <DataListHead
-                order={order}
-                orderBy={orderBy}
-                headLabel={HEAD}
-                onRequestSort={handleRequestSort}
-              />
-              <TableBody>
-                {uiStatus === 'loading' && (
+            <Table>
+              <TableContainer sx={{ minWidth: 800 }}>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
+                <TableBody>
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando escuadras..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    squads.length > 0 &&
+                    squads.map(squad => {
+                      const { code, name, squadronCode, personId } = squad;
+                      return (
+                        <TableRow key={code} tabIndex={-1} hover>
+                          <TableCell>{code}</TableCell>
+                          <TableCell>{name}</TableCell>
+                          <TableCell>{squadronCode}</TableCell>
+                          <TableCell>{personId}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
                   <TableRow>
                     <TableCell
                       align="center"
                       colSpan={HEAD.length}
                       sx={{ py: 3 }}
                     >
-                      <CircularLoader
-                        size={150}
-                        message="Cargando escuadras..."
-                      />
+                      <ApiErrors />
                     </TableCell>
                   </TableRow>
-                )}
-                {uiStatus === 'loaded' &&
-                  squads.length > 0 &&
-                  squads.map(squad => {
-                    const { code, name, squadronCode, personId } = squad;
-                    return (
-                      <TableRow key={code} tabIndex={-1} hover>
-                        <TableCell>{code}</TableCell>
-                        <TableCell>{name}</TableCell>
-                        <TableCell>{squadronCode}</TableCell>
-                        <TableCell>{personId}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-
-                <TableRow>
-                  <TableCell
-                    align="center"
-                    colSpan={HEAD.length}
-                    sx={{ py: 3 }}
-                  >
-                    <ApiErrors />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </TableContainer>
+                </TableBody>
+              </TableContainer>
+            </Table>
           </Scrollbar>
         </Card>
       </Container>

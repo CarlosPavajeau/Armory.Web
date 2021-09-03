@@ -2,6 +2,7 @@ import { Card } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
+import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -89,7 +90,12 @@ const Explosives = (): ReactElement => {
   return (
     <Page title="Armería | Explosivos">
       <Container>
-        <Stack>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
+        >
           <Typography variant="h4" gutterBottom>
             Explosivos
           </Typography>
@@ -112,57 +118,59 @@ const Explosives = (): ReactElement => {
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
-              <DataListHead
-                order={order}
-                orderBy={orderBy}
-                headLabel={HEAD}
-                onRequestSort={handleRequestSort}
-              />
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
 
-              <TableBody>
-                {uiStatus === 'loading' && (
+                <TableBody>
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell>
+                        <CircularLoader
+                          size={150}
+                          message="Cargando explosivos"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    explosives.length > 0 &&
+                    explosives.map(explosive => {
+                      const {
+                        code,
+                        type,
+                        mark,
+                        caliber,
+                        series,
+                        quantityAvailable,
+                      } = explosive;
+                      return (
+                        <TableRow key={code} tabIndex={-1} hover>
+                          <TableCell>{code}</TableCell>
+                          <TableCell>{type}</TableCell>
+                          <TableCell>{mark}</TableCell>
+                          <TableCell>{caliber}</TableCell>
+                          <TableCell>{series}</TableCell>
+                          <TableCell>{quantityAvailable}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
                   <TableRow>
-                    <TableCell>
-                      <CircularLoader
-                        size={150}
-                        message="Cargando explosivos"
-                      />
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
                     </TableCell>
                   </TableRow>
-                )}
-                {uiStatus === 'loaded' &&
-                  explosives.length > 0 &&
-                  explosives.map(explosive => {
-                    const {
-                      code,
-                      type,
-                      mark,
-                      caliber,
-                      series,
-                      quantityAvailable,
-                    } = explosive;
-                    return (
-                      <TableRow key={code} tabIndex={-1} hover>
-                        <TableCell>{code}</TableCell>
-                        <TableCell>{type}</TableCell>
-                        <TableCell>{mark}</TableCell>
-                        <TableCell>{caliber}</TableCell>
-                        <TableCell>{series}</TableCell>
-                        <TableCell>{quantityAvailable}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-
-                <TableRow>
-                  <TableCell
-                    align="center"
-                    colSpan={HEAD.length}
-                    sx={{ py: 3 }}
-                  >
-                    <ApiErrors />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
+                </TableBody>
+              </Table>
             </TableContainer>
           </Scrollbar>
         </Card>
