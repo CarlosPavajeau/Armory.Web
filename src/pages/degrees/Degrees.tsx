@@ -76,6 +76,7 @@ const Degrees = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'id', label: 'Id', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
+    { id: 'rankId', label: 'Rango', alignRight: false },
   ];
 
   return (
