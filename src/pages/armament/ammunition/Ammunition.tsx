@@ -1,18 +1,21 @@
-import Paper from '@material-ui/core/Paper';
+import { Card } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Stack from '@material-ui/core/Stack';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getAmmunition } from 'modules/armament/ammunition/Service';
 import {
   apiError,
@@ -21,13 +24,17 @@ import {
   selectAmmunition,
   selectUiStatus,
 } from 'modules/armament/ammunition/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type AmmunitionProps = WithStyles<typeof displayData>;
-
-const Ammunition = (props: AmmunitionProps): ReactElement => {
-  const { classes } = props;
+const Ammunition = (): ReactElement => {
   const dispatch = useAppDispatch();
   const ammunition = useAppSelector(selectAmmunition);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -48,63 +55,111 @@ const Ammunition = (props: AmmunitionProps): ReactElement => {
     })();
   }, [fetchAmmunition]);
 
-  const handleRefresh = async () => {
-    await fetchAmmunition();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'code', label: 'Id', alignRight: false },
+    { id: 'type', label: 'Tipo', alignRight: false },
+    { id: 'mark', label: 'Marca', alignRight: false },
+    { id: 'caliber', label: 'Calibre', alignRight: false },
+    { id: 'series', label: 'N° de serie', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Municiones</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar munición"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Municiones">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando municiones..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Código</TableCell>
-                    <TableCell>Tipo</TableCell>
-                    <TableCell>Marca</TableCell>
-                    <TableCell>Calibre</TableCell>
-                    <TableCell>Número de serie</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography variant="h4" gutterBottom>
+            Municiones
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/ammunition/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar munición
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar municiones"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
+
                 <TableBody>
-                  {ammunition.map(a => {
-                    return (
-                      <TableRow key={a.code}>
-                        <TableCell>{a.code}</TableCell>
-                        <TableCell>{a.type}</TableCell>
-                        <TableCell>{a.mark}</TableCell>
-                        <TableCell>{a.caliber}</TableCell>
-                        <TableCell>{a.series}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                        <CircularLoader
+                          size={150}
+                          message="Cargando municiones..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    ammunition.length > 0 &&
+                    ammunition.map(a => {
+                      const { code, type, mark, caliber, series } = a;
+                      return (
+                        <TableRow key={code}>
+                          <TableCell>{code}</TableCell>
+                          <TableCell>{type}</TableCell>
+                          <TableCell>{mark}</TableCell>
+                          <TableCell>{caliber}</TableCell>
+                          <TableCell>{series}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          <ApiErrors />
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Ammunition);
+export default Ammunition;
