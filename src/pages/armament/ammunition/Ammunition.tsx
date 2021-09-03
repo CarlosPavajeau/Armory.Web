@@ -80,6 +80,11 @@ const Ammunition = (): ReactElement => {
     { id: 'mark', label: 'Marca', alignRight: false },
     { id: 'caliber', label: 'Calibre', alignRight: false },
     { id: 'series', label: 'N° de serie', alignRight: false },
+    {
+      id: 'quantityAvailable',
+      label: 'Cantidad disponible',
+      alignRight: false,
+    },
   ];
 
   return (
@@ -139,14 +144,22 @@ const Ammunition = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     ammunition.length > 0 &&
                     ammunition.map(a => {
-                      const { code, type, mark, caliber, series } = a;
+                      const {
+                        code,
+                        type,
+                        mark,
+                        caliber,
+                        series,
+                        quantityAvailable,
+                      } = a;
                       return (
-                        <TableRow key={code}>
+                        <TableRow key={code} tabIndex={-1} hover>
                           <TableCell>{code}</TableCell>
                           <TableCell>{type}</TableCell>
                           <TableCell>{mark}</TableCell>
                           <TableCell>{caliber}</TableCell>
                           <TableCell>{series}</TableCell>
+                          <TableCell>{quantityAvailable}</TableCell>
                         </TableRow>
                       );
                     })}

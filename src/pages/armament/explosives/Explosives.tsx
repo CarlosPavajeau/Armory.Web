@@ -1,16 +1,14 @@
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
+import { Card } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Stack from '@material-ui/core/Stack';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { getExplosives } from 'modules/armament/explosives/Service';
@@ -21,13 +19,22 @@ import {
   selectExplosives,
   selectUiStatus,
 } from 'modules/armament/explosives/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type ExplosivesProps = WithStyles<typeof displayData>;
+import DataListHead, { HeadLabel } from '../../../components/data/DataListHead';
+import DataListToolbar from '../../../components/data/DataListToolbar';
+import Page from '../../../components/Page';
+import Scrollbar from '../../../components/scrollbar/Scrollbar';
 
-const Explosives = (props: ExplosivesProps): ReactElement => {
-  const { classes } = props;
+const Explosives = (): ReactElement => {
   const dispatch = useAppDispatch();
   const explosives = useAppSelector(selectExplosives);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -48,65 +55,117 @@ const Explosives = (props: ExplosivesProps): ReactElement => {
     })();
   }, [fetchExplosives]);
 
-  const handleRefresh = async () => {
-    await fetchExplosives();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'code', label: 'Id', alignRight: false },
+    { id: 'type', label: 'Nombre', alignRight: false },
+    { id: 'mark', label: 'Nombre', alignRight: false },
+    { id: 'caliber', label: 'Nombre', alignRight: false },
+    { id: 'series', label: 'Nombre', alignRight: false },
+    { id: 'quantityAvailable', label: 'Nombre', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Explosivos</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar explosivo"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
-        >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando explosivos" />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
+    <Page title="Armería | Explosivos">
+      <Container>
+        <Stack>
+          <Typography variant="h4" gutterBottom>
+            Explosivos
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/explosives/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar explosivo
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar explosivo"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <DataListHead
+                order={order}
+                orderBy={orderBy}
+                headLabel={HEAD}
+                onRequestSort={handleRequestSort}
+              />
+
+              <TableBody>
+                {uiStatus === 'loading' && (
                   <TableRow>
-                    <TableCell>Código</TableCell>
-                    <TableCell>Tipo</TableCell>
-                    <TableCell>Marca</TableCell>
-                    <TableCell>Calibre</TableCell>
-                    <TableCell>Número de serie</TableCell>
-                    <TableCell>Candidad disponible</TableCell>
+                    <TableCell>
+                      <CircularLoader
+                        size={150}
+                        message="Cargando explosivos"
+                      />
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {explosives.map(explosive => {
+                )}
+                {uiStatus === 'loaded' &&
+                  explosives.length > 0 &&
+                  explosives.map(explosive => {
+                    const {
+                      code,
+                      type,
+                      mark,
+                      caliber,
+                      series,
+                      quantityAvailable,
+                    } = explosive;
                     return (
-                      <TableRow key={explosive.code}>
-                        <TableCell>{explosive.code}</TableCell>
-                        <TableCell>{explosive.type}</TableCell>
-                        <TableCell>{explosive.mark}</TableCell>
-                        <TableCell>{explosive.caliber}</TableCell>
-                        <TableCell>{explosive.series}</TableCell>
-                        <TableCell>{explosive.quantityAvailable}</TableCell>
+                      <TableRow key={code} tabIndex={-1} hover>
+                        <TableCell>{code}</TableCell>
+                        <TableCell>{type}</TableCell>
+                        <TableCell>{mark}</TableCell>
+                        <TableCell>{caliber}</TableCell>
+                        <TableCell>{series}</TableCell>
+                        <TableCell>{quantityAvailable}</TableCell>
                       </TableRow>
                     );
                   })}
-                </TableBody>
-              </Table>
+
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={HEAD.length}
+                    sx={{ py: 3 }}
+                  >
+                    <ApiErrors />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
             </TableContainer>
-          )}
-          <ApiErrors />
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Explosives);
+export default Explosives;
