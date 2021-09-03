@@ -9,11 +9,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
-import PeopleListHead, { HeadLabel } from 'components/people/PeopleListHead';
-import PeopleListToolbar from 'components/people/PeopleListToolbar';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getPeople } from 'modules/people/Service';
 import {
@@ -100,15 +100,16 @@ const People = (): ReactElement => {
         </Stack>
 
         <Card>
-          <PeopleListToolbar
+          <DataListToolbar
             filterName={filterName}
+            placeholder="Buscar persona"
             onFilterName={handleFilterByName}
           />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <PeopleListHead
+                <DataListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={HEAD}

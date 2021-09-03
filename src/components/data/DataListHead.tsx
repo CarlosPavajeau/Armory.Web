@@ -18,7 +18,7 @@ interface PeopleListHeadProps {
   onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
 }
 
-const PeopleListHead = (props: PeopleListHeadProps): ReactElement => {
+const DataListHead = (props: PeopleListHeadProps): ReactElement => {
   const { order, orderBy, headLabel, onRequestSort } = props;
 
   const createSortHandler =
@@ -55,4 +55,4 @@ const PeopleListHead = (props: PeopleListHeadProps): ReactElement => {
   );
 };
 
-export default PeopleListHead;
+export default DataListHead;

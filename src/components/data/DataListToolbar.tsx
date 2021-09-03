@@ -26,18 +26,19 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 interface PeopleListToolbarProps {
   filterName: string;
+  placeholder: string;
   onFilterName: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
 }
 
-const PeopleListToolbar = (props: PeopleListToolbarProps): ReactElement => {
-  const { filterName, onFilterName } = props;
+const DataListToolbar = (props: PeopleListToolbarProps): ReactElement => {
+  const { filterName, onFilterName, placeholder } = props;
 
   return (
     <RootStyle>
       <SearchStyle
         value={filterName}
         onChange={onFilterName}
-        placeholder="Buscar persona"
+        placeholder={placeholder}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />
@@ -48,4 +49,4 @@ const PeopleListToolbar = (props: PeopleListToolbarProps): ReactElement => {
   );
 };
 
-export default PeopleListToolbar;
+export default DataListToolbar;
