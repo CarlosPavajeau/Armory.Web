@@ -111,8 +111,8 @@ const Squads = (): ReactElement => {
           />
 
           <Scrollbar>
-            <Table>
-              <TableContainer sx={{ minWidth: 800 }}>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
                 <DataListHead
                   order={order}
                   orderBy={orderBy}
@@ -158,8 +158,8 @@ const Squads = (): ReactElement => {
                     </TableCell>
                   </TableRow>
                 </TableBody>
-              </TableContainer>
-            </Table>
+              </Table>
+            </TableContainer>
           </Scrollbar>
         </Card>
       </Container>
