@@ -74,8 +74,10 @@ const Squads = (): ReactElement => {
   };
 
   const HEAD: HeadLabel[] = [
-    { id: 'id', label: 'Id', alignRight: false },
+    { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
+    { id: 'squadronCode', label: 'Escuadrilla', alignRight: false },
+    { id: 'personId', label: 'Persona a cargo', alignRight: false },
   ];
 
   return (

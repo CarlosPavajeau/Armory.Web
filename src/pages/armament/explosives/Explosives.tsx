@@ -75,11 +75,15 @@ const Explosives = (): ReactElement => {
 
   const HEAD: HeadLabel[] = [
     { id: 'code', label: 'Id', alignRight: false },
-    { id: 'type', label: 'Nombre', alignRight: false },
-    { id: 'mark', label: 'Nombre', alignRight: false },
-    { id: 'caliber', label: 'Nombre', alignRight: false },
-    { id: 'series', label: 'Nombre', alignRight: false },
-    { id: 'quantityAvailable', label: 'Nombre', alignRight: false },
+    { id: 'type', label: 'Tipo', alignRight: false },
+    { id: 'mark', label: 'Marca', alignRight: false },
+    { id: 'caliber', label: 'Calibre', alignRight: false },
+    { id: 'series', label: 'N° de serie', alignRight: false },
+    {
+      id: 'quantityAvailable',
+      label: 'Cantidad disponible',
+      alignRight: false,
+    },
   ];
 
   return (

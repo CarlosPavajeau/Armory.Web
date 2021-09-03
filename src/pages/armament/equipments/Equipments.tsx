@@ -89,7 +89,12 @@ const Equipments = (): ReactElement => {
   return (
     <Page title="Armería | Equipo especial y accesorios">
       <Container>
-        <Stack>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
+        >
           <Typography variant="h4" gutterBottom>
             Equipo especial y accesorios
           </Typography>
