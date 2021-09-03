@@ -11,9 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
@@ -193,4 +191,4 @@ const Weapons = (): ReactElement => {
   );
 };
 
-export default withStyles(displayData)(Weapons);
+export default Weapons;
