@@ -1,21 +1,25 @@
-import { Tooltip } from '@material-ui/core';
+import { Card, Tooltip } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
+import Stack from '@material-ui/core/Stack';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { WithStyles } from '@material-ui/styles';
 import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
 import FileSaver from 'file-saver';
 import { generateQr, getWeapons } from 'modules/armament/weapons/Service';
 import {
@@ -25,13 +29,17 @@ import {
   selectUiStatus,
   selectWeapons,
 } from 'modules/armament/weapons/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type WeaponsProps = WithStyles<typeof displayData>;
-
-const Weapons = (props: WeaponsProps): ReactElement => {
-  const { classes } = props;
+const Weapons = (): ReactElement => {
   const dispatch = useAppDispatch();
   const weapons = useAppSelector(selectWeapons);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -52,9 +60,32 @@ const Weapons = (props: WeaponsProps): ReactElement => {
     })();
   }, [fetchWeapons]);
 
-  const handleRefresh = async () => {
-    await fetchWeapons();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
+
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'code', label: 'Código', alignRight: false },
+    { id: 'type', label: 'Tipo', alignRight: false },
+    { id: 'mark', label: 'Marca', alignRight: false },
+    { id: 'model', label: 'Modelo', alignRight: false },
+    { id: 'caliber', label: 'Calibre', alignRight: false },
+  ];
 
   const generateWeaponQr = async (code: string) => {
     try {
@@ -66,68 +97,99 @@ const Weapons = (props: WeaponsProps): ReactElement => {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Armería | Armas</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar arma"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Armas">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando armas..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Código</TableCell>
-                    <TableCell>Tipo</TableCell>
-                    <TableCell>Marca</TableCell>
-                    <TableCell>Modelo</TableCell>
-                    <TableCell>Calibre</TableCell>
-                    <TableCell>Acciones</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography variant="h4" gutterBottom>
+            Armas
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/weapons/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar arma
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar arma"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
                 <TableBody>
-                  {weapons.map(weapon => {
-                    return (
-                      <TableRow key={weapon.code}>
-                        <TableCell>{weapon.code}</TableCell>
-                        <TableCell>{weapon.type}</TableCell>
-                        <TableCell>{weapon.mark}</TableCell>
-                        <TableCell>{weapon.model}</TableCell>
-                        <TableCell>{weapon.caliber}</TableCell>
-                        <TableCell>
-                          <Tooltip title="Generar y descargar código QR">
-                            <IconButton
-                              onClick={() => generateWeaponQr(weapon.code)}
-                              size="large"
-                            >
-                              <GetAppIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando armas..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    weapons.length > 0 &&
+                    weapons.map(weapon => {
+                      const { code, type, mark, model, caliber } = weapon;
+                      return (
+                        <TableRow key={code} tabIndex={-1} hover>
+                          <TableCell>{code}</TableCell>
+                          <TableCell>{type}</TableCell>
+                          <TableCell>{mark}</TableCell>
+                          <TableCell>{model}</TableCell>
+                          <TableCell>{caliber}</TableCell>
+                          <TableCell>
+                            <Tooltip title="Generar y descargar código QR">
+                              <IconButton
+                                onClick={() => generateWeaponQr(code)}
+                                size="large"
+                              >
+                                <GetAppIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          <ApiErrors />
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
