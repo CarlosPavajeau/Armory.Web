@@ -1,18 +1,21 @@
-import Paper from '@material-ui/core/Paper';
+import { Card } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Stack from '@material-ui/core/Stack';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getTroopers } from 'modules/troopers/Service';
 import {
   apiError,
@@ -21,13 +24,17 @@ import {
   selectTroopers,
   selectUiStatus,
 } from 'modules/troopers/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type TroopersProps = WithStyles<typeof displayData>;
-
-const Troopers = (props: TroopersProps): ReactElement => {
-  const { classes } = props;
+const Troopers = (): ReactElement => {
   const dispatch = useAppDispatch();
   const troopers = useAppSelector(selectTroopers);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -48,64 +55,126 @@ const Troopers = (props: TroopersProps): ReactElement => {
     })();
   }, [fetchTroopers]);
 
-  const handleRefresh = async () => {
-    await fetchTroopers();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'id', label: 'Id', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
+    { id: 'squadCode', label: 'Escuadrón', alignRight: false },
+    { id: 'degreeId', label: 'Grado', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Tropas</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar tropa"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Tropas">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando tropas..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Identificación</TableCell>
-                    <TableCell>Nombre completo</TableCell>
-                    <TableCell>Escuadrón</TableCell>
-                    <TableCell>Grado</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography variant="h4" gutterBottom>
+            Cadetes, alumnos y soldados
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/troopers/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar cadete, alumno o soldado
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar cadete alumno o soldado"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
                 <TableBody>
-                  {troopers.map(troop => {
-                    return (
-                      <TableRow key={troop.id}>
-                        <TableCell>{troop.id}</TableCell>
-                        <TableCell>
-                          {troop.firstName} {troop.secondName} {troop.lastName}{' '}
-                          {troop.secondLastName}
-                        </TableCell>
-                        <TableCell>{troop.squadCode}</TableCell>
-                        <TableCell>{troop.degreeId}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando cadetes, alumnos y soldados..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    troopers.length > 0 &&
+                    troopers.map(troop => {
+                      const {
+                        id,
+                        firstName,
+                        secondName,
+                        lastName,
+                        secondLastName,
+                        squadCode,
+                        degreeId,
+                      } = troop;
+                      return (
+                        <TableRow key={id} tabIndex={-1} hover>
+                          <TableCell>{id}</TableCell>
+                          <TableCell>
+                            {firstName} {secondName} {lastName} {secondLastName}
+                          </TableCell>
+                          <TableCell>{squadCode}</TableCell>
+                          <TableCell>{degreeId}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          <ApiErrors />
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Troopers);
+export default Troopers;
