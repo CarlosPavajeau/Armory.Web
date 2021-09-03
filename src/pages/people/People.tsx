@@ -118,7 +118,11 @@ const People = (): ReactElement => {
                 <TableBody>
                   {peopleUiStatus === 'loading' && (
                     <TableRow>
-                      <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
                         <CircularLoader
                           size={150}
                           message="Cargando personas..."
@@ -147,7 +151,11 @@ const People = (): ReactElement => {
                     })}
 
                   <TableRow>
-                    <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
                       <ApiErrors />
                     </TableCell>
                   </TableRow>

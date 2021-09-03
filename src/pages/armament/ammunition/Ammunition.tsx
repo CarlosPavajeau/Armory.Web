@@ -124,7 +124,11 @@ const Ammunition = (): ReactElement => {
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
-                      <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
                         <CircularLoader
                           size={150}
                           message="Cargando municiones..."
@@ -148,7 +152,11 @@ const Ammunition = (): ReactElement => {
                     })}
 
                   <TableRow>
-                    <TableCell align="center" colSpan={2} sx={{ py: 3 }}>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
                       <ApiErrors />
                     </TableCell>
                   </TableRow>
