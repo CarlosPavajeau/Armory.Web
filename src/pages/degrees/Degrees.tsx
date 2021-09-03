@@ -134,12 +134,12 @@ const Degrees = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     degrees.length > 0 &&
                     degrees.map(degree => {
-                      const { id, name, rankId } = degree;
+                      const { id, name, rankName } = degree;
                       return (
                         <TableRow key={id} tabIndex={-1} hover>
                           <TableCell>{id}</TableCell>
                           <TableCell>{name}</TableCell>
-                          <TableCell>{rankId}</TableCell>
+                          <TableCell>{rankName}</TableCell>
                         </TableRow>
                       );
                     })}
