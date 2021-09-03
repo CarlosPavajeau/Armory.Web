@@ -1,18 +1,20 @@
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
+import { Card } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Stack from '@material-ui/core/Stack';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getSquads } from 'modules/squads/Service';
 import {
   apiError,
@@ -21,13 +23,17 @@ import {
   selectSquads,
   selectUiStatus,
 } from 'modules/squads/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type SquadsProps = WithStyles<typeof displayData>;
-
-const Squads = (props: SquadsProps): ReactElement => {
-  const { classes } = props;
+const Squads = (): ReactElement => {
   const dispatch = useAppDispatch();
   const squads = useAppSelector(selectSquads);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -48,61 +54,112 @@ const Squads = (props: SquadsProps): ReactElement => {
     })();
   }, [fetchSquads]);
 
-  const handleRefresh = async () => {
-    await fetchSquads();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'id', label: 'Id', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Escuadras</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar escuadra"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armeria | Escuadras">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando escuadras..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
+          <Typography variant="h4" gutterBottom>
+            Escuadras
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/squads/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar escuadra
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar escuadra"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <DataListHead
+                order={order}
+                orderBy={orderBy}
+                headLabel={HEAD}
+                onRequestSort={handleRequestSort}
+              />
+              <TableBody>
+                {uiStatus === 'loading' && (
                   <TableRow>
-                    <TableCell>Código</TableCell>
-                    <TableCell>Nombre</TableCell>
-                    <TableCell>Escuadrilla</TableCell>
-                    <TableCell>Persona a cargo</TableCell>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <CircularLoader
+                        size={150}
+                        message="Cargando escuadras..."
+                      />
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {squads.map(squad => {
+                )}
+                {uiStatus === 'loaded' &&
+                  squads.length > 0 &&
+                  squads.map(squad => {
+                    const { code, name, squadronCode, personId } = squad;
                     return (
-                      <TableRow key={squad.code}>
-                        <TableCell>{squad.code}</TableCell>
-                        <TableCell>{squad.name}</TableCell>
-                        <TableCell>{squad.squadronCode}</TableCell>
-                        <TableCell>{squad.personId}</TableCell>
+                      <TableRow key={code} tabIndex={-1} hover>
+                        <TableCell>{code}</TableCell>
+                        <TableCell>{name}</TableCell>
+                        <TableCell>{squadronCode}</TableCell>
+                        <TableCell>{personId}</TableCell>
                       </TableRow>
                     );
                   })}
-                </TableBody>
-              </Table>
+
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={HEAD.length}
+                    sx={{ py: 3 }}
+                  >
+                    <ApiErrors />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
             </TableContainer>
-          )}
-          <ApiErrors />
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Squads);
+export default Squads;
