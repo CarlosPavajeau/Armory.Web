@@ -9,8 +9,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
 import { getExplosives } from 'modules/armament/explosives/Service';
 import {
   apiError,
@@ -28,11 +32,6 @@ import {
   useState,
 } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-
-import DataListHead, { HeadLabel } from '../../../components/data/DataListHead';
-import DataListToolbar from '../../../components/data/DataListToolbar';
-import Page from '../../../components/Page';
-import Scrollbar from '../../../components/scrollbar/Scrollbar';
 
 const Explosives = (): ReactElement => {
   const dispatch = useAppDispatch();
