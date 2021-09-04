@@ -1,22 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Storage from 'common/plugins/Storage';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
 
 import { ArmoryRoles } from './Models';
 
-type LoginStatus =
-  | UiStatus
-  | 'login'
-  | 'loginSuccess'
-  | 'userNotFound'
-  | 'incorrectPassword';
-
 export interface UserState {
   token: string;
   role: string | string[];
   errors: string;
-  ui: LoginStatus;
+  ui: UiStatus;
   isAuthenticate: boolean;
   roles: ArmoryRoles;
 }
@@ -39,23 +31,6 @@ export const slice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginSuccess: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
-
-      const payload = Storage.decode(action.payload);
-      state.role = payload.role;
-
-      state.ui = 'loginSuccess';
-      state.isAuthenticate = true;
-    },
-    userNotFound: (state, action: PayloadAction<string>) => {
-      state.ui = 'userNotFound';
-      state.errors = action.payload;
-    },
-    incorrectPassword: (state, action: PayloadAction<string>) => {
-      state.ui = 'incorrectPassword';
-      state.errors = action.payload;
-    },
     authenticationStatus: (
       state,
       action: PayloadAction<AuthenticationPayload>,
@@ -73,17 +48,10 @@ export const slice = createSlice({
   },
 });
 
-export const {
-  loginSuccess,
-  incorrectPassword,
-  userNotFound,
-  authenticationStatus,
-  loadingRoles,
-  loadRoles,
-} = slice.actions;
+export const { authenticationStatus, loadingRoles, loadRoles } = slice.actions;
 
 export const selectToken = (state: RootState): string => state.user.token;
-export const selectUiStatus = (state: RootState): LoginStatus => state.user.ui;
+export const selectUiStatus = (state: RootState): UiStatus => state.user.ui;
 export const selectErrors = (state: RootState): string => state.user.errors;
 export const selectIsAuthenticate = (state: RootState): boolean =>
   state.user.isAuthenticate;

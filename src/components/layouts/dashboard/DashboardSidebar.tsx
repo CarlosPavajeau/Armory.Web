@@ -8,6 +8,7 @@ import { selectRole } from 'modules/auth/Slice';
 import { selectCurrentPerson } from 'modules/people/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import translateRole from 'utils/translateRole';
 
 import NavSection from './sidebar/NavSection';
 import sidebarConfig from './sidebar/SidebarConfig';
@@ -41,33 +42,6 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
 
   const person = useAppSelector(selectCurrentPerson);
   const role = useAppSelector(selectRole);
-
-  const translateRole = (role: string | string[] | undefined): string => {
-    if (typeof role === 'undefined') {
-      return '';
-    }
-
-    const translateHelper = (value: string) => {
-      switch (value) {
-        case 'Developer':
-          return 'Desarollador';
-        case 'SquadronLeader':
-          return 'Comandante de escuadrilla';
-        case 'SquadLeader':
-          return 'Comandante de escuadra';
-        case 'StoreLeader':
-          return 'Comandante de escuadron';
-        default:
-          return '';
-      }
-    };
-
-    if (typeof role === 'string') {
-      return translateHelper(role);
-    }
-
-    return role.map(rol => translateHelper(rol)).join(', ');
-  };
 
   useEffect(() => {
     if (isOpen) {

@@ -4,7 +4,11 @@ import { CreatePersonRequest, People, Person } from './Models';
 export const createPerson = async (
   data: CreatePersonRequest,
 ): Promise<void> => {
-  await HttpClient.post('/People', data);
+  const response = await HttpClient.post('/People', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar a la persona');
+  }
 };
 
 export const getPeople = async (): Promise<People> => {

@@ -10,7 +10,8 @@ module.exports = {
       common: srcPath('common'),
       components: srcPath('components'),
       modules: srcPath('modules'),
-      pages: srcPath('pages')
+      pages: srcPath('pages'),
+      utils: srcPath('utils')
     }
   },
   module: {
