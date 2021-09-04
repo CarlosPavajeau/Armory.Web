@@ -46,7 +46,7 @@ const People = (): ReactElement => {
   ];
 
   return (
-    <Page title="Armería | Personas">
+    <Page title="Armería | Comandantes">
       <Container>
         <Stack
           direction="row"
@@ -55,7 +55,7 @@ const People = (): ReactElement => {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Personas
+            Comandantes
           </Typography>
           <Button
             variant="contained"
@@ -63,14 +63,14 @@ const People = (): ReactElement => {
             to="/dashboard/people/register"
             startIcon={<AddIcon />}
           >
-            Agregar persona
+            Agregar comandante
           </Button>
         </Stack>
 
         <Card>
           <DataListToolbar
             filterName={filterName}
-            placeholder="Buscar persona"
+            placeholder="Buscar comandante"
             onFilterName={handleFilterByName}
           />
 
