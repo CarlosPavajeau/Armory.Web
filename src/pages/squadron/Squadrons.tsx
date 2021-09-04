@@ -77,7 +77,7 @@ const Squadrons = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'ownerName', label: 'Persona a cargo', alignRight: false },
+    { id: 'ownerName', label: 'Comandante', alignRight: false },
   ];
 
   return (
