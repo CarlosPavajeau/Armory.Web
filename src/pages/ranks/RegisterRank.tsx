@@ -1,8 +1,8 @@
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
 import Typography from '@material-ui/core/Typography';
+import RankForm from 'components/dashboard/ranks/RankForm';
 import Page from 'components/Page';
-import RankForm from 'components/ranks/RankForm';
 import { ReactElement } from 'react';
 
 const RegisterRank = (): ReactElement => {

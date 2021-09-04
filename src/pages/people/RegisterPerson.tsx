@@ -1,8 +1,8 @@
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
 import Typography from '@material-ui/core/Typography';
+import PersonForm from 'components/dashboard/people/PersonForm';
 import Page from 'components/Page';
-import PersonForm from 'components/people/PersonForm';
 import React, { ReactElement } from 'react';
 
 const RegisterPerson = (): ReactElement => {

@@ -1,8 +1,8 @@
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
 import Typography from '@material-ui/core/Typography';
+import SquadronForm from 'components/dashboard/squadrons/SquadronForm';
 import Page from 'components/Page';
-import SquadronForm from 'components/squadrons/SquadronForm';
 import { ReactElement } from 'react';
 
 const RegisterSquadron = (): ReactElement => {

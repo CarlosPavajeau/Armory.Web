@@ -1,8 +1,8 @@
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
 import Typography from '@material-ui/core/Typography';
+import SquadForm from 'components/dashboard/squads/SquadForm';
 import Page from 'components/Page';
-import SquadForm from 'components/squads/SquadForm';
 import React, { ReactElement } from 'react';
 
 const RegisterSquad = (): ReactElement => {

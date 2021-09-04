@@ -1,8 +1,8 @@
 import Container from '@material-ui/core/Container';
 import Stack from '@material-ui/core/Stack';
 import Typography from '@material-ui/core/Typography';
+import TroopForm from 'components/dashboard/troopers/TroopForm';
 import Page from 'components/Page';
-import TroopForm from 'components/troopers/TroopForm';
 import React, { ReactElement } from 'react';
 
 const RegisterTroop = (): ReactElement => {
