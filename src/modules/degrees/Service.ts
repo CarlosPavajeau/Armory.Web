@@ -4,7 +4,11 @@ import { CreateDegreeRequest, Degree, Degrees } from './Models';
 export const createDegree = async (
   data: CreateDegreeRequest,
 ): Promise<void> => {
-  await HttpClient.post('/Degrees', data);
+  const response = await HttpClient.post('/Degrees', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar el grado');
+  }
 };
 
 export const getDegrees = async (): Promise<Degrees> => {
