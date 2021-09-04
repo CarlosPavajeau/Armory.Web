@@ -9,7 +9,11 @@ import {
 export const createAmmunition = async (
   data: CreateAmmunitionRequest,
 ): Promise<void> => {
-  await HttpClient.post('/Ammunition', data);
+  const response = await HttpClient.post('/Ammunition', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar la munición');
+  }
 };
 
 export const getAmmunition = async (): Promise<Ammunition[]> => {
