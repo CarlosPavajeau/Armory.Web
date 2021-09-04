@@ -4,7 +4,11 @@ import { CreateSquadronRequest, Squadrons } from './Models';
 export const createSquadron = async (
   data: CreateSquadronRequest,
 ): Promise<void> => {
-  await HttpClient.post('/Squadrons', data);
+  const response = await HttpClient.post('/Squadrons', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar le escuadrilla.');
+  }
 };
 
 export const getSquadrons = async (): Promise<Squadrons> => {
