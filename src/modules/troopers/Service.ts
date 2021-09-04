@@ -8,7 +8,11 @@ import {
 } from './Models';
 
 export const createTroop = async (data: CreateTroopRequest): Promise<void> => {
-  await HttpClient.post('/Troopers', data);
+  const response = await HttpClient.post('/Troopers', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar al cadete, alumno, o soldado.');
+  }
 };
 
 export const getTroopers = async (): Promise<Troopers> => {
