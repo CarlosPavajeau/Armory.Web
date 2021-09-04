@@ -2,7 +2,11 @@ import HttpClient, { IsValidResponse } from '../../common/config/http';
 import { CreateRankRequest, Rank, Ranks } from './Models';
 
 export const createRank = async (data: CreateRankRequest): Promise<void> => {
-  await HttpClient.post('/Ranks', data);
+  const response = await HttpClient.post('/Ranks', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar el rango');
+  }
 };
 
 export const getRanks = async (): Promise<Ranks> => {
