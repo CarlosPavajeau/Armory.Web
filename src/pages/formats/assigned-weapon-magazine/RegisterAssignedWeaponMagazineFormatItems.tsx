@@ -17,7 +17,6 @@ import withStyles from '@material-ui/styles/withStyles';
 import { useAppDispatch, useAppSelector, useQuery } from 'common/hooks';
 import { formStyles } from 'common/styles';
 import QrReaderDialog from 'components/qr/QrReaderDialog';
-import Consola from 'consola';
 import FileSaver from 'file-saver';
 import { getWeapon } from 'modules/armament/weapons/Service';
 import {
@@ -25,12 +24,10 @@ import {
   loadWeapon,
   selectUiStatus as selectWeaponUiStatus,
 } from 'modules/armament/weapons/Slice';
+import { useAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/hooks';
 import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
 import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
-import {
-  addFormatItem,
-  selectCurrentFormat,
-} from 'modules/formats/assigned-weapon-magazine/Slice';
+import { addFormatItem } from 'modules/formats/assigned-weapon-magazine/Slice';
 import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
@@ -65,7 +62,6 @@ const RegisterAssignedWeaponMagazineFormatItems = (
   const { classes } = props;
   const customClasses = useCustomStyles();
   const dispatch = useAppDispatch();
-  const format = useAppSelector(selectCurrentFormat);
 
   const [openQrDialog, setOpenQrDialog] = useState(false);
   const [openItemDialog, setOpenItemDialog] = useState(false);
@@ -86,9 +82,10 @@ const RegisterAssignedWeaponMagazineFormatItems = (
 
   const query = useQuery();
   const formatId = query.get('formatId');
-  useMemo(() => {
-    Consola.info(formatId);
+  const memoFormatId = useMemo(() => {
+    return formatId || '0';
   }, [formatId]);
+  const [format] = useAssignedWeaponMagazineFormat(+memoFormatId);
 
   useEffect(() => {
     if (weaponUiStatus === 'loaded') {
@@ -170,21 +167,23 @@ const RegisterAssignedWeaponMagazineFormatItems = (
             Registros agregados
           </Typography>
           <List className={customClasses.list}>
-            {format?.items.map(item => {
-              return (
-                <>
-                  <ListItem>
-                    <ListItemText
-                      primary={`Identificación de la tropa: ${item.troopId}`}
-                      secondary={
-                        <AssignedWeaponMagazineFormatItemInfo item={item} />
-                      }
-                    />
-                  </ListItem>
-                  <Divider />
-                </>
-              );
-            })}
+            {format &&
+              format.records &&
+              format.records.map(item => {
+                return (
+                  <>
+                    <ListItem>
+                      <ListItemText
+                        primary={`Identificación de la tropa: ${item.troopId}`}
+                        secondary={
+                          <AssignedWeaponMagazineFormatItemInfo item={item} />
+                        }
+                      />
+                    </ListItem>
+                    <Divider />
+                  </>
+                );
+              })}
           </List>
         </div>
       </Paper>

@@ -36,5 +36,5 @@ export interface AssignedWeaponMagazineFormat
   extends CreateAssignedWeaponMagazineFormatRequest {
   id: number;
 
-  items: AssignedWeaponMagazineFormatItems;
+  records: AssignedWeaponMagazineFormatItems;
 }

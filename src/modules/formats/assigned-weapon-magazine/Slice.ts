@@ -32,6 +32,16 @@ export const slice = createSlice({
       state.wasRegistered = false;
       state.error = '';
     },
+    loadingAssignedWeaponMagazineFormat: state => {
+      state.ui = 'loading';
+    },
+    loadedAssignedWeaponMagazineFormat: (
+      state,
+      action: PayloadAction<AssignedWeaponMagazineFormat>,
+    ) => {
+      state.currentFormat = action.payload;
+      state.ui = 'loaded';
+    },
     setCurrentFormat: (
       state,
       action: PayloadAction<AssignedWeaponMagazineFormat>,
@@ -43,7 +53,7 @@ export const slice = createSlice({
       action: PayloadAction<AssignedWeaponMagazineFormatItem>,
     ) => {
       if (state.currentFormat != null) {
-        state.currentFormat.items.push(action.payload);
+        state.currentFormat.records.push(action.payload);
       }
     },
   },
@@ -52,6 +62,8 @@ export const slice = createSlice({
 export const {
   registeredCorrectly,
   resetRegister,
+  loadingAssignedWeaponMagazineFormat,
+  loadedAssignedWeaponMagazineFormat,
   setCurrentFormat,
   addFormatItem,
 } = slice.actions;
@@ -64,5 +76,8 @@ export const selectCurrentFormat = (
   state: RootState,
 ): AssignedWeaponMagazineFormat | null =>
   state.assigned_weapon_magazine_format.currentFormat;
+export const selectAssignedWeaponMagazineFormatUiStatus = (
+  state: RootState,
+): UiStatus => state.assigned_weapon_magazine_format.ui;
 
 export default slice.reducer;

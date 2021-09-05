@@ -23,18 +23,17 @@ import CloseIcon from '@material-ui/icons/Close';
 import { WithStyles } from '@material-ui/styles';
 import createStyles from '@material-ui/styles/createStyles';
 import withStyles from '@material-ui/styles/withStyles';
+import { useAppSelector } from 'common/hooks';
+import { formStyles } from 'common/styles';
 import { useFormik } from 'formik';
-import { forwardRef, ReactElement, Ref } from 'react';
-import * as Yup from 'yup';
-
-import { useAppSelector } from '../../../common/hooks';
-import { formStyles } from '../../../common/styles';
-import { selectWeapon } from '../../../modules/armament/weapons/Slice';
+import { selectWeapon } from 'modules/armament/weapons/Slice';
 import {
   AddAssignedWeaponMagazineFormatItemRequest,
   AssignedWeaponMagazineFormatItem,
-} from '../../../modules/formats/assigned-weapon-magazine/Models';
-import { addAssignedWeaponMagazineFormatItem } from '../../../modules/formats/assigned-weapon-magazine/Service';
+} from 'modules/formats/assigned-weapon-magazine/Models';
+import { addAssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Service';
+import { forwardRef, ReactElement, Ref } from 'react';
+import * as Yup from 'yup';
 
 const headerStyles = (theme: Theme) =>
   createStyles({
