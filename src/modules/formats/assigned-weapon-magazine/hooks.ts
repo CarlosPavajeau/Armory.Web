@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { UiStatus } from 'common/types';
 import Consola from 'consola';
 import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Models';
 import { getAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
 import {
+  AssignedWeaponMagazineFormatsUiStatus,
   loadedAssignedWeaponMagazineFormat,
   loadingAssignedWeaponMagazineFormat,
   selectAssignedWeaponMagazineFormatUiStatus,
@@ -12,8 +12,11 @@ import {
 import { useEffect } from 'react';
 
 export const useAssignedWeaponMagazineFormat = (
-  formatId: number,
-): [AssignedWeaponMagazineFormat | null, UiStatus] => {
+  formatId: number | null,
+): [
+  AssignedWeaponMagazineFormat | null,
+  AssignedWeaponMagazineFormatsUiStatus,
+] => {
   const dispatch = useAppDispatch();
   const format = useAppSelector(selectCurrentFormat);
   const uiStatus = useAppSelector(selectAssignedWeaponMagazineFormatUiStatus);
@@ -21,9 +24,11 @@ export const useAssignedWeaponMagazineFormat = (
   useEffect(() => {
     (async () => {
       try {
-        dispatch(loadingAssignedWeaponMagazineFormat());
-        const result = await getAssignedWeaponMagazineFormat(formatId);
-        dispatch(loadedAssignedWeaponMagazineFormat(result));
+        if (formatId) {
+          dispatch(loadingAssignedWeaponMagazineFormat());
+          const result = await getAssignedWeaponMagazineFormat(formatId);
+          dispatch(loadedAssignedWeaponMagazineFormat(result));
+        }
       } catch (err) {
         if (process.env.NODE_ENV === 'development') {
           Consola.error(err);

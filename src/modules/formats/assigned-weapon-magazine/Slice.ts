@@ -7,8 +7,13 @@ import {
   AssignedWeaponMagazineFormatItem,
 } from './Models';
 
+export type AssignedWeaponMagazineFormatsUiStatus =
+  | UiStatus
+  | 'generating'
+  | 'generated';
+
 export interface AssignedWeaponMagazineFormatsState {
-  ui: UiStatus;
+  ui: AssignedWeaponMagazineFormatsUiStatus;
   error: string;
   wasRegistered: boolean;
   currentFormat: AssignedWeaponMagazineFormat | null;
@@ -42,6 +47,12 @@ export const slice = createSlice({
       state.currentFormat = action.payload;
       state.ui = 'loaded';
     },
+    generatingAssignedWeaponMagazineFormat: state => {
+      state.ui = 'generating';
+    },
+    generatedAssignedWeaponMagazineFormat: state => {
+      state.ui = 'generated';
+    },
     setCurrentFormat: (
       state,
       action: PayloadAction<AssignedWeaponMagazineFormat>,
@@ -64,6 +75,8 @@ export const {
   resetRegister,
   loadingAssignedWeaponMagazineFormat,
   loadedAssignedWeaponMagazineFormat,
+  generatingAssignedWeaponMagazineFormat,
+  generatedAssignedWeaponMagazineFormat,
   setCurrentFormat,
   addFormatItem,
 } = slice.actions;
@@ -78,6 +91,7 @@ export const selectCurrentFormat = (
   state.assigned_weapon_magazine_format.currentFormat;
 export const selectAssignedWeaponMagazineFormatUiStatus = (
   state: RootState,
-): UiStatus => state.assigned_weapon_magazine_format.ui;
+): AssignedWeaponMagazineFormatsUiStatus =>
+  state.assigned_weapon_magazine_format.ui;
 
 export default slice.reducer;

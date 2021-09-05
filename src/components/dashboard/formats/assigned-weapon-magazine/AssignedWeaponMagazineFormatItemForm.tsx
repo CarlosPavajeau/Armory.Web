@@ -1,0 +1,158 @@
+import { TextField } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormLabel from '@material-ui/core/FormLabel';
+import Stack from '@material-ui/core/Stack';
+import { LoadingButton } from '@material-ui/lab';
+import ApiErrors from 'components/feedback/ApiErrors';
+import Consola from 'consola';
+import { Form, FormikProvider, useFormik } from 'formik';
+import { Weapon } from 'modules/armament/weapons/Models';
+import {
+  AddAssignedWeaponMagazineFormatItemRequest,
+  AssignedWeaponMagazineFormatItem,
+} from 'modules/formats/assigned-weapon-magazine/Models';
+import { addAssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Service';
+import React, { ReactElement } from 'react';
+import * as Yup from 'yup';
+
+interface AssignedWeaponMagazineFormatItemFormProps {
+  formatId: number;
+  weapon: Weapon | null;
+  onSuccess: (item: AssignedWeaponMagazineFormatItem) => void;
+}
+
+const AssignedWeaponMagazineFormatItemForm = (
+  props: AssignedWeaponMagazineFormatItemFormProps,
+): ReactElement => {
+  const { formatId, weapon, onSuccess } = props;
+
+  const RegisterAssignedWeaponMagazineFormatItemSchema = Yup.object().shape({
+    cartridgeOfLife: Yup.boolean().required(),
+    verifiedInPhysical: Yup.boolean().required(),
+    novelty: Yup.boolean().required(),
+    ammunitionQuantity: Yup.number()
+      .required('Es campo es requerido')
+      .min(0, 'Debe ser un valor positivo'),
+    ammunitionLot: Yup.string().required('Este campo es requerido'),
+    observations: Yup.string(),
+  });
+
+  const formik = useFormik<AddAssignedWeaponMagazineFormatItemRequest>({
+    initialValues: {
+      formatId,
+      troopId: weapon?.ownerId || '',
+      weaponCode: weapon?.code || '',
+      cartridgeOfLife: false,
+      verifiedInPhysical: false,
+      novelty: false,
+      ammunitionQuantity: 0,
+      ammunitionLot: '',
+      observations: '',
+    },
+    validationSchema: RegisterAssignedWeaponMagazineFormatItemSchema,
+    onSubmit: async values => {
+      try {
+        values.troopId = weapon != null ? weapon.ownerId : '';
+        values.weaponCode = weapon != null ? weapon.code : '';
+        const result = await addAssignedWeaponMagazineFormatItem(values);
+        onSuccess(result);
+      } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+          Consola.error(err);
+        }
+      }
+    },
+  });
+
+  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+
+  return (
+    <FormikProvider value={formik}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <FormControl component="fieldset" fullWidth>
+              <FormLabel component="legend">Verificaciones</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  label="Novedad"
+                  control={<Checkbox {...getFieldProps('novelty')} />}
+                />
+                <FormControlLabel
+                  label="Cartucho de la vida"
+                  control={<Checkbox {...getFieldProps('cartridgeOfLife')} />}
+                />
+                <FormControlLabel
+                  label="Verificado en físico"
+                  control={
+                    <Checkbox {...getFieldProps('verifiedInPhysical')} />
+                  }
+                />
+              </FormGroup>
+              <FormHelperText>
+                Selecciones las verificaciones que considere necesarias
+              </FormHelperText>
+            </FormControl>
+          </Stack>
+
+          <TextField
+            label="Cantidad de munición"
+            placeholder="Ejemplo: 22"
+            type="number"
+            helperText={
+              errors.ammunitionQuantity && touched.ammunitionQuantity
+                ? errors.ammunitionQuantity
+                : 'Digite la cantidad de munición'
+            }
+            error={!!(errors.ammunitionQuantity && touched.ammunitionQuantity)}
+            disabled={isSubmitting}
+            {...getFieldProps('ammunitionQuantity')}
+            fullWidth
+          />
+          <TextField
+            label="Lote munición"
+            helperText={
+              errors.ammunitionLot && touched.ammunitionLot
+                ? errors.ammunitionLot
+                : 'Digite el lote de la munición'
+            }
+            error={!!(errors.ammunitionLot && touched.ammunitionLot)}
+            disabled={isSubmitting}
+            {...getFieldProps('ammunitionLot')}
+            fullWidth
+          />
+          <TextField
+            label="Observaciones"
+            helperText={
+              errors.observations && touched.observations
+                ? errors.observations
+                : 'Digite las observaciones'
+            }
+            disabled={isSubmitting}
+            rows={3}
+            {...getFieldProps('observations')}
+            multiline
+            fullWidth
+          />
+
+          <ApiErrors />
+
+          <LoadingButton
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
+            Agregar ítem
+          </LoadingButton>
+        </Stack>
+      </Form>
+    </FormikProvider>
+  );
+};
+
+export default AssignedWeaponMagazineFormatItemForm;

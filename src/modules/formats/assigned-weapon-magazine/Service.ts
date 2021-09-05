@@ -3,6 +3,7 @@ import HttpClient, { IsValidResponse } from 'common/config/http';
 import {
   AddAssignedWeaponMagazineFormatItemRequest,
   AssignedWeaponMagazineFormat,
+  AssignedWeaponMagazineFormatItem,
   CreateAssignedWeaponMagazineFormatRequest,
 } from './Models';
 
@@ -22,8 +23,8 @@ export const createAssignedWeaponMagazineFormat = async (
 
 export const addAssignedWeaponMagazineFormatItem = async (
   data: AddAssignedWeaponMagazineFormatItemRequest,
-): Promise<number> => {
-  const response = await HttpClient.post<number>(
+): Promise<AssignedWeaponMagazineFormatItem> => {
+  const response = await HttpClient.post<AssignedWeaponMagazineFormatItem>(
     `/AssignedWeaponMagazineFormats/AddItem/${data.formatId}`,
     data,
   );
