@@ -9,50 +9,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { getDegrees } from 'modules/degrees/Service';
-import {
-  loadDegrees,
-  loadingDegrees,
-  selectDegrees,
-  selectUiStatus,
-} from 'modules/degrees/Slice';
-import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useDegrees } from 'modules/degrees/hooks';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Degrees = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const degrees = useAppSelector(selectDegrees);
-  const uiStatus = useAppSelector(selectUiStatus);
-
-  const fetchDegrees = useCallback(async () => {
-    try {
-      dispatch(loadingDegrees());
-      const result = await getDegrees();
-      dispatch(loadDegrees(result));
-    } catch (err) {
-      // Ignore error
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchDegrees();
-    })();
-  }, [fetchDegrees]);
+  const [degrees, uiStatus] = useDegrees();
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('name');

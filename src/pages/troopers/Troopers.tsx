@@ -9,51 +9,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { getTroopers } from 'modules/troopers/Service';
-import {
-  apiError,
-  loadingTroopers,
-  loadTroopers,
-  selectTroopers,
-  selectUiStatus,
-} from 'modules/troopers/Slice';
-import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useTroopers } from 'modules/troopers/hooks';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Troopers = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const troopers = useAppSelector(selectTroopers);
-  const uiStatus = useAppSelector(selectUiStatus);
-
-  const fetchTroopers = useCallback(async () => {
-    try {
-      dispatch(loadingTroopers());
-      const result = await getTroopers();
-      dispatch(loadTroopers(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchTroopers();
-    })();
-  }, [fetchTroopers]);
+  const [troopers, uiStatus] = useTroopers();
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('name');

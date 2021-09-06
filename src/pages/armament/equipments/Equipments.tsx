@@ -9,51 +9,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { getEquipments } from 'modules/armament/equipments/Service';
-import {
-  apiError,
-  loadEquipments,
-  loadingEquipments,
-  selectEquipments,
-  selectUiStatus,
-} from 'modules/armament/equipments/Slice';
-import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useEquipments } from 'modules/armament/equipments/hooks';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Equipments = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const equipments = useAppSelector(selectEquipments);
-  const uiStatus = useAppSelector(selectUiStatus);
-
-  const fetchEquipments = useCallback(async () => {
-    try {
-      dispatch(loadingEquipments());
-      const result = await getEquipments();
-      dispatch(loadEquipments(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchEquipments();
-    })();
-  }, [fetchEquipments]);
+  const [equipments, uiStatus] = useEquipments();
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('name');

@@ -9,51 +9,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { getAmmunition } from 'modules/armament/ammunition/Service';
-import {
-  apiError,
-  loadAmmunition,
-  loadingAmmunition,
-  selectAmmunition,
-  selectUiStatus,
-} from 'modules/armament/ammunition/Slice';
-import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useAmmunition } from 'modules/armament/ammunition/hooks';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Ammunition = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const ammunition = useAppSelector(selectAmmunition);
-  const uiStatus = useAppSelector(selectUiStatus);
-
-  const fetchAmmunition = useCallback(async () => {
-    try {
-      dispatch(loadingAmmunition());
-      const result = await getAmmunition();
-      dispatch(loadAmmunition(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchAmmunition();
-    })();
-  }, [fetchAmmunition]);
+  const [ammunition, uiStatus] = useAmmunition();
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('name');
