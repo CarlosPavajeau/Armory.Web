@@ -11,52 +11,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import Consola from 'consola';
 import FileSaver from 'file-saver';
-import { generateQr, getWeapons } from 'modules/armament/weapons/Service';
-import {
-  apiError,
-  loadingWeapons,
-  loadWeapons,
-  selectUiStatus,
-  selectWeapons,
-} from 'modules/armament/weapons/Slice';
-import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useWeapons } from 'modules/armament/weapons/hooks';
+import { generateQr } from 'modules/armament/weapons/Service';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Weapons = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const weapons = useAppSelector(selectWeapons);
-  const uiStatus = useAppSelector(selectUiStatus);
-
-  const fetchWeapons = useCallback(async () => {
-    try {
-      dispatch(loadingWeapons());
-      const result = await getWeapons();
-      dispatch(loadWeapons(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchWeapons();
-    })();
-  }, [fetchWeapons]);
+  const [weapons, uiStatus] = useWeapons();
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('name');
@@ -89,8 +58,10 @@ const Weapons = (): ReactElement => {
     try {
       const result = await generateQr(code);
       FileSaver.saveAs(result, `qr-${code}.pdf`);
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') {
+        Consola.error(err);
+      }
     }
   };
 
