@@ -80,7 +80,7 @@ const Ranks = (): ReactElement => {
   ];
 
   return (
-    <Page title="Armería | Rangos">
+    <Page title="Armería | Cargos de operación">
       <Container>
         <Stack
           direction="row"
@@ -89,7 +89,7 @@ const Ranks = (): ReactElement => {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Rangos
+            Cargos de operación
           </Typography>
           <Button
             variant="contained"
@@ -97,7 +97,7 @@ const Ranks = (): ReactElement => {
             to="/dashboard/ranks/register"
             startIcon={<AddIcon />}
           >
-            Agregar rango
+            Agregar cargo de operación
           </Button>
         </Stack>
 
