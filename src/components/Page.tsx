@@ -1,4 +1,4 @@
-import { Box, BoxProps } from '@material-ui/core';
+import { Box, BoxProps } from '@mui/material';
 import { forwardRef, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 

@@ -1,4 +1,4 @@
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import DashboardLayout from 'components/layouts/dashboard';

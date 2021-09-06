@@ -1,7 +1,7 @@
-import { InputAdornment, OutlinedInput } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@mui/icons-material/Search';
+import { InputAdornment, OutlinedInput } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 import { ChangeEventHandler, ReactElement } from 'react';
 
 const RootStyle = styled(Toolbar)(({ theme }) => ({

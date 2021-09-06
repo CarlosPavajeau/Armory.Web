@@ -1,6 +1,6 @@
-import { BoxProps } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import List from '@material-ui/core/List';
+import { BoxProps } from '@mui/material';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
 import { ReactElement } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 

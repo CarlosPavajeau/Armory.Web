@@ -1,8 +1,8 @@
-import { Card, TableCell } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
+import { Card, TableCell } from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import Scrollbar from 'components/scrollbar/Scrollbar';

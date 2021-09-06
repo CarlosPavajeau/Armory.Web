@@ -1,3 +1,6 @@
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { LoadingButton } from '@mui/lab';
 import {
   Checkbox,
   FormControlLabel,
@@ -5,11 +8,8 @@ import {
   Link,
   Stack,
   TextField,
-} from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { LoadingButton } from '@material-ui/lab';
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import ApiErrors from 'components/feedback/ApiErrors';
@@ -92,7 +92,11 @@ const LoginForm = (): ReactElement => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
+                  <IconButton
+                    onClick={handleShowPassword}
+                    edge="end"
+                    size="large"
+                  >
                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </IconButton>
                 </InputAdornment>

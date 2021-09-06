@@ -1,6 +1,6 @@
-import Stack from '@material-ui/core/Stack';
-import TextField from '@material-ui/core/TextField';
-import { LoadingButton } from '@material-ui/lab';
+import { LoadingButton } from '@mui/lab';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';

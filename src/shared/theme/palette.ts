@@ -1,9 +1,9 @@
+import { alpha } from '@mui/material/styles';
 import {
-  alpha,
+  ColorPartial,
   PaletteColorOptions,
   PaletteOptions,
-} from '@material-ui/core/styles';
-import { ColorPartial } from '@material-ui/core/styles/createPalette';
+} from '@mui/material/styles/createPalette';
 
 const GREY: ColorPartial = {
   0: '#FFFFFF',

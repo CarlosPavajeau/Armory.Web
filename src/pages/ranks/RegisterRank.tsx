@@ -1,6 +1,6 @@
-import Container from '@material-ui/core/Container';
-import Stack from '@material-ui/core/Stack';
-import Typography from '@material-ui/core/Typography';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import RankForm from 'components/dashboard/ranks/RankForm';
 import Page from 'components/Page';
 import { ReactElement } from 'react';

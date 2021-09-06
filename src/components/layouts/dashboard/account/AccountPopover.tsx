@@ -1,14 +1,14 @@
-import { Avatar } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import { alpha } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonIcon from '@material-ui/icons/Person';
-import SettingsIcon from '@material-ui/icons/Settings';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Avatar } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import { alpha } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
 import { logoutUser } from 'modules/auth/Service';
@@ -76,6 +76,7 @@ const AccountPopover = (): ReactElement => {
             },
           }),
         }}
+        size="large"
       >
         <Avatar sx={{ bgcolor: 'primary.main' }}>A</Avatar>
       </IconButton>

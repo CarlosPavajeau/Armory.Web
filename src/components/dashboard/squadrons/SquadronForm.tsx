@@ -1,10 +1,10 @@
-import { FormHelperText, TextField } from '@material-ui/core';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Stack from '@material-ui/core/Stack';
-import { LoadingButton } from '@material-ui/lab';
+import { LoadingButton } from '@mui/lab';
+import { FormHelperText, TextField } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
 import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';

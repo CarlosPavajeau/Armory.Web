@@ -1,3 +1,5 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   Collapse,
@@ -5,10 +7,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core';
-import { alpha, styled, useTheme } from '@material-ui/core/styles';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+} from '@mui/material';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import { ReactElement, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 

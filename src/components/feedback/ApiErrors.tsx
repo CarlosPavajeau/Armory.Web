@@ -1,5 +1,5 @@
-import { Collapse } from '@material-ui/core';
-import Alert from '@material-ui/core/Alert';
+import { Collapse } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { useAppSelector } from 'common/hooks';
 import { selectApiErrors } from 'modules/application/Slice';
 import { ReactElement } from 'react';

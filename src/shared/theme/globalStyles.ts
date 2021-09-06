@@ -1,5 +1,5 @@
-import { Theme } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { Theme } from '@mui/material';
+import { withStyles } from '@mui/styles';
 
 const GlobalStyles = withStyles((theme: Theme) => ({
   '@global': {

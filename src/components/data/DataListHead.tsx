@@ -1,8 +1,8 @@
-import { TableCell, TableSortLabel } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { visuallyHidden } from '@material-ui/utils';
+import { TableCell, TableSortLabel } from '@mui/material';
+import Box from '@mui/material/Box';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { visuallyHidden } from '@mui/utils';
 import { MouseEvent, ReactElement } from 'react';
 
 export interface HeadLabel {

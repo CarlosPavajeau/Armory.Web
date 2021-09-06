@@ -1,6 +1,6 @@
-import { Avatar, Drawer, Link, Stack, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import { styled } from '@material-ui/core/styles';
+import { Avatar, Drawer, Link, Stack, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 import { useAppSelector } from 'common/hooks';
 import MHidden from 'components/@material-extend/MHidden';
 import Scrollbar from 'components/scrollbar/Scrollbar';

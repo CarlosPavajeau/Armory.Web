@@ -1,6 +1,6 @@
-import { Card, CardContent } from '@material-ui/core';
-import Stack from '@material-ui/core/Stack';
-import Typography from '@material-ui/core/Typography';
+import { Card, CardContent } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import CircularLoader from 'components/loading/CircularLoader';
 import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Models';
 import { AssignedWeaponMagazineFormatsUiStatus } from 'modules/formats/assigned-weapon-magazine/Slice';

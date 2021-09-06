@@ -1,8 +1,8 @@
-import AddModeratorIcon from '@material-ui/icons/AddModerator';
-import AutoAwesomeIcon from '@material-ui/icons/AutoAwesome';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import PeopleIcon from '@material-ui/icons/People';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import PeopleIcon from '@mui/icons-material/People';
 import { ReactElement } from 'react';
 
 export interface SidebarConfigItemChildren {

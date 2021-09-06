@@ -1,7 +1,7 @@
-import Container from '@material-ui/core/Container';
-import Stack from '@material-ui/core/Stack';
-import { styled } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import LoginForm from 'components/authentication/login/LoginForm';
 import Page from 'components/Page';
 import { ReactElement } from 'react';

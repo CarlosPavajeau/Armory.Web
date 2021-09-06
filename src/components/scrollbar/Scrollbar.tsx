@@ -1,6 +1,6 @@
-import { Box, Theme } from '@material-ui/core';
-import { alpha, styled } from '@material-ui/core/styles';
-import { SxProps } from '@material-ui/system';
+import { Box, Theme } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import { SxProps } from '@mui/system';
 import { ReactElement, ReactNode } from 'react';
 import SimpleBarReact from 'simplebar-react';
 

@@ -1,6 +1,6 @@
-import Container from '@material-ui/core/Container';
-import Stack from '@material-ui/core/Stack';
-import Typography from '@material-ui/core/Typography';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import TroopForm from 'components/dashboard/troopers/TroopForm';
 import Page from 'components/Page';
 import React, { ReactElement } from 'react';
