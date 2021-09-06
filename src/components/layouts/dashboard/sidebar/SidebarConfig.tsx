@@ -20,16 +20,16 @@ export interface SidebarConfigItem {
 
 const sidebarConfig: SidebarConfigItem[] = [
   {
-    title: 'Personas',
+    title: 'Comandantes',
     path: '/dashboard/people',
     icon: <PeopleIcon />,
     children: [
       {
-        title: 'Registrar persona',
+        title: 'Registrar comandante',
         path: '/dashboard/people/register',
       },
       {
-        title: 'Consultar personas',
+        title: 'Consultar comandantes',
         path: '/dashboard/people/all',
       },
     ],
@@ -65,16 +65,16 @@ const sidebarConfig: SidebarConfigItem[] = [
     ],
   },
   {
-    title: 'Rangos',
+    title: 'Cargos de operación',
     path: '/dashboard/ranks/',
     icon: <AddModeratorIcon />,
     children: [
       {
-        title: 'Registrar rango',
+        title: 'Cargo de operación',
         path: '/dashboard/ranks/register',
       },
       {
-        title: 'Rangos',
+        title: 'Consultar cargos de operación',
         path: '/dashboard/ranks/all',
       },
     ],
@@ -89,7 +89,7 @@ const sidebarConfig: SidebarConfigItem[] = [
         path: '/dashboard/degrees/register',
       },
       {
-        title: 'Grados',
+        title: 'Consultar grados',
         path: '/dashboard/degrees/all',
       },
     ],
