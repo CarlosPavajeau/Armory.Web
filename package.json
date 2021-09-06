@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.15.0",
+    "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.0",
     "@date-io/moment": "1.x",
     "@emotion/react": "^11.4.1",
