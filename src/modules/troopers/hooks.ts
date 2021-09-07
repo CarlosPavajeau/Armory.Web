@@ -43,9 +43,11 @@ export const useTroopersBySquad = (squadCode: string): [Troopers, UiStatus] => {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(loadingTroopers());
-        const result = await getTroopersBySquad(squadCode);
-        dispatch(loadTroopers(result));
+        if (squadCode) {
+          dispatch(loadingTroopers());
+          const result = await getTroopersBySquad(squadCode);
+          dispatch(loadTroopers(result));
+        }
       } catch (err) {
         if (process.env.NODE_ENV === 'development') {
           Consola.error(err);
