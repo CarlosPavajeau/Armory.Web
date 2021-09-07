@@ -5,7 +5,6 @@ export interface CreateWeaponRequest {
   model: string;
   caliber: string;
   series: string;
-  lot: string;
   numberOfProviders: number;
   providerCapacity: number;
 }

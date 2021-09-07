@@ -19,7 +19,6 @@ const WeaponForm = (): ReactElement => {
     model: Yup.string().required('Este campo es requerido'),
     caliber: Yup.string().required('Este campo es requerido'),
     series: Yup.string().required('Este campo es requerido'),
-    lot: Yup.string().required('Este campo es requerido'),
     numberOfProviders: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Este campo es requerido'),
@@ -37,7 +36,6 @@ const WeaponForm = (): ReactElement => {
       model: '',
       caliber: '',
       series: '',
-      lot: '',
       numberOfProviders: 0,
       providerCapacity: 0,
     },
@@ -131,16 +129,6 @@ const WeaponForm = (): ReactElement => {
             error={!!(errors.series && touched.series)}
             disabled={isSubmitting}
             {...getFieldProps('series')}
-            fullWidth
-          />
-          <TextField
-            label="Lote"
-            helperText={
-              errors.lot && touched.lot ? errors.lot : 'Digite el lote del arma'
-            }
-            error={!!(errors.lot && touched.lot)}
-            disabled={isSubmitting}
-            {...getFieldProps('lot')}
             fullWidth
           />
           <TextField
