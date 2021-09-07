@@ -44,8 +44,9 @@ const Troopers = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'id', label: 'Id', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'squadCode', label: 'Escuadrón', alignRight: false },
-    { id: 'degreeId', label: 'Grado', alignRight: false },
+    { id: 'squadName', label: 'Escuadrón', alignRight: false },
+    { id: 'rankName', label: 'Cargo de operación', alignRight: false },
+    { id: 'degreeName', label: 'Grado', alignRight: false },
   ];
 
   return (
@@ -110,8 +111,9 @@ const Troopers = (): ReactElement => {
                         secondName,
                         lastName,
                         secondLastName,
-                        squadCode,
-                        degreeId,
+                        squadName,
+                        rankName,
+                        degreeName,
                       } = troop;
                       return (
                         <TableRow key={id} tabIndex={-1} hover>
@@ -119,8 +121,9 @@ const Troopers = (): ReactElement => {
                           <TableCell>
                             {firstName} {secondName} {lastName} {secondLastName}
                           </TableCell>
-                          <TableCell>{squadCode}</TableCell>
-                          <TableCell>{degreeId}</TableCell>
+                          <TableCell>{squadName}</TableCell>
+                          <TableCell>{rankName}</TableCell>
+                          <TableCell>{degreeName}</TableCell>
                         </TableRow>
                       );
                     })}
