@@ -37,7 +37,11 @@ const AssignedWeaponMagazineFormatItemsInfo = (
   };
 
   const HEAD: HeadLabel[] = [
-    { id: 'troopId', label: 'Cadete, soldado o alumno', alignRight: false },
+    {
+      id: 'troopId',
+      label: 'Oficial, suboficial o soldado',
+      alignRight: false,
+    },
     { id: 'ammunitionQuantity', label: 'Cant. Munición', alignRight: false },
     { id: 'ammunitionLot', label: 'Lote Munición', alignRight: false },
     {

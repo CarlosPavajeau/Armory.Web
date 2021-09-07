@@ -49,7 +49,7 @@ const Troopers = (): ReactElement => {
   ];
 
   return (
-    <Page title="Armería | Tropas">
+    <Page title="Armería | Oficiales, suboficiales y soldados">
       <Container>
         <Stack
           direction="row"
@@ -58,7 +58,7 @@ const Troopers = (): ReactElement => {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Cadetes, alumnos y soldados
+            Oficiales, suboficiales y soldados
           </Typography>
           <Button
             variant="contained"
@@ -66,14 +66,14 @@ const Troopers = (): ReactElement => {
             to="/dashboard/troopers/register"
             startIcon={<AddIcon />}
           >
-            Agregar cadete, alumno o soldado
+            Agregar oficial, suboficial o soldado
           </Button>
         </Stack>
 
         <Card>
           <DataListToolbar
             filterName={filterName}
-            placeholder="Buscar cadete alumno o soldado"
+            placeholder="Buscar oficial, suboficial o soldado"
             onFilterName={handleFilterByName}
           />
 
@@ -96,7 +96,7 @@ const Troopers = (): ReactElement => {
                       >
                         <CircularLoader
                           size={150}
-                          message="Cargando cadetes, alumnos y soldados..."
+                          message="Cargando oficiales, suboficiales o soldados..."
                         />
                       </TableCell>
                     </TableRow>

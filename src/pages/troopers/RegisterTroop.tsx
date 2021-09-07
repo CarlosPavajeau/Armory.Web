@@ -7,11 +7,11 @@ import React, { ReactElement } from 'react';
 
 const RegisterTroop = (): ReactElement => {
   return (
-    <Page title="Armería | Registro de cadetes, alumnos y soldados">
+    <Page title="Armería | Registro de oficiales, suboficiales o soldados">
       <Container>
         <Stack sx={{ mb: 5 }}>
           <Typography variant="h4" gutterBottom>
-            Registro de cadetes, alumnos y soldados
+            Registro de oficiales, suboficiales o soldados
           </Typography>
         </Stack>
 

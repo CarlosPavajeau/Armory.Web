@@ -95,16 +95,16 @@ const sidebarConfig: SidebarConfigItem[] = [
     ],
   },
   {
-    title: 'Cadetes, alumnos y sodados',
+    title: 'Oficiales, suboficiales y soldados',
     icon: <PeopleIcon />,
     path: '/dashboard/troopers/',
     children: [
       {
-        title: 'Registrar cadete, alumno o soldado',
+        title: 'Registrar oficial, suboficial o soldado',
         path: '/dashboard/troopers/register',
       },
       {
-        title: 'Consultar cadetes, alumnos o soldado',
+        title: 'Consultar oficiales, suboficiales y soldados',
         path: '/dashboard/troopers/all',
       },
     ],

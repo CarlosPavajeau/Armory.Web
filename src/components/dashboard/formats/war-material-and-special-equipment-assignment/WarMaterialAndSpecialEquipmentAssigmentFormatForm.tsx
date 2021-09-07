@@ -329,10 +329,12 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
           </Stack>
 
           <FormControl fullWidth>
-            <InputLabel id="troopId-label">Cadete, soldado o alumno</InputLabel>
+            <InputLabel id="troopId-label">
+              Oficial, suboficial o soldado
+            </InputLabel>
             <Select
               labelId="troopId-label"
-              label="Cadete, soldado o alumno"
+              label="Oficial, suboficial o soldado"
               error={!!(errors.troopId && touched.troopId)}
               disabled={isSubmitting}
               defaultValue=""
@@ -342,7 +344,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
                 <MenuItem value="">
                   <CircularLoader
                     size={40}
-                    message="Cargando cadetes soldados y alumnos"
+                    message="Cargando oficiales, suboficiales o soldados"
                   />
                 </MenuItem>
               )}
@@ -366,7 +368,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
             <FormHelperText error={!!(errors.troopId && touched.troopId)}>
               {errors.troopId && touched.troopId
                 ? errors.troopId
-                : 'Seleccione una tropa'}
+                : 'Seleccione un oficial, suboficial o soldado'}
             </FormHelperText>
           </FormControl>
 
