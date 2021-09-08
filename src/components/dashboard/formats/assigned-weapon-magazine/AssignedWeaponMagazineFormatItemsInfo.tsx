@@ -45,8 +45,8 @@ const AssignedWeaponMagazineFormatItemsInfo = (
     { id: 'ammunitionQuantity', label: 'Cant. Munición', alignRight: false },
     { id: 'ammunitionLot', label: 'Lote Munición', alignRight: false },
     {
-      id: 'cartridgeOfLife',
-      label: 'Cartucho de securidad',
+      id: 'safetyCartridge',
+      label: 'Cartucho de seguridad',
       alignRight: false,
     },
     {
@@ -83,7 +83,7 @@ const AssignedWeaponMagazineFormatItemsInfo = (
                   const {
                     id,
                     troopId,
-                    cartridgeOfLife,
+                    safetyCartridge,
                     verifiedInPhysical,
                     novelty,
                     ammunitionQuantity,
@@ -95,7 +95,7 @@ const AssignedWeaponMagazineFormatItemsInfo = (
                       <TableCell>{troopId}</TableCell>
                       <TableCell>{ammunitionQuantity}</TableCell>
                       <TableCell>{ammunitionLot}</TableCell>
-                      <TableCell>{cartridgeOfLife ? 'SI' : 'NO'}</TableCell>
+                      <TableCell>{safetyCartridge ? 'SI' : 'NO'}</TableCell>
                       <TableCell>{verifiedInPhysical ? 'SI' : 'NO'}</TableCell>
                       <TableCell>{novelty ? 'SI' : 'NO'}</TableCell>
                       <TableCell>{observations}</TableCell>

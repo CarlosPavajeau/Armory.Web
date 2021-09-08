@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography';
 import AssignedWeaponMagazineFormatItemForm from 'components/dashboard/formats/assigned-weapon-magazine/AssignedWeaponMagazineFormatItemForm';
+import AssignedWeaponMagazineFormatWeaponInfo from 'components/dashboard/formats/assigned-weapon-magazine/AssignedWeaponMagazineFormatWeaponInfo';
 import { Weapon } from 'modules/armament/weapons/Models';
 import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
 import { forwardRef, ReactElement, Ref } from 'react';
@@ -63,7 +64,9 @@ const AddAssignedWeaponMagazineFormatItemDialog = (
         </Toolbar>
       </AppBar>
 
-      <Container sx={{ pt: 7 }}>
+      <Container sx={{ pt: 3, pb: 4 }}>
+        <AssignedWeaponMagazineFormatWeaponInfo weapon={weapon} />
+
         <AssignedWeaponMagazineFormatItemForm
           formatId={formatId}
           weapon={weapon}

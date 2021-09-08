@@ -31,7 +31,7 @@ const AssignedWeaponMagazineFormatItemForm = (
   const { formatId, weapon, onSuccess } = props;
 
   const RegisterAssignedWeaponMagazineFormatItemSchema = Yup.object().shape({
-    cartridgeOfLife: Yup.boolean().required(),
+    safetyCartridge: Yup.boolean().required(),
     verifiedInPhysical: Yup.boolean().required(),
     novelty: Yup.boolean().required(),
     ammunitionQuantity: Yup.number()
@@ -46,7 +46,7 @@ const AssignedWeaponMagazineFormatItemForm = (
       formatId,
       troopId: weapon?.ownerId || '',
       weaponCode: weapon?.code || '',
-      cartridgeOfLife: false,
+      safetyCartridge: false,
       verifiedInPhysical: false,
       novelty: false,
       ammunitionQuantity: 0,
@@ -83,8 +83,8 @@ const AssignedWeaponMagazineFormatItemForm = (
                   control={<Checkbox {...getFieldProps('novelty')} />}
                 />
                 <FormControlLabel
-                  label="Cartucho de la vida"
-                  control={<Checkbox {...getFieldProps('cartridgeOfLife')} />}
+                  label="Cartucho de seguridad"
+                  control={<Checkbox {...getFieldProps('safetyCartridge')} />}
                 />
                 <FormControlLabel
                   label="Verificado en físico"
