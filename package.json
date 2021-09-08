@@ -8,6 +8,7 @@
     "@date-io/moment": "2.x",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@iconify/react": "^3.0.1",
     "@mui/icons-material": "^5.0.0-rc.0",
     "@mui/lab": "^5.0.0-alpha.45",
     "@mui/material": "^5.0.0-rc.0",
@@ -77,6 +78,7 @@
     ]
   },
   "devDependencies": {
+    "@iconify/icons-mdi": "^1.1.27",
     "@types/enzyme-to-json": "^1.5.4",
     "@types/react-qr-reader": "^2.1.4",
     "@typescript-eslint/eslint-plugin": "^4.30.0",

@@ -1,8 +1,13 @@
+import ammunitionIcon from '@iconify/icons-mdi/ammunition';
+import bombIcon from '@iconify/icons-mdi/bomb';
+import flashlightIcon from '@iconify/icons-mdi/flashlight';
+import pistolIcon from '@iconify/icons-mdi/pistol';
+import { Icon, IconifyIcon } from '@iconify/react';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import PeopleIcon from '@mui/icons-material/People';
+import ShieldIcon from '@mui/icons-material/Shield';
 import { ReactElement } from 'react';
 
 export interface SidebarConfigItemChildren {
@@ -17,6 +22,10 @@ export interface SidebarConfigItem {
   info?: string;
   children?: SidebarConfigItemChildren[];
 }
+
+const getIcon = (name: IconifyIcon | string) => (
+  <Icon icon={name} width={22} height={22} />
+);
 
 const sidebarConfig: SidebarConfigItem[] = [
   {
@@ -82,7 +91,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   {
     title: 'Grados',
     path: '/dashboard/degrees/',
-    icon: <AddModeratorIcon />,
+    icon: <ShieldIcon />,
     children: [
       {
         title: 'Registrar grado',
@@ -111,7 +120,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Armas',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(pistolIcon),
     path: '/dashboard/weapons/',
     children: [
       {
@@ -126,7 +135,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Explosivos',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(bombIcon),
     path: '/dashboard/explosives/',
     children: [
       {
@@ -141,7 +150,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Equipo especial y accesorios',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(flashlightIcon),
     path: '/dashboard/equipments/',
     children: [
       {
@@ -156,7 +165,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Municiones',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(ammunitionIcon),
     path: '/dashboard/ammunition/',
     children: [
       {
