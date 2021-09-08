@@ -71,9 +71,10 @@ const ExplosiveAndQuantityForm = (
                 explosives &&
                 explosives.length > 0 &&
                 explosives.map(s => {
+                  const { code, type, caliber } = s;
                   return (
-                    <MenuItem value={s.code} key={s.code}>
-                      {s.code}
+                    <MenuItem value={code} key={code}>
+                      Código: {code}, Tipo: {type}, Calibre: {caliber}
                     </MenuItem>
                   );
                 })}
