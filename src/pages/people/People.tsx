@@ -93,7 +93,7 @@ const People = (): ReactElement => {
                       >
                         <CircularLoader
                           size={150}
-                          message="Cargando personas..."
+                          message="Cargando comandantes..."
                         />
                       </TableCell>
                     </TableRow>

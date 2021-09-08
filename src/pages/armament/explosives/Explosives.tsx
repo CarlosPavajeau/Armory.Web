@@ -96,7 +96,11 @@ const Explosives = (): ReactElement => {
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
-                      <TableCell>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
                         <CircularLoader
                           size={150}
                           message="Cargando explosivos"

@@ -99,7 +99,7 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
         >
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Version 1.0.0-beta.1
+              Version 1.0.0-beta.2
             </Typography>
           </Box>
         </Stack>
