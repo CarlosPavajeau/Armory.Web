@@ -56,9 +56,7 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
       squadronCode: Yup.string().required('Este campo es requerido'),
       squadCode: Yup.string().required('Este campo es requerido'),
       troopId: Yup.string().required('Este campo es requerido'),
-      weapons: Yup.array(Yup.string())
-        .required('Este campo es requerido')
-        .min(1, 'Se debe seleccionar al menos un arma'),
+      weapons: Yup.array(Yup.string()).required('Este campo es requerido'),
       ammunition: Yup.array()
         .of(
           Yup.object().shape({
