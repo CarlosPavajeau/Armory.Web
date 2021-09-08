@@ -1,7 +1,7 @@
-import Typography from '@mui/material/Typography';
 import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import DashboardLayout from 'components/layouts/dashboard';
+import DashboardHome from 'components/layouts/dashboard/DashboardHome';
 import { clearErrors } from 'modules/application/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
@@ -57,7 +57,7 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
       children: [
         {
           path: '',
-          element: <Typography variant="h4">Bienvenido</Typography>,
+          element: <DashboardHome />,
         },
         {
           path: 'people',
