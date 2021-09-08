@@ -2,10 +2,9 @@ import { LoadingButton } from '@mui/lab';
 import AdapterMoment from '@mui/lab/AdapterMoment';
 import DatePicker from '@mui/lab/DatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText, OutlinedInput } from '@mui/material';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -362,14 +361,13 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
             <InputLabel id="weapons-label">Armas</InputLabel>
             <Select
               labelId="weapons-label"
-              label="Armas"
-              multiple
               renderValue={selected => (selected as string[]).join(', ')}
-              input={<Input />}
+              input={<OutlinedInput label="Armas" />}
               error={!!(errors.weapons && touched.weapons)}
               {...getFieldProps('weapons')}
               onChange={handleSelectWeapon}
               disabled={isSubmitting}
+              multiple
               fullWidth
             >
               {weaponsUiStatus === 'loading' && (
@@ -383,10 +381,12 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
               {weaponsUiStatus === 'loaded' &&
                 weapons &&
                 weapons.length > 0 &&
-                weapons.map(s => {
+                weapons.map(weapon => {
+                  const { code, type, model, caliber } = weapon;
                   return (
-                    <MenuItem value={s.code} key={s.code}>
-                      {s.code}
+                    <MenuItem value={code} key={code}>
+                      Código: {code}, Tipo: {type}, Modelo: {model}, Calibre:{' '}
+                      {caliber}
                     </MenuItem>
                   );
                 })}
