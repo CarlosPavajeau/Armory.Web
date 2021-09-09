@@ -1,4 +1,5 @@
 import { LoadingButton } from '@mui/lab';
+import { Collapse } from '@mui/material';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
@@ -94,43 +95,54 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
           formatUiStatus={formatUiStatus}
         />
 
-        <QrReaderDialog open={openQrDialog} onClose={handleCloseQrDialog} />
-        <AddAssignedWeaponMagazineFormatItemDialog
-          open={openItemDialog}
-          formatId={formatId}
-          weapon={weapon}
-          onClose={handleCloseFormatItemDialog}
-        />
-
         <ApiErrors />
 
-        <Divider sx={{ mb: 3, mt: 2 }} />
+        <Collapse in={!!format} timeout={500} unmountOnExit>
+          {format && (
+            <>
+              <QrReaderDialog
+                open={openQrDialog}
+                onClose={handleCloseQrDialog}
+              />
+              <AddAssignedWeaponMagazineFormatItemDialog
+                open={openItemDialog}
+                formatId={formatId}
+                weapon={weapon}
+                onClose={handleCloseFormatItemDialog}
+              />
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <LoadingButton
-            variant="contained"
-            onClick={handleClickOnOpenQrDialog}
-            loading={weaponUiStatus === 'loading'}
-            disabled={formatUiStatus === 'generating'}
-            fullWidth
-          >
-            Escanear código QR
-          </LoadingButton>
-          <LoadingButton
-            variant="outlined"
-            onClick={handleClickOnGenerateFormat}
-            loading={formatUiStatus === 'generating'}
-            disabled={weaponUiStatus === 'loading'}
-            fullWidth
-          >
-            Generar formato
-          </LoadingButton>
-        </Stack>
+              <Divider sx={{ mb: 3, mt: 2 }} />
 
-        <Divider sx={{ mb: 3, mt: 3 }} />
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <LoadingButton
+                  variant="contained"
+                  onClick={handleClickOnOpenQrDialog}
+                  loading={weaponUiStatus === 'loading'}
+                  disabled={formatUiStatus === 'generating'}
+                  fullWidth
+                >
+                  Escanear código QR
+                </LoadingButton>
+                <LoadingButton
+                  variant="outlined"
+                  onClick={handleClickOnGenerateFormat}
+                  loading={formatUiStatus === 'generating'}
+                  disabled={weaponUiStatus === 'loading'}
+                  fullWidth
+                >
+                  Generar formato
+                </LoadingButton>
+              </Stack>
 
-        <Typography variant="h4">Registros agregados</Typography>
-        <AssignedWeaponMagazineFormatItemsInfo records={format?.records} />
+              <Divider sx={{ mb: 3, mt: 3 }} />
+
+              <Typography variant="h4">Registros agregados</Typography>
+              <AssignedWeaponMagazineFormatItemsInfo
+                records={format?.records}
+              />
+            </>
+          )}
+        </Collapse>
       </Container>
     </Page>
   );

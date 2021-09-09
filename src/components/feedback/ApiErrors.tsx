@@ -8,7 +8,11 @@ const ApiErrors = (): ReactElement => {
   const apiErrors = useAppSelector(selectApiErrors);
 
   return (
-    <Collapse in={apiErrors && apiErrors.length > 0}>
+    <Collapse
+      in={apiErrors && apiErrors.length > 0}
+      timeout="auto"
+      unmountOnExit
+    >
       {apiErrors.map(error => {
         return (
           <Alert severity="error" sx={{ marginY: 3 }}>
