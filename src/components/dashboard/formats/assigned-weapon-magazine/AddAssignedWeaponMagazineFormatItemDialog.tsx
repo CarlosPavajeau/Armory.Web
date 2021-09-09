@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Dialog, Slide, Tooltip } from '@mui/material';
+import { Alert, AlertTitle, Dialog, Slide, Tooltip } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
@@ -65,13 +65,23 @@ const AddAssignedWeaponMagazineFormatItemDialog = (
       </AppBar>
 
       <Container sx={{ pt: 3, pb: 4 }}>
-        <AssignedWeaponMagazineFormatWeaponInfo weapon={weapon} />
+        {weapon && weapon.ownerId && (
+          <>
+            <AssignedWeaponMagazineFormatWeaponInfo weapon={weapon} />
 
-        <AssignedWeaponMagazineFormatItemForm
-          formatId={formatId}
-          weapon={weapon}
-          onSuccess={onClose}
-        />
+            <AssignedWeaponMagazineFormatItemForm
+              formatId={formatId}
+              weapon={weapon}
+              onSuccess={onClose}
+            />
+          </>
+        )}
+        {weapon && !weapon.ownerId && (
+          <Alert severity="warning" sx={{ marginY: 3 }}>
+            <AlertTitle>Arma no asignada</AlertTitle>
+            El arma no está asignada ningún oficial, suboficial o soldado.
+          </Alert>
+        )}
       </Container>
     </Dialog>
   );
