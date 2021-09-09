@@ -21,10 +21,19 @@ import {
   generatingAssignedWeaponMagazineFormat,
 } from 'modules/formats/assigned-weapon-magazine/Slice';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
   const query = useQuery();
   const queryId = query.get('formatId');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!queryId) {
+      navigate('/dashboard');
+    }
+  }, [navigate, queryId]);
+
   const formatId = useMemo(() => {
     if (queryId) {
       return +queryId;
