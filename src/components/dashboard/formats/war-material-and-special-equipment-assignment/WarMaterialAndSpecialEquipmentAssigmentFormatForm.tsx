@@ -401,7 +401,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
                 defaultValue={Purpose.Instruction}
                 {...getFieldProps('purpose')}
               >
-                <MenuItem value={Purpose.Instruction}>Intrucción</MenuItem>
+                <MenuItem value={Purpose.Instruction}>Instrucción</MenuItem>
                 <MenuItem value={Purpose.Operations}>Operaciones</MenuItem>
                 <MenuItem value={Purpose.Verification}>Comprobación</MenuItem>
               </Select>
