@@ -312,12 +312,10 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
           </Stack>
 
           <FormControl fullWidth>
-            <InputLabel id="troopId-label">
-              Oficial, suboficial o soldado
-            </InputLabel>
+            <InputLabel id="troopId-label">Aplicante</InputLabel>
             <Select
               labelId="troopId-label"
-              label="Oficial, suboficial o soldado"
+              label="Aplicante"
               error={!!(errors.troopId && touched.troopId)}
               disabled={isSubmitting}
               defaultValue=""
@@ -351,7 +349,7 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
             <FormHelperText error={!!(errors.troopId && touched.troopId)}>
               {errors.troopId && touched.troopId
                 ? errors.troopId
-                : 'Seleccione un oficial, suboficial o soldado'}
+                : 'Seleccione un aplicante'}
             </FormHelperText>
           </FormControl>
 
