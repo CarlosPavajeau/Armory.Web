@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const SquadForm = (): ReactElement => {
-  const [people, peopleUiStatus] = usePeopleByRole('SquadronLeader');
+  const [people, peopleUiStatus] = usePeopleByRole('SquadLeader');
   const [squadrons, squadronsUiStatus] = useSquadrons();
 
   const RegisterSquadScheme = Yup.object().shape({
