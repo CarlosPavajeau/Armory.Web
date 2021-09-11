@@ -252,10 +252,10 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <FormControl fullWidth>
-              <InputLabel id="squadronCode-label">Escuadrilla</InputLabel>
+              <InputLabel id="squadronCode-label">Unidad</InputLabel>
               <Select
                 labelId="squadronCode-label"
-                label="Escuadrilla"
+                label="Unidad"
                 error={!!(errors.squadronCode && touched.squadronCode)}
                 disabled={isSubmitting}
                 defaultValue=""
@@ -285,14 +285,14 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
               >
                 {errors.squadronCode && touched.squadronCode
                   ? errors.squadronCode
-                  : 'Seleccione una escuadrilla'}
+                  : 'Seleccione una unidad'}
               </FormHelperText>
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel id="squadCode-label">Escuadra</InputLabel>
+              <InputLabel id="squadCode-label">Dependencia</InputLabel>
               <Select
                 labelId="squadCode-label"
-                label="Escuadra"
+                label="Dependencia"
                 error={!!(errors.squadCode && touched.squadCode)}
                 disabled={isSubmitting}
                 defaultValue=""
@@ -322,7 +322,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
               <FormHelperText error={!!(errors.squadCode && touched.squadCode)}>
                 {errors.squadCode && touched.squadCode
                   ? errors.squadCode
-                  : 'Seleccione una escuadra'}
+                  : 'Seleccione una dependencia'}
               </FormHelperText>
             </FormControl>
           </Stack>
