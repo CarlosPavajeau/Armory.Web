@@ -312,10 +312,10 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
           </Stack>
 
           <FormControl fullWidth>
-            <InputLabel id="troopId-label">Aplicante</InputLabel>
+            <InputLabel id="troopId-label">Solicitante</InputLabel>
             <Select
               labelId="troopId-label"
-              label="Aplicante"
+              label="Solicitante"
               error={!!(errors.troopId && touched.troopId)}
               disabled={isSubmitting}
               defaultValue=""
