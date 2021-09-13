@@ -10,6 +10,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectSquadField from 'components/forms/SelectSquadField';
+import SelectSquadronField from 'components/forms/SelectSquadronField';
+import SelectTroopField from 'components/forms/SelectTroopField';
 import CircularLoader from 'components/loading/CircularLoader';
 import Fallback from 'components/routes/Fallback';
 import Consola from 'consola';
@@ -28,9 +31,6 @@ import {
   EquipmentAndQuantity,
   ExplosiveAndQuantity,
 } from 'modules/formats/war-material-delivery-certificate/Models';
-import { useSquadrons } from 'modules/squadrons/hooks';
-import { useSquadsBySquadron } from 'modules/squads/hooks';
-import { useTroopersBySquad } from 'modules/troopers/hooks';
 import moment from 'moment';
 import { lazy, ReactElement, Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +49,6 @@ const ExplosiveAndQuantityDialog = lazy(
 );
 
 const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
-  const [squadrons, squadronsUiStatus] = useSquadrons();
   const [weapons, weaponsUiStatus] = useWeapons();
 
   const RegisterWarMaterialAndSpecialEquipmentAssigmentFormatSchema =
@@ -131,9 +130,6 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
     formik;
-
-  const [squads, squadsUiStatus] = useSquadsBySquadron(values.squadronCode);
-  const [troopers, troopersUiStatus] = useTroopersBySquad(values.squadCode);
 
   const handleSelectWeapon = (
     event: SelectChangeEvent<typeof values.weapons>,
@@ -251,123 +247,22 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
           />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <FormControl fullWidth>
-              <InputLabel id="squadronCode-label">Unidad</InputLabel>
-              <Select
-                labelId="squadronCode-label"
-                label="Unidad"
-                error={!!(errors.squadronCode && touched.squadronCode)}
-                disabled={isSubmitting}
-                defaultValue=""
-                {...getFieldProps('squadronCode')}
-              >
-                {squadronsUiStatus === 'loading' && (
-                  <MenuItem value="">
-                    <CircularLoader size={40} message="Cargando escuadrillas" />
-                  </MenuItem>
-                )}
-                {squadronsUiStatus === 'apiError' && (
-                  <MenuItem value="">No hay datos</MenuItem>
-                )}
-                {squadronsUiStatus === 'loaded' &&
-                  squadrons &&
-                  squadrons.length > 0 &&
-                  squadrons.map(s => {
-                    return (
-                      <MenuItem value={s.code} key={s.code}>
-                        {s.name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText
-                error={!!(errors.squadronCode && touched.squadronCode)}
-              >
-                {errors.squadronCode && touched.squadronCode
-                  ? errors.squadronCode
-                  : 'Seleccione una unidad'}
-              </FormHelperText>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel id="squadCode-label">Dependencia</InputLabel>
-              <Select
-                labelId="squadCode-label"
-                label="Dependencia"
-                error={!!(errors.squadCode && touched.squadCode)}
-                disabled={isSubmitting}
-                defaultValue=""
-                {...getFieldProps('squadCode')}
-              >
-                {squadsUiStatus === 'loading' && (
-                  <MenuItem value="">
-                    <CircularLoader size={40} message="Cargando escuadras" />
-                  </MenuItem>
-                )}
-                {squadsUiStatus === 'apiError' && (
-                  <MenuItem value="">No hay datos</MenuItem>
-                )}
-                {squadsUiStatus === 'loaded' &&
-                  squads &&
-                  squads.map(s => {
-                    return (
-                      <MenuItem value={s.code} key={s.code}>
-                        {s.name}
-                      </MenuItem>
-                    );
-                  })}
-                {squads && squads.length === 0 && (
-                  <MenuItem value="">No hay datos</MenuItem>
-                )}
-              </Select>
-              <FormHelperText error={!!(errors.squadCode && touched.squadCode)}>
-                {errors.squadCode && touched.squadCode
-                  ? errors.squadCode
-                  : 'Seleccione una dependencia'}
-              </FormHelperText>
-            </FormControl>
+            <SelectSquadronField
+              disabled={isSubmitting}
+              {...getFieldProps('squadronCode')}
+            />
+            <SelectSquadField
+              squadronCode={values.squadronCode}
+              disabled={isSubmitting}
+              {...getFieldProps('squadCode')}
+            />
           </Stack>
 
-          <FormControl fullWidth>
-            <InputLabel id="troopId-label">Solicitante</InputLabel>
-            <Select
-              labelId="troopId-label"
-              label="Solicitante"
-              error={!!(errors.troopId && touched.troopId)}
-              disabled={isSubmitting}
-              defaultValue=""
-              {...getFieldProps('troopId')}
-            >
-              {troopersUiStatus === 'loading' && (
-                <MenuItem value="">
-                  <CircularLoader
-                    size={40}
-                    message="Cargando oficiales, suboficiales o soldados"
-                  />
-                </MenuItem>
-              )}
-              {troopersUiStatus === 'apiError' && (
-                <MenuItem value="">No hay datos</MenuItem>
-              )}
-              {troopersUiStatus === 'loaded' &&
-                troopers &&
-                troopers.map(s => {
-                  return (
-                    <MenuItem value={s.id} key={s.id}>
-                      {s.id} - {s.firstName} {s.secondName} {s.lastName}{' '}
-                      {s.secondLastName}
-                    </MenuItem>
-                  );
-                })}
-              {troopers && troopers.length === 0 && (
-                <MenuItem value="">No hay datos</MenuItem>
-              )}
-            </Select>
-            <FormHelperText error={!!(errors.troopId && touched.troopId)}>
-              {errors.troopId && touched.troopId
-                ? errors.troopId
-                : 'Seleccione un aplicante'}
-            </FormHelperText>
-          </FormControl>
+          <SelectTroopField
+            squadCode={values.squadCode}
+            disabled={isSubmitting}
+            {...getFieldProps('troopId')}
+          />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <FormControl fullWidth>
