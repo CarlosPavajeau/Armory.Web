@@ -2,7 +2,7 @@ import { LoadingButton } from '@mui/lab';
 import AdapterMoment from '@mui/lab/AdapterMoment';
 import DatePicker from '@mui/lab/DatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { FormHelperText, OutlinedInput, TextField } from '@mui/material';
+import { FormHelperText, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -13,12 +13,11 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import SelectSquadField from 'components/forms/SelectSquadField';
 import SelectSquadronField from 'components/forms/SelectSquadronField';
 import SelectTroopField from 'components/forms/SelectTroopField';
-import CircularLoader from 'components/loading/CircularLoader';
+import SelectWeaponsField from 'components/forms/SelectWeaponsField';
 import Fallback from 'components/routes/Fallback';
 import Consola from 'consola';
 import FileSaver from 'file-saver';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useWeapons } from 'modules/armament/weapons/hooks';
 import {
   CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest,
   DocMovement,
@@ -49,8 +48,6 @@ const ExplosiveAndQuantityDialog = lazy(
 );
 
 const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
-  const [weapons, weaponsUiStatus] = useWeapons();
-
   const RegisterWarMaterialAndSpecialEquipmentAssigmentFormatSchema =
     Yup.object().shape({
       code: Yup.string().required('Este campo es requerido'),
@@ -352,49 +349,11 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
             fullWidth
           />
 
-          <FormControl fullWidth>
-            <InputLabel id="weapons-label">Armas</InputLabel>
-            <Select
-              labelId="weapons-label"
-              renderValue={selected => (selected as string[]).join(', ')}
-              input={<OutlinedInput label="Armas" />}
-              error={!!(errors.weapons && touched.weapons)}
-              {...getFieldProps('weapons')}
-              onChange={handleSelectWeapon}
-              disabled={isSubmitting}
-              multiple
-              fullWidth
-            >
-              {weaponsUiStatus === 'loading' && (
-                <MenuItem value="">
-                  <CircularLoader size={40} message="Cargando armas" />
-                </MenuItem>
-              )}
-              {weaponsUiStatus === 'apiError' && (
-                <MenuItem value="">No hay datos</MenuItem>
-              )}
-              {weaponsUiStatus === 'loaded' &&
-                weapons &&
-                weapons.length > 0 &&
-                weapons.map(weapon => {
-                  const { code, type, model, caliber } = weapon;
-                  return (
-                    <MenuItem value={code} key={code}>
-                      Código: {code}, Tipo: {type}, Modelo: {model}, Calibre:{' '}
-                      {caliber}
-                    </MenuItem>
-                  );
-                })}
-              {weapons && weapons.length === 0 && (
-                <MenuItem value="">No hay datos</MenuItem>
-              )}
-            </Select>
-            <FormHelperText error={!!(errors.weapons && touched.weapons)}>
-              {errors.weapons && touched.weapons
-                ? errors.weapons
-                : 'Seleccione una(s) arma'}
-            </FormHelperText>
-          </FormControl>
+          <SelectWeaponsField
+            handleSelect={handleSelectWeapon}
+            disabled={isSubmitting}
+            {...getFieldProps('weapons')}
+          />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <Button
