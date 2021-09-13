@@ -48,6 +48,7 @@ const Weapons = (): ReactElement => {
 
   const HEAD: HeadLabel[] = [
     { id: 'code', label: 'Código', alignRight: false },
+    { id: 'series', label: 'Serial', alignRight: false },
     { id: 'type', label: 'Tipo', alignRight: false },
     { id: 'mark', label: 'Marca', alignRight: false },
     { id: 'model', label: 'Modelo', alignRight: false },
@@ -121,10 +122,12 @@ const Weapons = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     weapons.length > 0 &&
                     weapons.map(weapon => {
-                      const { code, type, mark, model, caliber } = weapon;
+                      const { code, series, type, mark, model, caliber } =
+                        weapon;
                       return (
                         <TableRow key={code} tabIndex={-1} hover>
                           <TableCell>{code}</TableCell>
+                          <TableCell>{series}</TableCell>
                           <TableCell>{type}</TableCell>
                           <TableCell>{mark}</TableCell>
                           <TableCell>{model}</TableCell>
