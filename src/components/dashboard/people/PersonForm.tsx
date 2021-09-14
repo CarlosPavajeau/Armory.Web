@@ -7,6 +7,8 @@ import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectDegreeField from 'components/forms/SelectDegreeField';
+import SelectRankField from 'components/forms/SelectRankField';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -17,6 +19,10 @@ import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import translateRole from 'utils/translateRole';
 import * as Yup from 'yup';
+
+interface PersonFormValues extends CreatePersonRequest {
+  rankId: number;
+}
 
 const PersonForm = (): ReactElement => {
   const [roles, userUiStatus] = useRoles();
@@ -37,10 +43,16 @@ const PersonForm = (): ReactElement => {
       .min(10, 'Se deben digitar mínimo 10 caracteres')
       .max(10, 'No se permiten más de 10 caracteres'),
     roleName: Yup.string().required('Este campo es requerido'),
+    degreeId: Yup.number()
+      .required('Este campo es requerido')
+      .min(1, 'Este campo es requerido'),
+    rankId: Yup.number()
+      .required('Este campo es requerido')
+      .min(1, 'Este campo es requerido'),
   });
 
   const navigate = useNavigate();
-  const formik = useFormik<CreatePersonRequest>({
+  const formik = useFormik<PersonFormValues>({
     initialValues: {
       id: '',
       firstName: '',
@@ -50,6 +62,8 @@ const PersonForm = (): ReactElement => {
       email: '',
       phoneNumber: '',
       roleName: '',
+      degreeId: 0,
+      rankId: 0,
     },
     validationSchema: RegisterPersonScheme,
     onSubmit: async values => {
@@ -62,7 +76,8 @@ const PersonForm = (): ReactElement => {
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
+    formik;
 
   return (
     <FormikProvider value={formik}>
@@ -201,6 +216,18 @@ const PersonForm = (): ReactElement => {
                 : 'Seleccione el rol del comandante'}
             </FormHelperText>
           </FormControl>
+
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <SelectRankField
+              disabled={isSubmitting}
+              {...getFieldProps('rankId')}
+            />
+            <SelectDegreeField
+              rankId={values.rankId}
+              disabled={isSubmitting}
+              {...getFieldProps('degreeId')}
+            />
+          </Stack>
 
           <ApiErrors />
 

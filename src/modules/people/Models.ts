@@ -7,6 +7,7 @@ export interface CreatePersonRequest {
   email: string;
   phoneNumber: string;
   roleName: string;
+  degreeId: number;
 }
 
 export interface Person {
