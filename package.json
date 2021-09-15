@@ -31,7 +31,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.8",
-    "axios": "^0.21.3",
+    "axios": "^0.21.4",
     "change-case": "^4.1.2",
     "clsx": "^1.1.1",
     "consola": "^2.15.3",
@@ -45,8 +45,8 @@
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^1.1.2",
     "react-qr-reader": "^2.2.1",
-    "react-redux": "^7.2.0",
-    "react-router": "^5.2.0",
+    "react-redux": "^7.2.5",
+    "react-router": "^5.2.1",
     "react-router-dom": "6.0.0-beta.2",
     "react-scripts": "^4.0.3",
     "rxjs": "^7.3.0",
@@ -94,9 +94,9 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.4.0"
   }
 }
