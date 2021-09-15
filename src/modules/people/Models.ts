@@ -6,7 +6,6 @@ export interface CreatePersonRequest {
   secondLastName: string;
   email: string;
   phoneNumber: string;
-  roleName: string;
   degreeId: number;
 }
 

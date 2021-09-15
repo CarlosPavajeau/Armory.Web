@@ -1,23 +1,15 @@
 import { LoadingButton } from '@mui/lab';
-import { FormHelperText } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectDegreeField from 'components/forms/SelectDegreeField';
 import SelectRankField from 'components/forms/SelectRankField';
-import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreatePersonRequest } from 'modules/people/Models';
 import { createPerson } from 'modules/people/Service';
-import { useRoles } from 'modules/users/hooks';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
-import translateRole from 'utils/translateRole';
 import * as Yup from 'yup';
 
 interface PersonFormValues extends CreatePersonRequest {
@@ -25,8 +17,6 @@ interface PersonFormValues extends CreatePersonRequest {
 }
 
 const PersonForm = (): ReactElement => {
-  const [roles, userUiStatus] = useRoles();
-
   const RegisterPersonScheme = Yup.object().shape({
     id: Yup.string()
       .required('Este campo es requerido')
@@ -42,7 +32,6 @@ const PersonForm = (): ReactElement => {
       .required('Este campo es requerido')
       .min(10, 'Se deben digitar mínimo 10 caracteres')
       .max(10, 'No se permiten más de 10 caracteres'),
-    roleName: Yup.string().required('Este campo es requerido'),
     degreeId: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Este campo es requerido'),
@@ -61,7 +50,6 @@ const PersonForm = (): ReactElement => {
       secondLastName: '',
       email: '',
       phoneNumber: '',
-      roleName: '',
       degreeId: 0,
       rankId: 0,
     },
@@ -183,39 +171,6 @@ const PersonForm = (): ReactElement => {
               fullWidth
             />
           </Stack>
-          <FormControl fullWidth>
-            <InputLabel id="role-label">Rol del comandante</InputLabel>
-            <Select
-              labelId="role-label"
-              label="Rol del comandante"
-              defaultValue=""
-              {...getFieldProps('roleName')}
-              fullWidth
-            >
-              {userUiStatus === 'loading' && (
-                <MenuItem value="">
-                  <CircularLoader size={40} message="Cargando roles..." />
-                </MenuItem>
-              )}
-              {userUiStatus === 'loaded' &&
-                roles &&
-                roles.length > 0 &&
-                roles
-                  .filter(r => r.name !== 'Developer')
-                  .map(r => {
-                    return (
-                      <MenuItem value={r.name} key={r.name}>
-                        {translateRole(r.name)}
-                      </MenuItem>
-                    );
-                  })}
-            </Select>
-            <FormHelperText error={!!(errors.roleName && touched.roleName)}>
-              {errors.roleName && touched.roleName
-                ? errors.roleName
-                : 'Seleccione el rol del comandante'}
-            </FormHelperText>
-          </FormControl>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <SelectRankField
