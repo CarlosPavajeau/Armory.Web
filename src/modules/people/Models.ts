@@ -10,6 +10,11 @@ export interface CreatePersonRequest {
   degreeId: number;
 }
 
+export interface UpdatePersonDegreeRequest {
+  id: string;
+  degreeId: number;
+}
+
 export interface Person {
   id: string;
   firstName: string;

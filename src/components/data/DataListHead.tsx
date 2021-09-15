@@ -7,8 +7,8 @@ import { MouseEvent, ReactElement } from 'react';
 
 export interface HeadLabel {
   id: string;
-  label: string;
-  alignRight: boolean;
+  label?: string;
+  alignRight?: boolean;
 }
 
 interface PeopleListHeadProps {

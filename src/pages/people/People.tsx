@@ -8,6 +8,8 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import ChangePersonDegreeDialog from 'components/dashboard/people/ChangePersonDegreeDialog';
+import PersonMoreMenu from 'components/dashboard/people/PersonMoreMenu';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
@@ -45,11 +47,30 @@ const People = (): ReactElement => {
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'rankName', label: 'Cargo de operaciones', alignRight: false },
     { id: 'degreeName', label: 'Grado', alignRight: false },
+    { id: '' },
   ];
+
+  const [isOpenChangePersonDegree, setIsOpenChangePersonDegree] =
+    useState(false);
+  const [currentPersonId, setCurrentPersonId] = useState('');
+
+  const handleOnCloseChangePersonDegree = () => {
+    setIsOpenChangePersonDegree(false);
+  };
+
+  const handleChangePersonDegreeClick = (personId: string) => {
+    setCurrentPersonId(personId);
+    setIsOpenChangePersonDegree(true);
+  };
 
   return (
     <Page title="Armería | Comandantes">
       <Container>
+        <ChangePersonDegreeDialog
+          open={isOpenChangePersonDegree}
+          personId={currentPersonId}
+          onClose={handleOnCloseChangePersonDegree}
+        />
         <Stack
           direction="row"
           alignItems="center"
@@ -120,6 +141,15 @@ const People = (): ReactElement => {
                           </TableCell>
                           <TableCell>{rankName}</TableCell>
                           <TableCell>{degreeName}</TableCell>
+
+                          <TableCell align="right">
+                            <PersonMoreMenu
+                              personId={id}
+                              onChangePersonDegreeClick={
+                                handleChangePersonDegreeClick
+                              }
+                            />
+                          </TableCell>
                         </TableRow>
                       );
                     })}
