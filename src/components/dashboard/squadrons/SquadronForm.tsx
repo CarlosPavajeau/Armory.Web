@@ -9,7 +9,7 @@ import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { usePeopleByRole } from 'modules/people/hooks';
+import { usePeopleByRank } from 'modules/people/hooks';
 import { CreateSquadronRequest } from 'modules/squadrons/Models';
 import { createSquadron } from 'modules/squadrons/Service';
 import { apiError, registeredCorrectly } from 'modules/squadrons/Slice';
@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 
 const SquadronForm = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [people, peopleUiState] = usePeopleByRole('SquadronLeader');
+  const [people, peopleUiState] = usePeopleByRank('Comandante de Escuadrilla');
   const navigate = useNavigate();
 
   const RegisterSquadronScheme = Yup.object().shape({

@@ -10,7 +10,7 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { usePeopleByRole } from 'modules/people/hooks';
+import { usePeopleByRank } from 'modules/people/hooks';
 import { useSquadrons } from 'modules/squadrons/hooks';
 import { CreateSquadRequest } from 'modules/squads/Models';
 import { createSquad } from 'modules/squads/Service';
@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const SquadForm = (): ReactElement => {
-  const [people, peopleUiStatus] = usePeopleByRole('SquadLeader');
+  const [people, peopleUiStatus] = usePeopleByRank('Comandante de Escuadra');
   const [squadrons, squadronsUiStatus] = useSquadrons();
 
   const RegisterSquadScheme = Yup.object().shape({

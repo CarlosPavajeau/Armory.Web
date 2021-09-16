@@ -3,7 +3,7 @@ import { UiStatus } from 'common/types';
 import { useEffect } from 'react';
 
 import { People } from './Models';
-import { getPeople, getPeopleByRole } from './Service';
+import { getPeople, getPeopleByRank, getPeopleByRole } from './Service';
 import {
   apiError,
   apiError as peopleApiError,
@@ -29,6 +29,26 @@ export const usePeopleByRole = (role: string): [People, UiStatus] => {
       }
     })();
   }, [dispatch, role]);
+
+  return [people, peopleUiStatus];
+};
+
+export const usePeopleByRank = (rankName: string): [People, UiStatus] => {
+  const dispatch = useAppDispatch();
+  const people = useAppSelector(selectPeople);
+  const peopleUiStatus = useAppSelector(selectUiStatus);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        dispatch(loadingPeople());
+        const result = await getPeopleByRank(rankName);
+        dispatch(loadPeople(result));
+      } catch (err: unknown) {
+        dispatch(peopleApiError((err as Error).message));
+      }
+    })();
+  }, [dispatch, rankName]);
 
   return [people, peopleUiStatus];
 };

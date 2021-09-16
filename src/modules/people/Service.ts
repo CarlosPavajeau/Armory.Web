@@ -43,6 +43,15 @@ export const getPeopleByRole = async (role: string): Promise<People> => {
   throw new Error('No se pudieron obtener las personas.');
 };
 
+export const getPeopleByRank = async (rankName: string): Promise<People> => {
+  const response = await HttpClient.get<People>(`/People/ByRank/${rankName}`);
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener las personas.');
+};
+
 export const getPersonByUserId = async (userId: string): Promise<Person> => {
   const response = await HttpClient.get<Person>(`/People/ByUserId/${userId}`);
   if (IsValidResponse(response)) {
