@@ -1,4 +1,5 @@
 import { CssBaseline } from '@mui/material';
+import { esES } from '@mui/material/locale';
 import {
   Components,
   createTheme,
@@ -38,9 +39,11 @@ export default function ThemeConfig({
     [],
   );
 
-  const theme = createTheme(themeOptions);
-
-  theme.components = componentsOverride(theme) as Components;
+  const theme = createTheme(themeOptions, esES);
+  theme.components = {
+    ...theme.components,
+    ...(componentsOverride(theme) as Components),
+  };
 
   return (
     <StyledEngineProvider injectFirst>

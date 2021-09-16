@@ -1,11 +1,11 @@
+import { ConfigureGlobalError } from 'common/config/http';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import Storage from 'common/plugins/Storage';
+import { selectIsAuth, selectPayload } from 'modules/auth/Slice';
+import { getPersonByUserId } from 'modules/people/Service';
+import { setCurrentPerson } from 'modules/people/Slice';
 import { ReactElement, useEffect } from 'react';
 
-import { ConfigureGlobalError } from './common/config/http';
-import { useAppDispatch, useAppSelector } from './common/hooks';
-import Storage from './common/plugins/Storage';
-import { selectIsAuth, selectPayload } from './modules/auth/Slice';
-import { getPersonByUserId } from './modules/people/Service';
-import { setCurrentPerson } from './modules/people/Slice';
 import Router from './routes';
 import ThemeConfig from './shared/theme';
 
