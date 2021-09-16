@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card, TableCell } from '@mui/material';
+import { Card, TableCell, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -10,30 +10,44 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import ChangePersonDegreeDialog from 'components/dashboard/people/ChangePersonDegreeDialog';
 import PersonMoreMenu from 'components/dashboard/people/PersonMoreMenu';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { filter } from 'lodash';
 import { usePeople } from 'modules/people/hooks';
+import { Person } from 'modules/people/Models';
 import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const People = (): ReactElement => {
   const [people, peopleUiStatus] = usePeople();
-
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
 
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
+  const filteredPeople = filter(people, (person: Person) => {
+    const { firstName, secondName, lastName, secondLastName } = person;
+    const fullName = `${firstName} ${secondName} ${lastName} ${secondLastName}`;
+    return fullName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+  });
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const handleFilterByName = (
@@ -100,12 +114,7 @@ const People = (): ReactElement => {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {peopleUiStatus === 'loading' && (
                     <TableRow>
@@ -122,37 +131,43 @@ const People = (): ReactElement => {
                     </TableRow>
                   )}
                   {peopleUiStatus === 'loaded' &&
-                    people.length > 0 &&
-                    people.map(person => {
-                      const {
-                        id,
-                        firstName,
-                        secondName,
-                        lastName,
-                        secondLastName,
-                        rankName,
-                        degreeName,
-                      } = person;
-                      return (
-                        <TableRow key={id} tabIndex={-1} hover>
-                          <TableCell>{id}</TableCell>
-                          <TableCell>
-                            {firstName} {secondName} {lastName} {secondLastName}
-                          </TableCell>
-                          <TableCell>{rankName}</TableCell>
-                          <TableCell>{degreeName}</TableCell>
+                    filteredPeople.length > 0 &&
+                    filteredPeople
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(person => {
+                        const {
+                          id,
+                          firstName,
+                          secondName,
+                          lastName,
+                          secondLastName,
+                          rankName,
+                          degreeName,
+                        } = person;
+                        return (
+                          <TableRow key={id} tabIndex={-1} hover>
+                            <TableCell>{id}</TableCell>
+                            <TableCell>
+                              {firstName} {secondName} {lastName}{' '}
+                              {secondLastName}
+                            </TableCell>
+                            <TableCell>{rankName}</TableCell>
+                            <TableCell>{degreeName}</TableCell>
 
-                          <TableCell align="right">
-                            <PersonMoreMenu
-                              personId={id}
-                              onChangePersonDegreeClick={
-                                handleChangePersonDegreeClick
-                              }
-                            />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                            <TableCell align="right">
+                              <PersonMoreMenu
+                                personId={id}
+                                onChangePersonDegreeClick={
+                                  handleChangePersonDegreeClick
+                                }
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -167,6 +182,16 @@ const People = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredPeople.length}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>
