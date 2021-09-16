@@ -5,38 +5,17 @@ import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { getDegreesByRank } from 'modules/degrees/Service';
-import {
-  apiError as degreesApiError,
-  loadDegrees,
-  loadingDegrees,
-  selectDegrees,
-  selectUiStatus as selectDegreesUiStatus,
-} from 'modules/degrees/Slice';
-import { getRanks } from 'modules/ranks/Service';
-import {
-  apiError as ranksApiError,
-  loadingRanks,
-  loadRanks,
-  selectRanks,
-  selectUiStatus as selectRanksUiStatus,
-} from 'modules/ranks/Slice';
-import { getSquads } from 'modules/squads/Service';
-import {
-  apiError as squadsApiError,
-  loadingSquads,
-  loadSquads,
-  selectSquads,
-  selectUiStatus as selectSquadsUiStatus,
-} from 'modules/squads/Slice';
+import { useDegreesByRank } from 'modules/degrees/hooks';
+import { useRanks } from 'modules/ranks/hooks';
+import { useSquads } from 'modules/squads/hooks';
 import { CreateTroopRequest } from 'modules/troopers/Models';
 import { createTroop } from 'modules/troopers/Service';
 import { apiError, registeredCorrectly } from 'modules/troopers/Slice';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -46,39 +25,10 @@ interface RegisterTroopFormValues extends CreateTroopRequest {
 
 const TroopForm = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const squads = useAppSelector(selectSquads);
-  const squadsUiStatus = useAppSelector(selectSquadsUiStatus);
-  const ranks = useAppSelector(selectRanks);
-  const ranksUiStatus = useAppSelector(selectRanksUiStatus);
-  const degrees = useAppSelector(selectDegrees);
-  const degreesUiStatus = useAppSelector(selectDegreesUiStatus);
+  const [squads, squadsUiStatus] = useSquads();
+  const [ranks, ranksUiStatus] = useRanks();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        dispatch(loadingSquads());
-        const result = await getSquads();
-        dispatch(loadSquads(result));
-      } catch (err: unknown) {
-        dispatch(squadsApiError((err as Error).message));
-      }
-    })();
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        dispatch(loadingRanks());
-        const result = await getRanks();
-        dispatch(loadRanks(result));
-      } catch (err: unknown) {
-        dispatch(ranksApiError((err as Error).message));
-      }
-    })();
-  }, [dispatch]);
-
   const RegisterTroopSchema = Yup.object().shape({
     id: Yup.string()
       .required('Este campo es requerido')
@@ -123,19 +73,7 @@ const TroopForm = (): ReactElement => {
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
     formik;
 
-  useEffect(() => {
-    if (values.rankId && values.rankId !== 0) {
-      (async () => {
-        try {
-          dispatch(loadingDegrees());
-          const result = await getDegreesByRank(values.rankId);
-          dispatch(loadDegrees(result));
-        } catch (err: unknown) {
-          dispatch(degreesApiError((err as Error).message));
-        }
-      })();
-    }
-  }, [dispatch, values.rankId]);
+  const [degrees, degreesUiStatus] = useDegreesByRank(values.rankId);
 
   return (
     <FormikProvider value={formik}>
