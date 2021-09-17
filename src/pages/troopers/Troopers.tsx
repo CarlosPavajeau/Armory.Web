@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '@mui/material';
+import { Card, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -9,36 +9,50 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { filter } from 'lodash';
 import { useTroopers } from 'modules/troopers/hooks';
+import { Troop } from 'modules/troopers/Models';
 import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Troopers = (): ReactElement => {
   const [troopers, uiStatus] = useTroopers();
-
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
 
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const filteredTroopers = filter(troopers, (troop: Troop) => {
+    const { firstName, secondName, lastName, secondLastName } = troop;
+    const fullName = `${firstName} ${secondName} ${lastName} ${secondLastName}`;
+    return fullName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+  });
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     setFilterName(event.target.value);
+  };
+
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const HEAD: HeadLabel[] = [
@@ -81,12 +95,7 @@ const Troopers = (): ReactElement => {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
@@ -103,30 +112,36 @@ const Troopers = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    troopers.length > 0 &&
-                    troopers.map(troop => {
-                      const {
-                        id,
-                        firstName,
-                        secondName,
-                        lastName,
-                        secondLastName,
-                        squadName,
-                        rankName,
-                        degreeName,
-                      } = troop;
-                      return (
-                        <TableRow key={id} tabIndex={-1} hover>
-                          <TableCell>{id}</TableCell>
-                          <TableCell>
-                            {firstName} {secondName} {lastName} {secondLastName}
-                          </TableCell>
-                          <TableCell>{squadName}</TableCell>
-                          <TableCell>{rankName}</TableCell>
-                          <TableCell>{degreeName}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    filteredTroopers.length > 0 &&
+                    filteredTroopers
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(troop => {
+                        const {
+                          id,
+                          firstName,
+                          secondName,
+                          lastName,
+                          secondLastName,
+                          squadName,
+                          rankName,
+                          degreeName,
+                        } = troop;
+                        return (
+                          <TableRow key={id} tabIndex={-1} hover>
+                            <TableCell>{id}</TableCell>
+                            <TableCell>
+                              {firstName} {secondName} {lastName}{' '}
+                              {secondLastName}
+                            </TableCell>
+                            <TableCell>{squadName}</TableCell>
+                            <TableCell>{rankName}</TableCell>
+                            <TableCell>{degreeName}</TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -141,6 +156,16 @@ const Troopers = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredTroopers.length}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>
