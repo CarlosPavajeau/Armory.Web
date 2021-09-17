@@ -16,6 +16,7 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import SearchNotFound from 'components/SearchNotFound';
 import { filter } from 'lodash';
 import { useTroopers } from 'modules/troopers/hooks';
 import { Troop } from 'modules/troopers/Models';
@@ -62,6 +63,8 @@ const Troopers = (): ReactElement => {
     { id: 'rankName', label: 'Cargo de operación', alignRight: false },
     { id: 'degreeName', label: 'Grado', alignRight: false },
   ];
+
+  const isTroopNotFound = filteredTroopers.length === 0;
 
   return (
     <Page title="Armería | Oficiales, suboficiales y soldados">
@@ -153,6 +156,15 @@ const Troopers = (): ReactElement => {
                     </TableCell>
                   </TableRow>
                 </TableBody>
+                {isTroopNotFound && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell colSpan={6} sx={{ py: 3 }}>
+                        <SearchNotFound searchQuery={filterName} />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
               </Table>
             </TableContainer>
           </Scrollbar>
