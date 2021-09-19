@@ -10,8 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import ApiErrors from 'components/feedback/ApiErrors';
-import SelectSquadField from 'components/forms/SelectSquadField';
-import SelectSquadronField from 'components/forms/SelectSquadronField';
+import SelectFireteamField from 'components/forms/SelectFireteamField';
+import SelectFlightField from 'components/forms/SelectFlightField';
 import SelectTroopField from 'components/forms/SelectTroopField';
 import SelectWeaponsField from 'components/forms/SelectWeaponsField';
 import Fallback from 'components/routes/Fallback';
@@ -53,8 +53,8 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
       code: Yup.string().required('Este campo es requerido'),
       validity: Yup.date().required('Este campo es requerido'),
       place: Yup.string().required('Este campo es requerido'),
-      squadronCode: Yup.string().required('Este campo es requerido'),
-      squadCode: Yup.string().required('Este campo es requerido'),
+      flightCode: Yup.string().required('Este campo es requerido'),
+      fireteamCode: Yup.string().required('Este campo es requerido'),
       troopId: Yup.string().required('Este campo es requerido'),
       warehouse: Yup.number().required('Este campo es requerido'),
       purpose: Yup.number().required('Este campo es requerido'),
@@ -96,8 +96,8 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
         validity: moment(),
         place: '',
         date: moment(),
-        squadronCode: '',
-        squadCode: '',
+        flightCode: '',
+        fireteamCode: '',
         troopId: '',
         warehouse: Warehouse.Air,
         purpose: Purpose.Instruction,
@@ -244,19 +244,19 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
           />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <SelectSquadronField
+            <SelectFlightField
               disabled={isSubmitting}
-              {...getFieldProps('squadronCode')}
+              {...getFieldProps('flightCode')}
             />
-            <SelectSquadField
-              squadronCode={values.squadronCode}
+            <SelectFireteamField
+              flightCode={values.flightCode}
               disabled={isSubmitting}
-              {...getFieldProps('squadCode')}
+              {...getFieldProps('fireteamCode')}
             />
           </Stack>
 
           <SelectTroopField
-            squadCode={values.squadCode}
+            fireteamCode={values.fireteamCode}
             disabled={isSubmitting}
             {...getFieldProps('troopId')}
           />

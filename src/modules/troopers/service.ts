@@ -1,11 +1,10 @@
 import HttpClient, { IsValidResponse } from 'common/config/http';
-
 import {
   CreateTroopRequest,
   Troop,
   Troopers,
   UpdateTroopRequest,
-} from './Models';
+} from 'modules/troopers/models';
 
 export const createTroop = async (data: CreateTroopRequest): Promise<void> => {
   const response = await HttpClient.post('/Troopers', data);
@@ -24,11 +23,11 @@ export const getTroopers = async (): Promise<Troopers> => {
   throw new Error('No se pudieron obtener las tropas.');
 };
 
-export const getTroopersBySquad = async (
-  squadCode: string,
+export const getTroopersByFireteam = async (
+  fireteamCode: string,
 ): Promise<Troopers> => {
   const response = await HttpClient.get<Troopers>(
-    `/Troopers/BySquad/${squadCode}`,
+    `/Troopers/ByFireteam/${fireteamCode}`,
   );
 
   if (IsValidResponse(response)) {

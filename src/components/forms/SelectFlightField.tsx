@@ -10,21 +10,21 @@ import { useFlights } from 'modules/flights/hooks';
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface SelectSquadronFieldProps extends FieldInputProps<any> {
+interface SelectFlightFieldProps extends FieldInputProps<any> {
   disabled: boolean;
 }
 
-const SelectSquadronField = (props: SelectSquadronFieldProps): ReactElement => {
+const SelectFlightField = (props: SelectFlightFieldProps): ReactElement => {
   const { disabled, ...others } = props;
   const [squadrons, squadronsUiStatus] = useFlights();
   const [field, meta] = useField(others);
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="squadronCode-label">Unidad</InputLabel>
+      <InputLabel id="squadronCode-label">Escuadrilla</InputLabel>
       <Select
         labelId="squadronCode-label"
-        label="Unidad"
+        label="Escuadrilla"
         error={!!(meta.error && meta.touched)}
         disabled={disabled}
         defaultValue=""
@@ -51,10 +51,10 @@ const SelectSquadronField = (props: SelectSquadronFieldProps): ReactElement => {
           })}
       </Select>
       <FormHelperText error={!!(meta.error && meta.touched)}>
-        {meta.error && meta.touched ? meta.error : 'Seleccione una unidad'}
+        {meta.error && meta.touched ? meta.error : 'Seleccione una escuadrilla'}
       </FormHelperText>
     </FormControl>
   );
 };
 
-export default SelectSquadronField;
+export default SelectFlightField;

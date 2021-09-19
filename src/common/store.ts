@@ -14,7 +14,7 @@ import WarMaterialDeliveryCertificate from 'modules/formats/war-material-deliver
 import PeopleReducer from 'modules/people/Slice';
 import RanksReducer from 'modules/ranks/Slice';
 import SquadsReducer from 'modules/squads/slice';
-import TroopersReducer from 'modules/troopers/Slice';
+import TroopersReducer from 'modules/troopers/slice';
 import UsersReducer from 'modules/users/Slice';
 
 export const store = configureStore({

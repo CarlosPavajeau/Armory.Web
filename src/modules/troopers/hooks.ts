@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { Troopers } from 'modules/troopers/Models';
-import { getTroopers, getTroopersBySquad } from 'modules/troopers/Service';
+import { Troopers } from 'modules/troopers/models';
+import { getTroopers, getTroopersByFireteam } from 'modules/troopers/service';
 import {
   apiError,
   loadingTroopers,
   loadTroopers,
   selectTroopers,
   selectUiStatus,
-} from 'modules/troopers/Slice';
+} from 'modules/troopers/slice';
 import { useEffect } from 'react';
 
 export const useTroopers = (): [Troopers, UiStatus] => {
@@ -35,7 +35,9 @@ export const useTroopers = (): [Troopers, UiStatus] => {
   return [troopers, uiStatus];
 };
 
-export const useTroopersBySquad = (squadCode: string): [Troopers, UiStatus] => {
+export const useTroopersByFireteam = (
+  fireteamCode: string,
+): [Troopers, UiStatus] => {
   const dispatch = useAppDispatch();
   const troopers = useAppSelector(selectTroopers);
   const uiStatus = useAppSelector(selectUiStatus);
@@ -43,9 +45,9 @@ export const useTroopersBySquad = (squadCode: string): [Troopers, UiStatus] => {
   useEffect(() => {
     (async () => {
       try {
-        if (squadCode) {
+        if (fireteamCode) {
           dispatch(loadingTroopers());
-          const result = await getTroopersBySquad(squadCode);
+          const result = await getTroopersByFireteam(fireteamCode);
           dispatch(loadTroopers(result));
         }
       } catch (err) {
@@ -55,7 +57,7 @@ export const useTroopersBySquad = (squadCode: string): [Troopers, UiStatus] => {
         dispatch(apiError('Error de operación'));
       }
     })();
-  }, [dispatch, squadCode]);
+  }, [dispatch, fireteamCode]);
 
   return [troopers, uiStatus];
 };

@@ -10,22 +10,22 @@ import { useFireteamsByFlight } from 'modules/fireteams/hooks';
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface SelectSquadFieldProps extends FieldInputProps<any> {
-  squadronCode: string;
+interface SelectFireteamFieldProps extends FieldInputProps<any> {
+  flightCode: string;
   disabled: boolean;
 }
 
-const SelectSquadField = (props: SelectSquadFieldProps): ReactElement => {
-  const { squadronCode, disabled, ...others } = props;
+const SelectFireteamField = (props: SelectFireteamFieldProps): ReactElement => {
+  const { flightCode, disabled, ...others } = props;
   const [field, meta] = useField(others);
-  const [squads, squadsUiStatus] = useFireteamsByFlight(squadronCode);
+  const [squads, squadsUiStatus] = useFireteamsByFlight(flightCode);
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="squadCode-label">Dependencia</InputLabel>
+      <InputLabel id="squadCode-label">Escuadra</InputLabel>
       <Select
         labelId="squadCode-label"
-        label="Dependencia"
+        label="Escuadra"
         error={!!(meta.error && meta.touched)}
         disabled={disabled}
         defaultValue=""
@@ -54,10 +54,10 @@ const SelectSquadField = (props: SelectSquadFieldProps): ReactElement => {
         )}
       </Select>
       <FormHelperText error={!!(meta.error && meta.touched)}>
-        {meta.error && meta.touched ? meta.error : 'Seleccione una dependencia'}
+        {meta.error && meta.touched ? meta.error : 'Seleccione una escuadra'}
       </FormHelperText>
     </FormControl>
   );
 };
 
-export default SelectSquadField;
+export default SelectFireteamField;

@@ -4,7 +4,7 @@ export interface CreateTroopRequest {
   secondName: string;
   lastName: string;
   secondLastName: string;
-  squadCode: string;
+  fireteamCode: string;
   degreeId: number;
 }
 
@@ -22,7 +22,7 @@ export interface Troop {
   secondName: string;
   lastName: string;
   secondLastName: string;
-  squadName: string;
+  fireteamName: string;
   rankName: string;
   degreeName: string;
 }

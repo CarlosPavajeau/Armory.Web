@@ -6,19 +6,19 @@ import Select from '@mui/material/Select';
 import CircularLoader from 'components/loading/CircularLoader';
 import { useField } from 'formik';
 import { FieldInputProps } from 'formik/dist/types';
-import { useTroopersBySquad } from 'modules/troopers/hooks';
+import { useTroopersByFireteam } from 'modules/troopers/hooks';
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface SelectTroopFieldProps extends FieldInputProps<any> {
-  squadCode: string;
+  fireteamCode: string;
   disabled: boolean;
 }
 
 const SelectTroopField = (props: SelectTroopFieldProps): ReactElement => {
-  const { squadCode, disabled, ...others } = props;
+  const { fireteamCode, disabled, ...others } = props;
   const [field, meta] = useField(others);
-  const [troopers, troopersUiStatus] = useTroopersBySquad(squadCode);
+  const [troopers, troopersUiStatus] = useTroopersByFireteam(fireteamCode);
 
   return (
     <FormControl fullWidth>

@@ -19,7 +19,7 @@ import Scrollbar from 'components/scrollbar/Scrollbar';
 import SearchNotFound from 'components/SearchNotFound';
 import { filter } from 'lodash';
 import { useTroopers } from 'modules/troopers/hooks';
-import { Troop } from 'modules/troopers/Models';
+import { Troop } from 'modules/troopers/models';
 import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -128,7 +128,7 @@ const Troopers = (): ReactElement => {
                           secondName,
                           lastName,
                           secondLastName,
-                          squadName,
+                          fireteamName,
                           rankName,
                           degreeName,
                         } = troop;
@@ -139,7 +139,7 @@ const Troopers = (): ReactElement => {
                               {firstName} {secondName} {lastName}{' '}
                               {secondLastName}
                             </TableCell>
-                            <TableCell>{squadName}</TableCell>
+                            <TableCell>{fireteamName}</TableCell>
                             <TableCell>{rankName}</TableCell>
                             <TableCell>{degreeName}</TableCell>
                           </TableRow>

@@ -26,8 +26,8 @@ export interface CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest {
   validity: Moment;
   place: string;
   date: Moment;
-  squadronCode: string;
-  squadCode: string;
+  flightCode: string;
+  fireteamCode: string;
   troopId: string;
   warehouse: Warehouse;
   purpose: Purpose;
