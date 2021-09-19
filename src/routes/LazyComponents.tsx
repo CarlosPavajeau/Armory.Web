@@ -10,8 +10,10 @@ const RegisterPersonComponent = lazy(
   () => import('pages/people/RegisterPerson'),
 );
 const PeopleComponent = lazy(() => import('pages/people/People'));
-const RegisterSquadComponent = lazy(() => import('pages/squads/RegisterSquad'));
-const SquadsComponent = lazy(() => import('pages/squads/Squads'));
+const RegisterFireteamComponent = lazy(
+  () => import('pages/fireteams/RegisterFireteam'),
+);
+const FireteamsComponent = lazy(() => import('pages/fireteams/Fireteams'));
 const RegisterRankComponent = lazy(() => import('pages/ranks/RegisterRank'));
 const RanksComponent = lazy(() => import('pages/ranks/Ranks'));
 const RegisterDegreeComponent = lazy(
@@ -76,13 +78,13 @@ export const Login = (): ReactElement => (
   </Suspense>
 );
 
-export const RegisterSquadron = (): ReactElement => (
+export const RegisterFlight = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <RegisterFlightComponent />
   </Suspense>
 );
 
-export const Squadrons = (): ReactElement => (
+export const Flights = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <FlightsComponent />
   </Suspense>
@@ -100,15 +102,15 @@ export const People = (): ReactElement => (
   </Suspense>
 );
 
-export const RegisterSquad = (): ReactElement => (
+export const RegisterFireteam = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
-    <RegisterSquadComponent />
+    <RegisterFireteamComponent />
   </Suspense>
 );
 
-export const Squads = (): ReactElement => (
+export const Fireteams = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
-    <SquadsComponent />
+    <FireteamsComponent />
   </Suspense>
 );
 

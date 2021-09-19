@@ -10,8 +10,8 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useDegreesByRank } from 'modules/degrees/hooks';
+import { useFireteams } from 'modules/fireteams/hooks';
 import { useRanks } from 'modules/ranks/hooks';
-import { useSquads } from 'modules/squads/hooks';
 import { CreateTroopRequest } from 'modules/troopers/Models';
 import { createTroop } from 'modules/troopers/Service';
 import { apiError, registeredCorrectly } from 'modules/troopers/Slice';
@@ -25,7 +25,7 @@ interface RegisterTroopFormValues extends CreateTroopRequest {
 
 const TroopForm = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [squads, squadsUiStatus] = useSquads();
+  const [squads, squadsUiStatus] = useFireteams();
   const [ranks, ranksUiStatus] = useRanks();
 
   const navigate = useNavigate();

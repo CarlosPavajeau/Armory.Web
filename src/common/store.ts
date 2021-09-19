@@ -6,13 +6,13 @@ import ExplosivesReducer from 'modules/armament/explosives/Slice';
 import WeaponsReducer from 'modules/armament/weapons/Slice';
 import AuthReducer from 'modules/auth/Slice';
 import DegreesReducer from 'modules/degrees/Slice';
+import FireteamsReducer from 'modules/fireteams/slice';
 import FlightsReducer from 'modules/flights/slice';
 import AssignedWeaponMagazineFormat from 'modules/formats/assigned-weapon-magazine/Slice';
 import WarMaterialAndSpecialEquipmentAssigment from 'modules/formats/war-material-and-special-equipment-assignment/Slice';
 import WarMaterialDeliveryCertificate from 'modules/formats/war-material-delivery-certificate/Slice';
 import PeopleReducer from 'modules/people/Slice';
 import RanksReducer from 'modules/ranks/Slice';
-import SquadsReducer from 'modules/squads/Slice';
 import TroopersReducer from 'modules/troopers/Slice';
 import UsersReducer from 'modules/users/Slice';
 
@@ -22,7 +22,7 @@ export const store = configureStore({
     application: ApplicationReducer,
     user: UsersReducer,
     flight: FlightsReducer,
-    squads: SquadsReducer,
+    fireteams: FireteamsReducer,
     people: PeopleReducer,
     ammunition: AmmunitionReducer,
     equipments: EquipmentsReducer,

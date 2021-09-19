@@ -1,11 +1,11 @@
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import SquadForm from 'components/dashboard/squads/SquadForm';
+import FireteamForm from 'components/dashboard/fireteams/FireteamForm';
 import Page from 'components/Page';
 import React, { ReactElement } from 'react';
 
-const RegisterSquad = (): ReactElement => {
+const RegisterFireteam = (): ReactElement => {
   return (
     <Page title="Armería | Registro de escuadras">
       <Container>
@@ -15,10 +15,10 @@ const RegisterSquad = (): ReactElement => {
           </Typography>
         </Stack>
 
-        <SquadForm />
+        <FireteamForm />
       </Container>
     </Page>
   );
 };
 
-export default RegisterSquad;
+export default RegisterFireteam;

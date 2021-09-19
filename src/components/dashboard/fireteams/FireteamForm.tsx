@@ -10,38 +10,38 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { CreateFireteamRequest } from 'modules/fireteams/models';
+import { createFireteam } from 'modules/fireteams/service';
 import { useFlights } from 'modules/flights/hooks';
 import { usePeopleByRank } from 'modules/people/hooks';
-import { CreateSquadRequest } from 'modules/squads/Models';
-import { createSquad } from 'modules/squads/Service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-const SquadForm = (): ReactElement => {
+const FireteamForm = (): ReactElement => {
   const [people, peopleUiStatus] = usePeopleByRank('Comandante de Escuadra');
   const [squadrons, squadronsUiStatus] = useFlights();
 
   const RegisterSquadScheme = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),
     name: Yup.string().required('Este campo es requerido'),
-    squadronCode: Yup.string().required('Este campo es requerido'),
+    flightCode: Yup.string().required('Este campo es requerido'),
     personId: Yup.string().required('Este campo es requerido'),
   });
 
   const navigate = useNavigate();
-  const formik = useFormik<CreateSquadRequest>({
+  const formik = useFormik<CreateFireteamRequest>({
     initialValues: {
       code: '',
       name: '',
-      squadronCode: '',
+      flightCode: '',
       personId: '',
     },
     validationSchema: RegisterSquadScheme,
     onSubmit: async values => {
       try {
-        await createSquad(values);
-        navigate('/dashboard/squads/all');
+        await createFireteam(values);
+        navigate('/dashboard/fireteams/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
           Consola.error(err);
@@ -89,7 +89,7 @@ const SquadForm = (): ReactElement => {
             <Select
               labelId="squadron-label"
               label="Escuadrilla"
-              error={!!(errors.squadronCode && touched.squadronCode)}
+              error={!!(errors.flightCode && touched.flightCode)}
               defaultValue=""
               {...getFieldProps('squadronCode')}
               fullWidth
@@ -110,11 +110,9 @@ const SquadForm = (): ReactElement => {
                   );
                 })}
             </Select>
-            <FormHelperText
-              error={!!(errors.squadronCode && touched.squadronCode)}
-            >
-              {errors.squadronCode && touched.squadronCode
-                ? errors.squadronCode
+            <FormHelperText error={!!(errors.flightCode && touched.flightCode)}>
+              {errors.flightCode && touched.flightCode
+                ? errors.flightCode
                 : 'Seleccione la escuadrilla a la que pertenece'}
             </FormHelperText>
           </FormControl>
@@ -178,4 +176,4 @@ const SquadForm = (): ReactElement => {
   );
 };
 
-export default SquadForm;
+export default FireteamForm;

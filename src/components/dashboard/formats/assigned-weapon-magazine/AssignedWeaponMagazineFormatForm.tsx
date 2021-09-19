@@ -13,11 +13,11 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useFireteamsByFlight } from 'modules/fireteams/hooks';
 import { useFlights } from 'modules/flights/hooks';
 import { CreateAssignedWeaponMagazineFormatRequest } from 'modules/formats/assigned-weapon-magazine/Models';
 import { createAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
 import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
-import { useSquadsBySquadron } from 'modules/squads/hooks';
 import moment from 'moment';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -64,7 +64,7 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
     formik;
 
-  const [squads, squadsUiStatus] = useSquadsBySquadron(values.squadronCode);
+  const [squads, squadsUiStatus] = useFireteamsByFlight(values.squadronCode);
 
   return (
     <FormikProvider value={formik}>

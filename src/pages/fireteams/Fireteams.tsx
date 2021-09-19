@@ -9,64 +9,20 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { getSquads } from 'modules/squads/Service';
-import {
-  apiError,
-  loadingSquads,
-  loadSquads,
-  selectSquads,
-  selectUiStatus,
-} from 'modules/squads/Slice';
-import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useFireteams } from 'modules/fireteams/hooks';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Squads = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const squads = useAppSelector(selectSquads);
-  const uiStatus = useAppSelector(selectUiStatus);
-
-  const fetchSquads = useCallback(async () => {
-    try {
-      dispatch(loadingSquads());
-      const result = await getSquads();
-      dispatch(loadSquads(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchSquads();
-    })();
-  }, [fetchSquads]);
-
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
+const Fireteams = (): ReactElement => {
+  const [fireteams, uiStatus] = useFireteams();
   const [filterName, setFilterName] = useState('');
-
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -96,7 +52,7 @@ const Squads = (): ReactElement => {
           <Button
             variant="contained"
             component={RouterLink}
-            to="/dashboard/squads/register"
+            to="/dashboard/fireteams/register"
             startIcon={<AddIcon />}
           >
             Agregar escuadra
@@ -113,12 +69,7 @@ const Squads = (): ReactElement => {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
@@ -135,14 +86,14 @@ const Squads = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    squads.length > 0 &&
-                    squads.map(squad => {
-                      const { code, name, squadronName, ownerName } = squad;
+                    fireteams.length > 0 &&
+                    fireteams.map(squad => {
+                      const { code, name, flightName, ownerName } = squad;
                       return (
                         <TableRow key={code} tabIndex={-1} hover>
                           <TableCell>{code}</TableCell>
                           <TableCell>{name}</TableCell>
-                          <TableCell>{squadronName}</TableCell>
+                          <TableCell>{flightName}</TableCell>
                           <TableCell>{ownerName}</TableCell>
                         </TableRow>
                       );
@@ -167,4 +118,4 @@ const Squads = (): ReactElement => {
   );
 };
 
-export default Squads;
+export default Fireteams;

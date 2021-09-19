@@ -60,16 +60,16 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Escuadras',
-    path: '/dashboard/squads',
+    path: '/dashboard/fireteams',
     icon: <DashboardIcon />,
     children: [
       {
         title: 'Registrar escuadras',
-        path: '/dashboard/squads/register',
+        path: '/dashboard/fireteams/register',
       },
       {
         title: 'Consultar escuadras',
-        path: '/dashboard/squads/all',
+        path: '/dashboard/fireteams/all',
       },
     ],
   },

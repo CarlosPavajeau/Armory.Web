@@ -11,6 +11,8 @@ import {
   Degrees,
   Equipments,
   Explosives,
+  Fireteams,
+  Flights,
   Login,
   People,
   Ranks,
@@ -20,16 +22,14 @@ import {
   RegisterDegree,
   RegisterEquipment,
   RegisterExplosive,
+  RegisterFireteam,
+  RegisterFlight,
   RegisterPerson,
   RegisterRank,
-  RegisterSquad,
-  RegisterSquadron,
   RegisterTroop,
   RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   RegisterWarMaterialDeliveryCertificateFormat,
   RegisterWeapon,
-  Squadrons,
-  Squads,
   Troopers,
   Weapons,
 } from './LazyComponents';
@@ -85,16 +85,16 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
             },
             {
               path: 'register',
-              element: <RegisterSquadron />,
+              element: <RegisterFlight />,
             },
             {
               path: 'all',
-              element: <Squadrons />,
+              element: <Flights />,
             },
           ],
         },
         {
-          path: 'squads',
+          path: 'fireteams',
           children: [
             {
               path: '',
@@ -102,11 +102,11 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
             },
             {
               path: 'register',
-              element: <RegisterSquad />,
+              element: <RegisterFireteam />,
             },
             {
               path: 'all',
-              element: <Squads />,
+              element: <Fireteams />,
             },
           ],
         },

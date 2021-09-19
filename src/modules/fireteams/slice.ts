@@ -1,27 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
+import { Fireteam, Fireteams } from 'modules/fireteams/models';
 
-import { Squad, Squads } from './Models';
-
-export interface SquadState {
+export interface FireteamState {
   ui: UiStatus;
   error: string;
   wasRegistered: boolean;
-  data: Squads;
-  squad: Squad | null;
+  data: Fireteams;
+  fireteam: Fireteam | null;
 }
 
-const initialState: SquadState = {
+const initialState: FireteamState = {
   ui: 'idle',
   error: '',
   wasRegistered: false,
   data: [],
-  squad: null,
+  fireteam: null,
 };
 
 export const slice = createSlice({
-  name: 'squads',
+  name: 'fireteams',
   initialState,
   reducers: {
     registeredCorrectly: state => {
@@ -31,19 +30,19 @@ export const slice = createSlice({
       state.wasRegistered = false;
       state.error = '';
     },
-    loadingSquads: state => {
+    loadingFireteams: state => {
       state.ui = 'loading';
     },
-    loadSquads: (state, action: PayloadAction<Squads>) => {
+    loadFireteams: (state, action: PayloadAction<Fireteams>) => {
       state.ui = 'loaded';
       state.data = action.payload;
     },
-    loadingSquad: state => {
+    loadingFireteam: state => {
       state.ui = 'loading';
     },
-    loadSquad: (state, action: PayloadAction<Squad>) => {
+    loadFireteam: (state, action: PayloadAction<Fireteam>) => {
       state.ui = 'loaded';
-      state.squad = action.payload;
+      state.fireteam = action.payload;
     },
     apiError: (state, action: PayloadAction<string>) => {
       state.ui = 'apiError';
@@ -56,18 +55,20 @@ export const {
   apiError,
   registeredCorrectly,
   resetRegister,
-  loadingSquads,
-  loadSquads,
-  loadingSquad,
-  loadSquad,
+  loadingFireteams,
+  loadFireteams,
+  loadingFireteam,
+  loadFireteam,
 } = slice.actions;
 
-export const selectError = (state: RootState): string => state.squads.error;
+export const selectError = (state: RootState): string => state.fireteams.error;
 export const selectWasRegistered = (state: RootState): boolean =>
-  state.squads.wasRegistered;
-export const selectSquads = (state: RootState): Squads => state.squads.data;
-export const selectSquad = (state: RootState): Squad | null =>
-  state.squads.squad;
-export const selectUiStatus = (state: RootState): UiStatus => state.squads.ui;
+  state.fireteams.wasRegistered;
+export const selectFireteams = (state: RootState): Fireteams =>
+  state.fireteams.data;
+export const selectFireteam = (state: RootState): Fireteam | null =>
+  state.fireteams.fireteam;
+export const selectUiStatus = (state: RootState): UiStatus =>
+  state.fireteams.ui;
 
 export default slice.reducer;
