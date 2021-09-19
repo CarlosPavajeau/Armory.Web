@@ -42,10 +42,10 @@ const AssignedWeaponMagazineFormatInfo = (
               Vigencia: {format && moment(format.validity).format('L')}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              Unidad: {format && format?.squadronCode}
+              Escuadrilla: {format && format?.flightCode}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              Dependencia o escuadron: {format && format?.squadCode}
+              Escuadra: {format && format?.fireteamCode}
             </Typography>
             <Typography variant="body1" color="textSecondary">
               Alamacén de armamento:{' '}

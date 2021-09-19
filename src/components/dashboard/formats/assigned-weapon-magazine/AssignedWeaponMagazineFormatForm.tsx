@@ -10,11 +10,10 @@ import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
-import CircularLoader from 'components/loading/CircularLoader';
+import SelectFireteamField from 'components/forms/SelectFireteamField';
+import SelectFlightField from 'components/forms/SelectFlightField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useFireteamsByFlight } from 'modules/fireteams/hooks';
-import { useFlights } from 'modules/flights/hooks';
 import { CreateAssignedWeaponMagazineFormatRequest } from 'modules/formats/assigned-weapon-magazine/Models';
 import { createAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
 import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
@@ -24,13 +23,11 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const AssignedWeaponMagazineFormatForm = (): ReactElement => {
-  const [squadrons, squadronsUiStatus] = useFlights();
-
   const RegisterAssignedWeaponMagazineFormatSchema = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),
     validity: Yup.date().required('Este campo es requerido'),
-    squadronCode: Yup.string().required('Este campo es requerido'),
-    squadCode: Yup.string().required('Este campo es requerido'),
+    flightCode: Yup.string().required('Este campo es requerido'),
+    fireteamCode: Yup.string().required('Este campo es requerido'),
     warehouse: Yup.number().required('Este campo es requerido'),
     comments: Yup.string(),
   });
@@ -40,8 +37,8 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
     initialValues: {
       code: '',
       validity: moment(),
-      squadronCode: '',
-      squadCode: '',
+      flightCode: '',
+      fireteamCode: '',
       warehouse: Warehouse.Air,
       date: moment(),
       comments: '',
@@ -63,8 +60,6 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
     formik;
-
-  const [squads, squadsUiStatus] = useFireteamsByFlight(values.squadronCode);
 
   return (
     <FormikProvider value={formik}>
@@ -108,82 +103,15 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
           </LocalizationProvider>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <FormControl fullWidth>
-              <InputLabel id="squadronCode-label">Escuadrilla</InputLabel>
-              <Select
-                labelId="squadronCode-label"
-                label="Escuadrilla"
-                error={!!(errors.squadronCode && touched.squadronCode)}
-                disabled={isSubmitting}
-                defaultValue=""
-                {...getFieldProps('squadronCode')}
-                fullWidth
-              >
-                {squadronsUiStatus === 'loading' && (
-                  <MenuItem value="">
-                    <CircularLoader size={40} message="Cargando escuadrillas" />
-                  </MenuItem>
-                )}
-                {squadronsUiStatus === 'apiError' && (
-                  <MenuItem value="">No hay datos</MenuItem>
-                )}
-                {squadronsUiStatus === 'loaded' &&
-                  squadrons.length > 0 &&
-                  squadrons &&
-                  squadrons.map(s => {
-                    return (
-                      <MenuItem value={s.code} key={s.code}>
-                        {s.name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText
-                error={!!(errors.squadronCode && touched.squadronCode)}
-              >
-                {errors.squadronCode && touched.squadronCode
-                  ? errors.squadronCode
-                  : 'Seleccione una escuadrilla'}
-              </FormHelperText>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel id="squadCode-label">Escuadra</InputLabel>
-              <Select
-                labelId="squadCode-label"
-                label="Escuadra"
-                error={!!(errors.squadCode && touched.squadCode)}
-                disabled={isSubmitting}
-                defaultValue=""
-                {...getFieldProps('squadCode')}
-                fullWidth
-              >
-                {squadsUiStatus === 'loading' && (
-                  <MenuItem value="">
-                    <CircularLoader size={40} message="Cargando escuadras" />
-                  </MenuItem>
-                )}
-                {squadsUiStatus === 'apiError' && (
-                  <MenuItem value="">No hay datos</MenuItem>
-                )}
-                {squadsUiStatus === 'loaded' &&
-                  squads &&
-                  squads.map(s => {
-                    return (
-                      <MenuItem value={s.code} key={s.code}>
-                        {s.name}
-                      </MenuItem>
-                    );
-                  })}
-                {squads && squads.length === 0 && (
-                  <MenuItem value="">No hay datos</MenuItem>
-                )}
-              </Select>
-              <FormHelperText error={!!(errors.squadCode && touched.squadCode)}>
-                {errors.squadCode && touched.squadCode
-                  ? errors.squadCode
-                  : 'Seleccione una escuadra'}
-              </FormHelperText>
-            </FormControl>
+            <SelectFlightField
+              disabled={isSubmitting}
+              {...getFieldProps('flightCode')}
+            />
+            <SelectFireteamField
+              flightCode={values.flightCode}
+              disabled={isSubmitting}
+              {...getFieldProps('fireteamCode')}
+            />
           </Stack>
 
           <FormControl fullWidth>
