@@ -1,18 +1,19 @@
-import { Avatar } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import { alpha } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonIcon from '@material-ui/icons/Person';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { useAppDispatch } from 'common/hooks';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Avatar } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import { alpha } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
 import { logoutUser } from 'modules/auth/Service';
-import { logout } from 'modules/auth/Slice';
+import { logout, selectEmail } from 'modules/auth/Slice';
+import { selectCurrentPerson } from 'modules/people/Slice';
 import { ReactElement, useRef, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
@@ -31,6 +32,9 @@ const MENU_OPTIONS: MenuOption[] = [
 const AccountPopover = (): ReactElement => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const person = useAppSelector(selectCurrentPerson);
+  const email = useAppSelector(selectEmail);
 
   const handleOpen = () => {
     setOpen(true);
@@ -72,6 +76,7 @@ const AccountPopover = (): ReactElement => {
             },
           }),
         }}
+        size="large"
       >
         <Avatar sx={{ bgcolor: 'primary.main' }}>A</Avatar>
       </IconButton>
@@ -84,10 +89,12 @@ const AccountPopover = (): ReactElement => {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            Usuario armería
+            {person != null
+              ? `${person.firstName} ${person.lastName}`
+              : 'Usuario desconocido'}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            armeria@arm.com
+            {email && email}
           </Typography>
         </Box>
 

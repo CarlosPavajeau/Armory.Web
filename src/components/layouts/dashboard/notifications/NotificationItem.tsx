@@ -1,11 +1,11 @@
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import {
   Avatar,
   ListItemAvatar,
   ListItemButton,
   ListItemText,
-} from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import CircleNotificationsIcon from '@material-ui/icons/CircleNotifications';
+} from '@mui/material';
+import Typography from '@mui/material/Typography';
 import { noCase } from 'change-case';
 import { ReactElement } from 'react';
 

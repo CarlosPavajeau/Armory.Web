@@ -19,11 +19,16 @@ export const checkAuthentication = (): AuthenticationPayload => {
 
   if (token) {
     const payload = Storage.decode(token);
-    const { role } = payload;
-    return { isAuthenticate: Boolean(token), role, token };
+    const { role, email } = payload;
+    return { isAuthenticate: Boolean(token), role, token, email };
   }
 
-  return { isAuthenticate: false, role: undefined, token: undefined };
+  return {
+    isAuthenticate: false,
+    role: undefined,
+    token: undefined,
+    email: undefined,
+  };
 };
 
 export const logoutUser = async (): Promise<void> => {

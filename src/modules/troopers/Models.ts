@@ -1,5 +1,3 @@
-import { Degree } from '../degrees/Models';
-
 export interface CreateTroopRequest {
   id: string;
   firstName: string;
@@ -18,8 +16,15 @@ export interface UpdateTroopRequest {
   secondLastName: string;
 }
 
-export interface Troop extends CreateTroopRequest {
-  degree?: Degree;
+export interface Troop {
+  id: string;
+  firstName: string;
+  secondName: string;
+  lastName: string;
+  secondLastName: string;
+  squadName: string;
+  rankName: string;
+  degreeName: string;
 }
 
 export type Troopers = Troop[];

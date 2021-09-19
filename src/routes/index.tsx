@@ -1,7 +1,9 @@
-import Typography from '@material-ui/core/Typography';
+import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import DashboardLayout from 'components/layouts/dashboard';
-import { ReactElement } from 'react';
+import DashboardHome from 'components/layouts/dashboard/DashboardHome';
+import { clearErrors } from 'modules/application/Slice';
+import { ReactElement, useEffect } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 
 import {
@@ -10,9 +12,11 @@ import {
   Equipments,
   Explosives,
   Login,
+  People,
   Ranks,
   RegisterAmmunition,
   RegisterAssignedWeaponMagazineFormat,
+  RegisterAssignedWeaponMagazineFormatItems,
   RegisterDegree,
   RegisterEquipment,
   RegisterExplosive,
@@ -36,6 +40,12 @@ interface RouterProps {
 
 const Router = ({ isAuth }: RouterProps): ReactElement | null => {
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, [pathname, dispatch]);
+
   if (pathname !== '/login') {
     Storage.set('last_path', pathname);
   }
@@ -47,11 +57,24 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
       children: [
         {
           path: '',
-          element: <Typography variant="h4">Bienvenido</Typography>,
+          element: <DashboardHome />,
         },
         {
-          path: '/people/register',
-          element: <RegisterPerson />,
+          path: 'people',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/people/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterPerson />,
+            },
+            {
+              path: 'all',
+              element: <People />,
+            },
+          ],
         },
         {
           path: 'squadrons',
@@ -226,6 +249,10 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
               element: (
                 <RegisterWarMaterialAndSpecialEquipmentAssigmentFormat />
               ),
+            },
+            {
+              path: 'assigned-weapon-magazine-format/items',
+              element: <RegisterAssignedWeaponMagazineFormatItems />,
             },
           ],
         },

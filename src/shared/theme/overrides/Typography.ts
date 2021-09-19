@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
 
 export default function Typography(theme: Theme): unknown {
   return {

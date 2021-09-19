@@ -25,13 +25,22 @@
     "simple-import-sort"
   ],
   "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-use-before-define": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-props-no-spreading": "off",
+    "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-shadow": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "no-param-reassign": [
       2,
       {
         "props": false
       }
     ],
-    "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [
       "error"
     ],
@@ -42,8 +51,6 @@
         "singleQuote": true
       }
     ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
       1,
       {
@@ -52,8 +59,6 @@
         ]
       }
     ],
-    "react/jsx-props-no-spreading": "off",
-    "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -62,8 +67,6 @@
         "tsx": "never"
       }
     ],
-    "react/react-in-jsx-scope": "off",
-    "no-shadow": "off",
     "@typescript-eslint/no-shadow": [
       "off"
     ],
@@ -72,9 +75,7 @@
       {
         "devDependencies": true
       }
-    ],
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    ]
   },
   "settings": {
     "import/resolver": {

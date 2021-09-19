@@ -1,13 +1,13 @@
-import { Person } from '../people/Models';
-
 export interface CreateSquadronRequest {
   code: string;
   name: string;
   personId: string;
 }
 
-export interface Squadron extends CreateSquadronRequest {
-  person?: Person;
+export interface Squadron {
+  code: string;
+  name: string;
+  ownerName: string;
 }
 
 export type Squadrons = Squadron[];

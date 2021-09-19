@@ -1,11 +1,12 @@
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@mui/material';
+import { esES } from '@mui/material/locale';
 import {
+  Components,
   createTheme,
   StyledEngineProvider,
   Theme,
   ThemeProvider,
-} from '@material-ui/core/styles';
-import { Components } from '@material-ui/core/styles/components';
+} from '@mui/material/styles';
 import { ReactElement, ReactNode, useMemo } from 'react';
 
 import GlobalStyles from './globalStyles';
@@ -15,7 +16,7 @@ import shadows, { customShadows } from './shadows';
 import shape from './shape';
 import typography from './typography';
 
-declare module '@material-ui/styles/defaultTheme' {
+declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
@@ -38,9 +39,11 @@ export default function ThemeConfig({
     [],
   );
 
-  const theme = createTheme(themeOptions);
-
-  theme.components = componentsOverride(theme) as Components;
+  const theme = createTheme(themeOptions, esES);
+  theme.components = {
+    ...theme.components,
+    ...(componentsOverride(theme) as Components),
+  };
 
   return (
     <StyledEngineProvider injectFirst>

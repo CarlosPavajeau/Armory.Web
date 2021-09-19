@@ -5,5 +5,10 @@ export interface CreateSquadRequest {
   squadronCode: string;
 }
 
-export type Squad = CreateSquadRequest;
+export interface Squad {
+  code: string;
+  name: string;
+  ownerName: string;
+  squadronName: string;
+}
 export type Squads = Squad[];

@@ -1,10 +1,19 @@
 import HttpClient, { IsValidResponse } from '../../common/config/http';
-import { CreatePersonRequest, People, Person } from './Models';
+import {
+  CreatePersonRequest,
+  People,
+  Person,
+  UpdatePersonDegreeRequest,
+} from './Models';
 
 export const createPerson = async (
   data: CreatePersonRequest,
 ): Promise<void> => {
-  await HttpClient.post('/People', data);
+  const response = await HttpClient.post('/People', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar a la persona');
+  }
 };
 
 export const getPeople = async (): Promise<People> => {
@@ -27,6 +36,15 @@ export const getPerson = async (id: string): Promise<Person> => {
 
 export const getPeopleByRole = async (role: string): Promise<People> => {
   const response = await HttpClient.get<People>(`/People/ByRole/${role}`);
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener las personas.');
+};
+
+export const getPeopleByRank = async (rankName: string): Promise<People> => {
+  const response = await HttpClient.get<People>(`/People/ByRank/${rankName}`);
   if (IsValidResponse(response)) {
     return response.data;
   }
@@ -58,6 +76,19 @@ export const checkExists = async (code: string): Promise<boolean> => {
 
 export const updatePerson = async (person: Person): Promise<void> => {
   await HttpClient.put(`/People/${person.id}`, person);
+};
+
+export const updatePersonDegree = async (
+  data: UpdatePersonDegreeRequest,
+): Promise<void> => {
+  const response = await HttpClient.put(
+    `/People/ChangeDegree/${data.id}`,
+    data,
+  );
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo actualizar a la persona.');
+  }
 };
 
 export const deletePerson = async (id: string): Promise<void> => {

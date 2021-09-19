@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'common/store';
+import { UiStatus } from 'common/types';
 
-import { RootState } from '../../../common/store';
-import { UiStatus } from '../../../common/types';
 import { Weapon, Weapons } from './Models';
 
 export interface WeaponsState {
@@ -51,7 +51,7 @@ export const slice = createSlice({
     updatedWeapon: state => {
       state.ui = 'updated';
     },
-    apiError: (state, action: PayloadAction<string>) => {
+    operationFailure: (state, action: PayloadAction<string>) => {
       state.ui = 'apiError';
       state.error = action.payload;
     },
@@ -67,7 +67,7 @@ export const {
   loadWeapon,
   updatingWeapon,
   updatedWeapon,
-  apiError,
+  operationFailure,
 } = slice.actions;
 
 export const selectError = (state: RootState): string => state.weapons.error;

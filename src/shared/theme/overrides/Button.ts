@@ -1,5 +1,5 @@
-import { Theme } from '@material-ui/core';
-import { alpha } from '@material-ui/core/styles';
+import { Theme } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 
 export default function Button(theme: Theme): unknown {
   return {

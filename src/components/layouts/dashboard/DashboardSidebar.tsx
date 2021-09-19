@@ -1,10 +1,14 @@
-import { Avatar, Drawer, Link, Stack, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import { styled } from '@material-ui/core/styles';
+import { Avatar, Drawer, Link, Stack, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
+import { useAppSelector } from 'common/hooks';
 import MHidden from 'components/@material-extend/MHidden';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { selectRole } from 'modules/auth/Slice';
+import { selectCurrentPerson } from 'modules/people/Slice';
 import { ReactElement, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import translateRole from 'utils/translateRole';
 
 import NavSection from './sidebar/NavSection';
 import sidebarConfig from './sidebar/SidebarConfig';
@@ -36,6 +40,9 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
 
   const { pathname } = useLocation();
 
+  const person = useAppSelector(selectCurrentPerson);
+  const role = useAppSelector(selectRole);
+
   useEffect(() => {
     if (isOpen) {
       onClose();
@@ -63,10 +70,12 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
             <Avatar>A</Avatar>
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Armory user
+                {person != null
+                  ? `${person.firstName} ${person.lastName}`
+                  : 'Usuario desconocido'}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Armory role
+                {translateRole(role)}
               </Typography>
             </Box>
           </AccountStyle>
@@ -90,7 +99,7 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
         >
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Version 1.0.0-beta.1
+              Version 1.0.0-beta.3
             </Typography>
           </Box>
         </Stack>

@@ -1,8 +1,13 @@
-import AddModeratorIcon from '@material-ui/icons/AddModerator';
-import AutoAwesomeIcon from '@material-ui/icons/AutoAwesome';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import PeopleIcon from '@material-ui/icons/People';
+import ammunitionIcon from '@iconify/icons-mdi/ammunition';
+import bombIcon from '@iconify/icons-mdi/bomb';
+import flashlightIcon from '@iconify/icons-mdi/flashlight';
+import pistolIcon from '@iconify/icons-mdi/pistol';
+import { Icon, IconifyIcon } from '@iconify/react';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import PeopleIcon from '@mui/icons-material/People';
+import ShieldIcon from '@mui/icons-material/Shield';
 import { ReactElement } from 'react';
 
 export interface SidebarConfigItemChildren {
@@ -18,19 +23,23 @@ export interface SidebarConfigItem {
   children?: SidebarConfigItemChildren[];
 }
 
+const getIcon = (name: IconifyIcon | string) => (
+  <Icon icon={name} width={22} height={22} />
+);
+
 const sidebarConfig: SidebarConfigItem[] = [
   {
-    title: 'Personas',
+    title: 'Comandantes',
     path: '/dashboard/people',
     icon: <PeopleIcon />,
     children: [
       {
-        title: 'Registrar persona',
+        title: 'Registrar comandante',
         path: '/dashboard/people/register',
       },
       {
-        title: 'Consultar personas',
-        path: '/dashboard/people',
+        title: 'Consultar comandantes',
+        path: '/dashboard/people/all',
       },
     ],
   },
@@ -65,16 +74,16 @@ const sidebarConfig: SidebarConfigItem[] = [
     ],
   },
   {
-    title: 'Rangos',
+    title: 'Cargos de operación',
     path: '/dashboard/ranks/',
     icon: <AddModeratorIcon />,
     children: [
       {
-        title: 'Registrar rango',
+        title: 'Cargo de operación',
         path: '/dashboard/ranks/register',
       },
       {
-        title: 'Rangos',
+        title: 'Consultar cargos de operación',
         path: '/dashboard/ranks/all',
       },
     ],
@@ -82,36 +91,36 @@ const sidebarConfig: SidebarConfigItem[] = [
   {
     title: 'Grados',
     path: '/dashboard/degrees/',
-    icon: <AddModeratorIcon />,
+    icon: <ShieldIcon />,
     children: [
       {
         title: 'Registrar grado',
         path: '/dashboard/degrees/register',
       },
       {
-        title: 'Grados',
+        title: 'Consultar grados',
         path: '/dashboard/degrees/all',
       },
     ],
   },
   {
-    title: 'Cadetes, alumnos y sodados',
+    title: 'Oficiales, suboficiales y soldados',
     icon: <PeopleIcon />,
     path: '/dashboard/troopers/',
     children: [
       {
-        title: 'Registrar cadete, alumno o soldado',
+        title: 'Registrar oficial, suboficial o soldado',
         path: '/dashboard/troopers/register',
       },
       {
-        title: 'Consultar cadetes, alumnos o soldado',
+        title: 'Consultar oficiales, suboficiales y soldados',
         path: '/dashboard/troopers/all',
       },
     ],
   },
   {
     title: 'Armas',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(pistolIcon),
     path: '/dashboard/weapons/',
     children: [
       {
@@ -126,7 +135,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Explosivos',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(bombIcon),
     path: '/dashboard/explosives/',
     children: [
       {
@@ -141,7 +150,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Equipo especial y accesorios',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(flashlightIcon),
     path: '/dashboard/equipments/',
     children: [
       {
@@ -156,7 +165,7 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Municiones',
-    icon: <AutoAwesomeIcon />,
+    icon: getIcon(ammunitionIcon),
     path: '/dashboard/ammunition/',
     children: [
       {

@@ -1,3 +1,6 @@
+import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
+import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Collapse,
@@ -5,10 +8,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core';
-import { alpha, styled, useTheme } from '@material-ui/core/styles';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+} from '@mui/material';
+import { alpha, styled, useTheme } from '@mui/material/styles';
 import { ReactElement, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 
@@ -93,9 +94,11 @@ const NavItem = (props: NavItemProps): ReactElement => {
           <ListItemIconStyle>{icon}</ListItemIconStyle>
           <ListItemText primary={title} disableTypography />
           {info && info}
-          <Box sx={{ width: 16, height: 16, ml: 1 }}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </Box>
+          <Box
+            component={Icon}
+            icon={open ? arrowIosDownwardFill : arrowIosForwardFill}
+            sx={{ width: 16, height: 16, ml: 1 }}
+          />
         </ListItemStyle>
 
         <Collapse in={open} timeout="auto" unmountOnExit>

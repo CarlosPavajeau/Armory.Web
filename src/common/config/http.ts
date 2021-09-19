@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import Storage from 'common/plugins/Storage';
 import { AppDispatch } from 'common/store';
-import { apiError } from 'modules/application/Slice';
+import { apiError, clearErrors } from 'modules/application/Slice';
 import { logout } from 'modules/auth/Slice';
 
 const httpClient = axios.create({
@@ -25,7 +25,10 @@ httpClient.interceptors.request.use(
 
 export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
   httpClient.interceptors.response.use(
-    response => response,
+    response => {
+      dispatch(clearErrors());
+      return response;
+    },
     error => {
       if (error.response && error.response.status === 401) {
         dispatch(logout());
@@ -53,18 +56,6 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
 
 export const IsValidResponse = (response: AxiosResponse): boolean => {
   return response && (response.status === 200 || response.status === 201);
-};
-
-export const HasErrorName = (
-  response: AxiosResponse,
-  name: string,
-): boolean => {
-  return (
-    response &&
-    response.data &&
-    response.data.errors &&
-    response.data.errors[name]
-  );
 };
 
 export const GetErrorStr = (response: AxiosResponse, name: string): string => {

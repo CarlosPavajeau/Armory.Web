@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Storage from 'common/plugins/Storage';
+import { RootState } from 'common/store';
+import { UiStatus } from 'common/types';
 
-import { RootState } from '../../common/store';
-import { UiStatus } from '../../common/types';
 import { People, Person } from './Models';
 
 type PeopleStatus = UiStatus;
@@ -12,7 +13,11 @@ export interface PeopleState {
   wasRegistered: boolean;
   data: People;
   person: Person | null;
+  currentPerson: Person | null;
 }
+
+const loadCurrentPerson = (): Person | null =>
+  JSON.parse(Storage.get('current_person') || 'null');
 
 const initialState: PeopleState = {
   ui: 'idle',
@@ -20,6 +25,7 @@ const initialState: PeopleState = {
   wasRegistered: false,
   data: [],
   person: null,
+  currentPerson: loadCurrentPerson(),
 };
 
 export const slice = createSlice({
@@ -32,6 +38,9 @@ export const slice = createSlice({
     resetRegister: state => {
       state.wasRegistered = false;
       state.error = '';
+    },
+    setCurrentPerson: (state, action: PayloadAction<Person>) => {
+      state.currentPerson = action.payload;
     },
     loadingPeople: state => {
       state.ui = 'loading';
@@ -86,11 +95,14 @@ export const {
   deletingPerson,
   deletedPerson,
   apiError,
+  setCurrentPerson,
 } = slice.actions;
 
 export const selectError = (state: RootState): string => state.people.error;
 export const selectWasRegistered = (state: RootState): boolean =>
   state.people.wasRegistered;
+export const selectCurrentPerson = (state: RootState): Person | null =>
+  state.people.currentPerson;
 export const selectPeople = (state: RootState): People => state.people.data;
 export const selectPerson = (state: RootState): Person | null =>
   state.people.person;

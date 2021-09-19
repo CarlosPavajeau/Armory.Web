@@ -1,107 +1,133 @@
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import AddIcon from '@mui/icons-material/Add';
+import { Card } from '@mui/material';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
+import ApiErrors from 'components/feedback/ApiErrors';
+import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
+import { useRanks } from 'modules/ranks/hooks';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { displayData } from '../../common/styles';
-import DisplayDataHeader from '../../components/data/DisplayDataHeader';
-import Alert from '../../components/feedback/Alert';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getRanks } from '../../modules/ranks/Service';
-import {
-  apiError,
-  loadingRanks,
-  loadRanks,
-  selectError,
-  selectRanks,
-  selectUiStatus,
-} from '../../modules/ranks/Slice';
+const Ranks = (): ReactElement => {
+  const [ranks, uiStatus] = useRanks();
 
-export type RanksProps = WithStyles<typeof displayData>;
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
 
-const Ranks = (props: RanksProps): ReactElement => {
-  const { classes } = props;
-  const dispatch = useAppDispatch();
-  const ranks = useAppSelector(selectRanks);
-  const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
-
-  const fetchRanks = useCallback(async () => {
-    try {
-      dispatch(loadingRanks());
-      const result = await getRanks();
-      dispatch(loadRanks(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await fetchRanks();
-    })();
-  }, [fetchRanks]);
-
-  const handleRefresh = async () => {
-    await fetchRanks();
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'id', label: 'Id', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Rangos</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar rango"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Cargos de operación">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando rangos" />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell>Nombre</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography variant="h4" gutterBottom>
+            Cargos de operación
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/ranks/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar cargo de operación
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar rango"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
                 <TableBody>
-                  {ranks.map(rank => {
-                    return (
-                      <TableRow key={rank.id}>
-                        <TableCell>{rank.id}</TableCell>
-                        <TableCell>{rank.name}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando rangos..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    ranks.length > 0 &&
+                    ranks.map(rank => {
+                      const { id, name } = rank;
+                      return (
+                        <TableRow key={id} tabIndex={-1} hover>
+                          <TableCell>{id}</TableCell>
+                          <TableCell>{name}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Ranks);
+export default Ranks;

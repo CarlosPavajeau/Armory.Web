@@ -3,12 +3,10 @@ import { RootState } from 'common/store';
 
 export interface AppState {
   errors: string[];
-  openErrorDialog: boolean;
 }
 
 const initialState: AppState = {
   errors: [],
-  openErrorDialog: false,
 };
 
 export const slice = createSlice({
@@ -17,19 +15,16 @@ export const slice = createSlice({
   reducers: {
     apiError: (state, action: PayloadAction<string[]>) => {
       state.errors = action.payload;
-      state.openErrorDialog = true;
     },
-    closeErrorDialog: state => {
-      state.openErrorDialog = false;
+    clearErrors: state => {
+      state.errors = [];
     },
   },
 });
 
-export const { apiError, closeErrorDialog } = slice.actions;
+export const { apiError, clearErrors } = slice.actions;
 
 export const selectApiErrors = (state: RootState): string[] =>
   state.application.errors;
-export const openErrorDialog = (state: RootState): boolean =>
-  state.application.openErrorDialog;
 
 export default slice.reducer;

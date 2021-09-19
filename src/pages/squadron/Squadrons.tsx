@@ -1,39 +1,43 @@
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-
-import { useAppDispatch, useAppSelector } from '../../common/hooks';
-import { displayData } from '../../common/styles';
-import DisplayDataHeader from '../../components/data/DisplayDataHeader';
-import Alert from '../../components/feedback/Alert';
-import CircularLoader from '../../components/loading/CircularLoader';
-import { getSquadrons } from '../../modules/squadrons/Service';
+import AddIcon from '@mui/icons-material/Add';
+import { Card } from '@mui/material';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
+import ApiErrors from 'components/feedback/ApiErrors';
+import CircularLoader from 'components/loading/CircularLoader';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
+import { getSquadrons } from 'modules/squadrons/Service';
 import {
   apiError,
   loadingSquadrons,
   loadSquadrons,
-  selectError,
   selectSquadrons,
   selectUiStatus,
-} from '../../modules/squadrons/Slice';
+} from 'modules/squadrons/Slice';
+import {
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type SquadronsProps = WithStyles<typeof displayData>;
-
-const Squadrons = (props: SquadronsProps): ReactElement => {
-  const { classes } = props;
+const Squadrons = (): ReactElement => {
   const dispatch = useAppDispatch();
   const squadrons = useAppSelector(selectSquadrons);
   const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
 
   const fetchSquadrons = useCallback(async () => {
     try {
@@ -51,59 +55,114 @@ const Squadrons = (props: SquadronsProps): ReactElement => {
     })();
   }, [fetchSquadrons]);
 
-  const handleRefresh = async () => {
-    await fetchSquadrons();
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
+
+  const handleRequestSort = (
+    event: MouseEvent<HTMLSpanElement>,
+    property: string,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'code', label: 'Código', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
+    { id: 'ownerName', label: 'Comandante', alignRight: false },
+  ];
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Escuadrillas</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar escudrilla"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Escuadrillas">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando escuadrillas..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Código</TableCell>
-                    <TableCell>Nombre</TableCell>
-                    <TableCell>Persona a cargo</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography variant="h4" gutterBottom>
+            Escuadrillas
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/squadrons/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar escuadrilla
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar escuadrilla"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <DataListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={HEAD}
+                  onRequestSort={handleRequestSort}
+                />
                 <TableBody>
-                  {squadrons.map(squadron => {
-                    return (
-                      <TableRow key={squadron.code}>
-                        <TableCell>{squadron.code}</TableCell>
-                        <TableCell>{squadron.name}</TableCell>
-                        <TableCell>{squadron.personId}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando escuadrillas..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    squadrons.length > 0 &&
+                    squadrons.map(squadron => {
+                      const { code, name, ownerName } = squadron;
+                      return (
+                        <TableRow key={code} tabIndex={-1} hover>
+                          <TableCell>{code}</TableCell>
+                          <TableCell>{name}</TableCell>
+                          <TableCell>{ownerName}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Squadrons);
+export default Squadrons;

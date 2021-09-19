@@ -1,113 +1,187 @@
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { WithStyles } from '@material-ui/styles';
-import withStyles from '@material-ui/styles/withStyles';
-import clsx from 'clsx';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { displayData } from 'common/styles';
-import DisplayDataHeader from 'components/data/DisplayDataHeader';
-import Alert from 'components/feedback/Alert';
+import AddIcon from '@mui/icons-material/Add';
+import { Card, TablePagination } from '@mui/material';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import { HeadLabel } from 'components/data/DataListHead';
+import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
+import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
-import { getTroopers } from 'modules/troopers/Service';
-import {
-  apiError,
-  loadingTroopers,
-  loadTroopers,
-  selectError,
-  selectTroopers,
-  selectUiStatus,
-} from 'modules/troopers/Slice';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import Page from 'components/Page';
+import Scrollbar from 'components/scrollbar/Scrollbar';
+import SearchNotFound from 'components/SearchNotFound';
+import { filter } from 'lodash';
+import { useTroopers } from 'modules/troopers/hooks';
+import { Troop } from 'modules/troopers/Models';
+import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-export type TroopersProps = WithStyles<typeof displayData>;
+const Troopers = (): ReactElement => {
+  const [troopers, uiStatus] = useTroopers();
+  const [filterName, setFilterName] = useState('');
 
-const Troopers = (props: TroopersProps): ReactElement => {
-  const { classes } = props;
-  const dispatch = useAppDispatch();
-  const troopers = useAppSelector(selectTroopers);
-  const uiStatus = useAppSelector(selectUiStatus);
-  const error = useAppSelector(selectError);
+  const filteredTroopers = filter(troopers, (troop: Troop) => {
+    const { firstName, secondName, lastName, secondLastName } = troop;
+    const fullName = `${firstName} ${secondName} ${lastName} ${secondLastName}`;
+    return fullName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+  });
 
-  const fetchTroopers = useCallback(async () => {
-    try {
-      dispatch(loadingTroopers());
-      const result = await getTroopers();
-      dispatch(loadTroopers(result));
-    } catch (err: unknown) {
-      dispatch(apiError((err as Error).message));
-    }
-  }, [dispatch]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  useEffect(() => {
-    (async () => {
-      await fetchTroopers();
-    })();
-  }, [fetchTroopers]);
-
-  const handleRefresh = async () => {
-    await fetchTroopers();
+  const handleFilterByName = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setFilterName(event.target.value);
   };
 
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const HEAD: HeadLabel[] = [
+    { id: 'id', label: 'Id', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
+    { id: 'squadName', label: 'Escuadra', alignRight: false },
+    { id: 'rankName', label: 'Cargo de operación', alignRight: false },
+    { id: 'degreeName', label: 'Grado', alignRight: false },
+  ];
+
+  const isTroopNotFound = filteredTroopers.length === 0;
+
   return (
-    <>
-      <Helmet>
-        <title>Armería | Tropas</title>
-      </Helmet>
-      <Paper>
-        <DisplayDataHeader
-          placeholder="Buscar tropa"
-          handleRefresh={handleRefresh}
-        />
-        <Paper
-          elevation={0}
-          className={clsx(
-            (uiStatus === 'loading' || uiStatus === 'apiError') &&
-              classes.withoutData,
-          )}
+    <Page title="Armería | Oficiales, suboficiales y soldados">
+      <Container>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={5}
         >
-          {uiStatus === 'loading' && (
-            <CircularLoader size={150} message="Cargando tropas..." />
-          )}
-          {uiStatus === 'loaded' && (
-            <TableContainer className={classes.container}>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Identificación</TableCell>
-                    <TableCell>Nombre completo</TableCell>
-                    <TableCell>Escuadrón</TableCell>
-                    <TableCell>Grado</TableCell>
-                  </TableRow>
-                </TableHead>
+          <Typography variant="h4" gutterBottom>
+            Oficiales, suboficiales y soldados
+          </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/troopers/register"
+            startIcon={<AddIcon />}
+          >
+            Agregar oficial, suboficial o soldado
+          </Button>
+        </Stack>
+
+        <Card>
+          <DataListToolbar
+            filterName={filterName}
+            placeholder="Buscar oficial, suboficial o soldado"
+            onFilterName={handleFilterByName}
+          />
+
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
-                  {troopers.map(troop => {
-                    return (
-                      <TableRow key={troop.id}>
-                        <TableCell>{troop.id}</TableCell>
-                        <TableCell>
-                          {troop.firstName} {troop.secondName} {troop.lastName}{' '}
-                          {troop.secondLastName}
-                        </TableCell>
-                        <TableCell>{troop.squadCode}</TableCell>
-                        <TableCell>{troop.degreeId}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  {uiStatus === 'loading' && (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        colSpan={HEAD.length}
+                        sx={{ py: 3 }}
+                      >
+                        <CircularLoader
+                          size={150}
+                          message="Cargando oficiales, suboficiales o soldados..."
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {uiStatus === 'loaded' &&
+                    filteredTroopers.length > 0 &&
+                    filteredTroopers
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(troop => {
+                        const {
+                          id,
+                          firstName,
+                          secondName,
+                          lastName,
+                          secondLastName,
+                          squadName,
+                          rankName,
+                          degreeName,
+                        } = troop;
+                        return (
+                          <TableRow key={id} tabIndex={-1} hover>
+                            <TableCell>{id}</TableCell>
+                            <TableCell>
+                              {firstName} {secondName} {lastName}{' '}
+                              {secondLastName}
+                            </TableCell>
+                            <TableCell>{squadName}</TableCell>
+                            <TableCell>{rankName}</TableCell>
+                            <TableCell>{degreeName}</TableCell>
+                          </TableRow>
+                        );
+                      })}
+
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={HEAD.length}
+                      sx={{ py: 3 }}
+                    >
+                      <ApiErrors />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
+                {isTroopNotFound && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell colSpan={6} sx={{ py: 3 }}>
+                        <SearchNotFound searchQuery={filterName} />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
               </Table>
             </TableContainer>
-          )}
-          {uiStatus === 'apiError' && <Alert severity="error">{error}</Alert>}
-        </Paper>
-      </Paper>
-    </>
+          </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredTroopers.length}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Card>
+      </Container>
+    </Page>
   );
 };
 
-export default withStyles(displayData)(Troopers);
+export default Troopers;

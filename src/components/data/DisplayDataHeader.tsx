@@ -1,30 +1,32 @@
-import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import SearchIcon from '@material-ui/icons/Search';
-import { WithStyles, withStyles } from '@material-ui/styles';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import SearchIcon from '@mui/icons-material/Search';
+import { useTheme } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import { withStyles } from '@mui/styles';
 import { displayData } from 'common/styles';
 import { MouseEventHandler, ReactElement } from 'react';
 
-export interface DisplayDataHeaderProps extends WithStyles<typeof displayData> {
+export interface DisplayDataHeaderProps {
   handleRefresh: MouseEventHandler<HTMLButtonElement>;
   placeholder: string;
 }
 
+const AppBarStyle = styled(AppBar)({
+  borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+});
+
 const DisplayDataHeader = (props: DisplayDataHeaderProps): ReactElement => {
-  const { classes, handleRefresh, placeholder } = props;
+  const { handleRefresh, placeholder } = props;
+  const theme = useTheme();
 
   return (
-    <AppBar
-      position="static"
-      color="default"
-      elevation={0}
-      className={classes.searchBar}
-    >
+    <AppBarStyle position="static" color="default" elevation={0}>
       <Toolbar>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
@@ -32,10 +34,12 @@ const DisplayDataHeader = (props: DisplayDataHeaderProps): ReactElement => {
           </Grid>
           <Grid item xs>
             <TextField
+              variant="standard"
               placeholder={placeholder}
+              sx={{ fontSize: theme.typography.fontSize }}
               InputProps={{
                 disableUnderline: true,
-                className: classes.searchInput,
+                sx: { fontSize: theme.typography.fontSize },
               }}
               fullWidth
             />
@@ -43,13 +47,13 @@ const DisplayDataHeader = (props: DisplayDataHeaderProps): ReactElement => {
           <Grid item>
             <Tooltip title="Refrescar datos">
               <IconButton onClick={handleRefresh} size="large">
-                <RefreshIcon color="inherit" className={classes.block} />
+                <RefreshIcon color="inherit" sx={{ display: 'block' }} />
               </IconButton>
             </Tooltip>
           </Grid>
         </Grid>
       </Toolbar>
-    </AppBar>
+    </AppBarStyle>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Breakpoint, Theme, useMediaQuery } from '@material-ui/core';
+import { Breakpoint, Theme, useMediaQuery } from '@mui/material';
 import { ReactElement } from 'react';
 
 interface MHiddenProps {

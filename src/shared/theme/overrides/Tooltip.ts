@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
 
 export default function Tooltip(theme: Theme): unknown {
   return {

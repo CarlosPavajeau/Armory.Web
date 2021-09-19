@@ -9,7 +9,11 @@ import {
 export const createExplosive = async (
   data: CreateExplosiveRequest,
 ): Promise<void> => {
-  await HttpClient.post('/Explosives', data);
+  const response = await HttpClient.post('/Explosives', data);
+
+  if (!IsValidResponse(response)) {
+    throw new Error('No se pudo registrar el equipo especial o accesorio');
+  }
 };
 
 export const getExplosives = async (): Promise<Explosives> => {

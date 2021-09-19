@@ -7,5 +7,6 @@ export interface AuthenticationRequest {
 export interface AuthenticationPayload {
   isAuthenticate: boolean;
   role: string | string[] | undefined;
+  email: string | undefined;
   token: string | undefined;
 }

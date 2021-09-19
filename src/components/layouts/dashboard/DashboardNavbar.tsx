@@ -1,8 +1,8 @@
-import { AppBar, Stack, Toolbar } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
-import { alpha, styled } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Stack, Toolbar } from '@mui/material';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import { alpha, styled } from '@mui/material/styles';
 import MHidden from 'components/@material-extend/MHidden';
 import { ReactElement } from 'react';
 
@@ -44,6 +44,7 @@ const DashboardNavbar = (props: DashboardNavbarProps): ReactElement => {
           <IconButton
             onClick={onOpenSidebar}
             sx={{ mr: 1, color: 'text.primary' }}
+            size="large"
           >
             <MenuIcon />
           </IconButton>
