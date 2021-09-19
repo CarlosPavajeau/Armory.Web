@@ -12,9 +12,9 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import { useDegreesByRank } from 'modules/degrees/hooks';
 import { useFireteams } from 'modules/fireteams/hooks';
 import { useRanks } from 'modules/ranks/hooks';
-import { CreateTroopRequest } from 'modules/troopers/Models';
-import { createTroop } from 'modules/troopers/Service';
-import { apiError, registeredCorrectly } from 'modules/troopers/Slice';
+import { CreateTroopRequest } from 'modules/troopers/models';
+import { createTroop } from 'modules/troopers/service';
+import { apiError, registeredCorrectly } from 'modules/troopers/slice';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -38,7 +38,7 @@ const TroopForm = (): ReactElement => {
     secondName: Yup.string().required('Este campo es requerido'),
     lastName: Yup.string().required('Este campo es requerido'),
     secondLastName: Yup.string().required('Este campo es requerido'),
-    squadCode: Yup.string().required('Este campo es requerido'),
+    fireteamCode: Yup.string().required('Este campo es requerido'),
     degreeId: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Este campo es requerido'),
@@ -54,7 +54,7 @@ const TroopForm = (): ReactElement => {
       secondName: '',
       lastName: '',
       secondLastName: '',
-      squadCode: '',
+      fireteamCode: '',
       degreeId: 0,
       rankId: 0,
     },
@@ -136,8 +136,9 @@ const TroopForm = (): ReactElement => {
             <Select
               labelId="squad-label"
               label="Escuadra"
+              error={!!(errors.fireteamCode && touched.fireteamCode)}
               defaultValue=""
-              {...getFieldProps('squadCode')}
+              {...getFieldProps('fireteamCode')}
             >
               {squadsUiStatus === 'loading' && (
                 <MenuItem value="">
@@ -156,8 +157,10 @@ const TroopForm = (): ReactElement => {
                   );
                 })}
             </Select>
-            <FormHelperText error={!!(errors.squadCode && touched.squadCode)}>
-              {touched.squadCode && errors.squadCode}
+            <FormHelperText
+              error={!!(errors.fireteamCode && touched.fireteamCode)}
+            >
+              {touched.fireteamCode && errors.fireteamCode}
             </FormHelperText>
           </FormControl>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -166,6 +169,7 @@ const TroopForm = (): ReactElement => {
               <Select
                 labelId="rank-label"
                 label="Cargo de operación"
+                error={!!(errors.rankId && touched.rankId)}
                 defaultValue=""
                 {...getFieldProps('rankId')}
               >
@@ -196,6 +200,7 @@ const TroopForm = (): ReactElement => {
               <Select
                 labelId="degree-label"
                 label="Grado"
+                error={!!(errors.degreeId && touched.degreeId)}
                 defaultValue=""
                 {...getFieldProps('degreeId')}
               >
