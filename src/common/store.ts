@@ -13,6 +13,7 @@ import WarMaterialAndSpecialEquipmentAssigment from 'modules/formats/war-materia
 import WarMaterialDeliveryCertificate from 'modules/formats/war-material-delivery-certificate/Slice';
 import PeopleReducer from 'modules/people/Slice';
 import RanksReducer from 'modules/ranks/Slice';
+import SquadsReducer from 'modules/squads/slice';
 import TroopersReducer from 'modules/troopers/Slice';
 import UsersReducer from 'modules/users/Slice';
 
@@ -21,6 +22,7 @@ export const store = configureStore({
     auth: AuthReducer,
     application: ApplicationReducer,
     user: UsersReducer,
+    squads: SquadsReducer,
     flight: FlightsReducer,
     fireteams: FireteamsReducer,
     people: PeopleReducer,

@@ -4,10 +4,10 @@ import { CreateFlightRequest, Flights } from 'modules/flights/models';
 export const createFlight = async (
   data: CreateFlightRequest,
 ): Promise<void> => {
-  const response = await HttpClient.post('/Flight', data);
+  const response = await HttpClient.post('/Flights', data);
 
   if (!IsValidResponse(response)) {
-    throw new Error('No se pudo registrar le escuadrilla.');
+    throw new Error('No se pudo registrar la escuadrilla.');
   }
 };
 

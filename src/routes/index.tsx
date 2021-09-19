@@ -26,10 +26,12 @@ import {
   RegisterFlight,
   RegisterPerson,
   RegisterRank,
+  RegisterSquad,
   RegisterTroop,
   RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   RegisterWarMaterialDeliveryCertificateFormat,
   RegisterWeapon,
+  Squads,
   Troopers,
   Weapons,
 } from './LazyComponents';
@@ -77,11 +79,28 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
           ],
         },
         {
+          path: 'squads',
+          children: [
+            {
+              path: '',
+              element: <Navigate to="/dashboard/squads/all" />,
+            },
+            {
+              path: 'register',
+              element: <RegisterSquad />,
+            },
+            {
+              path: 'all',
+              element: <Squads />,
+            },
+          ],
+        },
+        {
           path: 'flights',
           children: [
             {
               path: '',
-              element: <Navigate to="/dashboard/squadrons/all" />,
+              element: <Navigate to="/dashboard/flights/all" />,
             },
             {
               path: 'register',

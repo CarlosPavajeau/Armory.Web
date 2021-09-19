@@ -5,6 +5,8 @@ const LoginComponent = lazy(() => import('pages/login/Login'));
 const RegisterFlightComponent = lazy(
   () => import('pages/flights/RegisterFlight'),
 );
+const RegisterSquadComponent = lazy(() => import('pages/squads/RegisterSquad'));
+const SquadsComponent = lazy(() => import('pages/squads/Squads'));
 const FlightsComponent = lazy(() => import('pages/flights/Flights'));
 const RegisterPersonComponent = lazy(
   () => import('pages/people/RegisterPerson'),
@@ -75,6 +77,18 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormatComponent = lazy(
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <LoginComponent />
+  </Suspense>
+);
+
+export const RegisterSquad = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <RegisterSquadComponent />
+  </Suspense>
+);
+
+export const Squads = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <SquadsComponent />
   </Suspense>
 );
 

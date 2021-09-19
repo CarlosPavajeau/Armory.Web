@@ -44,6 +44,21 @@ const sidebarConfig: SidebarConfigItem[] = [
     ],
   },
   {
+    title: 'Escuadrones',
+    path: '/dashboard/squads',
+    icon: <DashboardIcon />,
+    children: [
+      {
+        title: 'Registrar escuadrón',
+        path: '/dashboard/squads/register',
+      },
+      {
+        title: 'Consultar escuadrones',
+        path: '/dashboard/squads/all',
+      },
+    ],
+  },
+  {
     title: 'Escuadrillas',
     path: '/dashboard/flights',
     icon: <DashboardIcon />,
