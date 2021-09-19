@@ -22,10 +22,10 @@ const SelectTroopField = (props: SelectTroopFieldProps): ReactElement => {
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="troopId-label">Solicitante</InputLabel>
+      <InputLabel id="troopId-label">Entrega a</InputLabel>
       <Select
         labelId="troopId-label"
-        label="Solicitante"
+        label="Entrega a"
         error={!!(meta.error && meta.touched)}
         disabled={disabled}
         defaultValue=""
@@ -58,7 +58,9 @@ const SelectTroopField = (props: SelectTroopFieldProps): ReactElement => {
         )}
       </Select>
       <FormHelperText error={!!(meta.error && meta.touched)}>
-        {meta.error && meta.touched ? meta.error : 'Seleccione un aplicante'}
+        {meta.error && meta.touched
+          ? meta.error
+          : 'Seleccione un oficial, suboficial o soldado'}
       </FormHelperText>
     </FormControl>
   );
