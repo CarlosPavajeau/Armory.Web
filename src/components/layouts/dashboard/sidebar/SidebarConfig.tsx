@@ -45,16 +45,16 @@ const sidebarConfig: SidebarConfigItem[] = [
   },
   {
     title: 'Escuadrillas',
-    path: '/dashboard/squadrons',
+    path: '/dashboard/flights',
     icon: <DashboardIcon />,
     children: [
       {
         title: 'Registrar escuadrilla',
-        path: '/dashboard/squadrons/register',
+        path: '/dashboard/flights/register',
       },
       {
         title: 'Consultar escuadrillas',
-        path: '/dashboard/squadrons/all',
+        path: '/dashboard/flights/all',
       },
     ],
   },

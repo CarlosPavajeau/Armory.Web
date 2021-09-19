@@ -1,17 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
+import { Flights } from 'modules/flights/models';
 
-import { Squadrons } from './Models';
-
-export interface SquadronState {
+export interface FlightState {
   ui: UiStatus;
   error: string;
   wasRegistered: boolean;
-  data: Squadrons;
+  data: Flights;
 }
 
-const initialState: SquadronState = {
+const initialState: FlightState = {
   ui: 'idle',
   error: '',
   wasRegistered: false,
@@ -19,7 +18,7 @@ const initialState: SquadronState = {
 };
 
 export const slice = createSlice({
-  name: 'squadron',
+  name: 'flight',
   initialState,
   reducers: {
     registeredCorrectly: state => {
@@ -29,10 +28,10 @@ export const slice = createSlice({
       state.wasRegistered = false;
       state.error = '';
     },
-    loadingSquadrons: state => {
+    loadingFlights: state => {
       state.ui = 'loading';
     },
-    loadSquadrons: (state, action: PayloadAction<Squadrons>) => {
+    loadFlights: (state, action: PayloadAction<Flights>) => {
       state.ui = 'loaded';
       state.data = action.payload;
     },
@@ -47,15 +46,14 @@ export const {
   apiError,
   registeredCorrectly,
   resetRegister,
-  loadingSquadrons,
-  loadSquadrons,
+  loadingFlights,
+  loadFlights,
 } = slice.actions;
 
-export const selectError = (state: RootState): string => state.squadron.error;
+export const selectError = (state: RootState): string => state.flight.error;
 export const selectWasRegistered = (state: RootState): boolean =>
-  state.squadron.wasRegistered;
-export const selectSquadrons = (state: RootState): Squadrons =>
-  state.squadron.data;
-export const selectUiStatus = (state: RootState): UiStatus => state.squadron.ui;
+  state.flight.wasRegistered;
+export const selectFlights = (state: RootState): Flights => state.flight.data;
+export const selectUiStatus = (state: RootState): UiStatus => state.flight.ui;
 
 export default slice.reducer;

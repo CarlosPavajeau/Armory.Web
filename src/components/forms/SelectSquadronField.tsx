@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import CircularLoader from 'components/loading/CircularLoader';
 import { useField } from 'formik';
 import { FieldInputProps } from 'formik/dist/types';
-import { useSquadrons } from 'modules/squadrons/hooks';
+import { useFlights } from 'modules/flights/hooks';
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,7 +16,7 @@ interface SelectSquadronFieldProps extends FieldInputProps<any> {
 
 const SelectSquadronField = (props: SelectSquadronFieldProps): ReactElement => {
   const { disabled, ...others } = props;
-  const [squadrons, squadronsUiStatus] = useSquadrons();
+  const [squadrons, squadronsUiStatus] = useFlights();
   const [field, meta] = useField(others);
 
   return (

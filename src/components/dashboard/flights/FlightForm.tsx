@@ -9,37 +9,37 @@ import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { CreateFlightRequest } from 'modules/flights/models';
+import { createFlight } from 'modules/flights/service';
+import { apiError, registeredCorrectly } from 'modules/flights/slice';
 import { usePeopleByRank } from 'modules/people/hooks';
-import { CreateSquadronRequest } from 'modules/squadrons/Models';
-import { createSquadron } from 'modules/squadrons/Service';
-import { apiError, registeredCorrectly } from 'modules/squadrons/Slice';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-const SquadronForm = (): ReactElement => {
+const FlightForm = (): ReactElement => {
   const dispatch = useAppDispatch();
   const [people, peopleUiState] = usePeopleByRank('Comandante de Escuadrilla');
   const navigate = useNavigate();
 
-  const RegisterSquadronScheme = Yup.object().shape({
+  const RegisterFlightScheme = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),
     name: Yup.string().required('Este campo es requerido'),
     personId: Yup.string().required('Este campo es requerido'),
   });
 
-  const formik = useFormik<CreateSquadronRequest>({
+  const formik = useFormik<CreateFlightRequest>({
     initialValues: {
       code: '',
       name: '',
       personId: '',
     },
-    validationSchema: RegisterSquadronScheme,
-    onSubmit: async (values: CreateSquadronRequest) => {
+    validationSchema: RegisterFlightScheme,
+    onSubmit: async (values: CreateFlightRequest) => {
       try {
-        await createSquadron(values);
+        await createFlight(values);
         dispatch(registeredCorrectly());
-        navigate('/dashboard/squadrons/all');
+        navigate('/dashboard/flights/all');
       } catch (err: unknown) {
         dispatch(apiError((err as Error).message));
       }
@@ -137,4 +137,4 @@ const SquadronForm = (): ReactElement => {
   );
 };
 
-export default SquadronForm;
+export default FlightForm;

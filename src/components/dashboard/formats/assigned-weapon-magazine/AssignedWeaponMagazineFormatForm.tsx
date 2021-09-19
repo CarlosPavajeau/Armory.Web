@@ -13,10 +13,10 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useFlights } from 'modules/flights/hooks';
 import { CreateAssignedWeaponMagazineFormatRequest } from 'modules/formats/assigned-weapon-magazine/Models';
 import { createAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
 import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
-import { useSquadrons } from 'modules/squadrons/hooks';
 import { useSquadsBySquadron } from 'modules/squads/hooks';
 import moment from 'moment';
 import React, { ReactElement } from 'react';
@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const AssignedWeaponMagazineFormatForm = (): ReactElement => {
-  const [squadrons, squadronsUiStatus] = useSquadrons();
+  const [squadrons, squadronsUiStatus] = useFlights();
 
   const RegisterAssignedWeaponMagazineFormatSchema = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),

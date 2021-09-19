@@ -77,7 +77,7 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
           ],
         },
         {
-          path: 'squadrons',
+          path: 'flights',
           children: [
             {
               path: '',

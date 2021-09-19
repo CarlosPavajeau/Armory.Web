@@ -1,11 +1,11 @@
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import SquadronForm from 'components/dashboard/squadrons/SquadronForm';
+import FlightForm from 'components/dashboard/flights/FlightForm';
 import Page from 'components/Page';
 import { ReactElement } from 'react';
 
-const RegisterSquadron = (): ReactElement => {
+const RegisterFlight = (): ReactElement => {
   return (
     <Page title="Armería | Registro de escuadrillas">
       <Container>
@@ -15,10 +15,10 @@ const RegisterSquadron = (): ReactElement => {
           </Typography>
         </Stack>
 
-        <SquadronForm />
+        <FlightForm />
       </Container>
     </Page>
   );
 };
 
-export default RegisterSquadron;
+export default RegisterFlight;

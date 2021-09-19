@@ -10,8 +10,8 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useFlights } from 'modules/flights/hooks';
 import { usePeopleByRank } from 'modules/people/hooks';
-import { useSquadrons } from 'modules/squadrons/hooks';
 import { CreateSquadRequest } from 'modules/squads/Models';
 import { createSquad } from 'modules/squads/Service';
 import React, { ReactElement } from 'react';
@@ -20,7 +20,7 @@ import * as Yup from 'yup';
 
 const SquadForm = (): ReactElement => {
   const [people, peopleUiStatus] = usePeopleByRank('Comandante de Escuadra');
-  const [squadrons, squadronsUiStatus] = useSquadrons();
+  const [squadrons, squadronsUiStatus] = useFlights();
 
   const RegisterSquadScheme = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),

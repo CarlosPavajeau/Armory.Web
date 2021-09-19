@@ -2,10 +2,10 @@ import Fallback from 'components/routes/Fallback';
 import { lazy, ReactElement, Suspense } from 'react';
 
 const LoginComponent = lazy(() => import('pages/login/Login'));
-const RegisterSquadronComponent = lazy(
-  () => import('pages/squadron/RegisterSquadron'),
+const RegisterFlightComponent = lazy(
+  () => import('pages/flights/RegisterFlight'),
 );
-const SquadronsComponent = lazy(() => import('pages/squadron/Squadrons'));
+const FlightsComponent = lazy(() => import('pages/flights/Flights'));
 const RegisterPersonComponent = lazy(
   () => import('pages/people/RegisterPerson'),
 );
@@ -78,13 +78,13 @@ export const Login = (): ReactElement => (
 
 export const RegisterSquadron = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
-    <RegisterSquadronComponent />
+    <RegisterFlightComponent />
   </Suspense>
 );
 
 export const Squadrons = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
-    <SquadronsComponent />
+    <FlightsComponent />
   </Suspense>
 );
 

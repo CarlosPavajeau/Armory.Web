@@ -1,13 +1,13 @@
-export interface CreateSquadronRequest {
+export interface CreateFlightRequest {
   code: string;
   name: string;
   personId: string;
 }
 
-export interface Squadron {
+export interface Flight {
   code: string;
   name: string;
   ownerName: string;
 }
 
-export type Squadrons = Squadron[];
+export type Flights = Flight[];
