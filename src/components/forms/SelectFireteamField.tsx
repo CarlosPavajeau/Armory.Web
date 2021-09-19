@@ -18,13 +18,13 @@ interface SelectFireteamFieldProps extends FieldInputProps<any> {
 const SelectFireteamField = (props: SelectFireteamFieldProps): ReactElement => {
   const { flightCode, disabled, ...others } = props;
   const [field, meta] = useField(others);
-  const [squads, squadsUiStatus] = useFireteamsByFlight(flightCode);
+  const [fireteams, uiStatus] = useFireteamsByFlight(flightCode);
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="squadCode-label">Escuadra</InputLabel>
+      <InputLabel id="fireteamCode-label">Escuadra</InputLabel>
       <Select
-        labelId="squadCode-label"
+        labelId="fireteamCode-label"
         label="Escuadra"
         error={!!(meta.error && meta.touched)}
         disabled={disabled}
@@ -32,24 +32,22 @@ const SelectFireteamField = (props: SelectFireteamFieldProps): ReactElement => {
         {...field}
         {...others}
       >
-        {squadsUiStatus === 'loading' && (
+        {uiStatus === 'loading' && (
           <MenuItem value="">
             <CircularLoader size={40} message="Cargando escuadras" />
           </MenuItem>
         )}
-        {squadsUiStatus === 'apiError' && (
-          <MenuItem value="">No hay datos</MenuItem>
-        )}
-        {squadsUiStatus === 'loaded' &&
-          squads &&
-          squads.map(s => {
+        {uiStatus === 'apiError' && <MenuItem value="">No hay datos</MenuItem>}
+        {uiStatus === 'loaded' &&
+          fireteams &&
+          fireteams.map(s => {
             return (
               <MenuItem value={s.code} key={s.code}>
                 {s.name}
               </MenuItem>
             );
           })}
-        {squads && squads.length === 0 && (
+        {fireteams && fireteams.length === 0 && (
           <MenuItem value="">No hay datos</MenuItem>
         )}
       </Select>

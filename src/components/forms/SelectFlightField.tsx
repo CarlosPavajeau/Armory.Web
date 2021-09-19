@@ -16,14 +16,14 @@ interface SelectFlightFieldProps extends FieldInputProps<any> {
 
 const SelectFlightField = (props: SelectFlightFieldProps): ReactElement => {
   const { disabled, ...others } = props;
-  const [squadrons, squadronsUiStatus] = useFlights();
+  const [flights, uiStatus] = useFlights();
   const [field, meta] = useField(others);
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="squadronCode-label">Escuadrilla</InputLabel>
+      <InputLabel id="flightCode-label">Escuadrilla</InputLabel>
       <Select
-        labelId="squadronCode-label"
+        labelId="flightCode-label"
         label="Escuadrilla"
         error={!!(meta.error && meta.touched)}
         disabled={disabled}
@@ -31,18 +31,16 @@ const SelectFlightField = (props: SelectFlightFieldProps): ReactElement => {
         {...field}
         {...others}
       >
-        {squadronsUiStatus === 'loading' && (
+        {uiStatus === 'loading' && (
           <MenuItem value="">
             <CircularLoader size={40} message="Cargando escuadrillas" />
           </MenuItem>
         )}
-        {squadronsUiStatus === 'apiError' && (
-          <MenuItem value="">No hay datos</MenuItem>
-        )}
-        {squadronsUiStatus === 'loaded' &&
-          squadrons &&
-          squadrons.length > 0 &&
-          squadrons.map(s => {
+        {uiStatus === 'apiError' && <MenuItem value="">No hay datos</MenuItem>}
+        {uiStatus === 'loaded' &&
+          flights &&
+          flights.length > 0 &&
+          flights.map(s => {
             return (
               <MenuItem value={s.code} key={s.code}>
                 {s.name}

@@ -7,14 +7,14 @@ import {
   loadFlights,
   loadingFlights,
   selectFlights,
-  selectUiStatus as selectSquadronsUiStatus,
+  selectUiStatus,
 } from 'modules/flights/slice';
 import { useEffect } from 'react';
 
 export const useFlights = (): [Flights, UiStatus] => {
   const dispatch = useAppDispatch();
   const flights = useAppSelector(selectFlights);
-  const uiStatus = useAppSelector(selectSquadronsUiStatus);
+  const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
     (async () => {

@@ -86,8 +86,8 @@ const Flights = (): ReactElement => {
                   )}
                   {uiStatus === 'loaded' &&
                     flights.length > 0 &&
-                    flights.map(squadron => {
-                      const { code, name, ownerName } = squadron;
+                    flights.map(flight => {
+                      const { code, name, ownerName } = flight;
                       return (
                         <TableRow key={code} tabIndex={-1} hover>
                           <TableCell>{code}</TableCell>

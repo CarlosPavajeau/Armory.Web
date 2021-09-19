@@ -7,12 +7,12 @@ import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectFlightField from 'components/forms/SelectFlightField';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateFireteamRequest } from 'modules/fireteams/models';
 import { createFireteam } from 'modules/fireteams/service';
-import { useFlights } from 'modules/flights/hooks';
 import { usePeopleByRank } from 'modules/people/hooks';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -20,9 +20,8 @@ import * as Yup from 'yup';
 
 const FireteamForm = (): ReactElement => {
   const [people, peopleUiStatus] = usePeopleByRank('Comandante de Escuadra');
-  const [squadrons, squadronsUiStatus] = useFlights();
 
-  const RegisterSquadScheme = Yup.object().shape({
+  const RegisterFireteamScheme = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),
     name: Yup.string().required('Este campo es requerido'),
     flightCode: Yup.string().required('Este campo es requerido'),
@@ -37,7 +36,7 @@ const FireteamForm = (): ReactElement => {
       flightCode: '',
       personId: '',
     },
-    validationSchema: RegisterSquadScheme,
+    validationSchema: RegisterFireteamScheme,
     onSubmit: async values => {
       try {
         await createFireteam(values);
@@ -84,38 +83,10 @@ const FireteamForm = (): ReactElement => {
             fullWidth
           />
 
-          <FormControl fullWidth>
-            <InputLabel id="squadron-label">Escuadrilla</InputLabel>
-            <Select
-              labelId="squadron-label"
-              label="Escuadrilla"
-              error={!!(errors.flightCode && touched.flightCode)}
-              defaultValue=""
-              {...getFieldProps('squadronCode')}
-              fullWidth
-            >
-              {squadronsUiStatus === 'loading' && (
-                <MenuItem value="">
-                  <CircularLoader size={40} message="Cargando escuadrillas" />
-                </MenuItem>
-              )}
-              {squadronsUiStatus === 'loaded' &&
-                squadrons.length > 0 &&
-                squadrons &&
-                squadrons.map(p => {
-                  return (
-                    <MenuItem value={p.code} key={p.code}>
-                      {p.name}
-                    </MenuItem>
-                  );
-                })}
-            </Select>
-            <FormHelperText error={!!(errors.flightCode && touched.flightCode)}>
-              {errors.flightCode && touched.flightCode
-                ? errors.flightCode
-                : 'Seleccione la escuadrilla a la que pertenece'}
-            </FormHelperText>
-          </FormControl>
+          <SelectFlightField
+            disabled={isSubmitting}
+            {...getFieldProps('flightCode')}
+          />
 
           <FormControl fullWidth>
             <InputLabel id="person-label">Comandante</InputLabel>

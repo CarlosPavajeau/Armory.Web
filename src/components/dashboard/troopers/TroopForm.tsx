@@ -25,7 +25,7 @@ interface RegisterTroopFormValues extends CreateTroopRequest {
 
 const TroopForm = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [squads, squadsUiStatus] = useFireteams();
+  const [fireteams, fireteamsUiStatus] = useFireteams();
   const [ranks, ranksUiStatus] = useRanks();
 
   const navigate = useNavigate();
@@ -131,25 +131,26 @@ const TroopForm = (): ReactElement => {
               fullWidth
             />
           </Stack>
+
           <FormControl fullWidth>
-            <InputLabel id="squad-label">Escuadra</InputLabel>
+            <InputLabel id="fireteamCode-label">Escuadra</InputLabel>
             <Select
-              labelId="squad-label"
+              labelId="fireteamCode-label"
               label="Escuadra"
               error={!!(errors.fireteamCode && touched.fireteamCode)}
               defaultValue=""
               {...getFieldProps('fireteamCode')}
             >
-              {squadsUiStatus === 'loading' && (
+              {fireteamsUiStatus === 'loading' && (
                 <MenuItem value="">
                   <CircularLoader size={40} message="Cargando escuadras" />
                 </MenuItem>
               )}
-              {squadsUiStatus === 'loaded' &&
-                squads &&
-                squads.length > 0 &&
-                squads.map(squad => {
-                  const { code, name } = squad;
+              {fireteamsUiStatus === 'loaded' &&
+                fireteams &&
+                fireteams.length > 0 &&
+                fireteams.map(fireteam => {
+                  const { code, name } = fireteam;
                   return (
                     <MenuItem key={code} value={code}>
                       {name}

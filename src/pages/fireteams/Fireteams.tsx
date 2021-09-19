@@ -33,7 +33,7 @@ const Fireteams = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'squadronName', label: 'Escuadrilla', alignRight: false },
+    { id: 'flightName', label: 'Escuadrilla', alignRight: false },
     { id: 'ownerName', label: 'Comandante', alignRight: false },
   ];
 
@@ -87,8 +87,8 @@ const Fireteams = (): ReactElement => {
                   )}
                   {uiStatus === 'loaded' &&
                     fireteams.length > 0 &&
-                    fireteams.map(squad => {
-                      const { code, name, flightName, ownerName } = squad;
+                    fireteams.map(fireteam => {
+                      const { code, name, flightName, ownerName } = fireteam;
                       return (
                         <TableRow key={code} tabIndex={-1} hover>
                           <TableCell>{code}</TableCell>

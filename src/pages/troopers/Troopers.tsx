@@ -59,7 +59,7 @@ const Troopers = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'id', label: 'Id', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'squadName', label: 'Escuadra', alignRight: false },
+    { id: 'fireteamName', label: 'Escuadra', alignRight: false },
     { id: 'rankName', label: 'Cargo de operación', alignRight: false },
     { id: 'degreeName', label: 'Grado', alignRight: false },
   ];
