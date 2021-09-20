@@ -5,6 +5,7 @@ import { Warehouse } from '../war-material-and-special-equipment-assignment/Mode
 export interface CreateAssignedWeaponMagazineFormatRequest {
   code: string;
   validity: Moment;
+  squadCode: string;
   flightCode: string;
   fireteamCode: string;
   warehouse: Warehouse;

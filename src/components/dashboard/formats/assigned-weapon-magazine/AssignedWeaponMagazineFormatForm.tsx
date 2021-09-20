@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectFireteamField from 'components/forms/SelectFireteamField';
 import SelectFlightField from 'components/forms/SelectFlightField';
+import SelectSquadField from 'components/forms/SelectSquadField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateAssignedWeaponMagazineFormatRequest } from 'modules/formats/assigned-weapon-magazine/Models';
@@ -26,6 +27,7 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
   const RegisterAssignedWeaponMagazineFormatSchema = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),
     validity: Yup.date().required('Este campo es requerido'),
+    squadCode: Yup.string().required('Este campo es requerido'),
     flightCode: Yup.string().required('Este campo es requerido'),
     fireteamCode: Yup.string().required('Este campo es requerido'),
     warehouse: Yup.number().required('Este campo es requerido'),
@@ -37,6 +39,7 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
     initialValues: {
       code: '',
       validity: moment(),
+      squadCode: '',
       flightCode: '',
       fireteamCode: '',
       warehouse: Warehouse.Air,
@@ -103,6 +106,11 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
           </LocalizationProvider>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <SelectSquadField
+              disabled={isSubmitting}
+              {...getFieldProps('squadCode')}
+            />
+
             <SelectFlightField
               disabled={isSubmitting}
               {...getFieldProps('flightCode')}

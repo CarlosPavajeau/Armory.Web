@@ -24,6 +24,7 @@ export interface CreateWarMaterialDeliveryCertificateFormatRequest {
   validity: Moment;
   place: string;
   date: Moment;
+  squadCode: string;
   flightCode: string;
   fireteamCode: string;
   troopId: string;

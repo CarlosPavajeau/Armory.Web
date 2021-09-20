@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectFireteamField from 'components/forms/SelectFireteamField';
 import SelectFlightField from 'components/forms/SelectFlightField';
+import SelectSquadField from 'components/forms/SelectSquadField';
 import SelectTroopField from 'components/forms/SelectTroopField';
 import SelectWeaponsField from 'components/forms/SelectWeaponsField';
 import Fallback from 'components/routes/Fallback';
@@ -45,6 +46,7 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
       code: Yup.string().required('Este campo es requerido'),
       validity: Yup.date().required('Este campo es requerido'),
       place: Yup.string().required('Este campo es requerido'),
+      squadCode: Yup.string().required('Este campo es requerido'),
       flightCode: Yup.string().required('Este campo es requerido'),
       fireteamCode: Yup.string().required('Este campo es requerido'),
       troopId: Yup.string().required('Este campo es requerido'),
@@ -83,6 +85,7 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
       validity: moment(),
       place: '',
       date: moment(),
+      squadCode: '',
       flightCode: '',
       fireteamCode: '',
       troopId: '',
@@ -224,6 +227,11 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
           />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <SelectSquadField
+              disabled={isSubmitting}
+              {...getFieldProps('squadCode')}
+            />
+
             <SelectFlightField
               disabled={isSubmitting}
               {...getFieldProps('flightCode')}
@@ -231,7 +239,7 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
             <SelectFireteamField
               flightCode={values.flightCode}
               disabled={isSubmitting}
-              {...getFieldProps('fireTeamCode')}
+              {...getFieldProps('fireteamCode')}
             />
           </Stack>
 
