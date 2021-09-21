@@ -30,10 +30,7 @@ const AssignedWeaponMagazineFormatInfo = (
               Registro de formato de revista
             </Typography>
             <Typography variant="h5">
-              Formato No. {format && format.id}
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Código: {format && format?.code}
+              Formato No. {format && format.code}
             </Typography>
             <Typography variant="body1" color="textSecondary">
               Fecha: {format && moment(format.date).format('L')}

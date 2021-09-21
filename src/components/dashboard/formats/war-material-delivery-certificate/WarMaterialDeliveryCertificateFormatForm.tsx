@@ -176,7 +176,7 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
-            label="Código"
+            label="Formato No"
             helperText={
               errors.code && touched.code
                 ? errors.code
