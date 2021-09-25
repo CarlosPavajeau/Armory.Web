@@ -2,6 +2,7 @@ export interface CreateFlightRequest {
   code: string;
   name: string;
   personId: string;
+  squadCode: string;
 }
 
 export interface Flight {

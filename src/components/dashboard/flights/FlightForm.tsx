@@ -7,6 +7,7 @@ import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectSquadField from 'components/forms/SelectSquadField';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateFlightRequest } from 'modules/flights/models';
@@ -26,6 +27,7 @@ const FlightForm = (): ReactElement => {
     code: Yup.string().required('Este campo es requerido'),
     name: Yup.string().required('Este campo es requerido'),
     personId: Yup.string().required('Este campo es requerido'),
+    squadCode: Yup.string().required('Este campo es requerido'),
   });
 
   const formik = useFormik<CreateFlightRequest>({
@@ -33,6 +35,7 @@ const FlightForm = (): ReactElement => {
       code: '',
       name: '',
       personId: '',
+      squadCode: '',
     },
     validationSchema: RegisterFlightScheme,
     onSubmit: async (values: CreateFlightRequest) => {
@@ -78,6 +81,12 @@ const FlightForm = (): ReactElement => {
             {...getFieldProps('name')}
             fullWidth
           />
+
+          <SelectSquadField
+            disabled={isSubmitting}
+            {...getFieldProps('squadCode')}
+          />
+
           <FormControl fullWidth>
             <InputLabel id="person-label">Comandante</InputLabel>
             <Select
