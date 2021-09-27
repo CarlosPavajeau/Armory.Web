@@ -50,8 +50,8 @@ export const checkExists = async (code: string): Promise<boolean> => {
   }
 };
 
-export const generateQr = async (code: string): Promise<Blob> => {
-  const response = await HttpClient.get<Blob>(`/Weapons/GenerateQr/${code}`, {
+export const generateQr = async (series: string): Promise<Blob> => {
+  const response = await HttpClient.get<Blob>(`/Weapons/GenerateQr/${series}`, {
     responseType: 'blob',
   });
   if (IsValidResponse(response)) {

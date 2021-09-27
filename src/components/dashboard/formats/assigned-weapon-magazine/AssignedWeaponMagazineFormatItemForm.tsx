@@ -45,7 +45,7 @@ const AssignedWeaponMagazineFormatItemForm = (
     initialValues: {
       formatId,
       troopId: weapon?.ownerId || '',
-      weaponCode: weapon?.code || '',
+      weaponSeries: weapon?.series || '',
       safetyCartridge: false,
       verifiedInPhysical: false,
       novelty: false,
@@ -57,7 +57,7 @@ const AssignedWeaponMagazineFormatItemForm = (
     onSubmit: async values => {
       try {
         values.troopId = weapon != null ? weapon.ownerId : '';
-        values.weaponCode = weapon != null ? weapon.code : '';
+        values.weaponSeries = weapon != null ? weapon.series : '';
         const result = await addAssignedWeaponMagazineFormatItem(values);
         onSuccess(result);
       } catch (err) {

@@ -55,10 +55,10 @@ const Weapons = (): ReactElement => {
     { id: 'caliber', label: 'Calibre', alignRight: false },
   ];
 
-  const generateWeaponQr = async (code: string) => {
+  const generateWeaponQr = async (series: string) => {
     try {
-      const result = await generateQr(code);
-      FileSaver.saveAs(result, `qr-${code}.pdf`);
+      const result = await generateQr(series);
+      FileSaver.saveAs(result, `qr-${series}.pdf`);
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
         Consola.error(err);
@@ -135,7 +135,7 @@ const Weapons = (): ReactElement => {
                           <TableCell>
                             <Tooltip title="Generar y descargar código QR">
                               <IconButton
-                                onClick={() => generateWeaponQr(code)}
+                                onClick={() => generateWeaponQr(series)}
                                 size="large"
                               >
                                 <GetAppIcon />
