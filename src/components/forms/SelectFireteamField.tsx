@@ -40,10 +40,11 @@ const SelectFireteamField = (props: SelectFireteamFieldProps): ReactElement => {
         {uiStatus === 'apiError' && <MenuItem value="">No hay datos</MenuItem>}
         {uiStatus === 'loaded' &&
           fireteams &&
-          fireteams.map(s => {
+          fireteams.map(fireteam => {
+            const { code, name } = fireteam;
             return (
-              <MenuItem value={s.code} key={s.code}>
-                {s.name}
+              <MenuItem value={code} key={code}>
+                {code} - {name}
               </MenuItem>
             );
           })}

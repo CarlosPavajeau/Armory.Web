@@ -40,10 +40,11 @@ const SelectFlightField = (props: SelectFlightFieldProps): ReactElement => {
         {uiStatus === 'loaded' &&
           flights &&
           flights.length > 0 &&
-          flights.map(s => {
+          flights.map(flight => {
+            const { code, name } = flight;
             return (
-              <MenuItem value={s.code} key={s.code}>
-                {s.name}
+              <MenuItem value={code} key={code}>
+                {code} - {name}
               </MenuItem>
             );
           })}

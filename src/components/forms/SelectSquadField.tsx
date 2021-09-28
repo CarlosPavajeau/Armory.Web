@@ -40,10 +40,11 @@ const SelectSquadField = (props: SelectSquadFieldProps): ReactElement => {
         {uiStatus === 'loaded' &&
           squads &&
           squads.length > 0 &&
-          squads.map(s => {
+          squads.map(squad => {
+            const { code, name } = squad;
             return (
-              <MenuItem value={s.code} key={s.code}>
-                {s.name}
+              <MenuItem value={code} key={code}>
+                {code} - {name}
               </MenuItem>
             );
           })}
