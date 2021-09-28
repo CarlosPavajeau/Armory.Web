@@ -49,7 +49,7 @@ const SelectWeaponsField = (props: SelectWeaponsFieldProps): ReactElement => {
           weapons.map(weapon => {
             const { code, series, type, model, caliber } = weapon;
             return (
-              <MenuItem value={code} key={code}>
+              <MenuItem value={series} key={series}>
                 Código: {code}, Serial: {series}, Tipo: {type}, Modelo: {model},
                 Calibre: {caliber}
               </MenuItem>
