@@ -58,9 +58,9 @@ const People = (): ReactElement => {
 
   const HEAD: HeadLabel[] = [
     { id: 'id', label: 'Id', alignRight: false },
-    { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'rankName', label: 'Cargo de operaciones', alignRight: false },
     { id: 'degreeName', label: 'Grado', alignRight: false },
+    { id: 'rankName', label: 'Cargo de operaciones', alignRight: false },
+    { id: 'name', label: 'Nombre', alignRight: false },
     { id: '' },
   ];
 
@@ -150,12 +150,12 @@ const People = (): ReactElement => {
                         return (
                           <TableRow key={id} tabIndex={-1} hover>
                             <TableCell>{id}</TableCell>
+                            <TableCell>{degreeName}</TableCell>
+                            <TableCell>{rankName}</TableCell>
                             <TableCell>
                               {firstName} {secondName} {lastName}{' '}
                               {secondLastName}
                             </TableCell>
-                            <TableCell>{rankName}</TableCell>
-                            <TableCell>{degreeName}</TableCell>
 
                             <TableCell align="right">
                               <PersonMoreMenu

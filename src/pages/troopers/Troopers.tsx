@@ -58,10 +58,10 @@ const Troopers = (): ReactElement => {
 
   const HEAD: HeadLabel[] = [
     { id: 'id', label: 'Id', alignRight: false },
+    { id: 'degreeName', label: 'Grado', alignRight: false },
+    { id: 'rankName', label: 'Cargo de operación', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'fireteamName', label: 'Escuadra', alignRight: false },
-    { id: 'rankName', label: 'Cargo de operación', alignRight: false },
-    { id: 'degreeName', label: 'Grado', alignRight: false },
   ];
 
   const isTroopNotFound = filteredTroopers.length === 0;
@@ -135,13 +135,13 @@ const Troopers = (): ReactElement => {
                         return (
                           <TableRow key={id} tabIndex={-1} hover>
                             <TableCell>{id}</TableCell>
+                            <TableCell>{degreeName}</TableCell>
+                            <TableCell>{rankName}</TableCell>
                             <TableCell>
                               {firstName} {secondName} {lastName}{' '}
                               {secondLastName}
                             </TableCell>
                             <TableCell>{fireteamName}</TableCell>
-                            <TableCell>{rankName}</TableCell>
-                            <TableCell>{degreeName}</TableCell>
                           </TableRow>
                         );
                       })}
