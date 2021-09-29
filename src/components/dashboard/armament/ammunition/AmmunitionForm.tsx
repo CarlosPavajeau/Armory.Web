@@ -2,6 +2,7 @@ import { LoadingButton } from '@mui/lab';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectFlightField from 'components/forms/SelectFlightField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateAmmunitionRequest } from 'modules/armament/ammunition/models';
@@ -17,6 +18,7 @@ const AmmunitionForm = (): ReactElement => {
     mark: Yup.string().required('Este campo es requerido'),
     caliber: Yup.string().required('Este campo es requerido'),
     quantityAvailable: Yup.number().required('Este campo es requerido'),
+    flightCode: Yup.string().required('Este campo es requerido'),
   });
 
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ const AmmunitionForm = (): ReactElement => {
       mark: '',
       caliber: '',
       quantityAvailable: 0,
+      flightCode: '',
     },
     validationSchema: RegisterAmmunitionSchema,
     onSubmit: async values => {
@@ -106,6 +109,11 @@ const AmmunitionForm = (): ReactElement => {
             disabled={isSubmitting}
             {...getFieldProps('quantityAvailable')}
             fullWidth
+          />
+
+          <SelectFlightField
+            disabled={isSubmitting}
+            {...getFieldProps('flightCode')}
           />
 
           <ApiErrors />

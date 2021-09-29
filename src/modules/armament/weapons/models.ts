@@ -6,6 +6,7 @@ export interface CreateWeaponRequest {
   caliber: string;
   numberOfProviders: number;
   providerCapacity: number;
+  flightCode: string;
 }
 
 export type UpdateWeaponRequest = CreateWeaponRequest;
@@ -14,4 +15,5 @@ export interface Weapon extends CreateWeaponRequest {
   ownerId: string;
   ownerName: string;
 }
+
 export type Weapons = Weapon[];

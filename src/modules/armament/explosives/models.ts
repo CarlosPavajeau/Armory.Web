@@ -5,6 +5,7 @@ export interface CreateExplosiveRequest {
   mark: string;
   lot: string;
   quantityAvailable: number;
+  flightCode: string;
 }
 
 export type UpdateExplosiveRequest = CreateExplosiveRequest;

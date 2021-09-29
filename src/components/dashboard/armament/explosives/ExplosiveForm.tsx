@@ -2,6 +2,7 @@ import { LoadingButton } from '@mui/lab';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectFlightField from 'components/forms/SelectFlightField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateExplosiveRequest } from 'modules/armament/explosives/models';
@@ -20,6 +21,7 @@ const ExplosiveForm = (): ReactElement => {
     quantityAvailable: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Este campo es requerido'),
+    flightCode: Yup.string().required('Este campo es requerido'),
   });
 
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const ExplosiveForm = (): ReactElement => {
       caliber: '',
       lot: '',
       quantityAvailable: 0,
+      flightCode: '',
     },
     validationSchema: RegisterExplosiveSchema,
     onSubmit: async values => {
@@ -123,6 +126,11 @@ const ExplosiveForm = (): ReactElement => {
             disabled={isSubmitting}
             {...getFieldProps('quantityAvailable')}
             fullWidth
+          />
+
+          <SelectFlightField
+            disabled={isSubmitting}
+            {...getFieldProps('flightCode')}
           />
 
           <ApiErrors />

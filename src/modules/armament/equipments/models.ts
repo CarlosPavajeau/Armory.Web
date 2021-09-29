@@ -3,6 +3,7 @@ export interface CreateEquipmentRequest {
   type: string;
   model: string;
   quantityAvailable: number;
+  flightCode: string;
 }
 
 export type UpdateEquipmentRequest = CreateEquipmentRequest;

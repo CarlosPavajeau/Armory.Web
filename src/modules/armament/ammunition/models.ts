@@ -4,6 +4,7 @@ export interface CreateAmmunitionRequest {
   mark: string;
   caliber: string;
   quantityAvailable: number;
+  flightCode: string;
 }
 
 export type UpdateAmmunitionRequest = CreateAmmunitionRequest;
