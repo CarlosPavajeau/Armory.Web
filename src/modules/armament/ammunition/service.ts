@@ -24,6 +24,19 @@ export const getAmmunition = async (): Promise<Ammunition[]> => {
   throw new Error('No se pudieron obtener las municiones.');
 };
 
+export const getAmmunitionByFlight = async (
+  flightCode: string,
+): Promise<Ammunition[]> => {
+  const response = await HttpClient.get<Ammunition[]>(
+    `/Ammunition/ByFlight/${flightCode}`,
+  );
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener las municiones.');
+};
+
 export const getOneAmmunition = async (code: string): Promise<Ammunition> => {
   const response = await HttpClient.get<Ammunition>(`/Ammunition/${code}`);
   if (IsValidResponse(response)) {

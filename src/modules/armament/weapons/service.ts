@@ -29,6 +29,19 @@ export const getWeapons = async (): Promise<Weapons> => {
   throw new Error('No se pudieron obtener las armas.');
 };
 
+export const getWeaponsByFlight = async (
+  flightCode: string,
+): Promise<Weapons> => {
+  const response = await HttpClient.get<Weapons>(
+    `/Weapons/ByFlight/${flightCode}`,
+  );
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener las armas.');
+};
+
 export const getWeapon = async (code: string): Promise<Weapon> => {
   const response = await HttpClient.get<Weapon>(`/Weapons/${code}`);
   if (IsValidResponse(response)) {

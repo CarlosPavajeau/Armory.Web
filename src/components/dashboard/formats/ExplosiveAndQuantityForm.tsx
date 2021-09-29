@@ -9,20 +9,21 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useExplosives } from 'modules/armament/explosives/hooks';
+import { useExplosivesByFlight } from 'modules/armament/explosives/hooks';
 import { ExplosiveAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 
 interface ExplosiveAndQuantityFormProps {
+  flightCode: string;
   onSuccess: (item: ExplosiveAndQuantity | null) => void;
 }
 
 const ExplosiveAndQuantityForm = (
   props: ExplosiveAndQuantityFormProps,
 ): ReactElement => {
-  const { onSuccess } = props;
-  const [explosives, explosivesUiStatus] = useExplosives();
+  const { flightCode, onSuccess } = props;
+  const [explosives, explosivesUiStatus] = useExplosivesByFlight(flightCode);
 
   const ExplosivesAndQuantitySchema = Yup.object().shape({
     explosiveCode: Yup.string().required('Este campo es requerido'),

@@ -11,18 +11,19 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import CircularLoader from 'components/loading/CircularLoader';
 import { useField } from 'formik';
 import { FieldInputProps } from 'formik/dist/types';
-import { useWeapons } from 'modules/armament/weapons/hooks';
+import { useWeaponsByFlight } from 'modules/armament/weapons/hooks';
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface SelectWeaponsFieldProps extends FieldInputProps<any> {
+  flightCode: string;
   handleSelect: (event: SelectChangeEvent<string[]>) => void;
   disabled: boolean;
 }
 
 const SelectWeaponsField = (props: SelectWeaponsFieldProps): ReactElement => {
-  const { handleSelect, disabled, ...others } = props;
-  const [weapons, weaponsUiStatus] = useWeapons();
+  const { flightCode, handleSelect, disabled, ...others } = props;
+  const [weapons, weaponsUiStatus] = useWeaponsByFlight(flightCode);
   const [field, meta] = useField(others);
 
   return (

@@ -169,18 +169,21 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
       <Suspense fallback={<Fallback />}>
         {ammunitionDialogOpen ? (
           <AmmunitionAndQuantityDialog
+            flightCode={values.flightCode}
             open={ammunitionDialogOpen}
             onClose={handleOnCloseAmmunitionDialog}
           />
         ) : null}
         {equipmentsDialogOpen ? (
           <EquipmentAndQuantityDialog
+            flightCode={values.flightCode}
             open={equipmentsDialogOpen}
             onClose={handleOnCloseEquipmentsDialog}
           />
         ) : null}
         {explosivesDialogOpen ? (
           <ExplosiveAndQuantityDialog
+            flightCode={values.flightCode}
             open={explosivesDialogOpen}
             onClose={handleOnCloseExplosivesDialog}
           />
@@ -341,6 +344,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
           />
 
           <SelectWeaponsField
+            flightCode={values.flightCode}
             handleSelect={handleSelectWeapon}
             disabled={isSubmitting}
             {...getFieldProps('weapons')}

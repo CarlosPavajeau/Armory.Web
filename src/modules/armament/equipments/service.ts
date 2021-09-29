@@ -22,6 +22,19 @@ export const getEquipments = async (): Promise<Equipments> => {
   throw new Error('No se pudieron obtener los equipos.');
 };
 
+export const getEquipmentsByFlight = async (
+  flightCode: string,
+): Promise<Equipments> => {
+  const response = await HttpClient.get<Equipments>(
+    `/Equipments/ByFlight/${flightCode}`,
+  );
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener los equipos.');
+};
+
 export const getEquipment = async (code: string): Promise<Equipment> => {
   const response = await HttpClient.get<Equipment>(`/Equipments/${code}`);
   if (IsValidResponse(response)) {

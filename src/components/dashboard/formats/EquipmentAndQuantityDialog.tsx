@@ -6,6 +6,7 @@ import { EquipmentAndQuantity } from 'modules/formats/war-material-delivery-cert
 import { ReactElement } from 'react';
 
 interface EquipmentAndQuantityDialogProps {
+  flightCode: string;
   open: boolean;
   onClose: (item: EquipmentAndQuantity | null) => void;
 }
@@ -17,7 +18,7 @@ const RootContent = styled('div')(({ theme }) => ({
 const EquipmentAndQuantityDialog = (
   props: EquipmentAndQuantityDialogProps,
 ): ReactElement => {
-  const { open, onClose } = props;
+  const { flightCode, open, onClose } = props;
 
   const handleClose = () => {
     onClose(null);
@@ -28,7 +29,10 @@ const EquipmentAndQuantityDialog = (
       <DialogTitle>Añadir equipo</DialogTitle>
       <DialogContent>
         <RootContent>
-          <EquipmentAndQuantityForm onSuccess={onClose} />
+          <EquipmentAndQuantityForm
+            flightCode={flightCode}
+            onSuccess={onClose}
+          />
           <Button
             color="secondary"
             variant="outlined"

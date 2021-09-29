@@ -9,20 +9,21 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useEquipments } from 'modules/armament/equipments/hooks';
+import { useEquipmentsByFlight } from 'modules/armament/equipments/hooks';
 import { EquipmentAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 
 interface EquipmentAndQuantityFormProps {
+  flightCode: string;
   onSuccess: (item: EquipmentAndQuantity | null) => void;
 }
 
 const EquipmentAndQuantityForm = (
   props: EquipmentAndQuantityFormProps,
 ): ReactElement => {
-  const { onSuccess } = props;
-  const [equipments, equipmentsUiStatus] = useEquipments();
+  const { flightCode, onSuccess } = props;
+  const [equipments, equipmentsUiStatus] = useEquipmentsByFlight(flightCode);
 
   const EquipmentAndQuantitySchema = Yup.object().shape({
     equipmentSerial: Yup.string().required('Este campo es requerido'),

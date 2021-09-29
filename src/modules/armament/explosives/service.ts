@@ -25,6 +25,19 @@ export const getExplosives = async (): Promise<Explosives> => {
   throw new Error('No se pudieron obtener los explosivos.');
 };
 
+export const getExplosivesByFlight = async (
+  flightCode: string,
+): Promise<Explosives> => {
+  const response = await HttpClient.get<Explosives>(
+    `/Explosives/ByFlight/${flightCode}`,
+  );
+  if (IsValidResponse(response)) {
+    return response.data;
+  }
+
+  throw new Error('No se pudieron obtener los explosivos.');
+};
+
 export const getExplosive = async (code: string): Promise<Explosive> => {
   const response = await HttpClient.get<Explosive>(`/Explosives/${code}`);
   if (IsValidResponse(response)) {

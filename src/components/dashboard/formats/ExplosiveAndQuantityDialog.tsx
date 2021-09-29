@@ -6,6 +6,7 @@ import { ExplosiveAndQuantity } from 'modules/formats/war-material-delivery-cert
 import { ReactElement } from 'react';
 
 interface ExplosiveAndQuantityDialogProps {
+  flightCode: string;
   open: boolean;
   onClose: (item: ExplosiveAndQuantity | null) => void;
 }
@@ -17,7 +18,7 @@ const RootContent = styled('div')(({ theme }) => ({
 const ExplosiveAndQuantityDialog = (
   props: ExplosiveAndQuantityDialogProps,
 ): ReactElement => {
-  const { open, onClose } = props;
+  const { flightCode, open, onClose } = props;
 
   const handleClose = () => {
     onClose(null);
@@ -28,7 +29,10 @@ const ExplosiveAndQuantityDialog = (
       <DialogTitle>Añadir explosivo</DialogTitle>
       <DialogContent>
         <RootContent>
-          <ExplosiveAndQuantityForm onSuccess={onClose} />
+          <ExplosiveAndQuantityForm
+            flightCode={flightCode}
+            onSuccess={onClose}
+          />
           <Button
             color="secondary"
             variant="outlined"

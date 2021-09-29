@@ -9,20 +9,21 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useAmmunition } from 'modules/armament/ammunition/hooks';
+import { useAmmunitionByFlight } from 'modules/armament/ammunition/hooks';
 import { AmmunitionAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 
 interface AmmunitionAndQuantityFormProps {
+  flightCode: string;
   onSuccess: (item: AmmunitionAndQuantity | null) => void;
 }
 
 const AmmunitionAndQuantityForm = (
   props: AmmunitionAndQuantityFormProps,
 ): ReactElement => {
-  const { onSuccess } = props;
-  const [ammunition, ammunitionUiStatus] = useAmmunition();
+  const { flightCode, onSuccess } = props;
+  const [ammunition, ammunitionUiStatus] = useAmmunitionByFlight(flightCode);
 
   const AmmunitionAndQuantitySchema = Yup.object().shape({
     ammunitionLot: Yup.string().required('Este campo es requerido'),

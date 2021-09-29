@@ -2,7 +2,11 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
 import { Weapon, Weapons } from 'modules/armament/weapons/models';
-import { getWeapon, getWeapons } from 'modules/armament/weapons/service';
+import {
+  getWeapon,
+  getWeapons,
+  getWeaponsByFlight,
+} from 'modules/armament/weapons/service';
 import {
   loadingWeapon,
   loadingWeapons,
@@ -34,6 +38,31 @@ export const useWeapons = (): [Weapons, UiStatus] => {
       }
     })();
   }, [dispatch]);
+
+  return [weapons, weaponUiStatus];
+};
+
+export const useWeaponsByFlight = (flightCode: string): [Weapons, UiStatus] => {
+  const dispatch = useAppDispatch();
+  const weapons = useAppSelector(selectWeapons);
+  const weaponUiStatus = useAppSelector(selectWeaponUiStatus);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (flightCode) {
+          dispatch(loadingWeapons());
+          const result = await getWeaponsByFlight(flightCode);
+          dispatch(loadWeapons(result));
+        }
+      } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+          Consola.error(err);
+        }
+        dispatch(operationFailure('Error de operación.'));
+      }
+    })();
+  }, [dispatch, flightCode]);
 
   return [weapons, weaponUiStatus];
 };
