@@ -16,7 +16,7 @@ export interface CreateAssignedWeaponMagazineFormatRequest {
 export interface AddAssignedWeaponMagazineFormatItemRequest {
   formatId: number;
   troopId: string;
-  weaponSeries: string;
+  weaponSerial: string;
   safetyCartridge: boolean;
   verifiedInPhysical: boolean;
   novelty: boolean;

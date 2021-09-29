@@ -51,5 +51,5 @@ export const checkExists = async (code: string): Promise<boolean> => {
 export const updateOneAmmunition = async (
   data: UpdateAmmunitionRequest,
 ): Promise<void> => {
-  await HttpClient.put(`/Ammunition/${data.code}`, data);
+  await HttpClient.put(`/Ammunition/${data.lot}`, data);
 };

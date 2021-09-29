@@ -19,15 +19,14 @@ const AssignedWeaponMagazineFormatWeaponInfo = (
           <Typography variant="h5" gutterBottom>
             Arma a verificar
           </Typography>
-          <Typography variant="h6">Código: {weapon && weapon.code}</Typography>
+          <Typography variant="body1" color="textSecondary">
+            Número de serie: {weapon && weapon.serial}
+          </Typography>
           <Typography variant="body1" color="textSecondary">
             Tipo: {weapon && weapon.type}
           </Typography>
           <Typography variant="body1" color="textSecondary">
             Calibre: {weapon && weapon.caliber}
-          </Typography>
-          <Typography variant="body1" color="textSecondary">
-            Número de serie: {weapon && weapon.series}
           </Typography>
           <Typography variant="body1" color="textSecondary">
             Asignada a: {weapon && `${weapon.ownerId} - ${weapon.ownerName}`}

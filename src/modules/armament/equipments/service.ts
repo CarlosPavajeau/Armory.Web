@@ -49,5 +49,5 @@ export const checkExists = async (code: string): Promise<boolean> => {
 export const updateEquipment = async (
   data: UpdateEquipmentRequest,
 ): Promise<void> => {
-  await HttpClient.put(`/Equipments/${data.code}`, data);
+  await HttpClient.put(`/Equipments/${data.serial}`, data);
 };

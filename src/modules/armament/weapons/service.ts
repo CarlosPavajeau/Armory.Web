@@ -51,8 +51,8 @@ export const checkExists = async (code: string): Promise<boolean> => {
   }
 };
 
-export const generateQr = async (series: string): Promise<Blob> => {
-  const response = await HttpClient.get<Blob>(`/Weapons/GenerateQr/${series}`, {
+export const generateQr = async (serial: string): Promise<Blob> => {
+  const response = await HttpClient.get<Blob>(`/Weapons/GenerateQr/${serial}`, {
     responseType: 'blob',
   });
   if (IsValidResponse(response)) {
@@ -65,5 +65,5 @@ export const generateQr = async (series: string): Promise<Blob> => {
 export const updateWeapon = async (
   data: UpdateWeaponRequest,
 ): Promise<void> => {
-  await HttpClient.put(`/Weapons/${data.code}`, data);
+  await HttpClient.put(`/Weapons/${data.serial}`, data);
 };
