@@ -45,11 +45,19 @@ const SelectTroopField = (props: SelectTroopFieldProps): ReactElement => {
         )}
         {troopersUiStatus === 'loaded' &&
           troopers &&
-          troopers.map(s => {
+          troopers.map(troop => {
+            const {
+              id,
+              firstName,
+              secondName,
+              lastName,
+              secondLastName,
+              degreeName,
+            } = troop;
             return (
-              <MenuItem value={s.id} key={s.id}>
-                {s.id} - {s.firstName} {s.secondName} {s.lastName}{' '}
-                {s.secondLastName}
+              <MenuItem key={id} value={id}>
+                {degreeName}, {id} - {firstName} {secondName} {lastName}{' '}
+                {secondLastName}
               </MenuItem>
             );
           })}
