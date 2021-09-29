@@ -5,20 +5,19 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import Consola from 'consola';
 import FileSaver from 'file-saver';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { CreateWeaponRequest } from 'modules/armament/weapons/Models';
-import { createWeapon } from 'modules/armament/weapons/Service';
+import { CreateWeaponRequest } from 'modules/armament/weapons/models';
+import { createWeapon } from 'modules/armament/weapons/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const WeaponForm = (): ReactElement => {
   const RegisterWeaponSchema = Yup.object().shape({
-    code: Yup.string().required('Este campo es requerido'),
+    serial: Yup.string().required('Este campo es requerido'),
     type: Yup.string().required('Este campo es requerido'),
     mark: Yup.string().required('Este campo es requerido'),
     model: Yup.string().required('Este campo es requerido'),
     caliber: Yup.string().required('Este campo es requerido'),
-    series: Yup.string().required('Este campo es requerido'),
     numberOfProviders: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Este campo es requerido'),
@@ -30,12 +29,11 @@ const WeaponForm = (): ReactElement => {
   const navigate = useNavigate();
   const formik = useFormik<CreateWeaponRequest>({
     initialValues: {
-      code: '',
+      serial: '',
       type: '',
       mark: '',
       model: '',
       caliber: '',
-      series: '',
       numberOfProviders: 0,
       providerCapacity: 0,
     },
@@ -43,7 +41,7 @@ const WeaponForm = (): ReactElement => {
     onSubmit: async values => {
       try {
         const result = await createWeapon(values);
-        FileSaver.saveAs(result, `qr-${values.code}.pdf`);
+        FileSaver.saveAs(result, `qr-${values.serial}.pdf`);
         navigate('/dashboard/weapons/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
@@ -60,17 +58,18 @@ const WeaponForm = (): ReactElement => {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
-            label="Código"
+            label="Número de serie"
             helperText={
-              errors.code && touched.code
-                ? errors.code
-                : 'Digite el código del arma'
+              errors.serial && touched.serial
+                ? errors.serial
+                : 'Digite el número de serie del arma'
             }
-            error={!!(errors.code && touched.code)}
+            error={!!(errors.serial && touched.serial)}
             disabled={isSubmitting}
-            {...getFieldProps('code')}
+            {...getFieldProps('serial')}
             fullWidth
           />
+
           <TextField
             label="Tipo"
             helperText={
@@ -119,18 +118,7 @@ const WeaponForm = (): ReactElement => {
             {...getFieldProps('caliber')}
             fullWidth
           />
-          <TextField
-            label="Número de serie"
-            helperText={
-              errors.series && touched.series
-                ? errors.series
-                : 'Digite el número de serie del arma'
-            }
-            error={!!(errors.series && touched.series)}
-            disabled={isSubmitting}
-            {...getFieldProps('series')}
-            fullWidth
-          />
+
           <TextField
             label="Número de proveedores"
             helperText={

@@ -1,10 +1,11 @@
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
 import {
   CreateWeaponRequest,
   UpdateWeaponRequest,
   Weapon,
   Weapons,
-} from './Models';
+} from 'modules/armament/weapons/models';
+
+import HttpClient, { IsValidResponse } from '../../../common/config/http';
 
 export const createWeapon = async (
   data: CreateWeaponRequest,

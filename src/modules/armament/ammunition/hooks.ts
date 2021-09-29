@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { Ammunition } from 'modules/armament/ammunition/Models';
-import { getAmmunition } from 'modules/armament/ammunition/Service';
+import { Ammunition } from 'modules/armament/ammunition/models';
+import { getAmmunition } from 'modules/armament/ammunition/service';
 import {
   apiError,
   loadAmmunition,
   loadingAmmunition,
   selectAmmunition,
   selectUiStatus,
-} from 'modules/armament/ammunition/Slice';
+} from 'modules/armament/ammunition/slice';
 import { useEffect } from 'react';
 
 export const useAmmunition = (): [Ammunition[], UiStatus] => {

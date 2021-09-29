@@ -1,10 +1,9 @@
 export interface CreateWeaponRequest {
-  code: string;
+  serial: string;
   type: string;
   mark: string;
   model: string;
   caliber: string;
-  series: string;
   numberOfProviders: number;
   providerCapacity: number;
 }

@@ -28,8 +28,6 @@ export interface CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest {
   date: Moment;
   squadCode: string;
   flightCode: string;
-  fireteamCode: string;
-  troopId: string;
   warehouse: Warehouse;
   purpose: Purpose;
   docMovement: DocMovement;

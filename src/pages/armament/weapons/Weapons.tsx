@@ -20,7 +20,7 @@ import Scrollbar from 'components/scrollbar/Scrollbar';
 import Consola from 'consola';
 import FileSaver from 'file-saver';
 import { useWeapons } from 'modules/armament/weapons/hooks';
-import { generateQr } from 'modules/armament/weapons/Service';
+import { generateQr } from 'modules/armament/weapons/service';
 import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -47,12 +47,12 @@ const Weapons = (): ReactElement => {
   };
 
   const HEAD: HeadLabel[] = [
-    { id: 'code', label: 'Código', alignRight: false },
-    { id: 'series', label: 'Serial', alignRight: false },
+    { id: 'serial', label: 'Número de serie', alignRight: false },
     { id: 'type', label: 'Tipo', alignRight: false },
     { id: 'mark', label: 'Marca', alignRight: false },
     { id: 'model', label: 'Modelo', alignRight: false },
     { id: 'caliber', label: 'Calibre', alignRight: false },
+    { id: '' },
   ];
 
   const generateWeaponQr = async (series: string) => {
@@ -122,12 +122,10 @@ const Weapons = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     weapons.length > 0 &&
                     weapons.map(weapon => {
-                      const { code, series, type, mark, model, caliber } =
-                        weapon;
+                      const { serial, type, mark, model, caliber } = weapon;
                       return (
-                        <TableRow key={code} tabIndex={-1} hover>
-                          <TableCell>{code}</TableCell>
-                          <TableCell>{series}</TableCell>
+                        <TableRow key={serial} tabIndex={-1} hover>
+                          <TableCell>{serial}</TableCell>
                           <TableCell>{type}</TableCell>
                           <TableCell>{mark}</TableCell>
                           <TableCell>{model}</TableCell>
@@ -135,7 +133,7 @@ const Weapons = (): ReactElement => {
                           <TableCell>
                             <Tooltip title="Generar y descargar código QR">
                               <IconButton
-                                onClick={() => generateWeaponQr(series)}
+                                onClick={() => generateWeaponQr(serial)}
                                 size="large"
                               >
                                 <GetAppIcon />

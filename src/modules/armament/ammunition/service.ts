@@ -1,10 +1,9 @@
 import HttpClient, { IsValidResponse } from 'common/config/http';
-
 import {
   Ammunition,
   CreateAmmunitionRequest,
   UpdateAmmunitionRequest,
-} from './Models';
+} from 'modules/armament/ammunition/models';
 
 export const createAmmunition = async (
   data: CreateAmmunitionRequest,

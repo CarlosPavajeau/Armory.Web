@@ -25,14 +25,14 @@ const EquipmentAndQuantityForm = (
   const [equipments, equipmentsUiStatus] = useEquipments();
 
   const EquipmentAndQuantitySchema = Yup.object().shape({
-    equipmentCode: Yup.string().required('Este campo es requerido'),
+    equipmentSerial: Yup.string().required('Este campo es requerido'),
     quantity: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Se debe digitar mínimo un equipo'),
   });
   const formik = useFormik<EquipmentAndQuantity>({
     initialValues: {
-      equipmentCode: '',
+      equipmentSerial: '',
       quantity: 0,
     },
     validationSchema: EquipmentAndQuantitySchema,
@@ -48,14 +48,14 @@ const EquipmentAndQuantityForm = (
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <FormControl fullWidth>
-            <InputLabel id="equipmentCode-label">Equipo</InputLabel>
+            <InputLabel id="equipmentSerial-label">Equipo</InputLabel>
             <Select
-              labelId="equipmentCode-label"
+              labelId="equipmentSerial-label"
               label="Equipo"
-              error={!!(errors.equipmentCode && touched.equipmentCode)}
+              error={!!(errors.equipmentSerial && touched.equipmentSerial)}
               disabled={isSubmitting}
               defaultValue=""
-              {...getFieldProps('equipmentCode')}
+              {...getFieldProps('equipmentSerial')}
               fullWidth
             >
               {equipmentsUiStatus === 'loading' && (
@@ -69,19 +69,19 @@ const EquipmentAndQuantityForm = (
               {equipmentsUiStatus === 'loaded' &&
                 equipments &&
                 equipments.map(s => {
-                  const { code, type, model } = s;
+                  const { serial, type, model } = s;
                   return (
-                    <MenuItem value={code} key={code}>
-                      Código: {code}, Tipo: {type}, Modelo: {model}
+                    <MenuItem value={serial} key={serial}>
+                      Serial: {serial}, Tipo: {type}, Modelo: {model}
                     </MenuItem>
                   );
                 })}
             </Select>
             <FormHelperText
-              error={!!(errors.equipmentCode && touched.equipmentCode)}
+              error={!!(errors.equipmentSerial && touched.equipmentSerial)}
             >
-              {errors.equipmentCode && touched.equipmentCode
-                ? errors.equipmentCode
+              {errors.equipmentSerial && touched.equipmentSerial
+                ? errors.equipmentSerial
                 : 'Seleccione un equipo'}
             </FormHelperText>
           </FormControl>

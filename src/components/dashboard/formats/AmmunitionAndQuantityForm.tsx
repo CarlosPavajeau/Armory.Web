@@ -25,7 +25,7 @@ const AmmunitionAndQuantityForm = (
   const [ammunition, ammunitionUiStatus] = useAmmunition();
 
   const AmmunitionAndQuantitySchema = Yup.object().shape({
-    ammunitionCode: Yup.string().required('Este campo es requerido'),
+    ammunitionLot: Yup.string().required('Este campo es requerido'),
     quantity: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Se debe digitar mínimo una munición'),
@@ -33,7 +33,7 @@ const AmmunitionAndQuantityForm = (
 
   const formik = useFormik<AmmunitionAndQuantity>({
     initialValues: {
-      ammunitionCode: '',
+      ammunitionLot: '',
       quantity: 0,
     },
     validationSchema: AmmunitionAndQuantitySchema,
@@ -49,14 +49,14 @@ const AmmunitionAndQuantityForm = (
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <FormControl fullWidth>
-            <InputLabel id="ammunitionCode-label">Munición</InputLabel>
+            <InputLabel id="ammunitionLot-label">Munición</InputLabel>
             <Select
-              labelId="ammunitionCode-label"
+              labelId="ammunitionLot-label"
               label="Munición"
-              error={!!(errors.ammunitionCode && touched.ammunitionCode)}
+              error={!!(errors.ammunitionLot && touched.ammunitionLot)}
               disabled={isSubmitting}
               defaultValue=""
-              {...getFieldProps('ammunitionCode')}
+              {...getFieldProps('ammunitionLot')}
             >
               {ammunitionUiStatus === 'loading' && (
                 <MenuItem value="">
@@ -70,19 +70,19 @@ const AmmunitionAndQuantityForm = (
                 ammunition &&
                 ammunition.length > 0 &&
                 ammunition.map(s => {
-                  const { code, type, caliber } = s;
+                  const { lot, type, caliber } = s;
                   return (
-                    <MenuItem value={code} key={code}>
-                      Código: {code}, Tipo: {type}, Calibre: {caliber}
+                    <MenuItem value={lot} key={lot}>
+                      Tipo: {type}, Calibre: {caliber}
                     </MenuItem>
                   );
                 })}
             </Select>
             <FormHelperText
-              error={!!(errors.ammunitionCode && touched.ammunitionCode)}
+              error={!!(errors.ammunitionLot && touched.ammunitionLot)}
             >
-              {errors.ammunitionCode && touched.ammunitionCode
-                ? errors.ammunitionCode
+              {errors.ammunitionLot && touched.ammunitionLot
+                ? errors.ammunitionLot
                 : 'Seleccione una munición'}
             </FormHelperText>
           </FormControl>

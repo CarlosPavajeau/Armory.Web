@@ -4,32 +4,28 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { CreateAmmunitionRequest } from 'modules/armament/ammunition/Models';
-import { createAmmunition } from 'modules/armament/ammunition/Service';
+import { CreateAmmunitionRequest } from 'modules/armament/ammunition/models';
+import { createAmmunition } from 'modules/armament/ammunition/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const AmmunitionForm = (): ReactElement => {
   const RegisterAmmunitionSchema = Yup.object().shape({
-    code: Yup.string().required('Este campo es requerido'),
+    lot: Yup.string().required('Este campo es requerido'),
     type: Yup.string().required('Este campo es requerido'),
     mark: Yup.string().required('Este campo es requerido'),
     caliber: Yup.string().required('Este campo es requerido'),
-    series: Yup.string().required('Este campo es requerido'),
-    lot: Yup.string().required('Este campo es requerido'),
     quantityAvailable: Yup.number().required('Este campo es requerido'),
   });
 
   const navigate = useNavigate();
   const formik = useFormik<CreateAmmunitionRequest>({
     initialValues: {
-      code: '',
+      lot: '',
       type: '',
       mark: '',
       caliber: '',
-      series: '',
-      lot: '',
       quantityAvailable: 0,
     },
     validationSchema: RegisterAmmunitionSchema,
@@ -52,15 +48,15 @@ const AmmunitionForm = (): ReactElement => {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
-            label="Código"
+            label="Lote"
             helperText={
-              errors.code && touched.code
-                ? errors.code
-                : 'Digite el código de la munición'
+              errors.mark && touched.mark
+                ? errors.mark
+                : 'Digite el lote de la munición'
             }
-            error={!!(errors.code && touched.code)}
+            error={!!(errors.lot && touched.lot)}
             disabled={isSubmitting}
-            {...getFieldProps('code')}
+            {...getFieldProps('lot')}
             fullWidth
           />
           <TextField
@@ -97,30 +93,6 @@ const AmmunitionForm = (): ReactElement => {
             error={!!(errors.caliber && touched.caliber)}
             disabled={isSubmitting}
             {...getFieldProps('caliber')}
-            fullWidth
-          />
-          <TextField
-            label="Número de serie"
-            helperText={
-              errors.series && touched.series
-                ? errors.series
-                : 'Digite el número de serie de la munición'
-            }
-            error={!!(errors.series && touched.series)}
-            disabled={isSubmitting}
-            {...getFieldProps('series')}
-            fullWidth
-          />
-          <TextField
-            label="Lote"
-            helperText={
-              errors.mark && touched.mark
-                ? errors.mark
-                : 'Digite el lote de la munición'
-            }
-            error={!!(errors.lot && touched.lot)}
-            disabled={isSubmitting}
-            {...getFieldProps('lot')}
             fullWidth
           />
           <TextField

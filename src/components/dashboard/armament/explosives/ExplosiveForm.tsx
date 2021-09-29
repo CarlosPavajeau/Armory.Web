@@ -4,20 +4,19 @@ import TextField from '@mui/material/TextField';
 import ApiErrors from 'components/feedback/ApiErrors';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { CreateExplosiveRequest } from 'modules/armament/explosives/Models';
-import { createExplosive } from 'modules/armament/explosives/Service';
+import { CreateExplosiveRequest } from 'modules/armament/explosives/models';
+import { createExplosive } from 'modules/armament/explosives/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const ExplosiveForm = (): ReactElement => {
   const RegisterExplosiveSchema = Yup.object().shape({
-    code: Yup.string().required('Este campo es requerido'),
+    serial: Yup.string().required('Este campo es requerido'),
     type: Yup.string().required('Este campo es requerido'),
     mark: Yup.string().required('Este campo es requerido'),
     caliber: Yup.string().required('Este campo es requerido'),
     lot: Yup.string().required('Este campo es requerido'),
-    series: Yup.string().required('Este campo es requerido'),
     quantityAvailable: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Este campo es requerido'),
@@ -26,12 +25,11 @@ const ExplosiveForm = (): ReactElement => {
   const navigate = useNavigate();
   const formik = useFormik<CreateExplosiveRequest>({
     initialValues: {
-      code: '',
+      serial: '',
       type: '',
       mark: '',
       caliber: '',
       lot: '',
-      series: '',
       quantityAvailable: 0,
     },
     validationSchema: RegisterExplosiveSchema,
@@ -54,15 +52,15 @@ const ExplosiveForm = (): ReactElement => {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
-            label="Código"
+            label="Número de serie"
             helperText={
-              errors.code && touched.code
-                ? errors.code
-                : 'Digite el código del explosivo'
+              errors.serial && touched.serial
+                ? errors.serial
+                : 'Digite el número de serie del explosivo'
             }
-            error={!!(errors.code && touched.code)}
+            error={!!(errors.serial && touched.serial)}
             disabled={isSubmitting}
-            {...getFieldProps('code')}
+            {...getFieldProps('serial')}
             fullWidth
           />
           <TextField
@@ -113,18 +111,7 @@ const ExplosiveForm = (): ReactElement => {
             {...getFieldProps('lot')}
             fullWidth
           />
-          <TextField
-            label="Número de serie"
-            helperText={
-              errors.series && touched.series
-                ? errors.series
-                : 'Digite el número de serie del explosivo'
-            }
-            error={!!(errors.series && touched.series)}
-            disabled={isSubmitting}
-            {...getFieldProps('series')}
-            fullWidth
-          />
+
           <TextField
             label="Cantidad disponible"
             helperText={

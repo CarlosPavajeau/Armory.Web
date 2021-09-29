@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { Explosives } from 'modules/armament/explosives/Models';
-import { getExplosives } from 'modules/armament/explosives/Service';
+import { Explosives } from 'modules/armament/explosives/models';
+import { getExplosives } from 'modules/armament/explosives/service';
 import {
   apiError,
   loadExplosives,
   loadingExplosives,
   selectExplosives,
   selectUiStatus,
-} from 'modules/armament/explosives/Slice';
+} from 'modules/armament/explosives/slice';
 import { useEffect } from 'react';
 
 export const useExplosives = (): [Explosives, UiStatus] => {

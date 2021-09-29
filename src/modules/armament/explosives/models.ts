@@ -1,10 +1,9 @@
 export interface CreateExplosiveRequest {
-  code: string;
+  serial: string;
   type: string;
   caliber: string;
   mark: string;
   lot: string;
-  series: string;
   quantityAvailable: number;
 }
 

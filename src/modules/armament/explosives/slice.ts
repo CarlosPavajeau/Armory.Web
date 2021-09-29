@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { RootState } from '../../../common/store';
-import { UiStatus } from '../../../common/types';
-import { Explosive, Explosives } from './Models';
+import { RootState } from 'common/store';
+import { UiStatus } from 'common/types';
+import { Explosive, Explosives } from 'modules/armament/explosives/models';
 
 export interface ExplosiveState {
   ui: UiStatus;

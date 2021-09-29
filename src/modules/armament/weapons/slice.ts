@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-
-import { Weapon, Weapons } from './Models';
+import { Weapon, Weapons } from 'modules/armament/weapons/models';
 
 export interface WeaponsState {
   ui: UiStatus;

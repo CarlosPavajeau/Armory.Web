@@ -42,11 +42,10 @@ const Ammunition = (): ReactElement => {
   };
 
   const HEAD: HeadLabel[] = [
-    { id: 'code', label: 'Id', alignRight: false },
+    { id: 'lot', label: 'Lote', alignRight: false },
     { id: 'type', label: 'Tipo', alignRight: false },
     { id: 'mark', label: 'Marca', alignRight: false },
     { id: 'caliber', label: 'Calibre', alignRight: false },
-    { id: 'series', label: 'N° de serie', alignRight: false },
     {
       id: 'quantityAvailable',
       label: 'Cantidad disponible',
@@ -111,21 +110,13 @@ const Ammunition = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     ammunition.length > 0 &&
                     ammunition.map(a => {
-                      const {
-                        code,
-                        type,
-                        mark,
-                        caliber,
-                        series,
-                        quantityAvailable,
-                      } = a;
+                      const { lot, type, mark, caliber, quantityAvailable } = a;
                       return (
-                        <TableRow key={code} tabIndex={-1} hover>
-                          <TableCell>{code}</TableCell>
+                        <TableRow key={lot} tabIndex={-1} hover>
+                          <TableCell>{lot}</TableCell>
                           <TableCell>{type}</TableCell>
                           <TableCell>{mark}</TableCell>
                           <TableCell>{caliber}</TableCell>
-                          <TableCell>{series}</TableCell>
                           <TableCell>{quantityAvailable}</TableCell>
                         </TableRow>
                       );

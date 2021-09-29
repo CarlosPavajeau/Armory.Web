@@ -1,17 +1,17 @@
 import { Moment } from 'moment';
 
 export interface AmmunitionAndQuantity {
-  ammunitionCode: string;
+  ammunitionLot: string;
   quantity: number;
 }
 
 export interface EquipmentAndQuantity {
-  equipmentCode: string;
+  equipmentSerial: string;
   quantity: number;
 }
 
 export interface ExplosiveAndQuantity {
-  explosiveCode: string;
+  explosiveSerial: string;
   quantity: number;
 }
 

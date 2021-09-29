@@ -1,10 +1,10 @@
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
+import HttpClient, { IsValidResponse } from 'common/config/http';
 import {
   CreateExplosiveRequest,
   Explosive,
   Explosives,
   UpdateExplosiveRequest,
-} from './Models';
+} from 'modules/armament/explosives/models';
 
 export const createExplosive = async (
   data: CreateExplosiveRequest,
@@ -52,5 +52,5 @@ export const checkExists = async (code: string): Promise<boolean> => {
 export const updateExplosive = async (
   data: UpdateExplosiveRequest,
 ): Promise<void> => {
-  await HttpClient.put(`/Explosives/${data.code}`, data);
+  await HttpClient.put(`/Explosives/${data.serial}`, data);
 };

@@ -1,8 +1,7 @@
 export interface CreateEquipmentRequest {
-  code: string;
+  serial: string;
   type: string;
   model: string;
-  series: string;
   quantityAvailable: number;
 }
 

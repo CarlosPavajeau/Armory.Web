@@ -1,10 +1,8 @@
 export interface CreateAmmunitionRequest {
-  code: string;
+  lot: string;
   type: string;
   mark: string;
   caliber: string;
-  series: string;
-  lot: string;
   quantityAvailable: number;
 }
 

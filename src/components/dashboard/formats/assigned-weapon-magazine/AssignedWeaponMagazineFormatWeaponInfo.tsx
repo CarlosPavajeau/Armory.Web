@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Weapon } from 'modules/armament/weapons/Models';
+import { Weapon } from 'modules/armament/weapons/models';
 import { ReactElement } from 'react';
 
 interface AssignedWeaponMagazineFormatWeaponInfoProps {

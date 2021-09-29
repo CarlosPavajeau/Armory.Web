@@ -1,9 +1,9 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import ApplicationReducer from 'modules/application/Slice';
-import AmmunitionReducer from 'modules/armament/ammunition/Slice';
-import EquipmentsReducer from 'modules/armament/equipments/Slice';
-import ExplosivesReducer from 'modules/armament/explosives/Slice';
-import WeaponsReducer from 'modules/armament/weapons/Slice';
+import AmmunitionReducer from 'modules/armament/ammunition/slice';
+import EquipmentsReducer from 'modules/armament/equipments/slice';
+import ExplosivesReducer from 'modules/armament/explosives/slice';
+import WeaponsReducer from 'modules/armament/weapons/slice';
 import AuthReducer from 'modules/auth/Slice';
 import DegreesReducer from 'modules/degrees/Slice';
 import FireteamsReducer from 'modules/fireteams/slice';

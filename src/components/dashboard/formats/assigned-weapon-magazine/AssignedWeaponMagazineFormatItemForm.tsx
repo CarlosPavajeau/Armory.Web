@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import ApiErrors from 'components/feedback/ApiErrors';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { Weapon } from 'modules/armament/weapons/Models';
+import { Weapon } from 'modules/armament/weapons/models';
 import {
   AddAssignedWeaponMagazineFormatItemRequest,
   AssignedWeaponMagazineFormatItem,

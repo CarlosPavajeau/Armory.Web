@@ -31,9 +31,9 @@ const ExplosiveAndQuantityForm = (
       .min(1, 'Se debe digitar mínimo un explosivo'),
   });
 
-  const formik = useFormik({
+  const formik = useFormik<ExplosiveAndQuantity>({
     initialValues: {
-      explosiveCode: '',
+      explosiveSerial: '',
       quantity: 0,
     },
     validationSchema: ExplosivesAndQuantitySchema,
@@ -49,14 +49,14 @@ const ExplosiveAndQuantityForm = (
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <FormControl fullWidth>
-            <InputLabel id="explosiveCode-label">Explosivo</InputLabel>
+            <InputLabel id="explosiveSerial-label">Explosivo</InputLabel>
             <Select
-              labelId="explosiveCode-label"
+              labelId="explosiveSerial-label"
               label="Explosivo"
-              error={!!(errors.explosiveCode && touched.explosiveCode)}
+              error={!!(errors.explosiveSerial && touched.explosiveSerial)}
               disabled={isSubmitting}
               defaultValue=""
-              {...getFieldProps('explosiveCode')}
+              {...getFieldProps('explosiveSerial')}
               fullWidth
             >
               {explosivesUiStatus === 'loading' && (
@@ -70,20 +70,20 @@ const ExplosiveAndQuantityForm = (
               {explosivesUiStatus === 'loaded' &&
                 explosives &&
                 explosives.length > 0 &&
-                explosives.map(s => {
-                  const { code, type, caliber } = s;
+                explosives.map(explosive => {
+                  const { serial, type, caliber } = explosive;
                   return (
-                    <MenuItem value={code} key={code}>
-                      Código: {code}, Tipo: {type}, Calibre: {caliber}
+                    <MenuItem value={serial} key={serial}>
+                      Serial: {serial}, Tipo: {type}, Calibre: {caliber}
                     </MenuItem>
                   );
                 })}
             </Select>
             <FormHelperText
-              error={!!(errors.explosiveCode && touched.explosiveCode)}
+              error={!!(errors.explosiveSerial && touched.explosiveSerial)}
             >
-              {errors.explosiveCode && touched.explosiveCode
-                ? errors.explosiveCode
+              {errors.explosiveSerial && touched.explosiveSerial
+                ? errors.explosiveSerial
                 : 'Seleccione un explosivo'}
             </FormHelperText>
           </FormControl>

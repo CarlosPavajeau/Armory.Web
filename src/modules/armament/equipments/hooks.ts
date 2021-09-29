@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { Equipments } from 'modules/armament/equipments/Models';
-import { getEquipments } from 'modules/armament/equipments/Service';
+import { Equipments } from 'modules/armament/equipments/models';
+import { getEquipments } from 'modules/armament/equipments/service';
 import {
   apiError,
   loadEquipments,
   loadingEquipments,
   selectEquipments,
   selectUiStatus,
-} from 'modules/armament/equipments/Slice';
+} from 'modules/armament/equipments/slice';
 import { useEffect } from 'react';
 
 export const useEquipments = (): [Equipments, UiStatus] => {

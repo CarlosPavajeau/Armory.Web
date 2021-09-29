@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { Weapon, Weapons } from 'modules/armament/weapons/Models';
-import { getWeapon, getWeapons } from 'modules/armament/weapons/Service';
+import { Weapon, Weapons } from 'modules/armament/weapons/models';
+import { getWeapon, getWeapons } from 'modules/armament/weapons/service';
 import {
   loadingWeapon,
   loadingWeapons,
@@ -12,7 +12,7 @@ import {
   selectUiStatus as selectWeaponUiStatus,
   selectWeapon,
   selectWeapons,
-} from 'modules/armament/weapons/Slice';
+} from 'modules/armament/weapons/slice';
 import { useEffect } from 'react';
 
 export const useWeapons = (): [Weapons, UiStatus] => {

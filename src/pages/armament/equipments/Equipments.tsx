@@ -42,10 +42,9 @@ const Equipments = (): ReactElement => {
   };
 
   const HEAD: HeadLabel[] = [
-    { id: 'code', label: 'Código', alignRight: false },
+    { id: 'serial', label: 'Número de serie', alignRight: false },
     { id: 'type', label: 'Tipo', alignRight: false },
     { id: 'model', label: 'Modelo', alignRight: false },
-    { id: 'series', label: 'N° de seríe', alignRight: false },
     {
       id: 'quantityAvailable',
       label: 'Cantidad dispponible',
@@ -109,14 +108,13 @@ const Equipments = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     equipments.length > 0 &&
                     equipments.map(equipment => {
-                      const { code, type, model, series, quantityAvailable } =
+                      const { serial, type, model, quantityAvailable } =
                         equipment;
                       return (
-                        <TableRow key={code} tabIndex={-1} hover>
-                          <TableCell>{code}</TableCell>
+                        <TableRow key={serial} tabIndex={-1} hover>
+                          <TableCell>{serial}</TableCell>
                           <TableCell>{type}</TableCell>
                           <TableCell>{model}</TableCell>
-                          <TableCell>{series}</TableCell>
                           <TableCell>{quantityAvailable}</TableCell>
                         </TableRow>
                       );
