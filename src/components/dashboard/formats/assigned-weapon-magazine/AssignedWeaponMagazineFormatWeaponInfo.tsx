@@ -29,7 +29,7 @@ const AssignedWeaponMagazineFormatWeaponInfo = (
             Calibre: {weapon && weapon.caliber}
           </Typography>
           <Typography variant="body1" color="textSecondary">
-            Asignada a: {weapon && `${weapon.ownerId} - ${weapon.ownerName}`}
+            Asignada a: {weapon && `${weapon.holderId} - ${weapon.holderName}`}
           </Typography>
         </Stack>
       </CardContent>

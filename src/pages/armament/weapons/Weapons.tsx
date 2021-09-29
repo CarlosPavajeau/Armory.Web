@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import ApiErrors from 'components/feedback/ApiErrors';
+import Label from 'components/Label';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
@@ -52,6 +53,7 @@ const Weapons = (): ReactElement => {
     { id: 'mark', label: 'Marca', alignRight: false },
     { id: 'model', label: 'Modelo', alignRight: false },
     { id: 'caliber', label: 'Calibre', alignRight: false },
+    { id: 'holder', label: 'Asignado a', alignRight: false },
     { id: '' },
   ];
 
@@ -122,7 +124,8 @@ const Weapons = (): ReactElement => {
                   {uiStatus === 'loaded' &&
                     weapons.length > 0 &&
                     weapons.map(weapon => {
-                      const { serial, type, mark, model, caliber } = weapon;
+                      const { serial, type, mark, model, caliber, holderName } =
+                        weapon;
                       return (
                         <TableRow key={serial} tabIndex={-1} hover>
                           <TableCell>{serial}</TableCell>
@@ -130,6 +133,11 @@ const Weapons = (): ReactElement => {
                           <TableCell>{mark}</TableCell>
                           <TableCell>{model}</TableCell>
                           <TableCell>{caliber}</TableCell>
+                          <TableCell>
+                            <Label color="info" variant="ghost">
+                              {holderName || 'Arma no asinada'}
+                            </Label>
+                          </TableCell>
                           <TableCell>
                             <Tooltip title="Generar y descargar código QR">
                               <IconButton

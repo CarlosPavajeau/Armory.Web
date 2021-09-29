@@ -44,7 +44,7 @@ const AssignedWeaponMagazineFormatItemForm = (
   const formik = useFormik<AddAssignedWeaponMagazineFormatItemRequest>({
     initialValues: {
       formatId,
-      troopId: weapon?.ownerId || '',
+      troopId: weapon?.holderId || '',
       weaponSerial: weapon?.serial || '',
       safetyCartridge: false,
       verifiedInPhysical: false,
@@ -56,7 +56,7 @@ const AssignedWeaponMagazineFormatItemForm = (
     validationSchema: RegisterAssignedWeaponMagazineFormatItemSchema,
     onSubmit: async values => {
       try {
-        values.troopId = weapon != null ? weapon.ownerId : '';
+        values.troopId = weapon != null ? weapon.holderId : '';
         values.weaponSerial = weapon != null ? weapon.serial : '';
         const result = await addAssignedWeaponMagazineFormatItem(values);
         onSuccess(result);

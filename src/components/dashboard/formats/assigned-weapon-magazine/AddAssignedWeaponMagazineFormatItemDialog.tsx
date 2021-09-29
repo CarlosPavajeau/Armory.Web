@@ -65,7 +65,7 @@ const AddAssignedWeaponMagazineFormatItemDialog = (
       </AppBar>
 
       <Container sx={{ pt: 3, pb: 4 }}>
-        {weapon && weapon.ownerId && (
+        {weapon && weapon.holderId && (
           <>
             <AssignedWeaponMagazineFormatWeaponInfo weapon={weapon} />
 
@@ -76,7 +76,7 @@ const AddAssignedWeaponMagazineFormatItemDialog = (
             />
           </>
         )}
-        {weapon && !weapon.ownerId && (
+        {weapon && !weapon.holderId && (
           <Alert severity="warning" sx={{ marginY: 3 }}>
             <AlertTitle>Arma no asignada</AlertTitle>
             El arma no está asignada ningún oficial, suboficial o soldado.
