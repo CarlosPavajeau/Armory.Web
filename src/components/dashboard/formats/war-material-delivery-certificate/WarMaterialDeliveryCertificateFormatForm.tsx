@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import AmmunitionEquipmentsExplosivesInfoTab from 'components/dashboard/formats/AmmunitionEquipmentsExplosivesInfoTab';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectFireteamField from 'components/forms/SelectFireteamField';
 import SelectFlightField from 'components/forms/SelectFlightField';
@@ -288,6 +289,12 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
               Añadir explosivo
             </Button>
           </Stack>
+
+          <AmmunitionEquipmentsExplosivesInfoTab
+            ammunition={values.ammunition}
+            equipments={values.equipments}
+            explosives={values.explosives}
+          />
 
           <ApiErrors />
 
