@@ -8,8 +8,8 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import { ReactElement, ReactNode, useMemo } from 'react';
+import GlobalStyles from 'shared/theme/globalStyles';
 
-import GlobalStyles from './globalStyles';
 import componentsOverride from './overrides';
 import palette from './palette';
 import shadows, { customShadows } from './shadows';
