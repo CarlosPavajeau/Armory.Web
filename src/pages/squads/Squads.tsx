@@ -33,7 +33,7 @@ const Squads = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
-    { id: 'ownerName', label: 'Comandante - Grado', alignRight: false },
+    { id: 'ownerName', label: 'Grado - Comandante', alignRight: false },
   ];
 
   return (

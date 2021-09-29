@@ -34,7 +34,7 @@ const Fireteams = (): ReactElement => {
     { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'flightName', label: 'Escuadrilla', alignRight: false },
-    { id: 'ownerName', label: 'Comandante - Grado', alignRight: false },
+    { id: 'ownerName', label: 'Grado - Comandante', alignRight: false },
   ];
 
   return (
