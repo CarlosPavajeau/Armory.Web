@@ -1,4 +1,9 @@
-import { FormHelperText, OutlinedInput } from '@mui/material';
+import {
+  Checkbox,
+  FormHelperText,
+  ListItemText,
+  OutlinedInput,
+} from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -49,8 +54,9 @@ const SelectWeaponsField = (props: SelectWeaponsFieldProps): ReactElement => {
           weapons.map(weapon => {
             const { serial, type } = weapon;
             return (
-              <MenuItem value={serial} key={serial}>
-                Serial: {serial}, Tipo: {type}
+              <MenuItem key={serial} value={serial}>
+                <Checkbox checked={field.value.indexOf(serial) > -1} />
+                <ListItemText primary={`Serial: ${serial}, Tipo: ${type}`} />
               </MenuItem>
             );
           })}
