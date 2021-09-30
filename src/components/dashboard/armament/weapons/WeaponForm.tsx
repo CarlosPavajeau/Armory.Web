@@ -44,7 +44,7 @@ const WeaponForm = (): ReactElement => {
     onSubmit: async values => {
       try {
         const result = await createWeapon(values);
-        FileSaver.saveAs(result, `qr-${values.serial}.pdf`);
+        FileSaver.saveAs(result, `qr-${values.model}-${values.serial}.pdf`);
         navigate('/dashboard/weapons/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
