@@ -69,11 +69,12 @@ const EquipmentAndQuantityForm = (
               )}
               {equipmentsUiStatus === 'loaded' &&
                 equipments &&
-                equipments.map(s => {
-                  const { serial, type, model } = s;
+                equipments.map(equipment => {
+                  const { serial, type, quantityAvailable } = equipment;
                   return (
                     <MenuItem value={serial} key={serial}>
-                      Serial: {serial}, Tipo: {type}, Modelo: {model}
+                      Tipo: {type}, Serial: {serial}, Cantidad:{' '}
+                      {quantityAvailable}
                     </MenuItem>
                   );
                 })}
