@@ -70,11 +70,12 @@ const AmmunitionAndQuantityForm = (
               {ammunitionUiStatus === 'loaded' &&
                 ammunition &&
                 ammunition.length > 0 &&
-                ammunition.map(s => {
-                  const { lot, type, caliber } = s;
+                ammunition.map(ammo => {
+                  const { lot, caliber, quantityAvailable } = ammo;
                   return (
                     <MenuItem value={lot} key={lot}>
-                      Tipo: {type}, Calibre: {caliber}
+                      Calibre: {caliber}, Lote {lot}, Cantidad:{' '}
+                      {quantityAvailable}
                     </MenuItem>
                   );
                 })}
