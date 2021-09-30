@@ -53,11 +53,13 @@ const SelectWeaponsField = (props: SelectWeaponsFieldProps): ReactElement => {
           weapons &&
           weapons.length > 0 &&
           weapons.map(weapon => {
-            const { serial, type } = weapon;
+            const { serial, type, model } = weapon;
             return (
               <MenuItem key={serial} value={serial}>
                 <Checkbox checked={field.value.indexOf(serial) > -1} />
-                <ListItemText primary={`Serial: ${serial}, Tipo: ${type}`} />
+                <ListItemText
+                  primary={`Serial: ${serial}, Tipo: ${type}, Modelo ${model}`}
+                />
               </MenuItem>
             );
           })}
