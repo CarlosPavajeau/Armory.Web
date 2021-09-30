@@ -56,7 +56,7 @@ const SelectTroopField = (props: SelectTroopFieldProps): ReactElement => {
             } = troop;
             return (
               <MenuItem key={id} value={id}>
-                {degreeName}, {id} - {firstName} {secondName} {lastName}{' '}
+                {id} - {degreeName}. {firstName} {secondName} {lastName}{' '}
                 {secondLastName}
               </MenuItem>
             );
