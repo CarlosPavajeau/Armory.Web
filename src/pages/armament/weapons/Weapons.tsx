@@ -111,8 +111,8 @@ const Weapons = (): ReactElement => {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
+            <TableContainer sx={{ minWidth: 800, maxHeight: 450 }}>
+              <Table stickyHeader>
                 <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {uiStatus === 'loading' && (
