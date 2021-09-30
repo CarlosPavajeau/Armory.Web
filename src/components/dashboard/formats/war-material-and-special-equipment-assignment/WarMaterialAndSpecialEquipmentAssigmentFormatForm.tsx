@@ -113,7 +113,10 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
         try {
           const result =
             await createWarMaterialAndSpecialEquipmentAssigmentFormat(values);
-          FileSaver.saveAs(result, `format-${values.code}.xlsx`);
+          FileSaver.saveAs(
+            result,
+            `format-${values.code}${values.flightCode}.xlsx`,
+          );
           navigate('/dashboard');
         } catch (err) {
           if (process.env.NODE_ENV === 'development') {
