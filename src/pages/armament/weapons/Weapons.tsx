@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import GetAppIcon from '@mui/icons-material/GetApp';
-import { Card, Tooltip } from '@mui/material';
+import { Card, TablePagination, Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
@@ -11,8 +11,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import Label from 'components/Label';
 import CircularLoader from 'components/loading/CircularLoader';
@@ -20,25 +21,37 @@ import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import Consola from 'consola';
 import FileSaver from 'file-saver';
+import { filter } from 'lodash';
 import { useWeapons } from 'modules/armament/weapons/hooks';
+import { Weapon } from 'modules/armament/weapons/models';
 import { generateQr } from 'modules/armament/weapons/service';
 import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Weapons = (): ReactElement => {
   const [weapons, uiStatus] = useWeapons();
-
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
 
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
+  const filteredWeapons = filter(weapons, (weapon: Weapon) => {
+    const { serial } = weapon;
+    return serial.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+  });
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (
+    event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const handleFilterByName = (
@@ -57,10 +70,10 @@ const Weapons = (): ReactElement => {
     { id: '' },
   ];
 
-  const generateWeaponQr = async (series: string) => {
+  const generateWeaponQr = async (weapon: Weapon) => {
     try {
-      const result = await generateQr(series);
-      FileSaver.saveAs(result, `qr-${series}.pdf`);
+      const result = await generateQr(weapon.serial);
+      FileSaver.saveAs(result, `qr-${weapon.model}-${weapon.serial}.pdf`);
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
         Consola.error(err);
@@ -100,12 +113,7 @@ const Weapons = (): ReactElement => {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
@@ -122,35 +130,46 @@ const Weapons = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    weapons.length > 0 &&
-                    weapons.map(weapon => {
-                      const { serial, type, mark, model, caliber, holderName } =
-                        weapon;
-                      return (
-                        <TableRow key={serial} tabIndex={-1} hover>
-                          <TableCell>{serial}</TableCell>
-                          <TableCell>{type}</TableCell>
-                          <TableCell>{mark}</TableCell>
-                          <TableCell>{model}</TableCell>
-                          <TableCell>{caliber}</TableCell>
-                          <TableCell>
-                            <Label color="info" variant="ghost">
-                              {holderName || 'Arma no asinada'}
-                            </Label>
-                          </TableCell>
-                          <TableCell>
-                            <Tooltip title="Generar y descargar código QR">
-                              <IconButton
-                                onClick={() => generateWeaponQr(serial)}
-                                size="large"
-                              >
-                                <GetAppIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    filteredWeapons.length > 0 &&
+                    filteredWeapons
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(weapon => {
+                        const {
+                          serial,
+                          type,
+                          mark,
+                          model,
+                          caliber,
+                          holderName,
+                        } = weapon;
+                        return (
+                          <TableRow key={serial} tabIndex={-1} hover>
+                            <TableCell>{serial}</TableCell>
+                            <TableCell>{type}</TableCell>
+                            <TableCell>{mark}</TableCell>
+                            <TableCell>{model}</TableCell>
+                            <TableCell>{caliber}</TableCell>
+                            <TableCell>
+                              <Label color="info" variant="ghost">
+                                {holderName || 'Arma no asinada'}
+                              </Label>
+                            </TableCell>
+                            <TableCell>
+                              <Tooltip title="Generar y descargar código QR">
+                                <IconButton
+                                  onClick={() => generateWeaponQr(weapon)}
+                                  size="large"
+                                >
+                                  <GetAppIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -165,6 +184,16 @@ const Weapons = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredWeapons.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>
