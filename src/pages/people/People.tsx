@@ -99,7 +99,7 @@ const People = (): ReactElement => {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
+            <TableContainer sx={{ minWidth: 800, maxHeight: 450 }}>
               <Table>
                 <SimpleDataListHead head={HEAD} />
                 <TableBody>
