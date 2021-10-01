@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '@mui/material';
+import { Card, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -9,37 +9,22 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
-import DataListToolbar from 'components/data/DataListToolbar';
+import { HeadLabel } from 'components/data/DataListHead';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import { useRanks } from 'modules/ranks/hooks';
-import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const Ranks = (): ReactElement => {
   const [ranks, uiStatus] = useRanks();
 
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
-  const [filterName, setFilterName] = useState('');
-
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleFilterByName = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    setFilterName(event.target.value);
-  };
+  const [page, rowsPerPage, handleChangePage, handleChangeRowsPerPage] =
+    useTablePagination();
 
   const HEAD: HeadLabel[] = [
     { id: 'id', label: 'Id', alignRight: false },
@@ -69,21 +54,10 @@ const Ranks = (): ReactElement => {
         </Stack>
 
         <Card>
-          <DataListToolbar
-            filterName={filterName}
-            placeholder="Buscar rango"
-            onFilterName={handleFilterByName}
-          />
-
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
+            <TableContainer sx={{ minWidth: 800, maxHeight: 450 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
@@ -101,15 +75,20 @@ const Ranks = (): ReactElement => {
                   )}
                   {uiStatus === 'loaded' &&
                     ranks.length > 0 &&
-                    ranks.map(rank => {
-                      const { id, name } = rank;
-                      return (
-                        <TableRow key={id} tabIndex={-1} hover>
-                          <TableCell>{id}</TableCell>
-                          <TableCell>{name}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    ranks
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(rank => {
+                        const { id, name } = rank;
+                        return (
+                          <TableRow key={id} tabIndex={-1} hover>
+                            <TableCell>{id}</TableCell>
+                            <TableCell>{name}</TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -124,6 +103,16 @@ const Ranks = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={ranks.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>

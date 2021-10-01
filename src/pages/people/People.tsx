@@ -20,8 +20,9 @@ import Scrollbar from 'components/scrollbar/Scrollbar';
 import { filter } from 'lodash';
 import { usePeople } from 'modules/people/hooks';
 import { Person } from 'modules/people/Models';
-import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const People = (): ReactElement => {
   const [people, peopleUiStatus] = usePeople();
@@ -33,22 +34,8 @@ const People = (): ReactElement => {
     return fullName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
   });
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleChangePage = (
-    event: MouseEvent<HTMLButtonElement> | null,
-    newPage: number,
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const [page, rowsPerPage, handleChangePage, handleChangeRowsPerPage] =
+    useTablePagination();
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,

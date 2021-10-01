@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '@mui/material';
+import { Card, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -9,31 +9,31 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { filter } from 'lodash';
 import { useAmmunition } from 'modules/armament/ammunition/hooks';
-import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { Ammunition as Ammo } from 'modules/armament/ammunition/models';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const Ammunition = (): ReactElement => {
   const [ammunition, uiStatus] = useAmmunition();
-
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
 
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const filteredAmmunition = filter(ammunition, (ammo: Ammo) => {
+    const { lot } = ammo;
+    return lot.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+  });
+
+  const [page, rowsPerPage, handleChangePage, handleChangeRowsPerPage] =
+    useTablePagination();
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -85,12 +85,7 @@ const Ammunition = (): ReactElement => {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
 
                 <TableBody>
                   {uiStatus === 'loading' && (
@@ -108,8 +103,8 @@ const Ammunition = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    ammunition.length > 0 &&
-                    ammunition.map(a => {
+                    filteredAmmunition.length > 0 &&
+                    filteredAmmunition.map(a => {
                       const { lot, type, mark, caliber, quantityAvailable } = a;
                       return (
                         <TableRow key={lot} tabIndex={-1} hover>
@@ -135,6 +130,16 @@ const Ammunition = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredAmmunition.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>

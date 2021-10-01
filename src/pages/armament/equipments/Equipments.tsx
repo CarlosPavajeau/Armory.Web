@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '@mui/material';
+import { Card, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -9,31 +9,31 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import DataListHead, { HeadLabel } from 'components/data/DataListHead';
+import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
+import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { filter } from 'lodash';
 import { useEquipments } from 'modules/armament/equipments/hooks';
-import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { Equipment } from 'modules/armament/equipments/models';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const Equipments = (): ReactElement => {
   const [equipments, uiStatus] = useEquipments();
-
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
 
-  const handleRequestSort = (
-    event: MouseEvent<HTMLSpanElement>,
-    property: string,
-  ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const filteredEquipments = filter(equipments, (equipment: Equipment) => {
+    const { serial } = equipment;
+    return serial.toLowerCase().indexOf(filterName.toLowerCase()) !== -1;
+  });
+
+  const [page, rowsPerPage, handleChangePage, handleChangeRowsPerPage] =
+    useTablePagination();
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -84,12 +84,7 @@ const Equipments = (): ReactElement => {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <DataListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={HEAD}
-                  onRequestSort={handleRequestSort}
-                />
+                <SimpleDataListHead head={HEAD} />
                 <TableBody>
                   {uiStatus === 'loading' && (
                     <TableRow>
@@ -106,19 +101,24 @@ const Equipments = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    equipments.length > 0 &&
-                    equipments.map(equipment => {
-                      const { serial, type, model, quantityAvailable } =
-                        equipment;
-                      return (
-                        <TableRow key={serial} tabIndex={-1} hover>
-                          <TableCell>{serial}</TableCell>
-                          <TableCell>{type}</TableCell>
-                          <TableCell>{model}</TableCell>
-                          <TableCell>{quantityAvailable}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    filteredEquipments.length > 0 &&
+                    filteredEquipments
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(equipment => {
+                        const { serial, type, model, quantityAvailable } =
+                          equipment;
+                        return (
+                          <TableRow key={serial} tabIndex={-1} hover>
+                            <TableCell>{serial}</TableCell>
+                            <TableCell>{type}</TableCell>
+                            <TableCell>{model}</TableCell>
+                            <TableCell>{quantityAvailable}</TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -133,6 +133,16 @@ const Equipments = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredEquipments.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>

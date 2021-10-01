@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '@mui/material';
+import { Card, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -16,13 +16,28 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { filter } from 'lodash';
 import { useFireteams } from 'modules/fireteams/hooks';
+import { Fireteam } from 'modules/fireteams/models';
 import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const Fireteams = (): ReactElement => {
   const [fireteams, uiStatus] = useFireteams();
   const [filterName, setFilterName] = useState('');
+
+  const filteredFireteams = filter(fireteams, (fireteam: Fireteam) => {
+    const { code, name } = fireteam;
+    const lowerFilter = filterName.toLowerCase();
+    return (
+      code.toLowerCase().indexOf(lowerFilter) !== -1 ||
+      name.toLowerCase().indexOf(lowerFilter) !== -1
+    );
+  });
+
+  const [page, rowsPerPage, handleChangePage, handleChangeRowsPerPage] =
+    useTablePagination();
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -86,18 +101,23 @@ const Fireteams = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    fireteams.length > 0 &&
-                    fireteams.map(fireteam => {
-                      const { code, name, flightName, ownerName } = fireteam;
-                      return (
-                        <TableRow key={code} tabIndex={-1} hover>
-                          <TableCell>{code}</TableCell>
-                          <TableCell>{name}</TableCell>
-                          <TableCell>{flightName}</TableCell>
-                          <TableCell>{ownerName}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    filteredFireteams.length > 0 &&
+                    filteredFireteams
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(fireteam => {
+                        const { code, name, flightName, ownerName } = fireteam;
+                        return (
+                          <TableRow key={code} tabIndex={-1} hover>
+                            <TableCell>{code}</TableCell>
+                            <TableCell>{name}</TableCell>
+                            <TableCell>{flightName}</TableCell>
+                            <TableCell>{ownerName}</TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -112,6 +132,16 @@ const Fireteams = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredFireteams.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>

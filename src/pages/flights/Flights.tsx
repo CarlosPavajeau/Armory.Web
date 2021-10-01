@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '@mui/material';
+import { Card, TablePagination } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -16,13 +16,28 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
+import { filter } from 'lodash';
 import { useFlights } from 'modules/flights/hooks';
+import { Flight } from 'modules/flights/models';
 import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const Flights = (): ReactElement => {
   const [flights, uiStatus] = useFlights();
   const [filterName, setFilterName] = useState('');
+
+  const filteredFlights = filter(flights, (flight: Flight) => {
+    const { code, name } = flight;
+    const lowerFilter = filterName.toLowerCase();
+    return (
+      code.toLowerCase().indexOf(lowerFilter) !== -1 ||
+      name.toLowerCase().indexOf(lowerFilter) !== -1
+    );
+  });
+
+  const [page, rowsPerPage, handleChangePage, handleChangeRowsPerPage] =
+    useTablePagination();
 
   const handleFilterByName = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -85,17 +100,22 @@ const Flights = (): ReactElement => {
                     </TableRow>
                   )}
                   {uiStatus === 'loaded' &&
-                    flights.length > 0 &&
-                    flights.map(flight => {
-                      const { code, name, ownerName } = flight;
-                      return (
-                        <TableRow key={code} tabIndex={-1} hover>
-                          <TableCell>{code}</TableCell>
-                          <TableCell>{name}</TableCell>
-                          <TableCell>{ownerName}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                    filteredFlights.length > 0 &&
+                    filteredFlights
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage,
+                      )
+                      .map(flight => {
+                        const { code, name, ownerName } = flight;
+                        return (
+                          <TableRow key={code} tabIndex={-1} hover>
+                            <TableCell>{code}</TableCell>
+                            <TableCell>{name}</TableCell>
+                            <TableCell>{ownerName}</TableCell>
+                          </TableRow>
+                        );
+                      })}
 
                   <TableRow>
                     <TableCell
@@ -110,6 +130,16 @@ const Flights = (): ReactElement => {
               </Table>
             </TableContainer>
           </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredFlights.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Card>
       </Container>
     </Page>
