@@ -26,7 +26,7 @@ const ExplosiveAndQuantityForm = (
   const [explosives, explosivesUiStatus] = useExplosivesByFlight(flightCode);
 
   const ExplosivesAndQuantitySchema = Yup.object().shape({
-    explosiveCode: Yup.string().required('Este campo es requerido'),
+    explosiveSerial: Yup.string().required('Este campo es requerido'),
     quantity: Yup.number()
       .required('Este campo es requerido')
       .min(1, 'Se debe digitar mínimo un explosivo'),
