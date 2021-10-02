@@ -151,6 +151,16 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
       formik.setFieldValue('ammunition', [...values.ammunition, item]);
     }
   };
+  const handleOnDeleteAmmunition = (ammunitionToDelete: string) => {
+    const newValues = values.ammunition.filter(
+      (ammo: AmmunitionAndQuantity) => {
+        const { ammunitionLot } = ammo;
+        return ammunitionLot !== ammunitionToDelete;
+      },
+    );
+
+    formik.setFieldValue('ammunition', newValues);
+  };
 
   const [equipmentsDialogOpen, setEquipmentsDialogOpen] = useState(false);
   const handleOnCloseEquipmentsDialog = (item: EquipmentAndQuantity | null) => {
@@ -159,6 +169,16 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
       formik.setFieldValue('equipments', [...values.equipments, item]);
     }
   };
+  const handleOnDeleteEquipment = (equipmentToDelete: string) => {
+    const newValues = values.equipments.filter(
+      (equipment: EquipmentAndQuantity) => {
+        const { equipmentSerial } = equipment;
+        return equipmentSerial !== equipmentToDelete;
+      },
+    );
+
+    formik.setFieldValue('equipments', newValues);
+  };
 
   const [explosivesDialogOpen, setExplosivesDialogOpen] = useState(false);
   const handleOnCloseExplosivesDialog = (item: ExplosiveAndQuantity | null) => {
@@ -166,6 +186,16 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
     if (item != null) {
       formik.setFieldValue('explosives', [...values.explosives, item]);
     }
+  };
+  const handleOnDeleteExplosive = (explosiveToDelete: string) => {
+    const newValues = values.explosives.filter(
+      (explosive: ExplosiveAndQuantity) => {
+        const { explosiveSerial } = explosive;
+        return explosiveSerial !== explosiveToDelete;
+      },
+    );
+
+    formik.setFieldValue('explosives', newValues);
   };
 
   return (
@@ -388,6 +418,9 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
             ammunition={values.ammunition}
             equipments={values.equipments}
             explosives={values.explosives}
+            onDeleteAmmunition={handleOnDeleteAmmunition}
+            onDeleteEquipment={handleOnDeleteEquipment}
+            onDeleteExplosive={handleOnDeleteExplosive}
           />
 
           <ApiErrors />

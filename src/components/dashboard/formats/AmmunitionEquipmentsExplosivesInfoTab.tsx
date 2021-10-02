@@ -1,9 +1,11 @@
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { Alert, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+import AmmunitionInfo from 'components/dashboard/formats/AmmunitionInfo';
+import EquipmentsInfo from 'components/dashboard/formats/EquipmentsInfo';
+import ExplosivesInfo from 'components/dashboard/formats/ExplosivesInfo';
 import {
   AmmunitionAndQuantities,
   EquipmentsAndQuantities,
@@ -15,12 +17,22 @@ interface AmmunitionEquipmentsExplosivesInfoTabProps {
   ammunition: AmmunitionAndQuantities;
   equipments: EquipmentsAndQuantities;
   explosives: ExplosivesAndQuantities;
+  onDeleteAmmunition: (ammunitionToDelete: string) => void;
+  onDeleteEquipment: (equipmentToDelete: string) => void;
+  onDeleteExplosive: (explosiveToDelete: string) => void;
 }
 
 const AmmunitionEquipmentsExplosivesInfoTab = (
   props: AmmunitionEquipmentsExplosivesInfoTabProps,
 ): ReactElement => {
-  const { ammunition, equipments, explosives } = props;
+  const {
+    ammunition,
+    equipments,
+    explosives,
+    onDeleteAmmunition,
+    onDeleteEquipment,
+    onDeleteExplosive,
+  } = props;
   const [tabIndex, setTabIndex] = useState('1');
   const handleChangeTab = (event: SyntheticEvent, newValue: string) => {
     setTabIndex(newValue);
@@ -37,49 +49,22 @@ const AmmunitionEquipmentsExplosivesInfoTab = (
           </TabList>
         </Box>
         <TabPanel value="1">
-          {ammunition.map(ammunitionAndQuantity => {
-            const { ammunitionLot, quantity } = ammunitionAndQuantity;
-            return (
-              <Typography key={ammunitionLot} variant="body1">
-                Lote munición {ammunitionLot}, Cantidad: {quantity}
-              </Typography>
-            );
-          })}
-          {ammunition.length === 0 && (
-            <Alert severity="info">
-              No se ha seleccionado ninguna munición.
-            </Alert>
-          )}
+          <AmmunitionInfo
+            ammunition={ammunition}
+            onDeleteAmmunition={onDeleteAmmunition}
+          />
         </TabPanel>
         <TabPanel value="2">
-          {equipments.map(equipmentAndQuantity => {
-            const { equipmentSerial, quantity } = equipmentAndQuantity;
-            return (
-              <Typography key={equipmentSerial} variant="body1">
-                Serial: {equipmentSerial}, Cantidad: {quantity}
-              </Typography>
-            );
-          })}
-          {equipments.length === 0 && (
-            <Alert severity="info">
-              No se ha seleccionado ningún equipo especial o accesorio.
-            </Alert>
-          )}
+          <EquipmentsInfo
+            equipments={equipments}
+            onDeleteEquipment={onDeleteEquipment}
+          />
         </TabPanel>
         <TabPanel value="3">
-          {explosives.map(explosiveAndQuantity => {
-            const { explosiveSerial, quantity } = explosiveAndQuantity;
-            return (
-              <Typography key={explosiveSerial} variant="body1">
-                Serial: {explosiveSerial}, Cantidad: {quantity}
-              </Typography>
-            );
-          })}
-          {explosives.length === 0 && (
-            <Alert severity="info">
-              No se ha seleccionado ningún explosivo.
-            </Alert>
-          )}
+          <ExplosivesInfo
+            explosives={explosives}
+            onDeleteExplosive={onDeleteExplosive}
+          />
         </TabPanel>
       </TabContext>
     </Box>
