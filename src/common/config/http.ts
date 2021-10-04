@@ -10,11 +10,13 @@ const httpClient = axios.create({
 
 httpClient.interceptors.request.use(
   config => {
-    if (!config.headers.Authorization) {
-      const token = Storage.get('user_token');
-      config.withCredentials = !!token;
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    if (config && config.headers) {
+      if (!config.headers.Authorization) {
+        const token = Storage.get('user_token');
+        config.withCredentials = !!token;
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
       }
     }
 
