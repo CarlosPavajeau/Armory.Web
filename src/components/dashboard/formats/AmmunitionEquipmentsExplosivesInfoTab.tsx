@@ -10,7 +10,7 @@ import {
   AmmunitionAndQuantities,
   EquipmentsAndQuantities,
   ExplosivesAndQuantities,
-} from 'modules/formats/war-material-delivery-certificate/Models';
+} from 'modules/formats/war-material-delivery-certificate/models';
 import { ReactElement, SyntheticEvent, useState } from 'react';
 
 interface AmmunitionEquipmentsExplosivesInfoTabProps {

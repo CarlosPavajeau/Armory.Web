@@ -1,39 +1,27 @@
-import HttpClient, { IsValidResponse } from 'common/config/http';
-
+import HttpClient from 'common/config/http';
 import {
   AddAssignedWeaponMagazineFormatItemRequest,
   AssignedWeaponMagazineFormat,
   AssignedWeaponMagazineFormatItem,
   CreateAssignedWeaponMagazineFormatRequest,
-} from './Models';
+} from 'modules/formats/assigned-weapon-magazine/models';
 
 export const createAssignedWeaponMagazineFormat = async (
   data: CreateAssignedWeaponMagazineFormatRequest,
 ): Promise<number> => {
-  const response = await HttpClient.post<number>(
+  return HttpClient.post<CreateAssignedWeaponMagazineFormatRequest, number>(
     '/AssignedWeaponMagazineFormats',
     data,
   );
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo registrar el formato.');
 };
 
 export const addAssignedWeaponMagazineFormatItem = async (
   data: AddAssignedWeaponMagazineFormatItemRequest,
 ): Promise<AssignedWeaponMagazineFormatItem> => {
-  const response = await HttpClient.post<AssignedWeaponMagazineFormatItem>(
-    `/AssignedWeaponMagazineFormats/AddItem/${data.formatId}`,
-    data,
-  );
-
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo agregar el registro del formato.');
+  return HttpClient.post<
+    AddAssignedWeaponMagazineFormatItemRequest,
+    AssignedWeaponMagazineFormatItem
+  >(`/AssignedWeaponMagazineFormats/AddItem/${data.formatId}`, data);
 };
 
 export const getAssignedWeaponMagazineFormat = async (
@@ -42,12 +30,7 @@ export const getAssignedWeaponMagazineFormat = async (
   const response = await HttpClient.get<AssignedWeaponMagazineFormat>(
     `/AssignedWeaponMagazineFormats/${formatId}`,
   );
-
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo generar el formato');
+  return response.data;
 };
 
 export const generateAssignedWeaponMagazineFormat = async (
@@ -59,10 +42,5 @@ export const generateAssignedWeaponMagazineFormat = async (
       responseType: 'blob',
     },
   );
-
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo generar el formato');
+  return response.data;
 };

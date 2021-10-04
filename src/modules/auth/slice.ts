@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
-
-import { AuthenticationPayload } from './Model';
-import { checkAuthentication } from './Service';
+import { AuthenticationPayload } from 'modules/auth/model';
+import { checkAuthentication } from 'modules/auth/service';
 
 interface AuthState {
   payload: AuthenticationPayload;

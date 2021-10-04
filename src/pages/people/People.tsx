@@ -19,7 +19,7 @@ import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import { filter } from 'lodash';
 import { usePeople } from 'modules/people/hooks';
-import { Person } from 'modules/people/Models';
+import { Person } from 'modules/people/models';
 import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTablePagination } from 'shared/hooks/useTablePagination';

@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-
 import {
   AssignedWeaponMagazineFormat,
   AssignedWeaponMagazineFormatItem,
-} from './Models';
+} from 'modules/formats/assigned-weapon-magazine/models';
 
 export type AssignedWeaponMagazineFormatsUiStatus =
   | UiStatus

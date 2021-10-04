@@ -10,7 +10,7 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useAmmunitionByFlight } from 'modules/armament/ammunition/hooks';
-import { AmmunitionAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
+import { AmmunitionAndQuantity } from 'modules/formats/war-material-delivery-certificate/models';
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 

@@ -1,7 +1,7 @@
 import { Collapse } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { useAppSelector } from 'common/hooks';
-import { selectApiErrors } from 'modules/application/Slice';
+import { selectApiErrors } from 'modules/application/slice';
 import { ReactElement } from 'react';
 
 const ApiErrors = (): ReactElement => {

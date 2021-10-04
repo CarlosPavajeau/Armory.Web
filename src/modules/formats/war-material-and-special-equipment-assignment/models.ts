@@ -2,7 +2,7 @@ import {
   AmmunitionAndQuantities,
   EquipmentsAndQuantities,
   ExplosivesAndQuantities,
-} from 'modules/formats/war-material-delivery-certificate/Models';
+} from 'modules/formats/war-material-delivery-certificate/models';
 import { Moment } from 'moment';
 
 export enum Warehouse {

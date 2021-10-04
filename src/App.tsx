@@ -1,9 +1,9 @@
 import { ConfigureGlobalError } from 'common/config/http';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
-import { selectIsAuth, selectPayload } from 'modules/auth/Slice';
-import { getPersonByUserId } from 'modules/people/Service';
-import { setCurrentPerson } from 'modules/people/Slice';
+import { selectIsAuth, selectPayload } from 'modules/auth/slice';
+import { getPersonByUserId } from 'modules/people/service';
+import { setCurrentPerson } from 'modules/people/slice';
 import { ReactElement, useEffect } from 'react';
 
 import Router from './routes';

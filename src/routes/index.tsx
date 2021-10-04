@@ -2,7 +2,7 @@ import { useAppDispatch } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import DashboardLayout from 'components/layouts/dashboard';
 import DashboardHome from 'components/layouts/dashboard/DashboardHome';
-import { clearErrors } from 'modules/application/Slice';
+import { clearErrors } from 'modules/application/slice';
 import { ReactElement, useEffect } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 

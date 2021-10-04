@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import DataListHead, { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { AssignedWeaponMagazineFormatItems } from 'modules/formats/assigned-weapon-magazine/Models';
+import { AssignedWeaponMagazineFormatItems } from 'modules/formats/assigned-weapon-magazine/models';
 import { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 
 interface AssignedWeaponMagazineFormatItemsProps {

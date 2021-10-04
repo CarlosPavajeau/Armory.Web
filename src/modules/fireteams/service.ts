@@ -1,4 +1,4 @@
-import HttpClient, { IsValidResponse } from 'common/config/http';
+import HttpClient from 'common/config/http';
 import {
   CreateFireteamRequest,
   Fireteam,
@@ -13,11 +13,7 @@ export const createFireteam = async (
 
 export const getFireteams = async (): Promise<Fireteams> => {
   const response = await HttpClient.get<Fireteams>('/Fireteams');
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudieron obtener las escuadras.');
+  return response.data;
 };
 
 export const getFireteamsByFlight = async (
@@ -26,18 +22,10 @@ export const getFireteamsByFlight = async (
   const response = await HttpClient.get<Fireteams>(
     `/Fireteams/ByFlight/${flightCode}`,
   );
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudieron obtener las escuadras.');
+  return response.data;
 };
 
 export const getFireteam = async (code: string): Promise<Fireteam> => {
   const response = await HttpClient.get<Fireteam>(`/Fireteams/${code}`);
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo obtener la escuadra.');
+  return response.data;
 };

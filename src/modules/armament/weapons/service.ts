@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+import HttpClient from 'common/config/http';
 import {
   CreateWeaponRequest,
   UpdateWeaponRequest,
@@ -5,28 +7,22 @@ import {
   Weapons,
 } from 'modules/armament/weapons/models';
 
-import HttpClient, { IsValidResponse } from '../../../common/config/http';
-
 export const createWeapon = async (
   data: CreateWeaponRequest,
 ): Promise<Blob> => {
-  const response = await HttpClient.post<Blob>('/Weapons', data, {
+  const response = await HttpClient.post<
+    CreateWeaponRequest,
+    AxiosResponse<Blob>
+  >('/Weapons', data, {
     responseType: 'blob',
   });
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
 
-  throw new Error('No se pudo registrar el arma');
+  return response.data;
 };
 
 export const getWeapons = async (): Promise<Weapons> => {
   const response = await HttpClient.get<Weapons>('/Weapons');
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudieron obtener las armas.');
+  return response.data;
 };
 
 export const getWeaponsByFlight = async (
@@ -35,44 +31,19 @@ export const getWeaponsByFlight = async (
   const response = await HttpClient.get<Weapons>(
     `/Weapons/ByFlight/${flightCode}`,
   );
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudieron obtener las armas.');
+  return response.data;
 };
 
 export const getWeapon = async (code: string): Promise<Weapon> => {
   const response = await HttpClient.get<Weapon>(`/Weapons/${code}`);
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo obtener el arma.');
-};
-
-export const checkExists = async (code: string): Promise<boolean> => {
-  try {
-    const response = await HttpClient.get<boolean>(`/Weapons/Exists/${code}`);
-    if (IsValidResponse(response)) {
-      return response.data;
-    }
-
-    return false;
-  } catch (error) {
-    return false;
-  }
+  return response.data;
 };
 
 export const generateQr = async (serial: string): Promise<Blob> => {
   const response = await HttpClient.get<Blob>(`/Weapons/GenerateQr/${serial}`, {
     responseType: 'blob',
   });
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudo generar el QR del arma.');
+  return response.data;
 };
 
 export const updateWeapon = async (

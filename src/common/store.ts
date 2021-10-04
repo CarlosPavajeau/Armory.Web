@@ -1,21 +1,21 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import ApplicationReducer from 'modules/application/Slice';
+import ApplicationReducer from 'modules/application/slice';
 import AmmunitionReducer from 'modules/armament/ammunition/slice';
 import EquipmentsReducer from 'modules/armament/equipments/slice';
 import ExplosivesReducer from 'modules/armament/explosives/slice';
 import WeaponsReducer from 'modules/armament/weapons/slice';
-import AuthReducer from 'modules/auth/Slice';
-import DegreesReducer from 'modules/degrees/Slice';
+import AuthReducer from 'modules/auth/slice';
+import DegreesReducer from 'modules/degrees/slice';
 import FireteamsReducer from 'modules/fireteams/slice';
 import FlightsReducer from 'modules/flights/slice';
-import AssignedWeaponMagazineFormat from 'modules/formats/assigned-weapon-magazine/Slice';
-import WarMaterialAndSpecialEquipmentAssigment from 'modules/formats/war-material-and-special-equipment-assignment/Slice';
-import WarMaterialDeliveryCertificate from 'modules/formats/war-material-delivery-certificate/Slice';
-import PeopleReducer from 'modules/people/Slice';
-import RanksReducer from 'modules/ranks/Slice';
+import AssignedWeaponMagazineFormat from 'modules/formats/assigned-weapon-magazine/slice';
+import WarMaterialAndSpecialEquipmentAssigment from 'modules/formats/war-material-and-special-equipment-assignment/slice';
+import WarMaterialDeliveryCertificate from 'modules/formats/war-material-delivery-certificate/slice';
+import PeopleReducer from 'modules/people/slice';
+import RanksReducer from 'modules/ranks/slice';
 import SquadsReducer from 'modules/squads/slice';
 import TroopersReducer from 'modules/troopers/slice';
-import UsersReducer from 'modules/users/Slice';
+import UsersReducer from 'modules/users/slice';
 
 export const store = configureStore({
   reducer: {

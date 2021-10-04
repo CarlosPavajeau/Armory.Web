@@ -1,17 +1,20 @@
-import HttpClient, { IsValidResponse } from 'common/config/http';
+import { AxiosResponse } from 'axios';
+import HttpClient from 'common/config/http';
 import Storage from 'common/plugins/Storage';
-
-import { AuthenticationPayload, AuthenticationRequest } from './Model';
+import {
+  AuthenticationPayload,
+  AuthenticationRequest,
+} from 'modules/auth/model';
 
 export const authorizeUser = async (
   data: AuthenticationRequest,
 ): Promise<string> => {
-  const response = await HttpClient.post<string>(`/Authentication`, data);
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
+  const response = await HttpClient.post<
+    AuthenticationRequest,
+    AxiosResponse<string>
+  >(`/Authentication`, data);
 
-  throw new Error('No se pudo authorizar el usuario.');
+  return response.data;
 };
 
 export const checkAuthentication = (): AuthenticationPayload => {
@@ -32,9 +35,5 @@ export const checkAuthentication = (): AuthenticationPayload => {
 };
 
 export const logoutUser = async (): Promise<void> => {
-  const response = await HttpClient.post('/Authentication/Logout', {});
-
-  if (!IsValidResponse(response)) {
-    throw new Error('No se pudo cerrar la sesión.');
-  }
+  await HttpClient.post('/Authentication/Logout', {});
 };

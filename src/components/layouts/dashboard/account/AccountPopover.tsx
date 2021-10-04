@@ -11,9 +11,9 @@ import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
-import { logoutUser } from 'modules/auth/Service';
-import { logout, selectEmail } from 'modules/auth/Slice';
-import { selectCurrentPerson } from 'modules/people/Slice';
+import { logoutUser } from 'modules/auth/service';
+import { logout, selectEmail } from 'modules/auth/slice';
+import { selectCurrentPerson } from 'modules/people/slice';
 import { ReactElement, useRef, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import HttpClient, { IsValidResponse } from 'common/config/http';
+import HttpClient from 'common/config/http';
 import {
   CreateExplosiveRequest,
   Explosive,
@@ -9,20 +9,12 @@ import {
 export const createExplosive = async (
   data: CreateExplosiveRequest,
 ): Promise<void> => {
-  const response = await HttpClient.post('/Explosives', data);
-
-  if (!IsValidResponse(response)) {
-    throw new Error('No se pudo registrar el equipo especial o accesorio');
-  }
+  await HttpClient.post('/Explosives', data);
 };
 
 export const getExplosives = async (): Promise<Explosives> => {
   const response = await HttpClient.get<Explosives>('/Explosives');
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudieron obtener los explosivos.');
+  return response.data;
 };
 
 export const getExplosivesByFlight = async (
@@ -31,35 +23,12 @@ export const getExplosivesByFlight = async (
   const response = await HttpClient.get<Explosives>(
     `/Explosives/ByFlight/${flightCode}`,
   );
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se pudieron obtener los explosivos.');
+  return response.data;
 };
 
 export const getExplosive = async (code: string): Promise<Explosive> => {
   const response = await HttpClient.get<Explosive>(`/Explosives/${code}`);
-  if (IsValidResponse(response)) {
-    return response.data;
-  }
-
-  throw new Error('No se puedo obtener el explosivo.');
-};
-
-export const checkExists = async (code: string): Promise<boolean> => {
-  try {
-    const response = await HttpClient.get<boolean>(
-      `/Explosives/Exists/${code}`,
-    );
-    if (IsValidResponse(response)) {
-      return response.data;
-    }
-
-    return false;
-  } catch (error) {
-    return false;
-  }
+  return response.data;
 };
 
 export const updateExplosive = async (

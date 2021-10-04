@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import AssignedWeaponMagazineFormatItemForm from 'components/dashboard/formats/assigned-weapon-magazine/AssignedWeaponMagazineFormatItemForm';
 import AssignedWeaponMagazineFormatWeaponInfo from 'components/dashboard/formats/assigned-weapon-magazine/AssignedWeaponMagazineFormatWeaponInfo';
 import { Weapon } from 'modules/armament/weapons/models';
-import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
+import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/models';
 import { forwardRef, ReactElement, Ref } from 'react';
 
 const Transition = forwardRef(

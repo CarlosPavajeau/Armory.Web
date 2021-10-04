@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import ExplosiveAndQuantityForm from 'components/dashboard/formats/ExplosiveAndQuantityForm';
-import { ExplosiveAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
+import { ExplosiveAndQuantity } from 'modules/formats/war-material-delivery-certificate/models';
 import { ReactElement } from 'react';
 
 interface ExplosiveAndQuantityDialogProps {

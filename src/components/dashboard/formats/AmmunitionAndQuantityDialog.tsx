@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import AmmunitionAndQuantityForm from 'components/dashboard/formats/AmmunitionAndQuantityForm';
-import { AmmunitionAndQuantity } from 'modules/formats/war-material-delivery-certificate/Models';
+import { AmmunitionAndQuantity } from 'modules/formats/war-material-delivery-certificate/models';
 import { ReactElement } from 'react';
 
 interface AmmunitionAndQuantityDialogProps {

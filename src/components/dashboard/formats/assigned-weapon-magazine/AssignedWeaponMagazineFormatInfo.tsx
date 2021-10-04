@@ -2,9 +2,9 @@ import { Card, CardContent } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CircularLoader from 'components/loading/CircularLoader';
-import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Models';
-import { AssignedWeaponMagazineFormatsUiStatus } from 'modules/formats/assigned-weapon-magazine/Slice';
-import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/Models';
+import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/models';
+import { AssignedWeaponMagazineFormatsUiStatus } from 'modules/formats/assigned-weapon-magazine/slice';
+import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/models';
 import moment from 'moment';
 import { ReactElement } from 'react';
 

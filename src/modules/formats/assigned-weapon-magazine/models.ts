@@ -1,6 +1,5 @@
+import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/models';
 import { Moment } from 'moment';
-
-import { Warehouse } from '../war-material-and-special-equipment-assignment/Models';
 
 export interface CreateAssignedWeaponMagazineFormatRequest {
   code: string;

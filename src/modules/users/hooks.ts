@@ -1,11 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
+import { ArmoryRoles } from 'modules/users/models';
+import { getRoles } from 'modules/users/service';
+import {
+  loadingRoles,
+  loadRoles,
+  selectRoles,
+  selectUiStatus,
+} from 'modules/users/slice';
 import { useEffect } from 'react';
-
-import { ArmoryRoles } from './Models';
-import { getRoles } from './Service';
-import { loadingRoles, loadRoles, selectRoles, selectUiStatus } from './Slice';
 
 export const useRoles = (): [ArmoryRoles, UiStatus] => {
   const dispatch = useAppDispatch();

@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { RootState } from '../../common/store';
-import { UiStatus } from '../../common/types';
-import { Rank, Ranks } from './Models';
+import { RootState } from 'common/store';
+import { UiStatus } from 'common/types';
+import { Rank, Ranks } from 'modules/ranks/models';
 
 export interface RanksState {
   ui: UiStatus;

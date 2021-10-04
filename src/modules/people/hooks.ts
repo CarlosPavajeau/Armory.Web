@@ -1,9 +1,11 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
-import { useEffect } from 'react';
-
-import { People } from './Models';
-import { getPeople, getPeopleByRank, getPeopleByRole } from './Service';
+import { People } from 'modules/people/models';
+import {
+  getPeople,
+  getPeopleByRank,
+  getPeopleByRole,
+} from 'modules/people/service';
 import {
   apiError,
   apiError as peopleApiError,
@@ -11,7 +13,8 @@ import {
   loadPeople,
   selectPeople,
   selectUiStatus,
-} from './Slice';
+} from 'modules/people/slice';
+import { useEffect } from 'react';
 
 export const usePeopleByRole = (role: string): [People, UiStatus] => {
   const dispatch = useAppDispatch();

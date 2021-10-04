@@ -22,8 +22,8 @@ import {
   CreateWarMaterialDeliveryCertificateFormatRequest,
   EquipmentAndQuantity,
   ExplosiveAndQuantity,
-} from 'modules/formats/war-material-delivery-certificate/Models';
-import { createWarMaterialDeliveryCertificateFormat } from 'modules/formats/war-material-delivery-certificate/Service';
+} from 'modules/formats/war-material-delivery-certificate/models';
+import { createWarMaterialDeliveryCertificateFormat } from 'modules/formats/war-material-delivery-certificate/service';
 import moment from 'moment';
 import { lazy, ReactElement, Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

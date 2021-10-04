@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Storage from 'common/plugins/Storage';
 import { AppDispatch } from 'common/store';
-import { apiError, clearErrors } from 'modules/application/Slice';
-import { logout } from 'modules/auth/Slice';
+import { apiError, clearErrors } from 'modules/application/slice';
+import { logout } from 'modules/auth/slice';
 
 const httpClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -54,10 +54,6 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
       }
     },
   );
-};
-
-export const IsValidResponse = (response: AxiosResponse): boolean => {
-  return response && (response.status === 200 || response.status === 201);
 };
 
 export default httpClient;

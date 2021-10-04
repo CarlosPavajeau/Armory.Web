@@ -14,13 +14,13 @@ import QrReaderDialog from 'components/qr/QrReaderDialog';
 import FileSaver from 'file-saver';
 import { useWeapon } from 'modules/armament/weapons/hooks';
 import { useAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/hooks';
-import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Models';
-import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
+import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/models';
+import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/service';
 import {
   addFormatItem,
   generatedAssignedWeaponMagazineFormat,
   generatingAssignedWeaponMagazineFormat,
-} from 'modules/formats/assigned-weapon-magazine/Slice';
+} from 'modules/formats/assigned-weapon-magazine/slice';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

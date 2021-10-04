@@ -23,13 +23,13 @@ import {
   DocMovement,
   Purpose,
   Warehouse,
-} from 'modules/formats/war-material-and-special-equipment-assignment/Models';
-import { createWarMaterialAndSpecialEquipmentAssigmentFormat } from 'modules/formats/war-material-and-special-equipment-assignment/Service';
+} from 'modules/formats/war-material-and-special-equipment-assignment/models';
+import { createWarMaterialAndSpecialEquipmentAssigmentFormat } from 'modules/formats/war-material-and-special-equipment-assignment/service';
 import {
   AmmunitionAndQuantity,
   EquipmentAndQuantity,
   ExplosiveAndQuantity,
-} from 'modules/formats/war-material-delivery-certificate/Models';
+} from 'modules/formats/war-material-delivery-certificate/models';
 import moment from 'moment';
 import { lazy, ReactElement, Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

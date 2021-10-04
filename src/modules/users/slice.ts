@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-
-import { ArmoryRoles } from './Models';
+import { ArmoryRoles } from 'modules/users/models';
 
 export interface UserState {
   token: string;

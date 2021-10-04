@@ -1,16 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { useEffect } from 'react';
-
-import { Ranks } from './Models';
-import { getRanks } from './Service';
+import { Ranks } from 'modules/ranks/models';
+import { getRanks } from 'modules/ranks/service';
 import {
   loadingRanks,
   loadRanks,
   selectRanks,
   selectUiStatus as selectRanksUiStatus,
-} from './Slice';
+} from 'modules/ranks/slice';
+import { useEffect } from 'react';
 
 export const useRanks = (): [Ranks, UiStatus] => {
   const dispatch = useAppDispatch();

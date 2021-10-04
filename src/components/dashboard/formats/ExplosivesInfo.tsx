@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Alert, ListItem, ListItemText, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import { ExplosivesAndQuantities } from 'modules/formats/war-material-delivery-certificate/Models';
+import { ExplosivesAndQuantities } from 'modules/formats/war-material-delivery-certificate/models';
 import { Fragment, ReactElement } from 'react';
 
 interface ExplosivesInfoProps {

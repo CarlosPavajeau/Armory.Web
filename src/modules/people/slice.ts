@@ -2,8 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Storage from 'common/plugins/Storage';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-
-import { People, Person } from './Models';
+import { People, Person } from 'modules/people/models';
 
 type PeopleStatus = UiStatus;
 

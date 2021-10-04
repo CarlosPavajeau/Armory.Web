@@ -1,14 +1,14 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import Consola from 'consola';
-import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Models';
-import { getAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/Service';
+import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/models';
+import { getAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/service';
 import {
   AssignedWeaponMagazineFormatsUiStatus,
   loadedAssignedWeaponMagazineFormat,
   loadingAssignedWeaponMagazineFormat,
   selectAssignedWeaponMagazineFormatUiStatus,
   selectCurrentFormat,
-} from 'modules/formats/assigned-weapon-magazine/Slice';
+} from 'modules/formats/assigned-weapon-magazine/slice';
 import { useEffect } from 'react';
 
 export const useAssignedWeaponMagazineFormat = (

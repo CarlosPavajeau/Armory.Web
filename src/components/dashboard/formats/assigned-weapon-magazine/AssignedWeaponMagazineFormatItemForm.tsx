@@ -14,8 +14,8 @@ import { Weapon } from 'modules/armament/weapons/models';
 import {
   AddAssignedWeaponMagazineFormatItemRequest,
   AssignedWeaponMagazineFormatItem,
-} from 'modules/formats/assigned-weapon-magazine/Models';
-import { addAssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/Service';
+} from 'modules/formats/assigned-weapon-magazine/models';
+import { addAssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/service';
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 

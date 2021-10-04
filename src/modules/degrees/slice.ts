@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { RootState } from '../../common/store';
-import { UiStatus } from '../../common/types';
-import { Degree, Degrees } from './Models';
+import { RootState } from 'common/store';
+import { UiStatus } from 'common/types';
+import { Degree, Degrees } from 'modules/degrees/models';
 
 export interface DegreesState {
   ui: UiStatus;

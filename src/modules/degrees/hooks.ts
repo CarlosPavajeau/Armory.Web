@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
 import Consola from 'consola';
-import { Degrees } from 'modules/degrees/Models';
-import { getDegrees, getDegreesByRank } from 'modules/degrees/Service';
+import { Degrees } from 'modules/degrees/models';
+import { getDegrees, getDegreesByRank } from 'modules/degrees/service';
 import {
   apiError,
   loadDegrees,
   loadingDegrees,
   selectDegrees,
   selectUiStatus,
-} from 'modules/degrees/Slice';
+} from 'modules/degrees/slice';
 import { useEffect } from 'react';
 
 export const useDegrees = (): [Degrees, UiStatus] => {

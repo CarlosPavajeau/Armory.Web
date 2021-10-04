@@ -3,7 +3,7 @@ import { Alert, ListItem, ListItemText, Tooltip } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import { EquipmentsAndQuantities } from 'modules/formats/war-material-delivery-certificate/Models';
+import { EquipmentsAndQuantities } from 'modules/formats/war-material-delivery-certificate/models';
 import { Fragment, ReactElement } from 'react';
 
 interface EquipmentsInfoProps {
