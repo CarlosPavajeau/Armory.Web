@@ -11,7 +11,6 @@ import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import MenuPopover from 'components/menu/MenuPopover';
-import { logoutUser } from 'modules/auth/service';
 import { logout, selectEmail } from 'modules/auth/slice';
 import { selectCurrentPerson } from 'modules/people/slice';
 import { ReactElement, useRef, useState } from 'react';
@@ -45,14 +44,9 @@ const AccountPopover = (): ReactElement => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleOnLogout = async () => {
-    try {
-      await logoutUser();
-      dispatch(logout());
-      navigate('/login', { replace: true });
-    } catch (err) {
-      // Ignore error
-    }
+  const handleOnLogout = () => {
+    dispatch(logout());
+    navigate('/login', { replace: true });
   };
 
   return (

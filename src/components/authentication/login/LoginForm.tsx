@@ -11,10 +11,8 @@ import {
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { useAppDispatch } from 'common/hooks';
-import Storage from 'common/plugins/Storage';
 import ApiErrors from 'components/feedback/ApiErrors';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { authorizeUser } from 'modules/auth/service';
 import { authenticate } from 'modules/auth/slice';
 import { ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -39,17 +37,7 @@ const LoginForm = (): ReactElement => {
     },
     validationSchema: LoginSchema,
     onSubmit: async values => {
-      try {
-        const result = await authorizeUser({ ...values, isPersistent: false });
-
-        const token = Storage.decode(result);
-        const { role, email } = token;
-        dispatch(
-          authenticate({ isAuthenticate: true, role, token: result, email }),
-        );
-      } catch (err) {
-        // Ignore error
-      }
+      dispatch(authenticate(values));
     },
   });
 

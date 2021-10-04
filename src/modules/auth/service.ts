@@ -6,7 +6,7 @@ import {
   AuthenticationRequest,
 } from 'modules/auth/model';
 
-export const authorizeUser = async (
+export const authenticateUser = async (
   data: AuthenticationRequest,
 ): Promise<string> => {
   const response = await HttpClient.post<
