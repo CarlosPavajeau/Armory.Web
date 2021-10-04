@@ -60,8 +60,4 @@ export const IsValidResponse = (response: AxiosResponse): boolean => {
   return response && (response.status === 200 || response.status === 201);
 };
 
-export const GetErrorStr = (response: AxiosResponse, name: string): string => {
-  return response.data.errors[name].join(', ');
-};
-
 export default httpClient;
