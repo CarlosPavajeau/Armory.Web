@@ -13,7 +13,7 @@
     "@mui/lab": "^5.0.0-alpha.47",
     "@mui/material": "^5.0.1",
     "@mui/styles": "^5.0.0",
-    "@mui/system": "^5.0.0",
+    "@mui/system": "^5.0.2",
     "@mui/utils": "^5.0.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
