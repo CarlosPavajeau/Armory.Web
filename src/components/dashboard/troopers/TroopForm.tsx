@@ -7,11 +7,11 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
+import SelectDegreeField from 'components/forms/SelectDegreeField';
+import SelectRankField from 'components/forms/SelectRankField';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useDegreesByRank } from 'modules/degrees/hooks';
 import { useFireteams } from 'modules/fireteams/hooks';
-import { useRanks } from 'modules/ranks/hooks';
 import { CreateTroopRequest } from 'modules/troopers/models';
 import { createTroop } from 'modules/troopers/service';
 import { apiError, registeredCorrectly } from 'modules/troopers/slice';
@@ -26,7 +26,6 @@ interface RegisterTroopFormValues extends CreateTroopRequest {
 const TroopForm = (): ReactElement => {
   const dispatch = useAppDispatch();
   const [fireteams, fireteamsUiStatus] = useFireteams();
-  const [ranks, ranksUiStatus] = useRanks();
 
   const navigate = useNavigate();
   const RegisterTroopSchema = Yup.object().shape({
@@ -72,8 +71,6 @@ const TroopForm = (): ReactElement => {
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, values } =
     formik;
-
-  const [degrees, degreesUiStatus] = useDegreesByRank(values.rankId);
 
   return (
     <FormikProvider value={formik}>
@@ -165,71 +162,16 @@ const TroopForm = (): ReactElement => {
             </FormHelperText>
           </FormControl>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <FormControl fullWidth>
-              <InputLabel id="rank-label">Cargo de operación</InputLabel>
-              <Select
-                labelId="rank-label"
-                label="Cargo de operación"
-                error={!!(errors.rankId && touched.rankId)}
-                defaultValue=""
-                {...getFieldProps('rankId')}
-              >
-                {ranksUiStatus === 'loading' && (
-                  <MenuItem value="">
-                    <CircularLoader
-                      size={40}
-                      message="Cargando cargos de operación"
-                    />
-                  </MenuItem>
-                )}
-                {ranksUiStatus === 'loaded' &&
-                  ranks &&
-                  ranks.map(rank => {
-                    return (
-                      <MenuItem value={rank.id} key={rank.id}>
-                        {rank.name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText error={!!(errors.rankId && touched.rankId)}>
-                {touched.rankId && errors.rankId}
-              </FormHelperText>
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel id="degree-label">Grado</InputLabel>
-              <Select
-                labelId="degree-label"
-                label="Grado"
-                error={!!(errors.degreeId && touched.degreeId)}
-                defaultValue=""
-                {...getFieldProps('degreeId')}
-              >
-                {(degreesUiStatus === 'idle' ||
-                  (!!values.rankId && values.rankId === 0)) && (
-                  <MenuItem value="">
-                    Seleccione un cargo de operación primero
-                  </MenuItem>
-                )}
-                {degreesUiStatus === 'loading' && (
-                  <MenuItem value="">
-                    <CircularLoader size={40} message="Cargando grados" />
-                  </MenuItem>
-                )}
-                {degreesUiStatus === 'loaded' &&
-                  degrees &&
-                  degrees.map(degree => {
-                    return (
-                      <MenuItem value={degree.id} key={degree.id}>
-                        {degree.name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText error={!!(errors.degreeId && touched.degreeId)}>
-                {touched.degreeId && errors.degreeId}
-              </FormHelperText>
-            </FormControl>
+            <SelectRankField
+              disabled={isSubmitting}
+              {...getFieldProps('rankId')}
+            />
+
+            <SelectDegreeField
+              rankId={values.rankId}
+              disabled={isSubmitting}
+              {...getFieldProps('degreeId')}
+            />
           </Stack>
 
           <ApiErrors />
