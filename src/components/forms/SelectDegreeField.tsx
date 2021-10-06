@@ -40,8 +40,7 @@ const SelectDegreeField = (props: SelectDegreeFieldProps): ReactElement => {
             <CircularLoader size={40} message="Cargando grados" />
           </MenuItem>
         )}
-        {degreesUiStatus === 'loaded' &&
-          degrees &&
+        {degrees &&
           degrees.map(degree => {
             return (
               <MenuItem value={degree.id} key={degree.id}>

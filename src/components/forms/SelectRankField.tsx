@@ -36,8 +36,7 @@ const SelectRankField = (props: SelectRankFieldProps): ReactElement => {
             <CircularLoader size={40} message="Cargando cargos de operación" />
           </MenuItem>
         )}
-        {ranksUiStatus === 'loaded' &&
-          ranks &&
+        {ranks &&
           ranks.map(rank => {
             return (
               <MenuItem value={rank.id} key={rank.id}>

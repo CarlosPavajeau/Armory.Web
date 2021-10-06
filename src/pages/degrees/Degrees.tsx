@@ -74,8 +74,7 @@ const Degrees = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    degrees.length > 0 &&
+                  {degrees.length > 0 &&
                     degrees
                       .slice(
                         page * rowsPerPage,

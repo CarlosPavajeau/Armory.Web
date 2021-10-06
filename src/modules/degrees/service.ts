@@ -1,23 +1,29 @@
 import HttpClient from 'common/config/http';
-import { CreateDegreeRequest, Degree, Degrees } from 'modules/degrees/models';
+import { CreateDegreeRequest, Degrees } from 'modules/degrees/models';
 
-export const createDegree = async (
-  data: CreateDegreeRequest,
-): Promise<void> => {
-  await HttpClient.post('/Degrees', data);
+const DegreesService = {
+  /**
+   * Send request to create a Degree
+   * @param data request body
+   */
+  createDegree: async (data: CreateDegreeRequest): Promise<void> => {
+    await HttpClient.post('/Degrees', data);
+  },
+  /**
+   * Fetch all degrees
+   */
+  fetchDegrees: async (): Promise<Degrees> => {
+    const response = await HttpClient.get<Degrees>('/Degrees');
+    return response.data;
+  },
+  /**
+   * Fetch all degrees in rank
+   * @param rank rank id
+   */
+  fetchDegreesByRank: async (rank: number): Promise<Degrees> => {
+    const response = await HttpClient.get<Degrees>(`/Degrees/ByRank/${rank}`);
+    return response.data;
+  },
 };
 
-export const getDegrees = async (): Promise<Degrees> => {
-  const response = await HttpClient.get<Degrees>('/Degrees');
-  return response.data;
-};
-
-export const getDegreesByRank = async (rankId: number): Promise<Degrees> => {
-  const response = await HttpClient.get<Degrees>(`/Degrees/ByRank/${rankId}`);
-  return response.data;
-};
-
-export const getDegree = async (id: number): Promise<Degree | undefined> => {
-  const response = await HttpClient.get<Degree>(`/Degrees/${id}`);
-  return response.data;
-};
+export default DegreesService;

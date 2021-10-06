@@ -1,31 +1,25 @@
 import { LoadingButton } from '@mui/lab';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
-import CircularLoader from 'components/loading/CircularLoader';
+import SelectRankField from 'components/forms/SelectRankField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateDegreeRequest } from 'modules/degrees/models';
-import { createDegree } from 'modules/degrees/service';
-import { useRanks } from 'modules/ranks/hooks';
+import { createDegree } from 'modules/degrees/slice';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const DegreeForm = (): ReactElement => {
-  const [ranks, ranksUiStatus] = useRanks();
-
   const RegisterDegreeSchema = Yup.object().shape({
     name: Yup.string().required('Este campo es requerido'),
     rankId: Yup.number().required('Este campo es requerido'),
   });
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const formik = useFormik<CreateDegreeRequest>({
     initialValues: {
       name: '',
@@ -34,7 +28,7 @@ const DegreeForm = (): ReactElement => {
     validationSchema: RegisterDegreeSchema,
     onSubmit: async values => {
       try {
-        await createDegree(values);
+        dispatch(createDegree(values));
         navigate('/dashboard/degrees/all');
       } catch (err) {
         if (process.env.NODE_ENV === 'development') {
@@ -64,41 +58,10 @@ const DegreeForm = (): ReactElement => {
             fullWidth
           />
 
-          <FormControl fullWidth>
-            <InputLabel id="rank-label">Cargo de operación</InputLabel>
-            <Select
-              labelId="rank-label"
-              label="Cargo de operación"
-              error={!!(errors.rankId && touched.rankId)}
-              disabled={isSubmitting}
-              defaultValue=""
-              {...getFieldProps('rankId')}
-            >
-              {ranksUiStatus === 'loading' && (
-                <MenuItem value="">
-                  <CircularLoader
-                    size={40}
-                    message="Cargando cargos de operación"
-                  />
-                </MenuItem>
-              )}
-              {ranksUiStatus === 'loaded' &&
-                ranks &&
-                ranks.length > 0 &&
-                ranks.map(r => {
-                  return (
-                    <MenuItem value={r.id} key={r.id}>
-                      {r.name}
-                    </MenuItem>
-                  );
-                })}
-            </Select>
-            <FormHelperText error={!!(errors.rankId && touched.rankId)}>
-              {errors.rankId && touched.rankId
-                ? errors.rankId
-                : 'Seleccione un cargo de operación'}
-            </FormHelperText>
-          </FormControl>
+          <SelectRankField
+            disabled={isSubmitting}
+            {...getFieldProps('rankId')}
+          />
 
           <ApiErrors />
 
