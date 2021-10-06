@@ -73,8 +73,7 @@ const Ranks = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    ranks.length > 0 &&
+                  {ranks.length > 0 &&
                     ranks
                       .slice(
                         page * rowsPerPage,
