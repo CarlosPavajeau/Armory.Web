@@ -1,15 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import Storage from 'common/plugins/Storage';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import { People, Person } from 'modules/people/models';
+import {
+  CreatePersonRequest,
+  People,
+  Person,
+  UpdatePersonDegreeRequest,
+} from 'modules/people/models';
+import PeopleService from 'modules/people/service';
 
 type PeopleStatus = UiStatus;
 
 export interface PeopleState {
   ui: PeopleStatus;
-  error: string;
-  wasRegistered: boolean;
   data: People;
   person: Person | null;
   currentPerson: Person | null;
@@ -20,86 +24,102 @@ const loadCurrentPerson = (): Person | null =>
 
 const initialState: PeopleState = {
   ui: 'idle',
-  error: '',
-  wasRegistered: false,
   data: [],
   person: null,
   currentPerson: loadCurrentPerson(),
 };
 
+/**
+ * Create person action
+ * @param data request body
+ */
+export const createPerson = createAsyncThunk(
+  'people/create',
+  async (data: CreatePersonRequest) => {
+    await PeopleService.createPerson(data);
+  },
+);
+
+/**
+ * Fetch people action
+ */
+export const fetchPeople = createAsyncThunk('people/fetch_all', async () => {
+  return PeopleService.fetchPeople();
+});
+
+/**
+ * Fetch people by rank action
+ * @param rank name of the rank to fetch people
+ */
+export const fetchPeopleByRank = createAsyncThunk(
+  'people/fetch_all_by_rank',
+  async (rank: string) => {
+    return PeopleService.fetchPeopleByRank(rank);
+  },
+);
+
+/**
+ * Fetch person by user action
+ */
+export const fetchPersonByUserId = createAsyncThunk(
+  'people/fetch_by_user',
+  async (userId: string) => {
+    return PeopleService.fetchPersonByUserId(userId);
+  },
+);
+
+/**
+ * Update person degree action
+ * @param data request body
+ */
+export const updatePersonDegree = createAsyncThunk(
+  'people/update_degree',
+  async (data: UpdatePersonDegreeRequest) => {
+    await PeopleService.updatePersonDegree(data);
+  },
+);
+
 export const slice = createSlice({
   name: 'people',
   initialState,
-  reducers: {
-    registeredCorrectly: state => {
-      state.wasRegistered = true;
-    },
-    resetRegister: state => {
-      state.wasRegistered = false;
-      state.error = '';
-    },
-    setCurrentPerson: (state, action: PayloadAction<Person>) => {
-      state.currentPerson = action.payload;
-    },
-    loadingPeople: state => {
-      state.ui = 'loading';
-    },
-    loadPeople: (state, action: PayloadAction<People>) => {
-      state.ui = 'loaded';
-      state.data = action.payload;
-    },
-    loadingPerson: state => {
-      state.ui = 'loading';
-    },
-    loadPerson: (state, action: PayloadAction<Person>) => {
-      state.ui = 'loaded';
-      state.person = action.payload;
-    },
-    updatingPerson: state => {
-      state.ui = 'updating';
-    },
-    updatedPerson: state => {
-      state.ui = 'updated';
-    },
-    deletingPerson: state => {
-      state.ui = 'deleting';
-    },
-    deletedPerson: (state, action: PayloadAction<string>) => {
-      state.ui = 'deleted';
+  reducers: {},
 
-      if (state.person && state.person.id === action.payload) {
-        state.person = null;
-      }
-
-      if (state.data && state.data.length > 0) {
-        state.data = state.data.filter(p => p.id !== action.payload);
-      }
-    },
-    apiError: (state, action: PayloadAction<string>) => {
-      state.ui = 'apiError';
-      state.error = action.payload;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchPeople.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
+      .addCase(fetchPeopleByRank.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
+      .addCase(fetchPersonByUserId.fulfilled, (state, action) => {
+        state.currentPerson = action.payload;
+        Storage.set('current_person', JSON.stringify(action.payload));
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchPeople.pending,
+          fetchPeopleByRank.pending,
+          fetchPersonByUserId.pending,
+        ),
+        state => {
+          state.ui = 'loading';
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchPeople.fulfilled,
+          fetchPeople.rejected,
+          fetchPeopleByRank.fulfilled,
+          fetchPeopleByRank.rejected,
+        ),
+        state => {
+          state.ui = 'idle';
+        },
+      );
   },
 });
 
-export const {
-  registeredCorrectly,
-  resetRegister,
-  loadingPeople,
-  loadPeople,
-  loadingPerson,
-  loadPerson,
-  updatingPerson,
-  updatedPerson,
-  deletingPerson,
-  deletedPerson,
-  apiError,
-  setCurrentPerson,
-} = slice.actions;
-
-export const selectError = (state: RootState): string => state.people.error;
-export const selectWasRegistered = (state: RootState): boolean =>
-  state.people.wasRegistered;
 export const selectCurrentPerson = (state: RootState): Person | null =>
   state.people.currentPerson;
 export const selectPeople = (state: RootState): People => state.people.data;

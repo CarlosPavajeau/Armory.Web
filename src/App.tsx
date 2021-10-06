@@ -2,8 +2,7 @@ import { ConfigureGlobalError } from 'common/config/http';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import Storage from 'common/plugins/Storage';
 import { selectIsAuth, selectPayload } from 'modules/auth/slice';
-import { getPersonByUserId } from 'modules/people/service';
-import { setCurrentPerson } from 'modules/people/slice';
+import { fetchPersonByUserId } from 'modules/people/slice';
 import { ReactElement, useEffect } from 'react';
 
 import Router from './routes';
@@ -21,10 +20,7 @@ const App = (): ReactElement => {
       (async () => {
         if (payload.token !== undefined) {
           const { nameid } = Storage.decode(payload.token);
-          const person = await getPersonByUserId(nameid);
-          Storage.set('current_person', JSON.stringify(person));
-
-          dispatch(setCurrentPerson(person));
+          dispatch(fetchPersonByUserId(nameid));
         }
       })();
     } else {

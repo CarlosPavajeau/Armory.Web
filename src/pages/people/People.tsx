@@ -117,8 +117,7 @@ const People = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {peopleUiStatus === 'loaded' &&
-                    filteredPeople.length > 0 &&
+                  {filteredPeople.length > 0 &&
                     filteredPeople
                       .slice(
                         page * rowsPerPage,
