@@ -6,11 +6,7 @@ import {
   AuthenticationPayload,
   AuthenticationRequest,
 } from 'modules/auth/model';
-import {
-  authenticateUser,
-  checkAuthentication,
-  logoutUser,
-} from 'modules/auth/service';
+import AuthService from 'modules/auth/service';
 
 interface AuthState {
   payload: AuthenticationPayload;
@@ -18,7 +14,7 @@ interface AuthState {
 }
 
 const init = () => {
-  return checkAuthentication();
+  return AuthService.checkAuthentication();
 };
 
 const initialState: AuthState = {
@@ -26,15 +22,21 @@ const initialState: AuthState = {
   ui: 'idle',
 };
 
+/**
+ * Dispatch authenticate action
+ */
 export const authenticate = createAsyncThunk(
   'auth/authenticate',
   async (data: AuthenticationRequest) => {
-    return authenticateUser(data);
+    return AuthService.authenticate(data);
   },
 );
 
+/**
+ * Dispatch logout action
+ */
 export const logout = createAsyncThunk('auth/logout', async () => {
-  await logoutUser();
+  await AuthService.logout();
 });
 
 export const slice = createSlice({
@@ -51,6 +53,7 @@ export const slice = createSlice({
         (state, action: PayloadAction<string>) => {
           state.ui = 'idle';
           const payload = Storage.decode(action.payload);
+
           state.payload = {
             isAuthenticate: true,
             email: payload.email,
