@@ -84,8 +84,7 @@ const Squads = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    squads.length > 0 &&
+                  {squads.length > 0 &&
                     squads.map(squad => {
                       const { code, name, ownerName } = squad;
                       return (

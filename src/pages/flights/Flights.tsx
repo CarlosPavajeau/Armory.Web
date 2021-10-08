@@ -99,8 +99,7 @@ const Flights = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredFlights.length > 0 &&
+                  {filteredFlights.length > 0 &&
                     filteredFlights
                       .slice(
                         page * rowsPerPage,
