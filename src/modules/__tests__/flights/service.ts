@@ -6,8 +6,6 @@ import HttpClient from 'common/config/http';
 import { CreateFlightRequest, Flights } from 'modules/flights/models';
 import FlightsService from 'modules/flights/service';
 
-import { Squads } from '../../squads/models';
-
 jest.mock('common/config/http');
 
 describe('Flights service test', () => {
@@ -21,7 +19,7 @@ describe('Flights service test', () => {
         ownerName: 'Juan',
       },
     ];
-    const response: AxiosResponse<Squads> = {
+    const response: AxiosResponse<Flights> = {
       data,
       status: 200,
       statusText: 'Ok',
