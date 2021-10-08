@@ -1,11 +1,8 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
-import Consola from 'consola';
 import { Squads } from 'modules/squads/models';
-import { getSquads } from 'modules/squads/service';
 import {
-  loadingSquads,
-  loadSquads,
+  fetchAllSquads,
   selectSquads,
   selectUiStatus,
 } from 'modules/squads/slice';
@@ -17,17 +14,7 @@ export const useSquads = (): [Squads, UiStatus] => {
   const squadsUiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    (async () => {
-      try {
-        dispatch(loadingSquads());
-        const result = await getSquads();
-        dispatch(loadSquads(result));
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          Consola.error(err);
-        }
-      }
-    })();
+    dispatch(fetchAllSquads());
   }, [dispatch]);
 
   return [squads, squadsUiStatus];

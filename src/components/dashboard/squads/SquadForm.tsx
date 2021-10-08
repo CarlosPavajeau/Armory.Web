@@ -6,13 +6,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { usePeopleByRank } from 'modules/people/hooks';
 import { CreateSquadRequest } from 'modules/squads/models';
-import { createSquad } from 'modules/squads/service';
+import { createSquad } from 'modules/squads/slice';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -27,6 +28,7 @@ const SquadForm = (): ReactElement => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const formik = useFormik<CreateSquadRequest>({
     initialValues: {
       code: '',
@@ -36,7 +38,7 @@ const SquadForm = (): ReactElement => {
     validationSchema: RegisterSquadScheme,
     onSubmit: async values => {
       try {
-        await createSquad(values);
+        dispatch(createSquad(values));
         navigate('/dashboard/squads/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
