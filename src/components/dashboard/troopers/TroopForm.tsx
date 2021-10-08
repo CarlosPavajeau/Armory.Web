@@ -11,7 +11,7 @@ import SelectDegreeField from 'components/forms/SelectDegreeField';
 import SelectRankField from 'components/forms/SelectRankField';
 import CircularLoader from 'components/loading/CircularLoader';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useFireteams } from 'modules/fireteams/hooks';
+import { useFireTeams } from 'modules/fireteams/hooks';
 import { CreateTroopRequest } from 'modules/troopers/models';
 import { createTroop } from 'modules/troopers/service';
 import { apiError, registeredCorrectly } from 'modules/troopers/slice';
@@ -25,7 +25,7 @@ interface RegisterTroopFormValues extends CreateTroopRequest {
 
 const TroopForm = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [fireteams, fireteamsUiStatus] = useFireteams();
+  const [fireteams, fireteamsUiStatus] = useFireTeams();
 
   const navigate = useNavigate();
   const RegisterTroopSchema = Yup.object().shape({

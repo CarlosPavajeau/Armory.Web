@@ -1,31 +1,31 @@
 import HttpClient from 'common/config/http';
-import {
-  CreateFireteamRequest,
-  Fireteam,
-  Fireteams,
-} from 'modules/fireteams/models';
+import { CreateFireTeamRequest, FireTeams } from 'modules/fireteams/models';
 
-export const createFireteam = async (
-  data: CreateFireteamRequest,
-): Promise<void> => {
-  await HttpClient.post('/Fireteams', data);
+const FireTeamsService = {
+  /**
+   * Send request to create a FireTeam
+   * @param data request body
+   */
+  create: async (data: CreateFireTeamRequest): Promise<void> => {
+    await HttpClient.post('/Fireteams', data);
+  },
+  /**
+   * Fetch all FireTeams
+   */
+  fetchAll: async (): Promise<FireTeams> => {
+    const response = await HttpClient.get<FireTeams>('/Fireteams');
+    return response.data;
+  },
+  /**
+   * Fetch all FireTeams by flight
+   * @param flight flight code
+   */
+  fetchAllByFlight: async (flight: string): Promise<FireTeams> => {
+    const response = await HttpClient.get<FireTeams>(
+      `/Fireteams/ByFlight/${flight}`,
+    );
+    return response.data;
+  },
 };
 
-export const getFireteams = async (): Promise<Fireteams> => {
-  const response = await HttpClient.get<Fireteams>('/Fireteams');
-  return response.data;
-};
-
-export const getFireteamsByFlight = async (
-  flightCode: string,
-): Promise<Fireteams> => {
-  const response = await HttpClient.get<Fireteams>(
-    `/Fireteams/ByFlight/${flightCode}`,
-  );
-  return response.data;
-};
-
-export const getFireteam = async (code: string): Promise<Fireteam> => {
-  const response = await HttpClient.get<Fireteam>(`/Fireteams/${code}`);
-  return response.data;
-};
+export default FireTeamsService;

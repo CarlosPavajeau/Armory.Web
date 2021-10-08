@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import CircularLoader from 'components/loading/CircularLoader';
 import { useField } from 'formik';
 import { FieldInputProps } from 'formik/dist/types';
-import { useFireteamsByFlight } from 'modules/fireteams/hooks';
+import { useFireTeamsByFlight } from 'modules/fireteams/hooks';
 import { ReactElement } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +18,7 @@ interface SelectFireteamFieldProps extends FieldInputProps<any> {
 const SelectFireteamField = (props: SelectFireteamFieldProps): ReactElement => {
   const { flightCode, disabled, ...others } = props;
   const [field, meta] = useField(others);
-  const [fireteams, uiStatus] = useFireteamsByFlight(flightCode);
+  const [fireteams, uiStatus] = useFireTeamsByFlight(flightCode);
 
   return (
     <FormControl fullWidth>

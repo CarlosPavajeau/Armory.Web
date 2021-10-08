@@ -1,14 +1,14 @@
-export interface CreateFireteamRequest {
+export interface CreateFireTeamRequest {
   code: string;
   name: string;
   personId: string;
   flightCode: string;
 }
 
-export interface Fireteam {
+export interface FireTeam {
   code: string;
   name: string;
   ownerName: string;
   flightName: string;
 }
-export type Fireteams = Fireteam[];
+export type FireTeams = FireTeam[];

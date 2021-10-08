@@ -1,60 +1,36 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
-import Consola from 'consola';
-import { Fireteams } from 'modules/fireteams/models';
-import { getFireteams, getFireteamsByFlight } from 'modules/fireteams/service';
+import { FireTeams } from 'modules/fireteams/models';
 import {
-  loadFireteams,
-  loadingFireteams,
+  fetchFireTeams,
+  fetchFireTeamsByFlight,
   selectFireteams,
   selectUiStatus,
 } from 'modules/fireteams/slice';
 import { useEffect } from 'react';
 
-export const useFireteams = (): [Fireteams, UiStatus] => {
+export const useFireTeams = (): [FireTeams, UiStatus] => {
   const dispatch = useAppDispatch();
-  const fireteams = useAppSelector(selectFireteams);
+  const fireTeams = useAppSelector(selectFireteams);
   const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    (async () => {
-      try {
-        dispatch(loadingFireteams());
-        const result = await getFireteams();
-        dispatch(loadFireteams(result));
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          Consola.error(err);
-        }
-      }
-    })();
+    dispatch(fetchFireTeams());
   }, [dispatch]);
 
-  return [fireteams, uiStatus];
+  return [fireTeams, uiStatus];
 };
 
-export const useFireteamsByFlight = (
+export const useFireTeamsByFlight = (
   flightCode: string,
-): [Fireteams, UiStatus] => {
+): [FireTeams, UiStatus] => {
   const dispatch = useAppDispatch();
-  const fireteams = useAppSelector(selectFireteams);
+  const fireTeams = useAppSelector(selectFireteams);
   const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (flightCode) {
-          dispatch(loadingFireteams());
-          const result = await getFireteamsByFlight(flightCode);
-          dispatch(loadFireteams(result));
-        }
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          Consola.error(err);
-        }
-      }
-    })();
+    dispatch(fetchFireTeamsByFlight(flightCode));
   }, [dispatch, flightCode]);
 
-  return [fireteams, uiStatus];
+  return [fireTeams, uiStatus];
 };

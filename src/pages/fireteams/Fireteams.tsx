@@ -17,17 +17,17 @@ import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import { filter } from 'lodash';
-import { useFireteams } from 'modules/fireteams/hooks';
-import { Fireteam } from 'modules/fireteams/models';
+import { useFireTeams } from 'modules/fireteams/hooks';
+import { FireTeam } from 'modules/fireteams/models';
 import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTablePagination } from 'shared/hooks/useTablePagination';
 
 const Fireteams = (): ReactElement => {
-  const [fireteams, uiStatus] = useFireteams();
+  const [fireteams, uiStatus] = useFireTeams();
   const [filterName, setFilterName] = useState('');
 
-  const filteredFireteams = filter(fireteams, (fireteam: Fireteam) => {
+  const filteredFireteams = filter(fireteams, (fireteam: FireTeam) => {
     const { code, name } = fireteam;
     const lowerFilter = filterName.toLowerCase();
     return (

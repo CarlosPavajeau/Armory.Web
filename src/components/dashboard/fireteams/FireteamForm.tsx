@@ -6,13 +6,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectFlightField from 'components/forms/SelectFlightField';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { CreateFireteamRequest } from 'modules/fireteams/models';
-import { createFireteam } from 'modules/fireteams/service';
+import { CreateFireTeamRequest } from 'modules/fireteams/models';
+import { createFireTeam } from 'modules/fireteams/slice';
 import { usePeopleByRank } from 'modules/people/hooks';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +30,8 @@ const FireteamForm = (): ReactElement => {
   });
 
   const navigate = useNavigate();
-  const formik = useFormik<CreateFireteamRequest>({
+  const dispatch = useAppDispatch();
+  const formik = useFormik<CreateFireTeamRequest>({
     initialValues: {
       code: '',
       name: '',
@@ -39,7 +41,7 @@ const FireteamForm = (): ReactElement => {
     validationSchema: RegisterFireteamScheme,
     onSubmit: async values => {
       try {
-        await createFireteam(values);
+        dispatch(createFireTeam(values));
         navigate('/dashboard/fireteams/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
