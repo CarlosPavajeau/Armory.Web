@@ -114,8 +114,7 @@ const Troopers = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredTroopers.length > 0 &&
+                  {filteredTroopers.length > 0 &&
                     filteredTroopers
                       .slice(
                         page * rowsPerPage,

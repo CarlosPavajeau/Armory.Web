@@ -10,11 +10,11 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import SelectDegreeField from 'components/forms/SelectDegreeField';
 import SelectRankField from 'components/forms/SelectRankField';
 import CircularLoader from 'components/loading/CircularLoader';
+import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useFireTeams } from 'modules/fireteams/hooks';
 import { CreateTroopRequest } from 'modules/troopers/models';
-import { createTroop } from 'modules/troopers/service';
-import { apiError, registeredCorrectly } from 'modules/troopers/slice';
+import { createTroop } from 'modules/troopers/slice';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -24,10 +24,8 @@ interface RegisterTroopFormValues extends CreateTroopRequest {
 }
 
 const TroopForm = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const [fireteams, fireteamsUiStatus] = useFireTeams();
+  const [fireTeams, fireTeamsUiStatus] = useFireTeams();
 
-  const navigate = useNavigate();
   const RegisterTroopSchema = Yup.object().shape({
     id: Yup.string()
       .required('Este campo es requerido')
@@ -46,6 +44,8 @@ const TroopForm = (): ReactElement => {
       .min(1, 'Este campo es requerido'),
   });
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const formik = useFormik<RegisterTroopFormValues>({
     initialValues: {
       id: '',
@@ -60,11 +60,12 @@ const TroopForm = (): ReactElement => {
     validationSchema: RegisterTroopSchema,
     onSubmit: async values => {
       try {
-        await createTroop(values);
-        dispatch(registeredCorrectly());
+        dispatch(createTroop(values));
         navigate('/dashboard/troopers', { replace: true });
       } catch (err: unknown) {
-        dispatch(apiError((err as Error).message));
+        if (process.env.NODE_ENV === 'development') {
+          Consola.error(err);
+        }
       }
     },
   });
@@ -138,15 +139,15 @@ const TroopForm = (): ReactElement => {
               defaultValue=""
               {...getFieldProps('fireteamCode')}
             >
-              {fireteamsUiStatus === 'loading' && (
+              {fireTeamsUiStatus === 'loading' && (
                 <MenuItem value="">
                   <CircularLoader size={40} message="Cargando escuadras" />
                 </MenuItem>
               )}
-              {fireteamsUiStatus === 'loaded' &&
-                fireteams &&
-                fireteams.length > 0 &&
-                fireteams.map(fireteam => {
+              {fireTeamsUiStatus === 'loaded' &&
+                fireTeams &&
+                fireTeams.length > 0 &&
+                fireTeams.map(fireteam => {
                   const { code, name } = fireteam;
                   return (
                     <MenuItem key={code} value={code}>

@@ -1,34 +1,31 @@
 import HttpClient from 'common/config/http';
-import {
-  CreateTroopRequest,
-  Troop,
-  Troopers,
-  UpdateTroopRequest,
-} from 'modules/troopers/models';
+import { CreateTroopRequest, Troopers } from 'modules/troopers/models';
 
-export const createTroop = async (data: CreateTroopRequest): Promise<void> => {
-  await HttpClient.post('/Troopers', data);
+const TroopersService = {
+  /**
+   * Send request to create a Troop
+   * @param data request body
+   */
+  create: async (data: CreateTroopRequest): Promise<void> => {
+    await HttpClient.post('/Troopers', data);
+  },
+  /**
+   * Fetch all Troopers
+   */
+  fetchAll: async (): Promise<Troopers> => {
+    const response = await HttpClient.get<Troopers>('/Troopers');
+    return response.data;
+  },
+  /**
+   * Fetch all Trooper by FireTeam
+   * @param fireTeam FireTeam code
+   */
+  fetchAllByFireTeam: async (fireTeam: string): Promise<Troopers> => {
+    const response = await HttpClient.get<Troopers>(
+      `/Troopers/ByFireteam/${fireTeam}`,
+    );
+    return response.data;
+  },
 };
 
-export const getTroopers = async (): Promise<Troopers> => {
-  const response = await HttpClient.get<Troopers>('/Troopers');
-  return response.data;
-};
-
-export const getTroopersByFireteam = async (
-  fireteamCode: string,
-): Promise<Troopers> => {
-  const response = await HttpClient.get<Troopers>(
-    `/Troopers/ByFireteam/${fireteamCode}`,
-  );
-  return response.data;
-};
-
-export const getTroop = async (id: string): Promise<Troop> => {
-  const response = await HttpClient.get<Troop>(`/Troopers/${id}`);
-  return response.data;
-};
-
-export const updateTroop = async (data: UpdateTroopRequest): Promise<void> => {
-  await HttpClient.put(`/Troopers/${data.id}`, data);
-};
+export default TroopersService;
