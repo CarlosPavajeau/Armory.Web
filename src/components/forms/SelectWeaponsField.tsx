@@ -49,8 +49,7 @@ const SelectWeaponsField = (props: SelectWeaponsFieldProps): ReactElement => {
         {weaponsUiStatus === 'apiError' && (
           <MenuItem value="">No hay datos</MenuItem>
         )}
-        {weaponsUiStatus === 'loaded' &&
-          weapons &&
+        {weapons &&
           weapons.length > 0 &&
           weapons.map(weapon => {
             const { serial, type, model } = weapon;

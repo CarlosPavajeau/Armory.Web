@@ -24,7 +24,7 @@ import FileSaver from 'file-saver';
 import { filter } from 'lodash';
 import { useWeapons } from 'modules/armament/weapons/hooks';
 import { Weapon } from 'modules/armament/weapons/models';
-import { generateQr } from 'modules/armament/weapons/service';
+import WeaponsService from 'modules/armament/weapons/service';
 import { ChangeEvent, ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTablePagination } from 'shared/hooks/useTablePagination';
@@ -59,7 +59,7 @@ const Weapons = (): ReactElement => {
 
   const generateWeaponQr = async (weapon: Weapon) => {
     try {
-      const result = await generateQr(weapon.serial);
+      const result = await WeaponsService.generateQr(weapon.serial);
       FileSaver.saveAs(result, `qr-${weapon.model}-${weapon.serial}.pdf`);
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
@@ -116,8 +116,7 @@ const Weapons = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredWeapons.length > 0 &&
+                  {filteredWeapons.length > 0 &&
                     filteredWeapons
                       .slice(
                         page * rowsPerPage,

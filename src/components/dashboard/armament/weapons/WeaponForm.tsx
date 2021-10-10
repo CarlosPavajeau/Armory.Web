@@ -7,7 +7,7 @@ import Consola from 'consola';
 import FileSaver from 'file-saver';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateWeaponRequest } from 'modules/armament/weapons/models';
-import { createWeapon } from 'modules/armament/weapons/service';
+import WeaponsService from 'modules/armament/weapons/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -43,7 +43,7 @@ const WeaponForm = (): ReactElement => {
     validationSchema: RegisterWeaponSchema,
     onSubmit: async values => {
       try {
-        const result = await createWeapon(values);
+        const result = await WeaponsService.create(values);
         FileSaver.saveAs(result, `qr-${values.model}-${values.serial}.pdf`);
         navigate('/dashboard/weapons/all');
       } catch (err: unknown) {
