@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import { CreateDegreeRequest, Degrees } from 'modules/degrees/models';
+import { Degrees } from 'modules/degrees/models';
 import DegreesService from 'modules/degrees/service';
 
 export interface DegreesState {
@@ -13,17 +13,6 @@ const initialState: DegreesState = {
   ui: 'idle',
   data: [],
 };
-
-/**
- * Create a degree action
- * @param data request body
- */
-export const createDegree = createAsyncThunk(
-  'degrees/create',
-  async (data: CreateDegreeRequest) => {
-    await DegreesService.createDegree(data);
-  },
-);
 
 /**
  * Fetch degrees action

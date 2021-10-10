@@ -38,8 +38,7 @@ const SelectFireteamField = (props: SelectFireteamFieldProps): ReactElement => {
           </MenuItem>
         )}
         {uiStatus === 'apiError' && <MenuItem value="">No hay datos</MenuItem>}
-        {uiStatus === 'loaded' &&
-          fireteams &&
+        {fireteams &&
           fireteams.map(fireteam => {
             const { code, name } = fireteam;
             return (

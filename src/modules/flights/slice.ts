@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import { CreateFlightRequest, Flights } from 'modules/flights/models';
+import { Flights } from 'modules/flights/models';
 import FlightsService from 'modules/flights/service';
 
 export interface FlightState {
@@ -13,17 +13,6 @@ const initialState: FlightState = {
   ui: 'idle',
   data: [],
 };
-
-/**
- * Create flight action
- * @param data request body
- */
-export const createFlight = createAsyncThunk(
-  'flights/create',
-  async (data: CreateFlightRequest) => {
-    await FlightsService.create(data);
-  },
-);
 
 /**
  * Fetch all flights action

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import { CreateFireTeamRequest, FireTeams } from 'modules/fireteams/models';
+import { FireTeams } from 'modules/fireteams/models';
 import FireTeamsService from 'modules/fireteams/service';
 
 export interface FireTeamState {
@@ -13,17 +13,6 @@ const initialState: FireTeamState = {
   ui: 'idle',
   data: [],
 };
-
-/**
- * Create FireTeam action
- * @param data body request
- */
-export const createFireTeam = createAsyncThunk(
-  'fire_teams/create',
-  async (data: CreateFireTeamRequest) => {
-    await FireTeamsService.create(data);
-  },
-);
 
 /**
  * Fetch all FireTeams action

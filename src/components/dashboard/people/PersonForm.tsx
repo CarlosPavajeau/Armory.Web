@@ -1,14 +1,13 @@
 import { LoadingButton } from '@mui/lab';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectDegreeField from 'components/forms/SelectDegreeField';
 import SelectRankField from 'components/forms/SelectRankField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreatePersonRequest } from 'modules/people/models';
-import { createPerson } from 'modules/people/slice';
+import PeopleService from 'modules/people/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -42,7 +41,6 @@ const PersonForm = (): ReactElement => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const formik = useFormik<PersonFormValues>({
     initialValues: {
       id: '',
@@ -58,7 +56,7 @@ const PersonForm = (): ReactElement => {
     validationSchema: RegisterPersonScheme,
     onSubmit: async values => {
       try {
-        dispatch(createPerson(values));
+        await PeopleService.createPerson(values);
         navigate('/dashboard/people/all');
       } catch (err: unknown) {
         Consola.error(err);

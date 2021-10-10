@@ -37,8 +37,7 @@ const SelectFlightField = (props: SelectFlightFieldProps): ReactElement => {
           </MenuItem>
         )}
         {uiStatus === 'apiError' && <MenuItem value="">No hay datos</MenuItem>}
-        {uiStatus === 'loaded' &&
-          flights &&
+        {flights &&
           flights.length > 0 &&
           flights.map(flight => {
             const { code, name } = flight;

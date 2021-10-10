@@ -6,14 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectFlightField from 'components/forms/SelectFlightField';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateFireTeamRequest } from 'modules/fireteams/models';
-import { createFireTeam } from 'modules/fireteams/slice';
+import FireTeamsService from 'modules/fireteams/service';
 import { usePeopleByRank } from 'modules/people/hooks';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +29,6 @@ const FireteamForm = (): ReactElement => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const formik = useFormik<CreateFireTeamRequest>({
     initialValues: {
       code: '',
@@ -41,7 +39,7 @@ const FireteamForm = (): ReactElement => {
     validationSchema: RegisterFireteamScheme,
     onSubmit: async values => {
       try {
-        dispatch(createFireTeam(values));
+        await FireTeamsService.create(values);
         navigate('/dashboard/fireteams/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {

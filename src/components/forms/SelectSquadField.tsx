@@ -37,8 +37,7 @@ const SelectSquadField = (props: SelectSquadFieldProps): ReactElement => {
           </MenuItem>
         )}
         {uiStatus === 'apiError' && <MenuItem value="">No hay datos</MenuItem>}
-        {uiStatus === 'loaded' &&
-          squads &&
+        {squads &&
           squads.length > 0 &&
           squads.map(squad => {
             const { code, name } = squad;

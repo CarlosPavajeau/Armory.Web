@@ -2,12 +2,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import Storage from 'common/plugins/Storage';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import {
-  CreatePersonRequest,
-  People,
-  Person,
-  UpdatePersonDegreeRequest,
-} from 'modules/people/models';
+import { People, Person } from 'modules/people/models';
 import PeopleService from 'modules/people/service';
 
 type PeopleStatus = UiStatus;
@@ -28,17 +23,6 @@ const initialState: PeopleState = {
   person: null,
   currentPerson: loadCurrentPerson(),
 };
-
-/**
- * Create person action
- * @param data request body
- */
-export const createPerson = createAsyncThunk(
-  'people/create',
-  async (data: CreatePersonRequest) => {
-    await PeopleService.createPerson(data);
-  },
-);
 
 /**
  * Fetch people action
@@ -65,17 +49,6 @@ export const fetchPersonByUserId = createAsyncThunk(
   'people/fetch_by_user',
   async (userId: string) => {
     return PeopleService.fetchPersonByUserId(userId);
-  },
-);
-
-/**
- * Update person degree action
- * @param data request body
- */
-export const updatePersonDegree = createAsyncThunk(
-  'people/update_degree',
-  async (data: UpdatePersonDegreeRequest) => {
-    await PeopleService.updatePersonDegree(data);
   },
 );
 

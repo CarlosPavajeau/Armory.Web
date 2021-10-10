@@ -52,6 +52,8 @@ export const ConfigureGlobalError = (dispatch: AppDispatch): void => {
           ]),
         );
       }
+
+      throw error;
     },
   );
 };

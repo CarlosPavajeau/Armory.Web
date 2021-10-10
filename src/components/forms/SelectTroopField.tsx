@@ -43,8 +43,7 @@ const SelectTroopField = (props: SelectTroopFieldProps): ReactElement => {
         {troopersUiStatus === 'apiError' && (
           <MenuItem value="">No hay datos</MenuItem>
         )}
-        {troopersUiStatus === 'loaded' &&
-          troopers &&
+        {troopers &&
           troopers.map(troop => {
             const {
               id,

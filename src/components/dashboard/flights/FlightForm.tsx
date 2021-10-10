@@ -5,14 +5,13 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
-import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectSquadField from 'components/forms/SelectSquadField';
 import CircularLoader from 'components/loading/CircularLoader';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateFlightRequest } from 'modules/flights/models';
-import { createFlight } from 'modules/flights/slice';
+import FlightsService from 'modules/flights/service';
 import { usePeopleByRank } from 'modules/people/hooks';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +28,6 @@ const FlightForm = (): ReactElement => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const formik = useFormik<CreateFlightRequest>({
     initialValues: {
       code: '',
@@ -40,7 +38,7 @@ const FlightForm = (): ReactElement => {
     validationSchema: RegisterFlightScheme,
     onSubmit: async (values: CreateFlightRequest) => {
       try {
-        dispatch(createFlight(values));
+        await FlightsService.create(values);
         navigate('/dashboard/flights/all');
       } catch (err: unknown) {
         Consola.error(err);
