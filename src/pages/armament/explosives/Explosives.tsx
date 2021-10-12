@@ -103,8 +103,7 @@ const Explosives = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredExplosives.length > 0 &&
+                  {filteredExplosives.length > 0 &&
                     filteredExplosives
                       .slice(
                         page * rowsPerPage,

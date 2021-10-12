@@ -1,38 +1,34 @@
 import HttpClient from 'common/config/http';
 import {
   CreateExplosiveRequest,
-  Explosive,
   Explosives,
-  UpdateExplosiveRequest,
 } from 'modules/armament/explosives/models';
 
-export const createExplosive = async (
-  data: CreateExplosiveRequest,
-): Promise<void> => {
-  await HttpClient.post('/Explosives', data);
+const ExplosivesService = {
+  /**
+   * Send request to create a Explosive
+   * @param data request body
+   */
+  create: async (data: CreateExplosiveRequest): Promise<void> => {
+    await HttpClient.post('/Explosives', data);
+  },
+  /**
+   * Fetch all explosives
+   */
+  fetchAll: async (): Promise<Explosives> => {
+    const response = await HttpClient.get<Explosives>('/Explosives');
+    return response.data;
+  },
+  /**
+   * Fetch all explosives by Flight
+   * @param flight flight code
+   */
+  fetchAllByFlight: async (flight: string): Promise<Explosives> => {
+    const response = await HttpClient.get<Explosives>(
+      `/Explosives/ByFlight/${flight}`,
+    );
+    return response.data;
+  },
 };
 
-export const getExplosives = async (): Promise<Explosives> => {
-  const response = await HttpClient.get<Explosives>('/Explosives');
-  return response.data;
-};
-
-export const getExplosivesByFlight = async (
-  flightCode: string,
-): Promise<Explosives> => {
-  const response = await HttpClient.get<Explosives>(
-    `/Explosives/ByFlight/${flightCode}`,
-  );
-  return response.data;
-};
-
-export const getExplosive = async (code: string): Promise<Explosive> => {
-  const response = await HttpClient.get<Explosive>(`/Explosives/${code}`);
-  return response.data;
-};
-
-export const updateExplosive = async (
-  data: UpdateExplosiveRequest,
-): Promise<void> => {
-  await HttpClient.put(`/Explosives/${data.serial}`, data);
-};
+export default ExplosivesService;

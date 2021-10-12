@@ -6,7 +6,7 @@ import SelectFlightField from 'components/forms/SelectFlightField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateExplosiveRequest } from 'modules/armament/explosives/models';
-import { createExplosive } from 'modules/armament/explosives/service';
+import ExplosivesService from 'modules/armament/explosives/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -38,7 +38,7 @@ const ExplosiveForm = (): ReactElement => {
     validationSchema: RegisterExplosiveSchema,
     onSubmit: async values => {
       try {
-        await createExplosive(values);
+        await ExplosivesService.create(values);
         navigate('/dashboard/explosives/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {

@@ -68,8 +68,7 @@ const ExplosiveAndQuantityForm = (
               {explosivesUiStatus === 'apiError' && (
                 <MenuItem value="">No hay datos</MenuItem>
               )}
-              {explosivesUiStatus === 'loaded' &&
-                explosives &&
+              {explosives &&
                 explosives.length > 0 &&
                 explosives.map(explosive => {
                   const { serial, type, caliber, quantityAvailable } =
