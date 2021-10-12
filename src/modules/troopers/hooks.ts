@@ -29,7 +29,9 @@ export const useTroopersByFireTeam = (
   const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    dispatch(fetchAllTroopersByFireTeam(fireTeamCode));
+    if (fireTeamCode) {
+      dispatch(fetchAllTroopersByFireTeam(fireTeamCode));
+    }
   }, [dispatch, fireTeamCode]);
 
   return [troopers, uiStatus];

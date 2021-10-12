@@ -29,7 +29,9 @@ export const useFireTeamsByFlight = (
   const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    dispatch(fetchFireTeamsByFlight(flightCode));
+    if (flightCode) {
+      dispatch(fetchFireTeamsByFlight(flightCode));
+    }
   }, [dispatch, flightCode]);
 
   return [fireTeams, uiStatus];

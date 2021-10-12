@@ -29,7 +29,9 @@ export const useWeaponsByFlight = (flightCode: string): [Weapons, UiStatus] => {
   const weaponUiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    dispatch(fetchAllWeaponsByFlight(flightCode));
+    if (flightCode) {
+      dispatch(fetchAllWeaponsByFlight(flightCode));
+    }
   }, [dispatch, flightCode]);
 
   return [weapons, weaponUiStatus];
