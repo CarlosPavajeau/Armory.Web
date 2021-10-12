@@ -67,8 +67,7 @@ const EquipmentAndQuantityForm = (
               {equipmentsUiStatus === 'apiError' && (
                 <MenuItem value="">No hay datos</MenuItem>
               )}
-              {equipmentsUiStatus === 'loaded' &&
-                equipments &&
+              {equipments &&
                 equipments.map(equipment => {
                   const { serial, type, quantityAvailable } = equipment;
                   return (

@@ -1,15 +1,9 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { UiStatus } from 'common/types';
-import Consola from 'consola';
 import { Equipments } from 'modules/armament/equipments/models';
 import {
-  getEquipments,
-  getEquipmentsByFlight,
-} from 'modules/armament/equipments/service';
-import {
-  apiError,
-  loadEquipments,
-  loadingEquipments,
+  fetchAllEquipments,
+  fetchAllEquipmentsByFlight,
   selectEquipments,
   selectUiStatus,
 } from 'modules/armament/equipments/slice';
@@ -21,18 +15,7 @@ export const useEquipments = (): [Equipments, UiStatus] => {
   const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    (async () => {
-      try {
-        dispatch(loadingEquipments());
-        const result = await getEquipments();
-        dispatch(loadEquipments(result));
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          Consola.error(err);
-        }
-        dispatch(apiError('Error de operación'));
-      }
-    })();
+    dispatch(fetchAllEquipments());
   }, [dispatch]);
 
   return [equipments, uiStatus];
@@ -46,20 +29,9 @@ export const useEquipmentsByFlight = (
   const uiStatus = useAppSelector(selectUiStatus);
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (flightCode) {
-          dispatch(loadingEquipments());
-          const result = await getEquipmentsByFlight(flightCode);
-          dispatch(loadEquipments(result));
-        }
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          Consola.error(err);
-        }
-        dispatch(apiError('Error de operación'));
-      }
-    })();
+    if (flightCode) {
+      dispatch(fetchAllEquipmentsByFlight(flightCode));
+    }
   }, [dispatch, flightCode]);
 
   return [equipments, uiStatus];

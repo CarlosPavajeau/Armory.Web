@@ -100,8 +100,7 @@ const Equipments = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredEquipments.length > 0 &&
+                  {filteredEquipments.length > 0 &&
                     filteredEquipments
                       .slice(
                         page * rowsPerPage,

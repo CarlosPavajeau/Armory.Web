@@ -1,81 +1,77 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import { Equipment, Equipments } from 'modules/armament/equipments/models';
+import { Equipments } from 'modules/armament/equipments/models';
+import EquipmentsService from 'modules/armament/equipments/service';
 
 export interface EquipmentsState {
   ui: UiStatus;
-  error: string;
-  wasRegistered: boolean;
   data: Equipments;
-  equipment: Equipment | null;
 }
 
 const initialState: EquipmentsState = {
   ui: 'idle',
-  error: '',
-  wasRegistered: false,
   data: [],
-  equipment: null,
 };
+
+/**
+ * Fetch all equipments action
+ */
+export const fetchAllEquipments = createAsyncThunk(
+  'equipments/fetch_all',
+  async () => {
+    return EquipmentsService.fetchAll();
+  },
+);
+
+/**
+ * Fetch all equipments by flight action
+ */
+export const fetchAllEquipmentsByFlight = createAsyncThunk(
+  'equipments/fetch_all_by_flight',
+  async (flight: string) => {
+    return EquipmentsService.fetchAllByFlight(flight);
+  },
+);
 
 export const slice = createSlice({
   name: 'equipments',
   initialState,
-  reducers: {
-    registeredCorrectly: state => {
-      state.wasRegistered = true;
-    },
-    resetRegister: state => {
-      state.wasRegistered = false;
-      state.error = '';
-    },
-    loadingEquipments: state => {
-      state.ui = 'loading';
-    },
-    loadEquipments: (state, action: PayloadAction<Equipments>) => {
-      state.ui = 'loaded';
-      state.data = action.payload;
-    },
-    loadingEquipment: state => {
-      state.ui = 'loading';
-    },
-    loadEquipment: (state, action: PayloadAction<Equipment>) => {
-      state.ui = 'loaded';
-      state.equipment = action.payload;
-    },
-    updatingEquipment: state => {
-      state.ui = 'updating';
-    },
-    updatedEquipment: state => {
-      state.ui = 'updated';
-    },
-    apiError: (state, action: PayloadAction<string>) => {
-      state.ui = 'apiError';
-      state.error = action.payload;
-    },
+  reducers: {},
+
+  extraReducers: builder => {
+    builder
+      .addMatcher(
+        isAnyOf(
+          fetchAllEquipments.fulfilled,
+          fetchAllEquipmentsByFlight.fulfilled,
+        ),
+        (state, action) => {
+          state.data = action.payload;
+        },
+      )
+      .addMatcher(
+        isAnyOf(fetchAllEquipments.pending, fetchAllEquipmentsByFlight.pending),
+        state => {
+          state.ui = 'loading';
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchAllEquipments.fulfilled,
+          fetchAllEquipments.rejected,
+          fetchAllEquipmentsByFlight.fulfilled,
+          fetchAllEquipmentsByFlight.rejected,
+        ),
+        state => {
+          state.ui = 'idle';
+        },
+      );
   },
 });
 
-export const {
-  registeredCorrectly,
-  resetRegister,
-  loadingEquipments,
-  loadEquipments,
-  loadingEquipment,
-  loadEquipment,
-  updatingEquipment,
-  updatedEquipment,
-  apiError,
-} = slice.actions;
-
-export const selectError = (state: RootState): string => state.equipments.error;
-export const selectWasRegistered = (state: RootState): boolean =>
-  state.equipments.wasRegistered;
 export const selectEquipments = (state: RootState): Equipments =>
   state.equipments.data;
-export const selectEquipment = (state: RootState): Equipment | null =>
-  state.equipments.equipment;
 export const selectUiStatus = (state: RootState): UiStatus =>
   state.equipments.ui;
 

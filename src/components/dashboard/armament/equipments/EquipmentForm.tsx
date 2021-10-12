@@ -6,7 +6,7 @@ import SelectFlightField from 'components/forms/SelectFlightField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateEquipmentRequest } from 'modules/armament/equipments/models';
-import { createEquipment } from 'modules/armament/equipments/service';
+import EquipmentsService from 'modules/armament/equipments/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -34,7 +34,7 @@ const EquipmentForm = (): ReactElement => {
     validationSchema: RegisterEquipmentSchema,
     onSubmit: async values => {
       try {
-        await createEquipment(values);
+        await EquipmentsService.create(values);
         navigate('/dashboard/equipments/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
