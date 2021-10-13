@@ -67,8 +67,7 @@ const AmmunitionAndQuantityForm = (
               {ammunitionUiStatus === 'apiError' && (
                 <MenuItem value="">No hay datos</MenuItem>
               )}
-              {ammunitionUiStatus === 'loaded' &&
-                ammunition &&
+              {ammunition &&
                 ammunition.length > 0 &&
                 ammunition.map(ammo => {
                   const { lot, caliber, quantityAvailable } = ammo;

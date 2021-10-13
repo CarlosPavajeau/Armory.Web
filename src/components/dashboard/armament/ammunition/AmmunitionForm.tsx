@@ -6,7 +6,7 @@ import SelectFlightField from 'components/forms/SelectFlightField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateAmmunitionRequest } from 'modules/armament/ammunition/models';
-import { createAmmunition } from 'modules/armament/ammunition/service';
+import AmmunitionService from 'modules/armament/ammunition/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -34,7 +34,7 @@ const AmmunitionForm = (): ReactElement => {
     validationSchema: RegisterAmmunitionSchema,
     onSubmit: async values => {
       try {
-        await createAmmunition(values);
+        await AmmunitionService.create(values);
         navigate('/dashboard/ammunition/all');
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {

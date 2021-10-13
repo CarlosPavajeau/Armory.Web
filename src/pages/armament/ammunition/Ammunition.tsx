@@ -102,8 +102,7 @@ const Ammunition = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredAmmunition.length > 0 &&
+                  {filteredAmmunition.length > 0 &&
                     filteredAmmunition.map(a => {
                       const { lot, type, mark, caliber, quantityAvailable } = a;
                       return (
