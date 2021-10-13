@@ -24,31 +24,27 @@ const AssignedWeaponMagazineFormatInfo = (
         {formatUiStatus === 'loading' && (
           <CircularLoader size={150} message="Cargando formato..." />
         )}
-        {formatUiStatus !== 'loading' && (
+        {format && (
           <Stack>
             <Typography variant="h4" gutterBottom>
               Registro de formato de revista
             </Typography>
-            <Typography variant="h5">
-              Formato No. {format && format.code}
+            <Typography variant="h5">Formato No. {format.code}</Typography>
+            <Typography variant="body1" color="textSecondary">
+              Fecha: {moment(format.date).format('L')}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              Fecha: {format && moment(format.date).format('L')}
+              Vigencia: {moment(format.validity).format('L')}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              Vigencia: {format && moment(format.validity).format('L')}
+              Escuadrilla: {format?.flightCode}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              Escuadrilla: {format && format?.flightCode}
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Escuadra: {format && format?.fireteamCode}
+              Escuadra: {format?.fireteamCode}
             </Typography>
             <Typography variant="body1" color="textSecondary">
               Alamacén de armamento:{' '}
-              {format && format?.warehouse === Warehouse.Air
-                ? 'Aéreo '
-                : 'Terrestre'}
+              {format?.warehouse === Warehouse.Air ? 'Aéreo ' : 'Terrestre'}
             </Typography>
           </Stack>
         )}

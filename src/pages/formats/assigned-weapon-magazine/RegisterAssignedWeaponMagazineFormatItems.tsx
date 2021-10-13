@@ -15,12 +15,8 @@ import FileSaver from 'file-saver';
 import { useWeapon } from 'modules/armament/weapons/hooks';
 import { useAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/hooks';
 import { AssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/models';
-import { generateAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/service';
-import {
-  addFormatItem,
-  generatedAssignedWeaponMagazineFormat,
-  generatingAssignedWeaponMagazineFormat,
-} from 'modules/formats/assigned-weapon-magazine/slice';
+import AssignedWeaponMagazineFormatsService from 'modules/formats/assigned-weapon-magazine/service';
+import { addAssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/slice';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -68,12 +64,15 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
     setOpenQrDialog(true);
   };
 
+  const [generatingFormat, setGeneratingFormat] = useState(false);
   const handleClickOnGenerateFormat = async () => {
     if (formatId != null) {
-      dispatch(generatingAssignedWeaponMagazineFormat());
-      const result = await generateAssignedWeaponMagazineFormat(+formatId);
+      setGeneratingFormat(true);
+      const result = await AssignedWeaponMagazineFormatsService.generate(
+        +formatId,
+      );
       FileSaver.saveAs(result, `format-${formatId}.xlsx`);
-      dispatch(generatedAssignedWeaponMagazineFormat());
+      setGeneratingFormat(false);
     }
   };
 
@@ -83,7 +82,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
     setOpenItemDialog(false);
     setScanCode('');
     if (formatId != null && value != null) {
-      dispatch(addFormatItem(value));
+      dispatch(addAssignedWeaponMagazineFormatItem(value));
     }
   };
 
@@ -118,7 +117,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
                   variant="contained"
                   onClick={handleClickOnOpenQrDialog}
                   loading={weaponUiStatus === 'loading'}
-                  disabled={formatUiStatus === 'generating'}
+                  disabled={generatingFormat}
                   fullWidth
                 >
                   Escanear código QR
@@ -126,7 +125,7 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
                 <LoadingButton
                   variant="outlined"
                   onClick={handleClickOnGenerateFormat}
-                  loading={formatUiStatus === 'generating'}
+                  loading={generatingFormat}
                   disabled={weaponUiStatus === 'loading'}
                   fullWidth
                 >

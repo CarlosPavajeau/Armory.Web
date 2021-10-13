@@ -15,7 +15,7 @@ import {
   AddAssignedWeaponMagazineFormatItemRequest,
   AssignedWeaponMagazineFormatItem,
 } from 'modules/formats/assigned-weapon-magazine/models';
-import { addAssignedWeaponMagazineFormatItem } from 'modules/formats/assigned-weapon-magazine/service';
+import AssignedWeaponMagazineFormatsService from 'modules/formats/assigned-weapon-magazine/service';
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 
@@ -58,7 +58,9 @@ const AssignedWeaponMagazineFormatItemForm = (
       try {
         values.troopId = weapon != null ? weapon.holderId : '';
         values.weaponSerial = weapon != null ? weapon.serial : '';
-        const result = await addAssignedWeaponMagazineFormatItem(values);
+        const result = await AssignedWeaponMagazineFormatsService.addItem(
+          values,
+        );
         onSuccess(result);
       } catch (err) {
         if (process.env.NODE_ENV === 'development') {

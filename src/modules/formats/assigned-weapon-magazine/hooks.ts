@@ -1,11 +1,8 @@
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import Consola from 'consola';
 import { AssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/models';
-import { getAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/service';
 import {
   AssignedWeaponMagazineFormatsUiStatus,
-  loadedAssignedWeaponMagazineFormat,
-  loadingAssignedWeaponMagazineFormat,
+  fetchAssignedWeaponMagazineFormat,
   selectAssignedWeaponMagazineFormatUiStatus,
   selectCurrentFormat,
 } from 'modules/formats/assigned-weapon-magazine/slice';
@@ -22,19 +19,9 @@ export const useAssignedWeaponMagazineFormat = (
   const uiStatus = useAppSelector(selectAssignedWeaponMagazineFormatUiStatus);
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (formatId) {
-          dispatch(loadingAssignedWeaponMagazineFormat());
-          const result = await getAssignedWeaponMagazineFormat(formatId);
-          dispatch(loadedAssignedWeaponMagazineFormat(result));
-        }
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-          Consola.error(err);
-        }
-      }
-    })();
+    if (formatId) {
+      dispatch(fetchAssignedWeaponMagazineFormat(formatId));
+    }
   }, [dispatch, formatId]);
 
   return [format, uiStatus];

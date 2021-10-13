@@ -1,10 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  isAnyOf,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
 import {
   AssignedWeaponMagazineFormat,
   AssignedWeaponMagazineFormatItem,
 } from 'modules/formats/assigned-weapon-magazine/models';
+import AssignedWeaponMagazineFormatsService from 'modules/formats/assigned-weapon-magazine/service';
 
 export type AssignedWeaponMagazineFormatsUiStatus =
   | UiStatus
@@ -13,77 +19,64 @@ export type AssignedWeaponMagazineFormatsUiStatus =
 
 export interface AssignedWeaponMagazineFormatsState {
   ui: AssignedWeaponMagazineFormatsUiStatus;
-  error: string;
-  wasRegistered: boolean;
   currentFormat: AssignedWeaponMagazineFormat | null;
 }
 
 const initialState: AssignedWeaponMagazineFormatsState = {
   ui: 'idle',
-  error: '',
-  wasRegistered: false,
   currentFormat: null,
 };
+
+/**
+ * Fetch AssignedWeaponMagazineFormat action
+ * @param id format id
+ */
+export const fetchAssignedWeaponMagazineFormat = createAsyncThunk(
+  'assigned_weapon_magazine_format/fetch',
+  async (id: number) => {
+    return AssignedWeaponMagazineFormatsService.fetch(id);
+  },
+);
 
 export const slice = createSlice({
   name: 'assigned_weapon_magazine_formats',
   initialState,
   reducers: {
-    registeredCorrectly: state => {
-      state.wasRegistered = true;
-    },
-    resetRegister: state => {
-      state.wasRegistered = false;
-      state.error = '';
-    },
-    loadingAssignedWeaponMagazineFormat: state => {
-      state.ui = 'loading';
-    },
-    loadedAssignedWeaponMagazineFormat: (
-      state,
-      action: PayloadAction<AssignedWeaponMagazineFormat>,
-    ) => {
-      state.currentFormat = action.payload;
-      state.ui = 'loaded';
-    },
-    generatingAssignedWeaponMagazineFormat: state => {
-      state.ui = 'generating';
-    },
-    generatedAssignedWeaponMagazineFormat: state => {
-      state.ui = 'generated';
-    },
-    setCurrentFormat: (
-      state,
-      action: PayloadAction<AssignedWeaponMagazineFormat>,
-    ) => {
-      state.currentFormat = action.payload;
-    },
-    addFormatItem: (
+    addAssignedWeaponMagazineFormatItem: (
       state,
       action: PayloadAction<AssignedWeaponMagazineFormatItem>,
     ) => {
-      if (state.currentFormat != null) {
-        state.currentFormat.records.push(action.payload);
+      if (state.currentFormat) {
+        state.currentFormat.records = [
+          ...state.currentFormat.records,
+          action.payload,
+        ];
       }
     },
   },
+
+  extraReducers: builder => {
+    builder
+      .addCase(fetchAssignedWeaponMagazineFormat.fulfilled, (state, action) => {
+        state.currentFormat = action.payload;
+      })
+      .addCase(fetchAssignedWeaponMagazineFormat.pending, state => {
+        state.ui = 'loading';
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchAssignedWeaponMagazineFormat.fulfilled,
+          fetchAssignedWeaponMagazineFormat.rejected,
+        ),
+        state => {
+          state.ui = 'idle';
+        },
+      );
+  },
 });
 
-export const {
-  registeredCorrectly,
-  resetRegister,
-  loadingAssignedWeaponMagazineFormat,
-  loadedAssignedWeaponMagazineFormat,
-  generatingAssignedWeaponMagazineFormat,
-  generatedAssignedWeaponMagazineFormat,
-  setCurrentFormat,
-  addFormatItem,
-} = slice.actions;
+export const { addAssignedWeaponMagazineFormatItem } = slice.actions;
 
-export const selectError = (state: RootState): string =>
-  state.assigned_weapon_magazine_format.error;
-export const selectWasRegistered = (state: RootState): boolean =>
-  state.assigned_weapon_magazine_format.wasRegistered;
 export const selectCurrentFormat = (
   state: RootState,
 ): AssignedWeaponMagazineFormat | null =>

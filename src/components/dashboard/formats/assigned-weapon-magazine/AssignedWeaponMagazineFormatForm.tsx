@@ -16,7 +16,7 @@ import SelectSquadField from 'components/forms/SelectSquadField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { CreateAssignedWeaponMagazineFormatRequest } from 'modules/formats/assigned-weapon-magazine/models';
-import { createAssignedWeaponMagazineFormat } from 'modules/formats/assigned-weapon-magazine/service';
+import AssignedWeaponMagazineFormatsService from 'modules/formats/assigned-weapon-magazine/service';
 import { Warehouse } from 'modules/formats/war-material-and-special-equipment-assignment/models';
 import moment from 'moment';
 import React, { ReactElement } from 'react';
@@ -49,7 +49,9 @@ const AssignedWeaponMagazineFormatForm = (): ReactElement => {
     validationSchema: RegisterAssignedWeaponMagazineFormatSchema,
     onSubmit: async values => {
       try {
-        const result = await createAssignedWeaponMagazineFormat(values);
+        const result = await AssignedWeaponMagazineFormatsService.create(
+          values,
+        );
         navigate(
           `/dashboard/formats/assigned-weapon-magazine-format/items?formatId=${result}`,
         );
