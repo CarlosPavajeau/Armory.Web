@@ -24,7 +24,7 @@ import {
   Purpose,
   Warehouse,
 } from 'modules/formats/war-material-and-special-equipment-assignment/models';
-import { createWarMaterialAndSpecialEquipmentAssigmentFormat } from 'modules/formats/war-material-and-special-equipment-assignment/service';
+import WarMaterialAndSpecialEquipmentAssigmentFormatsService from 'modules/formats/war-material-and-special-equipment-assignment/service';
 import {
   AmmunitionAndQuantity,
   EquipmentAndQuantity,
@@ -112,7 +112,9 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
       onSubmit: async values => {
         try {
           const result =
-            await createWarMaterialAndSpecialEquipmentAssigmentFormat(values);
+            await WarMaterialAndSpecialEquipmentAssigmentFormatsService.create(
+              values,
+            );
           FileSaver.saveAs(
             result,
             `format-${values.code}${values.flightCode}.xlsx`,

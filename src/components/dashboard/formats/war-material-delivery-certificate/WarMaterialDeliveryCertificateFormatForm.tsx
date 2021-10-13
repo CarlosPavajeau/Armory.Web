@@ -23,7 +23,7 @@ import {
   EquipmentAndQuantity,
   ExplosiveAndQuantity,
 } from 'modules/formats/war-material-delivery-certificate/models';
-import { createWarMaterialDeliveryCertificateFormat } from 'modules/formats/war-material-delivery-certificate/service';
+import WarMaterialDeliveryCertificateFormatsService from 'modules/formats/war-material-delivery-certificate/service';
 import moment from 'moment';
 import { lazy, ReactElement, Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -98,7 +98,8 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
     validationSchema: RegisterWarMaterialDeliveryCertificateFormatSchema,
     onSubmit: async values => {
       try {
-        const result = await createWarMaterialDeliveryCertificateFormat(values);
+        const result =
+          await WarMaterialDeliveryCertificateFormatsService.create(values);
         FileSaver.saveAs(result, `format-${values.code}.xlsx`);
         navigate('/dashboard');
       } catch (err) {
