@@ -1,24 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
-import { CreateTroopRequest, Troopers } from 'modules/troopers/models';
+import { Troopers } from 'modules/troopers/models';
 import TroopersService from 'modules/troopers/service';
 
 export interface TroopersState {
   ui: UiStatus;
   data: Troopers;
 }
-
-/**
- * Create troop action
- * @param data request body
- */
-export const createTroop = createAsyncThunk(
-  'troopers/save',
-  async (data: CreateTroopRequest) => {
-    await TroopersService.create(data);
-  },
-);
 
 /**
  * Fetch all troopers action
@@ -49,6 +38,36 @@ export const slice = createSlice({
   name: 'troopers',
   initialState,
   reducers: {},
+
+  extraReducers: builder => {
+    builder
+      .addMatcher(
+        isAnyOf(
+          fetchAllTroopers.fulfilled,
+          fetchAllTroopersByFireTeam.fulfilled,
+        ),
+        (state, action) => {
+          state.data = action.payload;
+        },
+      )
+      .addMatcher(
+        isAnyOf(fetchAllTroopers.pending, fetchAllTroopersByFireTeam.pending),
+        state => {
+          state.ui = 'loading';
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchAllTroopers.fulfilled,
+          fetchAllTroopers.rejected,
+          fetchAllTroopersByFireTeam.fulfilled,
+          fetchAllTroopersByFireTeam.rejected,
+        ),
+        state => {
+          state.ui = 'idle';
+        },
+      );
+  },
 });
 
 export const selectTroopers = (state: RootState): Troopers =>
