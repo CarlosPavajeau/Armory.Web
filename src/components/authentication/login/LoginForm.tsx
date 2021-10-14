@@ -6,17 +6,18 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import { useAppDispatch } from 'common/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
 import PasswordField from 'components/forms/PasswordField';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { authenticate } from 'modules/auth/slice';
+import { authenticate, selectAuthUiStatus } from 'modules/auth/slice';
 import { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const LoginForm = (): ReactElement => {
   const dispatch = useAppDispatch();
+  const authUi = useAppSelector(selectAuthUiStatus);
 
   const LoginSchema = Yup.object().shape({
     usernameOrEmail: Yup.string().required(
@@ -37,8 +38,7 @@ const LoginForm = (): ReactElement => {
     },
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    formik;
+  const { errors, touched, values, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -53,7 +53,7 @@ const LoginForm = (): ReactElement => {
                 : 'Digite su nombre de usuario o email'
             }
             error={Boolean(touched.usernameOrEmail && errors.usernameOrEmail)}
-            disabled={isSubmitting}
+            disabled={authUi === 'loading'}
             {...getFieldProps('usernameOrEmail')}
             fullWidth
           />
@@ -61,7 +61,7 @@ const LoginForm = (): ReactElement => {
           <PasswordField
             label="Contraseña"
             helperText="Digite su contraseña de acceso"
-            disabled={isSubmitting}
+            disabled={authUi === 'loading'}
             {...getFieldProps('password')}
           />
         </Stack>
@@ -80,7 +80,7 @@ const LoginForm = (): ReactElement => {
               />
             }
             label="¿Recodar datos?"
-            disabled={isSubmitting}
+            disabled={authUi === 'loading'}
           />
 
           <Link
@@ -99,7 +99,7 @@ const LoginForm = (): ReactElement => {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          loading={authUi === 'loading'}
         >
           Iniciar sesión
         </LoadingButton>

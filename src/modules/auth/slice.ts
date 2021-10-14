@@ -83,6 +83,7 @@ export const slice = createSlice({
   },
 });
 
+export const selectAuthUiStatus = (state: RootState): UiStatus => state.auth.ui;
 export const selectIsAuth = (state: RootState): boolean =>
   state.auth.payload.isAuthenticate;
 export const selectRole = (state: RootState): string | string[] | undefined =>
