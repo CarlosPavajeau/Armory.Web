@@ -4,11 +4,9 @@ import { styled } from '@mui/material/styles';
 import { useAppSelector } from 'common/hooks';
 import MHidden from 'components/@material-extend/MHidden';
 import Scrollbar from 'components/scrollbar/Scrollbar';
-import { selectRole } from 'modules/auth/slice';
 import { selectCurrentPerson } from 'modules/people/slice';
 import { ReactElement, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import translateRole from 'utils/translateRole';
 
 import NavSection from './sidebar/NavSection';
 import sidebarConfig from './sidebar/SidebarConfig';
@@ -41,7 +39,6 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
   const { pathname } = useLocation();
 
   const person = useAppSelector(selectCurrentPerson);
-  const role = useAppSelector(selectRole);
 
   useEffect(() => {
     if (isOpen) {
@@ -75,7 +72,9 @@ const DashboardSidebar = (props: DashboardSidebarProps): ReactElement => {
                   : 'Usuario desconocido'}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {translateRole(role)}
+                {person != null
+                  ? `${person.degreeName} - ${person.rankName}`
+                  : 'Sin grado / rango'}
               </Typography>
             </Box>
           </AccountStyle>
