@@ -31,6 +31,7 @@ import {
   RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   RegisterWarMaterialDeliveryCertificateFormat,
   RegisterWeapon,
+  Settings,
   Squads,
   Troopers,
   Weapons,
@@ -60,6 +61,10 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
         {
           path: '',
           element: <DashboardHome />,
+        },
+        {
+          path: 'settings',
+          element: <Settings />,
         },
         {
           path: 'people',

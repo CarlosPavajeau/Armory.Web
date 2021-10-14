@@ -25,7 +25,7 @@ interface MenuOption {
 const MENU_OPTIONS: MenuOption[] = [
   { label: 'Inicio', icon: <HomeIcon />, linkTo: '/' },
   { label: 'Perfil', icon: <PersonIcon />, linkTo: '#' },
-  { label: 'Configuraciones', icon: <SettingsIcon />, linkTo: '#' },
+  { label: 'Configuraciones', icon: <SettingsIcon />, linkTo: 'settings' },
 ];
 
 const AccountPopover = (): ReactElement => {

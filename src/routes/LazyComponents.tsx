@@ -74,6 +74,8 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormatComponent = lazy(
     ),
 );
 
+const SettingsComponent = lazy(() => import('pages/users/Settings'));
+
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <LoginComponent />
@@ -236,3 +238,9 @@ export const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat =
       <RegisterWarMaterialAndSpecialEquipmentAssigmentFormatComponent />
     </Suspense>
   );
+
+export const Settings = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <SettingsComponent />
+  </Suspense>
+);

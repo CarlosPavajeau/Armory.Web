@@ -3,3 +3,9 @@ export interface ArmoryRole {
 }
 
 export type ArmoryRoles = ArmoryRole[];
+
+export interface ChangePasswordRequest {
+  usernameOrEmail: string;
+  oldPassword: string;
+  newPassword: string;
+}
