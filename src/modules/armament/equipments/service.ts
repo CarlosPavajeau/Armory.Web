@@ -10,13 +10,13 @@ const EquipmentsService = {
    * @param data request body
    */
   create: async (data: CreateEquipmentRequest): Promise<void> => {
-    await HttpClient.post('/Equipments', data);
+    await HttpClient.post('equipments', data);
   },
   /**
    * Fetch all equipments
    */
   fetchAll: async (): Promise<Equipments> => {
-    const response = await HttpClient.get<Equipments>('/Equipments');
+    const response = await HttpClient.get<Equipments>('equipments');
     return response.data;
   },
   /**
@@ -25,7 +25,7 @@ const EquipmentsService = {
    */
   fetchAllByFlight: async (flight: string): Promise<Equipments> => {
     const response = await HttpClient.get<Equipments>(
-      `/Equipments/ByFlight/${flight}`,
+      `equipments/byflight/${flight}`,
     );
     return response.data;
   },

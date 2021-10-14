@@ -10,13 +10,13 @@ const ExplosivesService = {
    * @param data request body
    */
   create: async (data: CreateExplosiveRequest): Promise<void> => {
-    await HttpClient.post('/Explosives', data);
+    await HttpClient.post('explosives', data);
   },
   /**
    * Fetch all explosives
    */
   fetchAll: async (): Promise<Explosives> => {
-    const response = await HttpClient.get<Explosives>('/Explosives');
+    const response = await HttpClient.get<Explosives>('explosives');
     return response.data;
   },
   /**
@@ -25,7 +25,7 @@ const ExplosivesService = {
    */
   fetchAllByFlight: async (flight: string): Promise<Explosives> => {
     const response = await HttpClient.get<Explosives>(
-      `/Explosives/ByFlight/${flight}`,
+      `explosives/byflight/${flight}`,
     );
     return response.data;
   },

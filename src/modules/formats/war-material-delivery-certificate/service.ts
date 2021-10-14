@@ -12,7 +12,7 @@ const WarMaterialDeliveryCertificateFormatsService = {
     return HttpClient.post<
       CreateWarMaterialDeliveryCertificateFormatRequest,
       Blob
-    >('/WarMaterialDeliveryCertificateFormats', data, {
+    >('warmaterialdeliverycertificateformats', data, {
       responseType: 'blob',
     });
   },

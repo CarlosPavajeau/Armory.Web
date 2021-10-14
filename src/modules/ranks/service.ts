@@ -7,13 +7,13 @@ const RankService = {
    * @param data request body
    */
   createRank: async (data: CreateRankRequest): Promise<void> => {
-    await HttpClient.post('/Ranks', data);
+    await HttpClient.post('ranks', data);
   },
   /**
    * Fetch all ranks
    */
   fetchRanks: async (): Promise<Ranks> => {
-    const response = await HttpClient.get<Ranks>('/Ranks');
+    const response = await HttpClient.get<Ranks>('ranks');
     return response.data;
   },
 };

@@ -16,7 +16,7 @@ const AuthService = {
     const response = await HttpClient.post<
       AuthenticationRequest,
       AxiosResponse<string>
-    >(`/Authentication`, data);
+    >('authentication', data);
 
     return response.data;
   },
@@ -44,7 +44,7 @@ const AuthService = {
    * Send a logout request
    */
   logout: async (): Promise<void> => {
-    await HttpClient.post('/Authentication/Logout', {});
+    await HttpClient.post('authentication/logout', {});
   },
 };
 

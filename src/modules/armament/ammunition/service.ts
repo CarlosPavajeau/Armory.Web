@@ -10,13 +10,13 @@ const AmmunitionService = {
    * @param data request body
    */
   create: async (data: CreateAmmunitionRequest): Promise<void> => {
-    await HttpClient.post('/Ammunition', data);
+    await HttpClient.post('ammunition', data);
   },
   /**
    * Fetch all ammunition
    */
   fetchAll: async (): Promise<Ammunition[]> => {
-    const response = await HttpClient.get<Ammunition[]>('/Ammunition');
+    const response = await HttpClient.get<Ammunition[]>('ammunition');
     return response.data;
   },
   /**
@@ -25,7 +25,7 @@ const AmmunitionService = {
    */
   fetchAllByFlight: async (flight: string): Promise<Ammunition[]> => {
     const response = await HttpClient.get<Ammunition[]>(
-      `/Ammunition/ByFlight/${flight}`,
+      `ammunition/byflight/${flight}`,
     );
 
     return response.data;

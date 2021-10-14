@@ -12,7 +12,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatsService = {
     return HttpClient.post<
       CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest,
       Blob
-    >('/WarMaterialAndSpecialEquipmentAssignmentFormats', data, {
+    >('warmaterialandspecialequipmentassignmentformats', data, {
       responseType: 'blob',
     });
   },

@@ -15,7 +15,7 @@ const WeaponsService = {
     const response = await HttpClient.post<
       CreateWeaponRequest,
       AxiosResponse<Blob>
-    >('/Weapons', data, {
+    >('weapons', data, {
       responseType: 'blob',
     });
 
@@ -25,7 +25,7 @@ const WeaponsService = {
    * Fetch all weapons
    */
   fetchAll: async (): Promise<Weapons> => {
-    const response = await HttpClient.get<Weapons>('/Weapons');
+    const response = await HttpClient.get<Weapons>('weapons');
     return response.data;
   },
   /**
@@ -34,7 +34,7 @@ const WeaponsService = {
    */
   fetchAllByFlight: async (flight: string): Promise<Weapons> => {
     const response = await HttpClient.get<Weapons>(
-      `/Weapons/ByFlight/${flight}`,
+      `weapons/byflight/${flight}`,
     );
     return response.data;
   },
@@ -43,7 +43,7 @@ const WeaponsService = {
    * @param serial weapon serial
    */
   fetch: async (serial: string): Promise<Weapon> => {
-    const response = await HttpClient.get<Weapon>(`/Weapons/${serial}`);
+    const response = await HttpClient.get<Weapon>(`weapons/${serial}`);
     return response.data;
   },
   /**
@@ -52,7 +52,7 @@ const WeaponsService = {
    */
   generateQr: async (serial: string): Promise<Blob> => {
     const response = await HttpClient.get<Blob>(
-      `/Weapons/GenerateQr/${serial}`,
+      `/weapons/generateqr/${serial}`,
       {
         responseType: 'blob',
       },

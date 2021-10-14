@@ -7,13 +7,13 @@ const FlightsService = {
    * @param data request body
    */
   create: async (data: CreateFlightRequest): Promise<void> => {
-    await HttpClient.post('/Flights', data);
+    await HttpClient.post('flights', data);
   },
   /**
    * Fetch all flights
    */
   fetchAll: async (): Promise<Flights> => {
-    const response = await HttpClient.get<Flights>('/Flights');
+    const response = await HttpClient.get<Flights>('flights');
     return response.data;
   },
 };

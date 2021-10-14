@@ -7,13 +7,13 @@ const SquadsService = {
    * @param data request body
    */
   create: async (data: CreateSquadRequest): Promise<void> => {
-    await HttpClient.post('/Squads', data);
+    await HttpClient.post('squads', data);
   },
   /**
    * Fetch all squads
    */
   fetchAll: async (): Promise<Squads> => {
-    const response = await HttpClient.get<Squads>('/Squads');
+    const response = await HttpClient.get<Squads>('squads');
     return response.data;
   },
 };

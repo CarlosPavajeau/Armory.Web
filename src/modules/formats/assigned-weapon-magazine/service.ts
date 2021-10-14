@@ -15,7 +15,7 @@ const AssignedWeaponMagazineFormatsService = {
     data: CreateAssignedWeaponMagazineFormatRequest,
   ): Promise<number> => {
     return HttpClient.post<CreateAssignedWeaponMagazineFormatRequest, number>(
-      '/AssignedWeaponMagazineFormats',
+      'assignedweaponmagazineformats',
       data,
     );
   },
@@ -29,7 +29,7 @@ const AssignedWeaponMagazineFormatsService = {
     return HttpClient.post<
       AddAssignedWeaponMagazineFormatItemRequest,
       AssignedWeaponMagazineFormatItem
-    >(`/AssignedWeaponMagazineFormats/AddItem/${data.formatId}`, data);
+    >(`assignedweaponmagazineformats/additem/${data.formatId}`, data);
   },
   /**
    * Fetch an AssignedWeaponMagazineFormat
@@ -37,7 +37,7 @@ const AssignedWeaponMagazineFormatsService = {
    */
   fetch: async (id: number): Promise<AssignedWeaponMagazineFormat> => {
     const response = await HttpClient.get<AssignedWeaponMagazineFormat>(
-      `/AssignedWeaponMagazineFormats/${id}`,
+      `assignedweaponmagazineformats/${id}`,
     );
     return response.data;
   },
@@ -47,7 +47,7 @@ const AssignedWeaponMagazineFormatsService = {
    */
   generate: async (id: number): Promise<Blob> => {
     const response = await HttpClient.get<Blob>(
-      `/AssignedWeaponMagazineFormats/Generate/${id}`,
+      `assignedweaponmagazineformats/generate/${id}`,
       {
         responseType: 'blob',
       },

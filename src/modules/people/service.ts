@@ -12,13 +12,13 @@ const PeopleService = {
    * @param data request body
    */
   createPerson: async (data: CreatePersonRequest): Promise<void> => {
-    await HttpClient.post('/People', data);
+    await HttpClient.post('people', data);
   },
   /**
    * Fetch all people
    */
   fetchPeople: async (): Promise<People> => {
-    const response = await HttpClient.get<People>('/People');
+    const response = await HttpClient.get<People>('people');
     return response.data;
   },
   /**
@@ -26,7 +26,7 @@ const PeopleService = {
    * @param rank name of the rank to fetch people
    */
   fetchPeopleByRank: async (rank: string): Promise<People> => {
-    const response = await HttpClient.get<People>(`/People/ByRank/${rank}`);
+    const response = await HttpClient.get<People>(`people/byrank/${rank}`);
     return response.data;
   },
   /**
@@ -34,7 +34,7 @@ const PeopleService = {
    * @param userId
    */
   fetchPersonByUserId: async (userId: string): Promise<Person> => {
-    const response = await HttpClient.get<Person>(`/People/ByUserId/${userId}`);
+    const response = await HttpClient.get<Person>(`people/byuserid/${userId}`);
     return response.data;
   },
   /**
@@ -44,7 +44,7 @@ const PeopleService = {
   updatePersonDegree: async (
     data: UpdatePersonDegreeRequest,
   ): Promise<void> => {
-    await HttpClient.put(`/People/ChangeDegree/${data.id}`, data);
+    await HttpClient.put(`people/changedegree/${data.id}`, data);
   },
 };
 

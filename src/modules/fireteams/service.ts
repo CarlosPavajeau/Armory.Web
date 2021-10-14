@@ -7,13 +7,13 @@ const FireTeamsService = {
    * @param data request body
    */
   create: async (data: CreateFireTeamRequest): Promise<void> => {
-    await HttpClient.post('/Fireteams', data);
+    await HttpClient.post('fireteams', data);
   },
   /**
    * Fetch all FireTeams
    */
   fetchAll: async (): Promise<FireTeams> => {
-    const response = await HttpClient.get<FireTeams>('/Fireteams');
+    const response = await HttpClient.get<FireTeams>('fireteams');
     return response.data;
   },
   /**
@@ -22,7 +22,7 @@ const FireTeamsService = {
    */
   fetchAllByFlight: async (flight: string): Promise<FireTeams> => {
     const response = await HttpClient.get<FireTeams>(
-      `/Fireteams/ByFlight/${flight}`,
+      `fireteams/byflight/${flight}`,
     );
     return response.data;
   },

@@ -7,13 +7,13 @@ const DegreesService = {
    * @param data request body
    */
   createDegree: async (data: CreateDegreeRequest): Promise<void> => {
-    await HttpClient.post('/Degrees', data);
+    await HttpClient.post('degrees', data);
   },
   /**
    * Fetch all degrees
    */
   fetchDegrees: async (): Promise<Degrees> => {
-    const response = await HttpClient.get<Degrees>('/Degrees');
+    const response = await HttpClient.get<Degrees>('degrees');
     return response.data;
   },
   /**
@@ -21,7 +21,7 @@ const DegreesService = {
    * @param rank rank id
    */
   fetchDegreesByRank: async (rank: number): Promise<Degrees> => {
-    const response = await HttpClient.get<Degrees>(`/Degrees/ByRank/${rank}`);
+    const response = await HttpClient.get<Degrees>(`degrees/byrank/${rank}`);
     return response.data;
   },
 };
