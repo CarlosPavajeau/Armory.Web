@@ -1,26 +1,22 @@
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { LoadingButton } from '@mui/lab';
 import {
   Checkbox,
   FormControlLabel,
-  InputAdornment,
   Link,
   Stack,
   TextField,
 } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 import { useAppDispatch } from 'common/hooks';
 import ApiErrors from 'components/feedback/ApiErrors';
+import PasswordField from 'components/forms/PasswordField';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { authenticate } from 'modules/auth/slice';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
 
 const LoginForm = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
     usernameOrEmail: Yup.string().required(
@@ -44,10 +40,6 @@ const LoginForm = (): ReactElement => {
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
 
-  const handleShowPassword = () => {
-    setShowPassword(show => !show);
-  };
-
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" onSubmit={handleSubmit} noValidate>
@@ -66,31 +58,11 @@ const LoginForm = (): ReactElement => {
             fullWidth
           />
 
-          <TextField
-            type={showPassword ? 'text' : 'password'}
+          <PasswordField
             label="Contraseña"
-            helperText={
-              touched.password && errors.password
-                ? errors.password
-                : 'Digite su contraseña de acceso'
-            }
-            error={Boolean(touched.password && errors.password)}
+            helperText="Digite su contraseña de acceso"
             disabled={isSubmitting}
             {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleShowPassword}
-                    edge="end"
-                    size="large"
-                  >
-                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            fullWidth
           />
         </Stack>
 
