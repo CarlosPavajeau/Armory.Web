@@ -21,7 +21,6 @@ export const slice = createSlice({
       state.ui = 'loading';
     },
     loadRoles: (state, action: PayloadAction<ArmoryRoles>) => {
-      state.ui = 'loaded';
       state.roles = action.payload;
     },
   },

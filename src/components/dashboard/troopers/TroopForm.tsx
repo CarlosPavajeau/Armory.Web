@@ -142,14 +142,13 @@ const TroopForm = (): ReactElement => {
                   <CircularLoader size={40} message="Cargando escuadras" />
                 </MenuItem>
               )}
-              {fireTeamsUiStatus === 'loaded' &&
-                fireTeams &&
+              {fireTeams &&
                 fireTeams.length > 0 &&
                 fireTeams.map(fireteam => {
                   const { code, name } = fireteam;
                   return (
                     <MenuItem key={code} value={code}>
-                      {name}
+                      {code} - {name}
                     </MenuItem>
                   );
                 })}

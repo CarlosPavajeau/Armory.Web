@@ -48,10 +48,10 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
   const [openItemDialog, setOpenItemDialog] = useState(false);
 
   useEffect(() => {
-    if (weaponUiStatus === 'loaded') {
+    if (weaponUiStatus === 'idle' && weapon) {
       setOpenItemDialog(true);
     }
-  }, [weaponUiStatus]);
+  }, [weaponUiStatus, weapon]);
 
   const handleCloseQrDialog = async (value: string | null) => {
     setOpenQrDialog(false);

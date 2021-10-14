@@ -107,8 +107,7 @@ const FireteamForm = (): ReactElement => {
                   />
                 </MenuItem>
               )}
-              {peopleUiStatus === 'loaded' &&
-                people &&
+              {people &&
                 people.map(p => {
                   const {
                     id,

@@ -100,8 +100,7 @@ const Fireteams = (): ReactElement => {
                       </TableCell>
                     </TableRow>
                   )}
-                  {uiStatus === 'loaded' &&
-                    filteredFireteams.length > 0 &&
+                  {filteredFireteams.length > 0 &&
                     filteredFireteams
                       .slice(
                         page * rowsPerPage,

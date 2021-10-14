@@ -102,8 +102,7 @@ const FlightForm = (): ReactElement => {
                   />
                 </MenuItem>
               )}
-              {peopleUiState === 'loaded' &&
-                people &&
+              {people &&
                 people.length > 0 &&
                 people.map(p => {
                   const {
