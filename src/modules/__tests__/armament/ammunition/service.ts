@@ -58,6 +58,6 @@ describe('Ammunition service test', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await AmmunitionService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Ammunition', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('ammunition', request);
   });
 });

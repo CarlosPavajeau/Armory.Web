@@ -76,6 +76,6 @@ describe('Troopers service tests', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await TroopersService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Troopers', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('troopers', request);
   });
 });

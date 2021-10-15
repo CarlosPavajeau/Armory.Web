@@ -42,6 +42,6 @@ describe('Flights service test', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await FlightsService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Flights', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('flights', request);
   });
 });

@@ -65,6 +65,6 @@ describe('FireTeams service test', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await FireTeamsService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Fireteams', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('fireteams', request);
   });
 });

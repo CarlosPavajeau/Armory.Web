@@ -128,7 +128,7 @@ describe('Weapons service tests', () => {
     );
 
     await WeaponsService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Weapons', request, {
+    expect(mockHttpClient.post).toHaveBeenCalledWith('weapons', request, {
       responseType: 'blob',
     });
   });

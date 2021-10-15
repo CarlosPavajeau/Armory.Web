@@ -41,6 +41,6 @@ describe('Squads service test', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await SquadsService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Squads', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('squads', request);
   });
 });

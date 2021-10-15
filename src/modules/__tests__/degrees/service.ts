@@ -52,7 +52,7 @@ describe('Degrees service tests', () => {
     const rank = 1;
     const degrees = await DegreesService.fetchDegreesByRank(rank);
     expect(degrees.length).toEqual(1);
-    expect(mockHttpClient.get).toHaveBeenCalledWith(`/Degrees/ByRank/${rank}`);
+    expect(mockHttpClient.get).toHaveBeenCalledWith(`degrees/byrank/${rank}`);
   });
 
   test('Should be save Degree', async () => {
@@ -63,6 +63,6 @@ describe('Degrees service tests', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await DegreesService.createDegree(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Degrees', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('degrees', request);
   });
 });

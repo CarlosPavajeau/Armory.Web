@@ -56,6 +56,6 @@ describe('Equipments service test', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await EquipmentsService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Equipments', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('equipments', request);
   });
 });

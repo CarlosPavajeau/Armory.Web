@@ -60,6 +60,6 @@ describe('Explosives service test', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await ExplosivesService.create(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Explosives', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('explosives', request);
   });
 });

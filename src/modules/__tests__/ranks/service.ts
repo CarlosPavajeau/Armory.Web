@@ -38,6 +38,6 @@ describe('Ranks service tests', () => {
     mockHttpClient.post.mockImplementationOnce(() => Promise.resolve());
 
     await RankService.createRank(request);
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/Ranks', request);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('ranks', request);
   });
 });
