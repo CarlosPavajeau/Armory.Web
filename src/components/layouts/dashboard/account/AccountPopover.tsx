@@ -88,7 +88,7 @@ const AccountPopover = (): ReactElement => {
               : 'Usuario desconocido'}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {email && email}
+            {email || 'No email'}
           </Typography>
         </Box>
 

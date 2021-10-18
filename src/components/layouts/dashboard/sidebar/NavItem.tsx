@@ -93,7 +93,7 @@ const NavItem = (props: NavItemProps): ReactElement => {
         >
           <ListItemIconStyle>{icon}</ListItemIconStyle>
           <ListItemText primary={title} disableTypography />
-          {info && info}
+          {info || 'No info'}
           <Box
             component={Icon}
             icon={open ? arrowIosDownwardFill : arrowIosForwardFill}
@@ -161,9 +161,9 @@ const NavItem = (props: NavItemProps): ReactElement => {
       }}
       {...listItem}
     >
-      <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
+      <ListItemIconStyle>{icon}</ListItemIconStyle>
       <ListItemText disableTypography primary={title} />
-      {info && info}
+      {info}
     </ListItemStyle>
   );
 };
