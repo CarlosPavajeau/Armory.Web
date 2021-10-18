@@ -19,20 +19,20 @@ const RootLabelStyle = styled('span', {
   slot: 'root',
   overridesResolver: (props, styles) => [styles.root],
 })<RootLabelStyleProps>(({ theme, color, variant }) => {
-  const styleFilled = (color: string) => ({
-    color: theme.palette[color].contrastText,
-    backgroundColor: theme.palette[color].main,
+  const styleFilled = (rootColor: string) => ({
+    color: theme.palette[rootColor].contrastText,
+    backgroundColor: theme.palette[rootColor].main,
   });
 
-  const styleOutlined = (color: string) => ({
-    color: theme.palette[color].main,
+  const styleOutlined = (rootColor: string) => ({
+    color: theme.palette[rootColor].main,
     backgroundColor: 'transparent',
-    border: `1px solid ${theme.palette[color].main}`,
+    border: `1px solid ${theme.palette[rootColor].main}`,
   });
 
-  const styleGhost = (color: string) => ({
-    color: theme.palette[color].dark,
-    backgroundColor: alpha(theme.palette[color].main, 0.16),
+  const styleGhost = (rootColor: string) => ({
+    color: theme.palette[rootColor].dark,
+    backgroundColor: alpha(theme.palette[rootColor].main, 0.16),
   });
 
   return {
