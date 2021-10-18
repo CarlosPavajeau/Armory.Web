@@ -1,32 +1,14 @@
 import { ConfigureGlobalError } from 'common/config/http';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
-import Storage from 'common/plugins/Storage';
-import { selectIsAuth, selectPayload } from 'modules/auth/slice';
-import { fetchPersonByUserId } from 'modules/people/slice';
+import { useAppDispatch } from 'common/hooks';
+import { useAuth } from 'modules/auth/hooks';
 import { ReactElement, useEffect } from 'react';
 
 import Router from './routes';
 import ThemeConfig from './shared/theme';
 
 const App = (): ReactElement => {
-  const payload = useAppSelector(selectPayload);
-  const isAuth = useAppSelector(selectIsAuth);
+  const isAuth = useAuth();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (payload.isAuthenticate && payload.token) {
-      Storage.set('user_token', payload.token);
-
-      (async () => {
-        if (payload.token !== undefined) {
-          const { nameid } = Storage.decode(payload.token);
-          dispatch(fetchPersonByUserId(nameid));
-        }
-      })();
-    } else {
-      Storage.remove('user_token');
-    }
-  }, [payload, dispatch]);
 
   useEffect(() => {
     ConfigureGlobalError(dispatch);
