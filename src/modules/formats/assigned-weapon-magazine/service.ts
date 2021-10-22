@@ -14,10 +14,12 @@ const AssignedWeaponMagazineFormatsService = {
   create: async (
     data: CreateAssignedWeaponMagazineFormatRequest,
   ): Promise<number> => {
-    return HttpClient.post<CreateAssignedWeaponMagazineFormatRequest, number>(
+    const response = await HttpClient.post<number>(
       'assignedweaponmagazineformats',
       data,
     );
+
+    return response.data;
   },
   /**
    * Send request to add an item to an AssignedWeaponMagazineFormat

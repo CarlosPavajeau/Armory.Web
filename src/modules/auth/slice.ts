@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  isAnyOf,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import Storage from 'common/plugins/Storage';
 import { RootState } from 'common/store';
 import { UiStatus } from 'common/types';
@@ -68,7 +73,7 @@ export const slice = createSlice({
       .addCase(logout.pending, state => {
         state.ui = 'loading';
       })
-      .addCase(logout.fulfilled, state => {
+      .addMatcher(isAnyOf(logout.fulfilled, logout.rejected), state => {
         state.ui = 'idle';
         state.payload = {
           isAuthenticate: false,
@@ -76,9 +81,6 @@ export const slice = createSlice({
           token: undefined,
           email: undefined,
         };
-      })
-      .addCase(logout.rejected, state => {
-        state.ui = 'idle';
       });
   },
 });
