@@ -9,12 +9,15 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatsService = {
   create: async (
     data: CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest,
   ): Promise<Blob> => {
-    return HttpClient.post<
-      CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest,
-      Blob
-    >('warmaterialandspecialequipmentassignmentformats', data, {
-      responseType: 'blob',
-    });
+    const response = await HttpClient.post<Blob>(
+      'warmaterialandspecialequipmentassignmentformats',
+      data,
+      {
+        responseType: 'blob',
+      },
+    );
+
+    return response.data;
   },
 };
 

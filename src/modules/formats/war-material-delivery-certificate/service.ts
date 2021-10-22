@@ -9,12 +9,15 @@ const WarMaterialDeliveryCertificateFormatsService = {
   create: async (
     data: CreateWarMaterialDeliveryCertificateFormatRequest,
   ): Promise<Blob> => {
-    return HttpClient.post<
-      CreateWarMaterialDeliveryCertificateFormatRequest,
-      Blob
-    >('warmaterialdeliverycertificateformats', data, {
-      responseType: 'blob',
-    });
+    const response = await HttpClient.post<Blob>(
+      'warmaterialdeliverycertificateformats',
+      data,
+      {
+        responseType: 'blob',
+      },
+    );
+
+    return response.data;
   },
 };
 
