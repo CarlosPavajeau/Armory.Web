@@ -93,7 +93,7 @@ const NavItem = (props: NavItemProps): ReactElement => {
         >
           <ListItemIconStyle>{icon}</ListItemIconStyle>
           <ListItemText primary={title} disableTypography />
-          {info || 'No info'}
+          {info}
           <Box
             component={Icon}
             icon={open ? arrowIosDownwardFill : arrowIosForwardFill}
