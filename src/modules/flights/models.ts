@@ -12,3 +12,8 @@ export interface Flight {
 }
 
 export type Flights = Flight[];
+
+export interface UpdateFlightCommanderRequest {
+  code: string;
+  personId: string;
+}

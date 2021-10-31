@@ -1,5 +1,9 @@
 import HttpClient from 'common/config/http';
-import { CreateFlightRequest, Flights } from 'modules/flights/models';
+import {
+  CreateFlightRequest,
+  Flights,
+  UpdateFlightCommanderRequest,
+} from 'modules/flights/models';
 
 const FlightsService = {
   /**
@@ -15,6 +19,15 @@ const FlightsService = {
   fetchAll: async (): Promise<Flights> => {
     const response = await HttpClient.get<Flights>('flights');
     return response.data;
+  },
+  /**
+   * Send a request to update Flight commander
+   * @param data request body
+   */
+  updateCommander: async (
+    data: UpdateFlightCommanderRequest,
+  ): Promise<void> => {
+    await HttpClient.put('flights/commander', data);
   },
 };
 
