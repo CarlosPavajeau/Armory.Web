@@ -1,5 +1,9 @@
 import HttpClient from 'common/config/http';
-import { CreateFireTeamRequest, FireTeams } from 'modules/fireteams/models';
+import {
+  CreateFireTeamRequest,
+  FireTeams,
+  UpdateFireTeamCommanderRequest,
+} from 'modules/fireteams/models';
 
 const FireTeamsService = {
   /**
@@ -25,6 +29,15 @@ const FireTeamsService = {
       `fireteams/byflight/${flight}`,
     );
     return response.data;
+  },
+  /**
+   * Send a request to update FireTeam commander
+   * @param data request body
+   */
+  updateCommander: async (
+    data: UpdateFireTeamCommanderRequest,
+  ): Promise<void> => {
+    await HttpClient.put('fireteams/commander', data);
   },
 };
 

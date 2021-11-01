@@ -4,20 +4,20 @@ import ApiErrors from 'components/feedback/ApiErrors';
 import SelectCommanderField from 'components/forms/SelectCommanderField';
 import Consola from 'consola';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { UpdateFlightCommanderRequest } from 'modules/flights/models';
-import FlightsService from 'modules/flights/service';
+import { UpdateFireTeamCommanderRequest } from 'modules/fireteams/models';
+import FireTeamsService from 'modules/fireteams/service';
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-interface ChangeFlightCommanderFormProps {
-  flightCode: string;
+interface ChangeFireTeamCommanderFormProps {
+  fireTeamCode: string;
 }
 
-const ChangeFlightCommanderForm = (
-  props: ChangeFlightCommanderFormProps,
+const ChangeFireTeamCommanderForm = (
+  props: ChangeFireTeamCommanderFormProps,
 ): ReactElement => {
-  const { flightCode } = props;
+  const { fireTeamCode } = props;
 
   const ChangeFlightCommanderSchema = Yup.object().shape({
     code: Yup.string().required('Este campo es requerido'),
@@ -25,15 +25,15 @@ const ChangeFlightCommanderForm = (
   });
 
   const navigate = useNavigate();
-  const formik = useFormik<UpdateFlightCommanderRequest>({
+  const formik = useFormik<UpdateFireTeamCommanderRequest>({
     initialValues: {
-      code: flightCode,
+      code: fireTeamCode,
       personId: '',
     },
     validationSchema: ChangeFlightCommanderSchema,
     onSubmit: async value => {
       try {
-        await FlightsService.updateCommander(value);
+        await FireTeamsService.updateCommander(value);
         navigate('/dashboard');
       } catch (err) {
         Consola.error(err);
@@ -48,7 +48,7 @@ const ChangeFlightCommanderForm = (
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <SelectCommanderField
-            rankName="Comandante de Escuadrilla"
+            rankName="Comandante de Escuadra"
             disabled={isSubmitting}
             {...getFieldProps('personId')}
           />
@@ -69,4 +69,4 @@ const ChangeFlightCommanderForm = (
   );
 };
 
-export default ChangeFlightCommanderForm;
+export default ChangeFireTeamCommanderForm;

@@ -11,4 +11,10 @@ export interface FireTeam {
   ownerName: string;
   flightName: string;
 }
+
 export type FireTeams = FireTeam[];
+
+export interface UpdateFireTeamCommanderRequest {
+  code: string;
+  personId: string;
+}
