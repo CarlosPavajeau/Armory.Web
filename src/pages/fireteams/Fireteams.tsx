@@ -51,6 +51,7 @@ const Fireteams = (): ReactElement => {
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'flightName', label: 'Escuadrilla', alignRight: false },
     { id: 'ownerName', label: 'Grado - Comandante', alignRight: false },
+    { id: '' },
   ];
 
   return (
