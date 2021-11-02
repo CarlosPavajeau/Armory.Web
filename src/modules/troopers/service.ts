@@ -1,5 +1,9 @@
 import HttpClient from 'common/config/http';
-import { CreateTroopRequest, Troopers } from 'modules/troopers/models';
+import {
+  CreateTroopRequest,
+  Troopers,
+  UpdateTroopFireTeamRequest,
+} from 'modules/troopers/models';
 
 const TroopersService = {
   /**
@@ -25,6 +29,13 @@ const TroopersService = {
       `troopers/byfireteam/${fireTeam}`,
     );
     return response.data;
+  },
+  /**
+   * Send a request to update Troop fire team
+   * @param data request body
+   */
+  updateFireTeam: async (data: UpdateTroopFireTeamRequest): Promise<void> => {
+    await HttpClient.put('troopers/fireteam', data);
   },
 };
 

@@ -28,3 +28,8 @@ export interface Troop {
 }
 
 export type Troopers = Troop[];
+
+export interface UpdateTroopFireTeamRequest {
+  id: string;
+  fireTeamCode: string;
+}

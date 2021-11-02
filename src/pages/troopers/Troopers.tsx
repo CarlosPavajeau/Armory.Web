@@ -9,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import TroopMoreMenu from 'components/dashboard/troopers/TroopMoreMenu';
 import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import SimpleDataListHead from 'components/data/SimpleDataListHead';
@@ -62,6 +63,7 @@ const Troopers = (): ReactElement => {
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'rankName', label: 'Cargo de operación', alignRight: false },
     { id: 'fireteamName', label: 'Escuadra', alignRight: false },
+    { id: '' },
   ];
 
   const isTroopNotFound = filteredTroopers.length === 0;
@@ -141,6 +143,10 @@ const Troopers = (): ReactElement => {
                             </TableCell>
                             <TableCell>{rankName}</TableCell>
                             <TableCell>{fireteamName}</TableCell>
+
+                            <TableCell align="right">
+                              <TroopMoreMenu troopId={id} />
+                            </TableCell>
                           </TableRow>
                         );
                       })}
