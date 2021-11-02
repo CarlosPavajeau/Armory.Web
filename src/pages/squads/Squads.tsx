@@ -9,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import SquadMoreMenu from 'components/dashboard/squads/SquadMoreMenu';
 import { HeadLabel } from 'components/data/DataListHead';
 import DataListToolbar from 'components/data/DataListToolbar';
 import SimpleDataListHead from 'components/data/SimpleDataListHead';
@@ -34,6 +35,7 @@ const Squads = (): ReactElement => {
     { id: 'code', label: 'Código', alignRight: false },
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'ownerName', label: 'Grado - Comandante', alignRight: false },
+    { id: '' },
   ];
 
   return (
@@ -92,6 +94,10 @@ const Squads = (): ReactElement => {
                           <TableCell>{code}</TableCell>
                           <TableCell>{name}</TableCell>
                           <TableCell>{ownerName}</TableCell>
+
+                          <TableCell align="right">
+                            <SquadMoreMenu squadCode={code} />
+                          </TableCell>
                         </TableRow>
                       );
                     })}

@@ -1,5 +1,9 @@
 import HttpClient from 'common/config/http';
-import { CreateSquadRequest, Squads } from 'modules/squads/models';
+import {
+  CreateSquadRequest,
+  Squads,
+  UpdateSquadCommanderRequest,
+} from 'modules/squads/models';
 
 const SquadsService = {
   /**
@@ -15,6 +19,13 @@ const SquadsService = {
   fetchAll: async (): Promise<Squads> => {
     const response = await HttpClient.get<Squads>('squads');
     return response.data;
+  },
+  /**
+   * Send a request to update Squad commander
+   * @param data request body
+   */
+  updateCommander: async (data: UpdateSquadCommanderRequest): Promise<void> => {
+    await HttpClient.put('squads/commander', data);
   },
 };
 

@@ -11,3 +11,8 @@ export interface Squad {
 }
 
 export type Squads = Squad[];
+
+export interface UpdateSquadCommanderRequest {
+  code: string;
+  personId: string;
+}
