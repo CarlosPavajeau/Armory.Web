@@ -109,15 +109,15 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
       },
       validationSchema:
         RegisterWarMaterialAndSpecialEquipmentAssigmentFormatSchema,
-      onSubmit: async values => {
+      onSubmit: async value => {
         try {
           const result =
             await WarMaterialAndSpecialEquipmentAssigmentFormatsService.create(
-              values,
+              value,
             );
           FileSaver.saveAs(
             result,
-            `format-${values.code}${values.flightCode}.xlsx`,
+            `formato-asignación-material-de-guerra-${value.code}${value.flightCode}.xlsx`,
           );
           navigate('/dashboard');
         } catch (err) {

@@ -96,11 +96,14 @@ const WarMaterialDeliveryCertificateFormatForm = (): ReactElement => {
       explosives: [],
     },
     validationSchema: RegisterWarMaterialDeliveryCertificateFormatSchema,
-    onSubmit: async values => {
+    onSubmit: async value => {
       try {
         const result =
-          await WarMaterialDeliveryCertificateFormatsService.create(values);
-        FileSaver.saveAs(result, `format-${values.code}.xlsx`);
+          await WarMaterialDeliveryCertificateFormatsService.create(value);
+        FileSaver.saveAs(
+          result,
+          `formato-acta-de-entrega-de-material-de-guerra-${value.code}-${value.flightCode}.xlsx`,
+        );
         navigate('/dashboard');
       } catch (err) {
         if (process.env.NODE_ENV === 'development') {

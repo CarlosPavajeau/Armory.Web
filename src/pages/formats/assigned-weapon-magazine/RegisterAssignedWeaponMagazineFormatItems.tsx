@@ -48,10 +48,10 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
   const [openItemDialog, setOpenItemDialog] = useState(false);
 
   useEffect(() => {
-    if (weaponUiStatus === 'idle' && weapon) {
+    if (scanCode && weaponUiStatus === 'idle' && weapon) {
       setOpenItemDialog(true);
     }
-  }, [weaponUiStatus, weapon]);
+  }, [weaponUiStatus, weapon, scanCode]);
 
   const handleCloseQrDialog = async (value: string | null) => {
     setOpenQrDialog(false);
@@ -71,7 +71,10 @@ const RegisterAssignedWeaponMagazineFormatItems = (): ReactElement => {
       const result = await AssignedWeaponMagazineFormatsService.generate(
         +formatId,
       );
-      FileSaver.saveAs(result, `format-${formatId}.xlsx`);
+      FileSaver.saveAs(
+        result,
+        `formato-revista-armamento-asignado-${formatId}.xlsx`,
+      );
       setGeneratingFormat(false);
     }
   };
