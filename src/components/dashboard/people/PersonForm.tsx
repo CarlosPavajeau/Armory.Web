@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import PersonalDataForm from 'components/dashboard/people/PersonalDataForm';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectDegreeField from 'components/forms/SelectDegreeField';
 import SelectRankField from 'components/forms/SelectRankField';
@@ -54,9 +55,9 @@ const PersonForm = (): ReactElement => {
       rankId: 0,
     },
     validationSchema: RegisterPersonScheme,
-    onSubmit: async values => {
+    onSubmit: async value => {
       try {
-        await PeopleService.createPerson(values);
+        await PeopleService.createPerson(value);
         navigate('/dashboard/people/all');
       } catch (err: unknown) {
         Consola.error(err);
@@ -85,64 +86,9 @@ const PersonForm = (): ReactElement => {
             required
             fullWidth
           />
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              label="Primer nombre"
-              placeholder="Ejemplo: Manolo"
-              helperText={
-                errors.firstName && touched.firstName
-                  ? errors.firstName
-                  : 'Digite el primer nombre del comandante'
-              }
-              error={!!(errors.firstName && touched.firstName)}
-              disabled={isSubmitting}
-              {...getFieldProps('firstName')}
-              required
-              fullWidth
-            />
-            <TextField
-              label="Segundo nombre"
-              placeholder="Ejemplo: Juan"
-              helperText={
-                errors.secondName && touched.secondName
-                  ? errors.secondName
-                  : 'Digite el segundo nombre del comandante'
-              }
-              error={!!(errors.secondName && touched.secondName)}
-              disabled={isSubmitting}
-              {...getFieldProps('secondName')}
-              fullWidth
-            />
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              label="Primer apellido"
-              placeholder="Ejemplo: Peréz"
-              helperText={
-                errors.lastName && touched.lastName
-                  ? errors.lastName
-                  : 'Digite el primer apellido del comandante'
-              }
-              error={!!(errors.lastName && touched.lastName)}
-              disabled={isSubmitting}
-              {...getFieldProps('lastName')}
-              required
-              fullWidth
-            />
-            <TextField
-              label="Segundo apellido"
-              placeholder="Ejemplo: Torres"
-              helperText={
-                errors.secondLastName && touched.secondLastName
-                  ? errors.secondLastName
-                  : 'Digite el segundo apellido del comandante'
-              }
-              error={!!(errors.secondLastName && touched.secondLastName)}
-              disabled={isSubmitting}
-              {...getFieldProps('secondLastName')}
-              fullWidth
-            />
-          </Stack>
+
+          <PersonalDataForm />
+
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               label="Email"

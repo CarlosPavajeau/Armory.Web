@@ -5,6 +5,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import PersonalDataForm from 'components/dashboard/people/PersonalDataForm';
 import ApiErrors from 'components/feedback/ApiErrors';
 import SelectDegreeField from 'components/forms/SelectDegreeField';
 import SelectRankField from 'components/forms/SelectRankField';
@@ -56,9 +57,9 @@ const TroopForm = (): ReactElement => {
       rankId: 0,
     },
     validationSchema: RegisterTroopSchema,
-    onSubmit: async values => {
+    onSubmit: async value => {
       try {
-        await TroopersService.create(values);
+        await TroopersService.create(value);
         navigate('/dashboard/troopers', { replace: true });
       } catch (err: unknown) {
         if (process.env.NODE_ENV === 'development') {
@@ -85,48 +86,8 @@ const TroopForm = (): ReactElement => {
             required
             fullWidth
           />
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              label="Primer nombre"
-              placeholder="Ejemplo: Manolo"
-              helperText={touched.firstName && errors.firstName}
-              error={!!(errors.firstName && touched.firstName)}
-              disabled={isSubmitting}
-              {...getFieldProps('firstName')}
-              required
-              fullWidth
-            />
-            <TextField
-              label="Segundo nombre"
-              placeholder="Ejemplo: Pedro"
-              helperText={touched.secondName && errors.secondName}
-              error={!!(errors.secondName && touched.secondName)}
-              disabled={isSubmitting}
-              {...getFieldProps('secondName')}
-              fullWidth
-            />
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              label="Primer apellido"
-              placeholder="Ejemplo: Perez"
-              helperText={touched.lastName && errors.lastName}
-              error={!!(errors.lastName && touched.lastName)}
-              disabled={isSubmitting}
-              {...getFieldProps('lastName')}
-              required
-              fullWidth
-            />
-            <TextField
-              label="Segundo apellido"
-              placeholder="Ejemplo: Pedro"
-              helperText={touched.secondLastName && errors.secondLastName}
-              error={!!(errors.secondLastName && touched.secondLastName)}
-              {...getFieldProps('secondLastName')}
-              disabled={isSubmitting}
-              fullWidth
-            />
-          </Stack>
+
+          <PersonalDataForm />
 
           <FormControl fullWidth>
             <InputLabel id="fireteamCode-label">Escuadra</InputLabel>
