@@ -32,7 +32,7 @@ const TroopForm = (): ReactElement => {
       .min(8, 'Debe digital mínimo 8 caracteres')
       .max(10, 'Solo se permiten 10 caracteres'),
     firstName: Yup.string().required('Este campo es requerido'),
-    secondName: Yup.string().required('Este campo es requerido'),
+    secondName: Yup.string(),
     lastName: Yup.string().required('Este campo es requerido'),
     secondLastName: Yup.string().required('Este campo es requerido'),
     fireteamCode: Yup.string().required('Este campo es requerido'),

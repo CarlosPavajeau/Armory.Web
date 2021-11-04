@@ -23,7 +23,7 @@ const PersonForm = (): ReactElement => {
       .required('Este campo es requerido')
       .max(10, 'No se permiten más de 10 caracteres'),
     firstName: Yup.string().required('Este campo es requerido'),
-    secondName: Yup.string().required('Este campo es requerido'),
+    secondName: Yup.string(),
     lastName: Yup.string().required('Este campo es requerido'),
     secondLastName: Yup.string().required('Este campo es requerido'),
     email: Yup.string()
