@@ -4,6 +4,7 @@ import {
   People,
   Person,
   UpdatePersonDegreeRequest,
+  UpdatePersonRequest,
 } from 'modules/people/models';
 
 const PeopleService = {
@@ -45,6 +46,13 @@ const PeopleService = {
     data: UpdatePersonDegreeRequest,
   ): Promise<void> => {
     await HttpClient.put(`people/changedegree/${data.id}`, data);
+  },
+  /**
+   * Send request to update a person
+   * @param data request body
+   */
+  update: async (data: UpdatePersonRequest): Promise<void> => {
+    await HttpClient.put(`people/${data.id}`, data);
   },
 };
 

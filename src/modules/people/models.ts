@@ -25,3 +25,11 @@ export interface Person {
 }
 
 export type People = Person[];
+
+export interface UpdatePersonRequest {
+  id: string;
+  firstName: string;
+  secondName: string;
+  lastName: string;
+  secondLastName: string;
+}

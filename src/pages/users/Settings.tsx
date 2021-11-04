@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Page from 'components/Page';
+import UpdatePerson from 'pages/people/UpdatePerson';
 import ChangePassword from 'pages/users/ChangePassword';
 import { ReactElement, SyntheticEvent, useState } from 'react';
 
@@ -29,11 +30,16 @@ const Settings = (): ReactElement => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList variant="fullWidth" onChange={handleChangeTab}>
                 <Tab label="Cambiar contraseña" value="1" />
+                <Tab label="Cambiar datos personales" value="2" />
               </TabList>
             </Box>
 
             <TabPanel value="1">
               <ChangePassword />
+            </TabPanel>
+
+            <TabPanel value="2">
+              <UpdatePerson />
             </TabPanel>
           </TabContext>
         </Box>
