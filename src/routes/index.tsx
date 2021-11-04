@@ -3,6 +3,7 @@ import Storage from 'common/plugins/Storage';
 import DashboardLayout from 'components/layouts/dashboard';
 import DashboardHome from 'components/layouts/dashboard/DashboardHome';
 import { clearErrors } from 'modules/application/slice';
+import NotFound from 'pages/NotFound';
 import { ReactElement, useEffect } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 
@@ -293,6 +294,10 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
     {
       path: '/',
       element: <Navigate to="/dashboard" replace />,
+    },
+    {
+      path: '*',
+      element: <NotFound />,
     },
   ]);
 };
