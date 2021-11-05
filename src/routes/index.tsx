@@ -14,6 +14,7 @@ import {
   Explosives,
   Fireteams,
   Flights,
+  ForgottenPassword,
   Login,
   People,
   Ranks,
@@ -32,6 +33,7 @@ import {
   RegisterWarMaterialAndSpecialEquipmentAssigmentFormat,
   RegisterWarMaterialDeliveryCertificateFormat,
   RegisterWeapon,
+  ResetPassword,
   Settings,
   Squads,
   Troopers,
@@ -50,7 +52,13 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
     dispatch(clearErrors());
   }, [pathname, dispatch]);
 
-  if (pathname !== '/login') {
+  const routesNotRemember = [
+    '/login',
+    '/forgotten_password',
+    '/reset_password',
+  ];
+  const index = routesNotRemember.indexOf(pathname);
+  if (index === -1) {
     Storage.set('last_path', pathname);
   }
 
@@ -290,6 +298,14 @@ const Router = ({ isAuth }: RouterProps): ReactElement | null => {
       ) : (
         <Navigate to={Storage.get('last_path') || '/'} replace />
       ),
+    },
+    {
+      path: 'forgotten_password',
+      element: <ForgottenPassword />,
+    },
+    {
+      path: 'reset_password',
+      element: <ResetPassword />,
     },
     {
       path: '/',

@@ -75,6 +75,10 @@ const RegisterWarMaterialAndSpecialEquipmentAssigmentFormatComponent = lazy(
 );
 
 const SettingsComponent = lazy(() => import('pages/users/Settings'));
+const ForgottenPasswordComponent = lazy(
+  () => import('pages/users/ForgottenPassword'),
+);
+const ResetPasswordComponent = lazy(() => import('pages/users/ResetPassword'));
 
 export const Login = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
@@ -242,5 +246,17 @@ export const RegisterWarMaterialAndSpecialEquipmentAssigmentFormat =
 export const Settings = (): ReactElement => (
   <Suspense fallback={<Fallback />}>
     <SettingsComponent />
+  </Suspense>
+);
+
+export const ForgottenPassword = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <ForgottenPasswordComponent />
+  </Suspense>
+);
+
+export const ResetPassword = (): ReactElement => (
+  <Suspense fallback={<Fallback />}>
+    <ResetPasswordComponent />
   </Suspense>
 );
