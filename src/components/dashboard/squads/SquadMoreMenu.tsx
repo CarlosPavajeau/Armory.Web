@@ -1,10 +1,9 @@
 import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { ListItemIcon, ListItemText, Menu } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { ListItemIcon, ListItemText } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ChangeSquadCommanderDialog from 'components/dashboard/squads/ChangeSquadCommanderDialog';
-import { ReactElement, useRef, useState } from 'react';
+import MoreMenu from 'components/menu/MoreMenu';
+import { ReactElement, useState } from 'react';
 
 interface SquadMoreMenuProps {
   squadCode: string;
@@ -12,8 +11,6 @@ interface SquadMoreMenuProps {
 
 const SquadMoreMenu = (props: SquadMoreMenuProps): ReactElement => {
   const { squadCode } = props;
-  const ref = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenChangeSquadCommander, setIsOpenChangeSquadCommander] =
     useState(false);
 
@@ -23,15 +20,7 @@ const SquadMoreMenu = (props: SquadMoreMenuProps): ReactElement => {
 
   return (
     <>
-      <IconButton ref={ref} onClick={() => setIsOpen(true)}>
-        <MoreVertIcon />
-      </IconButton>
-
-      <Menu
-        open={isOpen}
-        anchorEl={ref.current}
-        onClose={() => setIsOpen(false)}
-      >
+      <MoreMenu>
         <MenuItem onClick={() => setIsOpenChangeSquadCommander(true)}>
           <ListItemIcon>
             <EditIcon />
@@ -41,7 +30,7 @@ const SquadMoreMenu = (props: SquadMoreMenuProps): ReactElement => {
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
-      </Menu>
+      </MoreMenu>
 
       <ChangeSquadCommanderDialog
         open={isOpenChangeSquadCommander}

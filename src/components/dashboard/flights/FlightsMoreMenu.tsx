@@ -1,10 +1,9 @@
 import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { ListItemIcon, ListItemText, Menu } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { ListItemIcon, ListItemText } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ChangeFlightCommanderDialog from 'components/dashboard/flights/ChangeFlightCommanderDialog';
-import { ReactElement, useRef, useState } from 'react';
+import MoreMenu from 'components/menu/MoreMenu';
+import { ReactElement, useState } from 'react';
 
 interface FlightsMoreMenuProps {
   flightCode: string;
@@ -12,8 +11,6 @@ interface FlightsMoreMenuProps {
 
 const FlightsMoreMenu = (props: FlightsMoreMenuProps): ReactElement => {
   const { flightCode } = props;
-  const ref = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenChangeFlightCommander, setIsOpenChangeFlightCommander] =
     useState(false);
 
@@ -23,15 +20,7 @@ const FlightsMoreMenu = (props: FlightsMoreMenuProps): ReactElement => {
 
   return (
     <>
-      <IconButton ref={ref} onClick={() => setIsOpen(true)}>
-        <MoreVertIcon />
-      </IconButton>
-
-      <Menu
-        open={isOpen}
-        anchorEl={ref.current}
-        onClose={() => setIsOpen(false)}
-      >
+      <MoreMenu>
         <MenuItem onClick={() => setIsOpenChangeFlightCommander(true)}>
           <ListItemIcon>
             <EditIcon />
@@ -41,7 +30,7 @@ const FlightsMoreMenu = (props: FlightsMoreMenuProps): ReactElement => {
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
-      </Menu>
+      </MoreMenu>
 
       <ChangeFlightCommanderDialog
         open={isOpenChangeFlightCommander}

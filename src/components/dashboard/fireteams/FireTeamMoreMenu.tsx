@@ -1,10 +1,9 @@
 import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { ListItemIcon, ListItemText, Menu } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { ListItemIcon, ListItemText } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import ChangeFireTeamCommanderDialog from 'components/dashboard/fireteams/ChangeFireTeamCommanderDialog';
-import { ReactElement, useRef, useState } from 'react';
+import MoreMenu from 'components/menu/MoreMenu';
+import { ReactElement, useState } from 'react';
 
 interface FireTeamMoreMenuProps {
   fireTeamCode: string;
@@ -12,8 +11,6 @@ interface FireTeamMoreMenuProps {
 
 const FireTeamMoreMenu = (props: FireTeamMoreMenuProps): ReactElement => {
   const { fireTeamCode } = props;
-  const ref = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenChangeFireTeamCommander, setIsOpenChangeFireTeamCommander] =
     useState(false);
 
@@ -23,15 +20,7 @@ const FireTeamMoreMenu = (props: FireTeamMoreMenuProps): ReactElement => {
 
   return (
     <>
-      <IconButton ref={ref} onClick={() => setIsOpen(true)}>
-        <MoreVertIcon />
-      </IconButton>
-
-      <Menu
-        open={isOpen}
-        anchorEl={ref.current}
-        onClose={() => setIsOpen(false)}
-      >
+      <MoreMenu>
         <MenuItem onClick={() => setIsOpenChangeFireTeamCommander(true)}>
           <ListItemIcon>
             <EditIcon />
@@ -41,13 +30,13 @@ const FireTeamMoreMenu = (props: FireTeamMoreMenuProps): ReactElement => {
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
+      </MoreMenu>
 
-        <ChangeFireTeamCommanderDialog
-          open={isOpenChangeFireTeamCommander}
-          fireTeamCode={fireTeamCode}
-          onClose={handleOnCloseChangeFireTeamCommander}
-        />
-      </Menu>
+      <ChangeFireTeamCommanderDialog
+        open={isOpenChangeFireTeamCommander}
+        fireTeamCode={fireTeamCode}
+        onClose={handleOnCloseChangeFireTeamCommander}
+      />
     </>
   );
 };
