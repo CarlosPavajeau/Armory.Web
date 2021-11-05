@@ -8,3 +8,5 @@ export interface Rank {
 }
 
 export type Ranks = Rank[];
+
+export type UpdateRankRequest = Rank;
