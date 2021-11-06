@@ -1,5 +1,9 @@
 import HttpClient from 'common/config/http';
-import { CreateDegreeRequest, Degrees } from 'modules/degrees/models';
+import {
+  CreateDegreeRequest,
+  Degrees,
+  UpdateDegreeRequest,
+} from 'modules/degrees/models';
 
 const DegreesService = {
   /**
@@ -23,6 +27,13 @@ const DegreesService = {
   fetchDegreesByRank: async (rank: number): Promise<Degrees> => {
     const response = await HttpClient.get<Degrees>(`degrees/byrank/${rank}`);
     return response.data;
+  },
+  /**
+   * Send a request to update a Degree
+   * @param data request body
+   */
+  update: async (data: UpdateDegreeRequest): Promise<void> => {
+    await HttpClient.put(`degrees/${data.id}`, data);
   },
 };
 

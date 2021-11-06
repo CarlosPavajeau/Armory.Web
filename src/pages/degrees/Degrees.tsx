@@ -1,7 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Card, TablePagination } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import { Card, TablePagination, Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,6 +11,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import UpdateDegreeDialog from 'components/dashboard/degrees/UpdateDegreeDialog';
 import { HeadLabel } from 'components/data/DataListHead';
 import SimpleDataListHead from 'components/data/SimpleDataListHead';
 import ApiErrors from 'components/feedback/ApiErrors';
@@ -16,7 +19,7 @@ import CircularLoader from 'components/loading/CircularLoader';
 import Page from 'components/Page';
 import Scrollbar from 'components/scrollbar/Scrollbar';
 import { useDegrees } from 'modules/degrees/hooks';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTablePagination } from 'shared/hooks/useTablePagination';
 
@@ -29,7 +32,19 @@ const Degrees = (): ReactElement => {
   const HEAD: HeadLabel[] = [
     { id: 'name', label: 'Nombre', alignRight: false },
     { id: 'rankId', label: 'Cargo de operación', alignRight: false },
+    { id: '' },
   ];
+
+  const [degreeId, setDegreeId] = useState(0);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const handleClickEdit = (id: number): void => {
+    setDegreeId(id);
+    setOpenEditDialog(true);
+  };
+
+  const onCloseEditDialog = (): void => {
+    setOpenEditDialog(false);
+  };
 
   return (
     <Page title="Armería | Grados">
@@ -86,6 +101,17 @@ const Degrees = (): ReactElement => {
                           <TableRow key={id} tabIndex={-1} hover>
                             <TableCell>{name}</TableCell>
                             <TableCell>{rankName}</TableCell>
+
+                            <TableCell>
+                              <Tooltip title="Editar">
+                                <IconButton
+                                  aria-label="Editar"
+                                  onClick={() => handleClickEdit(id)}
+                                >
+                                  <EditIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </TableCell>
                           </TableRow>
                         );
                       })}
@@ -114,6 +140,12 @@ const Degrees = (): ReactElement => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Card>
+
+        <UpdateDegreeDialog
+          open={openEditDialog}
+          degreeId={degreeId}
+          onClose={onCloseEditDialog}
+        />
       </Container>
     </Page>
   );

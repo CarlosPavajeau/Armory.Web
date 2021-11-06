@@ -10,3 +10,8 @@ export interface Degree {
 }
 
 export type Degrees = Degree[];
+
+export interface UpdateDegreeRequest {
+  id: number;
+  name: string;
+}
