@@ -7,7 +7,7 @@
     "@babel/eslint-parser": "^7.15.8",
     "@date-io/moment": "2.x",
     "@emotion/react": "^11.6.0",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/styled": "^11.6.0",
     "@iconify/react": "^3.1.0",
     "@mui/icons-material": "^5.1.0",
     "@mui/lab": "^5.0.0-alpha.51",
