@@ -9,7 +9,7 @@
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@iconify/react": "^3.1.0",
-    "@mui/icons-material": "^5.1.0",
+    "@mui/icons-material": "^5.1.1",
     "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.1",
     "@mui/styles": "^5.1.0",
