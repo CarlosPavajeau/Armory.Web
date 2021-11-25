@@ -31,6 +31,7 @@ import {
   ExplosiveAndQuantity,
 } from 'modules/formats/war-material-delivery-certificate/models';
 import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import { lazy, ReactElement, Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -88,6 +89,7 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
     });
 
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const formik =
     useFormik<CreateWarMaterialAndSpecialEquipmentAssigmentFormatRequest>({
       initialValues: {
@@ -119,6 +121,14 @@ const WarMaterialAndSpecialEquipmentAssigmentFormatForm = (): ReactElement => {
             result,
             `formato-asignación-material-de-guerra-${value.code}${value.flightCode}.xlsx`,
           );
+
+          enqueueSnackbar('Formato creado exitosamente.', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'right',
+            },
+          });
           navigate('/dashboard');
         } catch (err) {
           if (process.env.NODE_ENV === 'development') {
