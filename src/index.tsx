@@ -19,7 +19,6 @@ ReactDOM.render(
           <SnackbarProvider maxSnack={3}>
             <App />
           </SnackbarProvider>
-          <App />
         </BrowserRouter>
       </HelmetProvider>
     </Provider>
