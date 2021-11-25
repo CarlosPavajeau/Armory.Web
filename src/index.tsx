@@ -1,6 +1,7 @@
 import 'simplebar/src/simplebar.css';
 
 import { store } from 'common/store';
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -15,6 +16,9 @@ ReactDOM.render(
     <Provider store={store}>
       <HelmetProvider>
         <BrowserRouter>
+          <SnackbarProvider maxSnack={3}>
+            <App />
+          </SnackbarProvider>
           <App />
         </BrowserRouter>
       </HelmetProvider>
