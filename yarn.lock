@@ -2428,10 +2428,10 @@
     jss-plugin-vendor-prefixer "^10.8.2"
     prop-types "^15.7.2"
 
-"@mui/system@^5.0.2", "@mui/system@^5.2.6":
-  version "5.2.6"
-  resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.2.6.tgz#153b534223caae254a98162eef06d6ab48ecff34"
-  integrity sha512-PZ7bmpWOLikWgqn2zWv9/Xa7lxnRBOmfjoMH7c/IVYJs78W3971brXJ3xV9MEWWQcoqiYQeXzUJaNf4rFbKCBA==
+"@mui/system@^5.2.6", "@mui/system@^5.2.8":
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.2.8.tgz#c8a7adff69b50fea8ec9cb20a1f5bdab33c247f5"
+  integrity sha512-tje1HRubQUk+cDJBG5F83X1j0XzVe+qhellKxByrJVOEEDHoSpbc8UW+NCLSuBBHvOikxihuv3SS4VOWOo2/BQ==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@mui/private-theming" "^5.2.3"
