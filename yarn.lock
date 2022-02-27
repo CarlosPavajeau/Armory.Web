@@ -1931,10 +1931,12 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@iconify/icons-eva@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@iconify/icons-eva/-/icons-eva-1.1.0.tgz#6d6dae59d766587e9034bbb782acca6c40ab4b0c"
-  integrity sha512-a2wCJw+6UebrsoJ2WhpHUcdr4PJljwk0tdu1GfpjzwVyiJBC7y6sc2h7as1npJPLwgMIc/q8YFJf5iFl7Ik3NA==
+"@iconify/icons-eva@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-eva/-/icons-eva-1.2.1.tgz#18e90e29fb5bdf35ad3e064e5d15bcc1bbb7686e"
+  integrity sha512-meKGFt+KmHxjz9baAqlxyvxjpDIValYm7t4Ejnshtik5qxqgldvX6PwMEp11UiDISOagtKirQKMDByXia2+EEA==
+  dependencies:
+    "@iconify/types" "^1.0.12"
 
 "@iconify/icons-mdi@^1.2.0":
   version "1.2.0"
