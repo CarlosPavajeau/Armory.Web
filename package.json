@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.17.0",
-    "@babel/eslint-parser": "^7.16.5",
+    "@babel/eslint-parser": "^7.17.0",
     "@date-io/moment": "2.x",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
