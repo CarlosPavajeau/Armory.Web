@@ -12,7 +12,7 @@
     "@mui/icons-material": "^5.4.1",
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.3.1",
-    "@mui/styles": "^5.2.3",
+    "@mui/styles": "^5.5.1",
     "@mui/system": "^5.4.3",
     "@mui/utils": "^5.4.4",
     "@reduxjs/toolkit": "^1.8.0",
