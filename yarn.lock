@@ -1938,10 +1938,10 @@
   dependencies:
     "@iconify/types" "^1.0.12"
 
-"@iconify/icons-mdi@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.2.0.tgz#b2a7fa920530bc6c24cbbe814f744c4318e6635c"
-  integrity sha512-PumThpl8NyyEwTtnfy2MHB2g/jOl4EQxOs7xKPUgnutKYuTY1IbQm4+bMs3GQ0gZmzN6L0fekDYzbhRs0mcjJw==
+"@iconify/icons-mdi@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.2.5.tgz#fa02b8ab3322ce1100eba67a26292d5c425d99ac"
+  integrity sha512-euKHOIOeqj5kRl4TQ6Y8pvVMnQNvLTPY18xfjAUZi9XJFzqkdk4w0PpXPzRZjMxkzdMfvCRPFeG5TINBGnhO1w==
   dependencies:
     "@iconify/types" "^1.0.12"
 
