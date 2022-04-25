@@ -1958,10 +1958,10 @@
   dependencies:
     "@iconify/types" "^1.0.12"
 
-"@iconify/icons-mdi@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.2.5.tgz#fa02b8ab3322ce1100eba67a26292d5c425d99ac"
-  integrity sha512-euKHOIOeqj5kRl4TQ6Y8pvVMnQNvLTPY18xfjAUZi9XJFzqkdk4w0PpXPzRZjMxkzdMfvCRPFeG5TINBGnhO1w==
+"@iconify/icons-mdi@^1.2.8":
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.2.8.tgz#ac0a958b0e59cfc2c1e982c8e31dec52415bfaf4"
+  integrity sha512-LerIU0XQIMT4Rev81ZFBweciILuo1uCZ4WgNajjj5M0+lbu70y08BnzeqOHNlDFYHeymauhKszMF5ST/S4WotQ==
   dependencies:
     "@iconify/types" "^1.0.12"
 
